@@ -11,7 +11,7 @@
                 <customObject id="RGQ-cG-AWy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ProjectDetailViewController" id="97T-ho-5rV" customClass="ProjectDetailViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="VUz-Qe-1iz">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="500" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0xO-lc-GNE">
@@ -23,7 +23,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iJi-xp-zcp">
-                                <rect key="frame" x="174" y="254" width="267" height="25"/>
+                                <rect key="frame" x="174" y="254" width="317" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="V2C-QS-6IO" id="kQ8-Pt-32i">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -64,7 +64,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="xJT-hy-420">
-                                <rect key="frame" x="177" y="175" width="261" height="22"/>
+                                <rect key="frame" x="177" y="175" width="311" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="THO-Ij-vVV">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -100,7 +100,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jfe-67-Mqf">
-                                <rect key="frame" x="234" y="5" width="82" height="32"/>
+                                <rect key="frame" x="284" y="5" width="82" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="D3x-Ky-hH1"/>
                                 </constraints>

@@ -10,11 +10,11 @@
             <objects>
                 <viewController title="Resources" storyboardIdentifier="MaintenanceViewController" id="CJA-Nb-0iZ" userLabel="Maintenance" customClass="MaintenanceViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Ad6-F3-Hgo">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="jRW-XD-bks">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="30"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xxe-np-g62">
                                         <rect key="frame" x="4" y="4" width="17" height="26"/>
@@ -27,7 +27,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCa-c1-f8n">
-                                        <rect key="frame" x="377" y="-2" width="75" height="32"/>
+                                        <rect key="frame" x="527" y="-2" width="75" height="32"/>
                                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pNK-DE-9kN">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -47,13 +47,13 @@
                                 </constraints>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFQ-MM-7OC">
-                                <rect key="frame" x="0.0" y="30" width="450" height="270"/>
+                                <rect key="frame" x="0.0" y="30" width="600" height="370"/>
                                 <clipView key="contentView" id="lzI-Og-26j">
-                                    <rect key="frame" x="1" y="0.0" width="448" height="269"/>
+                                    <rect key="frame" x="1" y="0.0" width="598" height="369"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="IVO-pc-zYr" id="1qH-GG-cxZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="448" height="244"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="598" height="344"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -70,7 +70,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <tableHeaderView key="headerView" id="IVO-pc-zYr">
-                                    <rect key="frame" x="0.0" y="0.0" width="448" height="25"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="598" height="25"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>

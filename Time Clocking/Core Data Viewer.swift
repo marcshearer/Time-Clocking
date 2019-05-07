@@ -289,11 +289,11 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                     }
                     cell = NSCell(textCell: value)
                     cell.alignment = column.alignment
-                    if column.width <= 0 && cell.cellSize.width > tableColumn!.width {
+                    if column.width <= 0 && cell.cellSize.width > tableColumn!.width + 2 {
                         Utility.mainThread {
                             
                             // Stretch column can't contain this value - expand it - trying to recover any padding first
-                            expand = cell.cellSize.width - tableColumn!.width
+                            expand = cell.cellSize.width - tableColumn!.width + 2
                             // Check how much padding is available
                             if self.padColumns.count > 0 {
                                 var padAvailable:CGFloat = 0.0

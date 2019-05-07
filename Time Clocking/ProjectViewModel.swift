@@ -24,60 +24,67 @@ class ProjectViewModel: ViewModel {
     public var hourlyRate = Observable<String>("")
     public var closed = Observable<Int>(0)
     public var canSave = Observable<Bool>(false)
-    private var lastCustomerCode = ""
     public var customers: [CustomerMO]!
     public var customerNames: [String]!
+    private var lastCustomerCode = ""
+    private var initialising = true
     
     init(from projectMO: ProjectMO?) {
     
         super.init()
+    
+        self.customers = Customer.load()
+        self.customerNames = self.customers.map {$0.name!}
+    
+        // Only allow save if project code and title complete
+        _ = combineLatest(self.projectCode, self.title).observeNext { _ in
+            self.canSave.value = (self.projectCode.value != "" && self.title.value != "")
+        }
+    
+        // Index of popup has changed -  update customer details
+        _ = customerIndex.observeNext { (index) in
+            if let index = index {
+                if index > 0 {
+                    self.updateFromCustomer(customerMO: self.customers[index-1])
+                }
+            }
+        }
+    
         
+        // Customer has changed - set popup index which in turn triggers update of customer details
+        _ = customerCode.observeNext { (customerCode) in
+            if self.customerCode.value != self.lastCustomerCode {
+                if let index = self.customers!.firstIndex(where: {$0.customerCode == customerCode}) {
+                    if self.customerIndex.value != index + 1 {
+                        self.customerIndex.value = index + 1
+                    }
+                } else {
+                    self.customerIndex.value = 0
+                }
+            }
+        }
+        
+        // Default from provided managed object
         if let projectMO = projectMO {
             self.customerCode.value = projectMO.customerCode ?? ""
-            self.lastCustomerCode = self.customerCode.value
             self.projectCode.value = projectMO.projectCode ?? ""
             self.title.value = projectMO.title ?? ""
             self.hourlyRate.value = "\(projectMO.hourlyRate)"
             self.closed.value = (projectMO.closed ? 1 : 0)
         }
-    
-        self.customers = Customer.load()
-        self.customerNames = self.customers.map {$0.name!}
-    
-        _ = combineLatest(self.projectCode, self.title).observeNext { _ in
-            self.canSave.value = (self.projectCode.value != "" && self.title.value != "")
-        }
-    
-        _ = customerIndex.observeNext { (index) in
-            if let index = index {
-                if index > 0 {
-                    self.updateCustomer(customerMO: self.customers[index-1], updateCustomerCode: true)
-                } else {
-                    self.customerCode.value = ""
-                    self.lastCustomerCode = ""
-                    self.customerName.value = ""
-                }
-            }
-        }
-    
-        _ = customerCode.observeNext { (customerCode) in
-            if self.customerCode.value != self.lastCustomerCode {
-                if let index = self.customers!.firstIndex(where: {$0.customerCode == customerCode}) {
-                    self.updateCustomer(customerMO: self.customers[index])
-                } else {
-                    self.lastCustomerCode = ""
-                }
-            }
-        }
+        
+        self.initialising = false
     }
     
-    private func updateCustomer(customerMO: CustomerMO, updateCustomerCode: Bool = false) {
-        if updateCustomerCode {
+    private func updateFromCustomer(customerMO: CustomerMO) {
+        if customerMO.customerCode != self.lastCustomerCode {
             self.customerCode.value = customerMO.customerCode!
+            self.lastCustomerCode = customerMO.customerCode!
+            self.customerName.value = customerMO.name!
+            if !self.initialising {
+                self.hourlyRate.value = "\(customerMO.defaultHourlyRate)"
+            }
         }
-        self.lastCustomerCode = customerMO.customerCode!
-        self.customerName.value = customerMO.name!
-        self.hourlyRate.value = "\(customerMO.defaultHourlyRate)"
     }
     
     override func save(to record: NSManagedObject) {

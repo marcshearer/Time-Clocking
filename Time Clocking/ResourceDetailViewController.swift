@@ -55,6 +55,11 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
         resourceViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
         resourceViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
         resourceViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        resourceViewModel.closed.bind(signal: Signal(closedChanged))
+    }
+    
+    private func closedChanged(_ value: Int, never: Never) {
+        
     }
 }
 
