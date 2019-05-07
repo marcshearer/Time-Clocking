@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Maintenance-->
+        <scene sceneID="EWq-TL-JVs">
+            <objects>
+                <viewController title="Resources" storyboardIdentifier="MaintenanceViewController" id="CJA-Nb-0iZ" userLabel="Maintenance" customClass="MaintenanceViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="Ad6-F3-Hgo">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="jRW-XD-bks">
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="30"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xxe-np-g62">
+                                        <rect key="frame" x="4" y="4" width="17" height="26"/>
+                                        <buttonCell key="cell" type="bevel" title="+" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" inset="2" id="34P-is-nkZ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system" size="20"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="addPressed:" target="CJA-Nb-0iZ" id="oz0-iO-EqV"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCa-c1-f8n">
+                                        <rect key="frame" x="377" y="-2" width="75" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pNK-DE-9kN">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="closePressed:" target="CJA-Nb-0iZ" id="gH1-G1-07r"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Xxe-np-g62" firstAttribute="top" secondItem="jRW-XD-bks" secondAttribute="top" id="27X-el-bne"/>
+                                    <constraint firstAttribute="bottom" secondItem="Xxe-np-g62" secondAttribute="bottom" constant="4" id="997-BP-37m"/>
+                                    <constraint firstAttribute="trailing" secondItem="RCa-c1-f8n" secondAttribute="trailing" constant="4" id="BOL-rD-mpc"/>
+                                    <constraint firstAttribute="height" constant="30" id="OBf-oG-XuB"/>
+                                    <constraint firstItem="Xxe-np-g62" firstAttribute="leading" secondItem="jRW-XD-bks" secondAttribute="leading" constant="4" id="Uqf-Hi-muR"/>
+                                    <constraint firstItem="RCa-c1-f8n" firstAttribute="centerY" secondItem="jRW-XD-bks" secondAttribute="centerY" id="jvE-wi-B8p"/>
+                                </constraints>
+                            </customView>
+                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFQ-MM-7OC">
+                                <rect key="frame" x="0.0" y="30" width="450" height="270"/>
+                                <clipView key="contentView" id="lzI-Og-26j">
+                                    <rect key="frame" x="1" y="0.0" width="448" height="269"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" headerView="IVO-pc-zYr" id="1qH-GG-cxZ">
+                                            <rect key="frame" x="0.0" y="0.0" width="448" height="244"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="2"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                        </tableView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xlA-ri-aoR">
+                                    <rect key="frame" x="1" y="119" width="223" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="unn-Md-qbe">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <tableHeaderView key="headerView" id="IVO-pc-zYr">
+                                    <rect key="frame" x="0.0" y="0.0" width="448" height="25"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableHeaderView>
+                            </scrollView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="jRW-XD-bks" firstAttribute="top" secondItem="rFQ-MM-7OC" secondAttribute="bottom" id="2zd-bv-3Vf"/>
+                            <constraint firstItem="rFQ-MM-7OC" firstAttribute="top" secondItem="Ad6-F3-Hgo" secondAttribute="top" id="J5G-0Q-a2l"/>
+                            <constraint firstAttribute="bottom" secondItem="jRW-XD-bks" secondAttribute="bottom" id="RWq-qw-cPI"/>
+                            <constraint firstAttribute="trailing" secondItem="rFQ-MM-7OC" secondAttribute="trailing" id="bzO-0w-4Ir"/>
+                            <constraint firstItem="rFQ-MM-7OC" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="dyE-F8-c26"/>
+                            <constraint firstAttribute="trailing" secondItem="jRW-XD-bks" secondAttribute="trailing" id="sv2-gW-xAU"/>
+                            <constraint firstItem="jRW-XD-bks" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="uxy-64-nw3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="1qH-GG-cxZ" id="guw-ZY-gzD"/>
+                    </connections>
+                </viewController>
+                <customObject id="Xdh-el-cxj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="80" y="107"/>
+        </scene>
+    </scenes>
+</document>

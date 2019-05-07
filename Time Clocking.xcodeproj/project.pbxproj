@@ -1,0 +1,915 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B2035A57227DD2B000BE3863 /* Time_ClockingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2035A56227DD2B000BE3863 /* Time_ClockingTests.swift */; };
+		B2035A62227DD2B000BE3863 /* Time_ClockingUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2035A61227DD2B000BE3863 /* Time_ClockingUITests.swift */; };
+		B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF1227E5299001CC666 /* ResourceViewModel.swift */; };
+		B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */; };
+		B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */; };
+		B241BEFB227E945B001CC666 /* ResourceMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */; };
+		B241BEFD227E95B6001CC666 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customer.swift */; };
+		B241BEFF227E9979001CC666 /* ProjectMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */; };
+		B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustommerViewModel.swift */; };
+		B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
+		B241BF05228094A1001CC666 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF04228094A1001CC666 /* ViewModel.swift */; };
+		B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
+		B2869871227DD81400377112 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
+		B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
+		B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
+		B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869853227DD81200377112 /* MaintenanceViewController.storyboard */; };
+		B2869875227DD81400377112 /* ClockingBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869855227DD81200377112 /* ClockingBaseViewController.swift */; };
+		B2869876227DD81400377112 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869856227DD81200377112 /* Main.storyboard */; };
+		B2869877227DD81400377112 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869857227DD81200377112 /* ClockingViewController.swift */; };
+		B2869878227DD81400377112 /* Create Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869858227DD81200377112 /* Create Data.swift */; };
+		B2869879227DD81400377112 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869859227DD81200377112 /* AppDelegate.swift */; };
+		B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */; };
+		B286987B227DD81400377112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B286985B227DD81200377112 /* Assets.xcassets */; };
+		B286987C227DD81400377112 /* ReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985C227DD81200377112 /* ReportingViewController.swift */; };
+		B286987D227DD81400377112 /* ReportingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985D227DD81200377112 /* ReportingViewController.storyboard */; };
+		B286987E227DD81400377112 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985E227DD81300377112 /* SettingsViewController.swift */; };
+		B286987F227DD81400377112 /* ReportingInvoicePromptViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */; };
+		B2869880227DD81400377112 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869860227DD81300377112 /* Utility.swift */; };
+		B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869861227DD81300377112 /* SettingsViewController.storyboard */; };
+		B2869882227DD81400377112 /* Status Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869862227DD81300377112 /* Status Menu.swift */; };
+		B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
+		B2869885227DD81400377112 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869866227DD81300377112 /* Settings.swift */; };
+		B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869867227DD81300377112 /* MaintenanceViewController.swift */; };
+		B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */; };
+		B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869869227DD81300377112 /* CustomerDetailViewController.swift */; };
+		B2869889227DD81400377112 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986A227DD81300377112 /* String Extensions.swift */; };
+		B286988A227DD81400377112 /* Time Entry Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986B227DD81300377112 /* Time Entry Class.swift */; };
+		B286988B227DD81400377112 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986C227DD81300377112 /* Date Extensions.swift */; };
+		B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */; };
+		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
+		B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B2035A53227DD2B000BE3863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2035A38227DD2AF00BE3863 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2035A3F227DD2AF00BE3863;
+			remoteInfo = "Time Clocking";
+		};
+		B2035A5E227DD2B000BE3863 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B2035A38227DD2AF00BE3863 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B2035A3F227DD2AF00BE3863;
+			remoteInfo = "Time Clocking";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		13BF53A8643CD37144B89B64 /* Pods-Time Clocking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Time Clocking.release.xcconfig"; path = "Pods/Target Support Files/Pods-Time Clocking/Pods-Time Clocking.release.xcconfig"; sourceTree = "<group>"; };
+		697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Time_Clocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F866EB9586651764051827B /* Pods-Time Clocking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Time Clocking.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Time Clocking/Pods-Time Clocking.debug.xcconfig"; sourceTree = "<group>"; };
+		B2035A40227DD2AF00BE3863 /* Time Clocking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Clocking.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2035A52227DD2B000BE3863 /* Time ClockingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time ClockingTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2035A56227DD2B000BE3863 /* Time_ClockingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_ClockingTests.swift; sourceTree = "<group>"; };
+		B2035A58227DD2B000BE3863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2035A5D227DD2B000BE3863 /* Time ClockingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Time ClockingUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2035A61227DD2B000BE3863 /* Time_ClockingUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time_ClockingUITests.swift; sourceTree = "<group>"; };
+		B2035A63227DD2B000BE3863 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B241BEF1227E5299001CC666 /* ResourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewModel.swift; sourceTree = "<group>"; };
+		B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDetailViewController.swift; sourceTree = "<group>"; };
+		B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ResourceDetailViewController.storyboard; sourceTree = "<group>"; };
+		B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceMaintenance.swift; sourceTree = "<group>"; };
+		B241BEFC227E95B6001CC666 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
+		B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMaintenance.swift; sourceTree = "<group>"; };
+		B241BF0022805EA1001CC666 /* CustommerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommerViewModel.swift; sourceTree = "<group>"; };
+		B241BF022280650B001CC666 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		B241BF04228094A1001CC666 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
+		B2869850227DD81200377112 /* Core Data Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Class.swift"; sourceTree = "<group>"; };
+		B2869851227DD81200377112 /* ClockingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingDetailViewController.swift; sourceTree = "<group>"; };
+		B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingDetailViewController.storyboard; sourceTree = "<group>"; };
+		B2869853227DD81200377112 /* MaintenanceViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MaintenanceViewController.storyboard; sourceTree = "<group>"; };
+		B2869854227DD81200377112 /* Time_Clocking.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Time_Clocking.entitlements; sourceTree = "<group>"; };
+		B2869855227DD81200377112 /* ClockingBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingBaseViewController.swift; sourceTree = "<group>"; };
+		B2869856227DD81200377112 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		B2869857227DD81200377112 /* ClockingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
+		B2869858227DD81200377112 /* Create Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Create Data.swift"; sourceTree = "<group>"; };
+		B2869859227DD81200377112 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProjectDetailViewController.storyboard; sourceTree = "<group>"; };
+		B286985B227DD81200377112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B286985C227DD81200377112 /* ReportingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingViewController.swift; sourceTree = "<group>"; };
+		B286985D227DD81200377112 /* ReportingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportingViewController.storyboard; sourceTree = "<group>"; };
+		B286985E227DD81300377112 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportingInvoicePromptViewController.storyboard; sourceTree = "<group>"; };
+		B2869860227DD81300377112 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		B2869861227DD81300377112 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
+		B2869862227DD81300377112 /* Status Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status Menu.swift"; sourceTree = "<group>"; };
+		B2869865227DD81300377112 /* ProjectDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewController.swift; sourceTree = "<group>"; };
+		B2869866227DD81300377112 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B2869867227DD81300377112 /* MaintenanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceViewController.swift; sourceTree = "<group>"; };
+		B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CustomerDetailViewController.storyboard; sourceTree = "<group>"; };
+		B2869869227DD81300377112 /* CustomerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerDetailViewController.swift; sourceTree = "<group>"; };
+		B286986A227DD81300377112 /* String Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
+		B286986B227DD81300377112 /* Time Entry Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Time Entry Class.swift"; sourceTree = "<group>"; };
+		B286986C227DD81300377112 /* Date Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date Extensions.swift"; sourceTree = "<group>"; };
+		B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingInvoicePromptViewController.swift; sourceTree = "<group>"; };
+		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
+		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2869870227DD81400377112 /* Core Data Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Viewer.swift"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B2035A3D227DD2AF00BE3863 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A4F227DD2B000BE3863 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A5A227DD2B000BE3863 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		062C69B362B354E58BD47EDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F838D927D286D884F681037 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7F866EB9586651764051827B /* Pods-Time Clocking.debug.xcconfig */,
+				13BF53A8643CD37144B89B64 /* Pods-Time Clocking.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B2035A37227DD2AF00BE3863 = {
+			isa = PBXGroup;
+			children = (
+				B2035A42227DD2AF00BE3863 /* Time Clocking */,
+				B2035A55227DD2B000BE3863 /* Time ClockingTests */,
+				B2035A60227DD2B000BE3863 /* Time ClockingUITests */,
+				B2035A41227DD2AF00BE3863 /* Products */,
+				5F838D927D286D884F681037 /* Pods */,
+				062C69B362B354E58BD47EDC /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B2035A41227DD2AF00BE3863 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B2035A40227DD2AF00BE3863 /* Time Clocking.app */,
+				B2035A52227DD2B000BE3863 /* Time ClockingTests.xctest */,
+				B2035A5D227DD2B000BE3863 /* Time ClockingUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B2035A42227DD2AF00BE3863 /* Time Clocking */ = {
+			isa = PBXGroup;
+			children = (
+				B2869890227DD82C00377112 /* Standard Components */,
+				B2869858227DD81200377112 /* Create Data.swift */,
+				B2869891227DD85D00377112 /* Main Classes */,
+				B2869892227DD86D00377112 /* Clockings */,
+				B241BEF9227E93E1001CC666 /* Maintenance */,
+				B2869894227DD8A200377112 /* Resources */,
+				B2869895227DD8AB00377112 /* Customers */,
+				B2869896227DD8B300377112 /* Projects */,
+				B2869898227DD8CF00377112 /* Reporting */,
+				B2869897227DD8BA00377112 /* Settings */,
+				B2869893227DD87700377112 /* Utility & Data Classes */,
+			);
+			path = "Time Clocking";
+			sourceTree = "<group>";
+		};
+		B2035A55227DD2B000BE3863 /* Time ClockingTests */ = {
+			isa = PBXGroup;
+			children = (
+				B2035A56227DD2B000BE3863 /* Time_ClockingTests.swift */,
+				B2035A58227DD2B000BE3863 /* Info.plist */,
+			);
+			path = "Time ClockingTests";
+			sourceTree = "<group>";
+		};
+		B2035A60227DD2B000BE3863 /* Time ClockingUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B2035A61227DD2B000BE3863 /* Time_ClockingUITests.swift */,
+				B2035A63227DD2B000BE3863 /* Info.plist */,
+			);
+			path = "Time ClockingUITests";
+			sourceTree = "<group>";
+		};
+		B241BEF9227E93E1001CC666 /* Maintenance */ = {
+			isa = PBXGroup;
+			children = (
+				B2869853227DD81200377112 /* MaintenanceViewController.storyboard */,
+				B2869867227DD81300377112 /* MaintenanceViewController.swift */,
+			);
+			name = Maintenance;
+			sourceTree = "<group>";
+		};
+		B2869890227DD82C00377112 /* Standard Components */ = {
+			isa = PBXGroup;
+			children = (
+				B2869859227DD81200377112 /* AppDelegate.swift */,
+				B286985B227DD81200377112 /* Assets.xcassets */,
+				B286986F227DD81300377112 /* Info.plist */,
+				B2869856227DD81200377112 /* Main.storyboard */,
+				B2869854227DD81200377112 /* Time_Clocking.entitlements */,
+				B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */,
+			);
+			name = "Standard Components";
+			sourceTree = "<group>";
+		};
+		B2869891227DD85D00377112 /* Main Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B286986B227DD81300377112 /* Time Entry Class.swift */,
+				B2869862227DD81300377112 /* Status Menu.swift */,
+				B2869866227DD81300377112 /* Settings.swift */,
+				B241BF04228094A1001CC666 /* ViewModel.swift */,
+			);
+			name = "Main Classes";
+			sourceTree = "<group>";
+		};
+		B2869892227DD86D00377112 /* Clockings */ = {
+			isa = PBXGroup;
+			children = (
+				B2869899227DD90600377112 /* Clocking Base */,
+				B286989A227DD91500377112 /* Clockings Entry */,
+				B286989B227DD91D00377112 /* Clockings Detail */,
+			);
+			name = Clockings;
+			sourceTree = "<group>";
+		};
+		B2869893227DD87700377112 /* Utility & Data Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B2869850227DD81200377112 /* Core Data Class.swift */,
+				B2869870227DD81400377112 /* Core Data Viewer.swift */,
+				B286986C227DD81300377112 /* Date Extensions.swift */,
+				B286986A227DD81300377112 /* String Extensions.swift */,
+				B2869860227DD81300377112 /* Utility.swift */,
+			);
+			name = "Utility & Data Classes";
+			sourceTree = "<group>";
+		};
+		B2869894227DD8A200377112 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */,
+				B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */,
+				B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */,
+				B241BEF1227E5299001CC666 /* ResourceViewModel.swift */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		B2869895227DD8AB00377112 /* Customers */ = {
+			isa = PBXGroup;
+			children = (
+				B241BEFC227E95B6001CC666 /* Customer.swift */,
+				B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */,
+				B2869869227DD81300377112 /* CustomerDetailViewController.swift */,
+				B241BF0022805EA1001CC666 /* CustommerViewModel.swift */,
+			);
+			name = Customers;
+			sourceTree = "<group>";
+		};
+		B2869896227DD8B300377112 /* Projects */ = {
+			isa = PBXGroup;
+			children = (
+				B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */,
+				B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */,
+				B2869865227DD81300377112 /* ProjectDetailViewController.swift */,
+				B241BF022280650B001CC666 /* ProjectViewModel.swift */,
+			);
+			name = Projects;
+			sourceTree = "<group>";
+		};
+		B2869897227DD8BA00377112 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B2869861227DD81300377112 /* SettingsViewController.storyboard */,
+				B286985E227DD81300377112 /* SettingsViewController.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		B2869898227DD8CF00377112 /* Reporting */ = {
+			isa = PBXGroup;
+			children = (
+				B286989C227DD95B00377112 /* Reporting List */,
+				B286989D227DD96600377112 /* Reporting Invoice Prompt */,
+			);
+			name = Reporting;
+			sourceTree = "<group>";
+		};
+		B2869899227DD90600377112 /* Clocking Base */ = {
+			isa = PBXGroup;
+			children = (
+				B2869855227DD81200377112 /* ClockingBaseViewController.swift */,
+			);
+			name = "Clocking Base";
+			sourceTree = "<group>";
+		};
+		B286989A227DD91500377112 /* Clockings Entry */ = {
+			isa = PBXGroup;
+			children = (
+				B286986E227DD81300377112 /* ClockingViewController.storyboard */,
+				B2869857227DD81200377112 /* ClockingViewController.swift */,
+			);
+			name = "Clockings Entry";
+			sourceTree = "<group>";
+		};
+		B286989B227DD91D00377112 /* Clockings Detail */ = {
+			isa = PBXGroup;
+			children = (
+				B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */,
+				B2869851227DD81200377112 /* ClockingDetailViewController.swift */,
+			);
+			name = "Clockings Detail";
+			sourceTree = "<group>";
+		};
+		B286989C227DD95B00377112 /* Reporting List */ = {
+			isa = PBXGroup;
+			children = (
+				B286985D227DD81200377112 /* ReportingViewController.storyboard */,
+				B286985C227DD81200377112 /* ReportingViewController.swift */,
+			);
+			name = "Reporting List";
+			sourceTree = "<group>";
+		};
+		B286989D227DD96600377112 /* Reporting Invoice Prompt */ = {
+			isa = PBXGroup;
+			children = (
+				B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */,
+				B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */,
+			);
+			name = "Reporting Invoice Prompt";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B2035A3F227DD2AF00BE3863 /* Time Clocking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2035A66227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time Clocking" */;
+			buildPhases = (
+				34D998A26FA060368AD246BE /* [CP] Check Pods Manifest.lock */,
+				B2035A3C227DD2AF00BE3863 /* Sources */,
+				B2035A3D227DD2AF00BE3863 /* Frameworks */,
+				B2035A3E227DD2AF00BE3863 /* Resources */,
+				31DFCD63E8462A72439472D3 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Time Clocking";
+			productName = "Time Clocking";
+			productReference = B2035A40227DD2AF00BE3863 /* Time Clocking.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B2035A51227DD2B000BE3863 /* Time ClockingTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2035A69227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time ClockingTests" */;
+			buildPhases = (
+				B2035A4E227DD2B000BE3863 /* Sources */,
+				B2035A4F227DD2B000BE3863 /* Frameworks */,
+				B2035A50227DD2B000BE3863 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2035A54227DD2B000BE3863 /* PBXTargetDependency */,
+			);
+			name = "Time ClockingTests";
+			productName = "Time ClockingTests";
+			productReference = B2035A52227DD2B000BE3863 /* Time ClockingTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B2035A5C227DD2B000BE3863 /* Time ClockingUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2035A6C227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time ClockingUITests" */;
+			buildPhases = (
+				B2035A59227DD2B000BE3863 /* Sources */,
+				B2035A5A227DD2B000BE3863 /* Frameworks */,
+				B2035A5B227DD2B000BE3863 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B2035A5F227DD2B000BE3863 /* PBXTargetDependency */,
+			);
+			name = "Time ClockingUITests";
+			productName = "Time ClockingUITests";
+			productReference = B2035A5D227DD2B000BE3863 /* Time ClockingUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B2035A38227DD2AF00BE3863 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1020;
+				LastUpgradeCheck = 1020;
+				ORGANIZATIONNAME = "Marc Shearer";
+				TargetAttributes = {
+					B2035A3F227DD2AF00BE3863 = {
+						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
+					};
+					B2035A51227DD2B000BE3863 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = B2035A3F227DD2AF00BE3863;
+					};
+					B2035A5C227DD2B000BE3863 = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = B2035A3F227DD2AF00BE3863;
+					};
+				};
+			};
+			buildConfigurationList = B2035A3B227DD2AF00BE3863 /* Build configuration list for PBXProject "Time Clocking" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				global,
+			);
+			mainGroup = B2035A37227DD2AF00BE3863;
+			productRefGroup = B2035A41227DD2AF00BE3863 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B2035A3F227DD2AF00BE3863 /* Time Clocking */,
+				B2035A51227DD2B000BE3863 /* Time ClockingTests */,
+				B2035A5C227DD2B000BE3863 /* Time ClockingUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B2035A3E227DD2AF00BE3863 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */,
+				B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */,
+				B2869876227DD81400377112 /* Main.storyboard in Resources */,
+				B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */,
+				B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */,
+				B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */,
+				B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */,
+				B286987D227DD81400377112 /* ReportingViewController.storyboard in Resources */,
+				B286987B227DD81400377112 /* Assets.xcassets in Resources */,
+				B286987F227DD81400377112 /* ReportingInvoicePromptViewController.storyboard in Resources */,
+				B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A50227DD2B000BE3863 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A5B227DD2B000BE3863 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		31DFCD63E8462A72439472D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		34D998A26FA060368AD246BE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Time Clocking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B2035A3C227DD2AF00BE3863 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */,
+				B241BEFB227E945B001CC666 /* ResourceMaintenance.swift in Sources */,
+				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
+				B2869885227DD81400377112 /* Settings.swift in Sources */,
+				B286987C227DD81400377112 /* ReportingViewController.swift in Sources */,
+				B2869882227DD81400377112 /* Status Menu.swift in Sources */,
+				B241BF05228094A1001CC666 /* ViewModel.swift in Sources */,
+				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
+				B241BEFD227E95B6001CC666 /* Customer.swift in Sources */,
+				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
+				B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */,
+				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
+				B2869880227DD81400377112 /* Utility.swift in Sources */,
+				B286988A227DD81400377112 /* Time Entry Class.swift in Sources */,
+				B2869877227DD81400377112 /* ClockingViewController.swift in Sources */,
+				B2869871227DD81400377112 /* Core Data Class.swift in Sources */,
+				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
+				B2869875227DD81400377112 /* ClockingBaseViewController.swift in Sources */,
+				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
+				B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */,
+				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
+				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
+				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
+				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
+				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
+				B2869878227DD81400377112 /* Create Data.swift in Sources */,
+				B241BEFF227E9979001CC666 /* ProjectMaintenance.swift in Sources */,
+				B286987E227DD81400377112 /* SettingsViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A4E227DD2B000BE3863 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2035A57227DD2B000BE3863 /* Time_ClockingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2035A59227DD2B000BE3863 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2035A62227DD2B000BE3863 /* Time_ClockingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B2035A54227DD2B000BE3863 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2035A3F227DD2AF00BE3863 /* Time Clocking */;
+			targetProxy = B2035A53227DD2B000BE3863 /* PBXContainerItemProxy */;
+		};
+		B2035A5F227DD2B000BE3863 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B2035A3F227DD2AF00BE3863 /* Time Clocking */;
+			targetProxy = B2035A5E227DD2B000BE3863 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B2035A64227DD2B000BE3863 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B2035A65227DD2B000BE3863 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		B2035A67227DD2B000BE3863 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F866EB9586651764051827B /* Pods-Time Clocking.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Time Clocking/Time_Clocking.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time Clocking/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-Clocking";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B2035A68227DD2B000BE3863 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13BF53A8643CD37144B89B64 /* Pods-Time Clocking.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Time Clocking/Time_Clocking.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time Clocking/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-Clocking";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B2035A6A227DD2B000BE3863 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time ClockingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-ClockingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Clocking.app/Contents/MacOS/Time Clocking";
+			};
+			name = Debug;
+		};
+		B2035A6B227DD2B000BE3863 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time ClockingTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-ClockingTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Time Clocking.app/Contents/MacOS/Time Clocking";
+			};
+			name = Release;
+		};
+		B2035A6D227DD2B000BE3863 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time ClockingUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-ClockingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Time Clocking";
+			};
+			name = Debug;
+		};
+		B2035A6E227DD2B000BE3863 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time ClockingUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-ClockingUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "Time Clocking";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B2035A3B227DD2AF00BE3863 /* Build configuration list for PBXProject "Time Clocking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2035A64227DD2B000BE3863 /* Debug */,
+				B2035A65227DD2B000BE3863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2035A66227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time Clocking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2035A67227DD2B000BE3863 /* Debug */,
+				B2035A68227DD2B000BE3863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2035A69227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time ClockingTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2035A6A227DD2B000BE3863 /* Debug */,
+				B2035A6B227DD2B000BE3863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2035A6C227DD2B000BE3863 /* Build configuration list for PBXNativeTarget "Time ClockingUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2035A6D227DD2B000BE3863 /* Debug */,
+				B2035A6E227DD2B000BE3863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B241BF0722814520001CC666 /* Time Clock.xcdatamodel */,
+			);
+			currentVersion = B241BF0722814520001CC666 /* Time Clock.xcdatamodel */;
+			path = "Time Clocking.xcdatamodeld";
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B2035A38227DD2AF00BE3863 /* Project object */;
+}
