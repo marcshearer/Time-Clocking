@@ -21,7 +21,8 @@ import Cocoa
 
 public protocol MaintenanceDetailViewControllerDelegate {
     
-    func setupViewController(record: NSManagedObject!, completion: ((_ record: NSManagedObject)->())!)
+    var record: NSManagedObject! {get set}
+    var completion: ((NSManagedObject, Bool)->())? {get set}
     
 }
 
@@ -54,7 +55,7 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     
     func shouldSelect(recordType: String, record: NSManagedObject) -> Bool {
         if recordType == self.delegate.recordType {
-            self.editRecord(record)
+            self.editRecord(record, completion: editCompletion)
          }
         return false
     }
@@ -63,15 +64,21 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
         return self.delegate?.derivedKey?(recordType: recordType, key: key, record: record) ?? ""
     }
     
-    private func editRecord(_ record: NSManagedObject? = nil, completion: ((NSManagedObject)->())? = nil) {
+    private func editRecord(_ record: NSManagedObject? = nil, completion: ((NSManagedObject, Bool)->())? = nil) {
         let storyboard = NSStoryboard(name: NSStoryboard.Name(self.delegate.detailStoryBoardName), bundle: nil)
         let viewController = storyboard.instantiateController(withIdentifier: self.delegate.detailViewControllerIdentifier) as! NSViewController
-        let maintenanceDetailViewController = viewController as? MaintenanceDetailViewControllerDelegate
-        maintenanceDetailViewController?.setupViewController(record: record, completion: completion)
+        var maintenanceDetailViewController = viewController as? MaintenanceDetailViewControllerDelegate
+        maintenanceDetailViewController?.record = record
+        maintenanceDetailViewController?.completion = completion
         self.presentAsSheet(viewController)
     }
     
-    private func addCompletion(_ record: NSManagedObject) {
+    private func addCompletion(_ record: NSManagedObject, deleted: Bool) {
         tableViewer.append(recordType: self.delegate.recordType, record: record)
     }
+    
+    private func editCompletion(_ record: NSManagedObject, deleted: Bool) {
+        tableViewer.commit(recordType: self.delegate.recordType, record: record, action: (deleted ? .delete : .update))
+    }
+    
 }

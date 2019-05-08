@@ -196,7 +196,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func showResources(_ sender: Any?) {
         // Retrieve or create the view controller
         self.resourcesViewController = self.showMenubarWindow(menubarViewController: self.resourcesViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
-        self.resourcesViewController?.delegate = ResourceMaintenance()
+        self.resourcesViewController?.delegate = Resources()
         self.resourcesPopover.contentViewController = self.resourcesViewController
         self.showPopover(self.resourcesPopover)
     }
@@ -204,7 +204,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func showCustomers(_ sender: Any?) {
         // Retrieve or create the view controller
         self.customersViewController = self.showMenubarWindow(menubarViewController: self.customersViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
-        self.customersViewController?.delegate = Customer()
+        self.customersViewController?.delegate = Customers()
         self.customersPopover.contentViewController = self.customersViewController
         self.showPopover(self.customersPopover)
     }
@@ -212,7 +212,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func showProjects(_ sender: Any?) {
         // Retrieve or create the view controller
         self.projectsViewController = self.showMenubarWindow(menubarViewController: self.projectsViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
-        self.projectsViewController?.delegate = ProjectMaintenance()
+        self.projectsViewController?.delegate = Projects()
         self.projectsPopover.contentViewController = self.projectsViewController
         self.showPopover(self.projectsPopover)
     }

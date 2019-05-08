@@ -11,18 +11,13 @@ import Bond
 
 class ResourceDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate, NSTextDelegate {
     
-    private var record: NSManagedObject!
-    private var completion: ((_ record: NSManagedObject)->())!
+    public var record: NSManagedObject!
+    public var completion: ((NSManagedObject, Bool)->())?
     
-    public func setupViewController(record: NSManagedObject!, completion: ((_ record: NSManagedObject)->())!) {
-        self.record = record
-        self.completion = completion
-    }
-
     private var resourceViewModel: ResourceViewModel!
     private var originalResourceCode: String!
+    private var originalClosed: Bool!
     private var resourceMO: ResourceMO!
-
     
     @IBOutlet private weak var resourceCodeTextField: NSTextField!
     @IBOutlet private weak var nameTextField: NSTextField!
@@ -30,13 +25,13 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     @IBOutlet private weak var saveButton: NSButton!
     
     @IBAction func savePressed(_ sender: NSButton) {
-        let record = self.resourceViewModel.save(record:            resourceMO,
-                                  keyColumn:         ["resourceCode"],
-                                  beforeValue:       [self.originalResourceCode],
-                                  afterValue:        [self.resourceViewModel.resourceCode.value],
-                                  recordDescription: "Resource code")
+        let record = self.resourceViewModel.save(record:    resourceMO,
+                                  keyColumn:                ["resourceCode"],
+                                  beforeValue:              [self.originalResourceCode],
+                                  afterValue:               [self.resourceViewModel.resourceCode.value],
+                                  recordDescription:        "Resource code")
         if let record = record {
-            completion?(record)
+            self.completion?(record, false)
             self.view.window?.close()
         }
     }
@@ -48,18 +43,38 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     override func viewDidLoad() {
         super.viewDidLoad()
         self.resourceMO = record as? ResourceMO
-        originalResourceCode = self.resourceMO?.resourceCode ?? ""
-        resourceViewModel = ResourceViewModel(from: self.resourceMO)
+        self.originalResourceCode = self.resourceMO?.resourceCode ?? ""
+        self.originalClosed = self.resourceMO?.closed ?? false
+        self.resourceViewModel = ResourceViewModel(from: self.resourceMO)
         
-        resourceViewModel.resourceCode.bidirectionalBind(to: resourceCodeTextField.reactive.editingString)
-        resourceViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
-        resourceViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
-        resourceViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
-        resourceViewModel.closed.bind(signal: Signal(closedChanged))
+        self.resourceViewModel.resourceCode.bidirectionalBind(to: resourceCodeTextField.reactive.editingString)
+        self.resourceViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
+        self.resourceViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
+        self.resourceViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        self.resourceViewModel.canClose.bind(to: self.closedButton.reactive.isEnabled)
+        
+        // Trigger option to delete if closing a record with no dependents
+        _ = self.resourceViewModel.closed.observeNext { (closed) in
+            if closed != 0 && self.originalClosed != true {
+                self.closeOrDeleteRecord()
+            }
+        }
     }
     
-    private func closedChanged(_ value: Int, never: Never) {
-        
+    private func closeOrDeleteRecord() {
+        if Clockings.load(specificResource: self.originalResourceCode, includeClosed: true).count == 0 {
+            let resourceCode = self.resourceViewModel.resourceCode.value
+            Utility.alertDecision("Resource '\(resourceCode)' does not have any clockings.\n\nWould you like to delete it?", title: "", okButtonText: "Delete Resource", okHandler: { self.deleteRecord() }, cancelButtonText: "Keep as Closed")
+        }
+    }
+    
+    private func deleteRecord() {
+        if CoreData.update(updateLogic: {
+            CoreData.delete(record: self.record)
+        }) {
+            self.completion?(record, true)
+            self.view.window?.close()
+        }
     }
 }
 

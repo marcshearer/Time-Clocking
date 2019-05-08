@@ -162,21 +162,21 @@ class ClockingBaseViewController: NSViewController, NSTextFieldDelegate, Clockin
             let clockingMO = record as! ClockingMO
             switch key {
             case "customer":
-                let customerMO = CoreData.fetch(from: "Customers", filter: NSPredicate(format: "customerCode = %@", clockingMO.customerCode!)) as [CustomerMO]
-                if customerMO.count == 1 {
-                    result = customerMO[0].name ?? customerMO[0].customerCode!
+                let customers = Customers.load(specific: clockingMO.customerCode, includeClosed: true)
+                if customers.count == 1 {
+                    result = customers[0].name ?? customers[0].customerCode!
                 }
                 
             case "project":
-                let projectMO = CoreData.fetch(from: "Projects", filter: NSPredicate(format: "customerCode = %@ and projectCode = %@", clockingMO.customerCode!, clockingMO.projectCode!)) as [ProjectMO]
-                if projectMO.count == 1 {
-                    result = projectMO[0].title ?? projectMO[0].projectCode!
+                let projects = Projects.load(specificCustomer: clockingMO.customerCode, specificProject: clockingMO.projectCode, includeClosed: true)
+                if projects.count == 1 {
+                    result = projects[0].title ?? projects[0].projectCode!
                 }
                 
             case "resource":
-                let resourceMO = CoreData.fetch(from: "Resources", filter: NSPredicate(format: "resourceCode = %@", clockingMO.resourceCode!)) as [ResourceMO]
-                if resourceMO.count == 1 {
-                    result = resourceMO[0].name ?? resourceMO[0].resourceCode!
+                let resources = Resources.load(specific: clockingMO.resourceCode, includeClosed: true)
+                if resources.count == 1 {
+                    result = resources[0].name ?? resources[0].resourceCode!
                 }
                 
             case "duration":
@@ -333,7 +333,7 @@ class ClockingBaseViewController: NSViewController, NSTextFieldDelegate, Clockin
         
         self.resourcePopupButton.removeAllItems()
         
-        self.resources = CoreData.fetch(from: "Resources", filter: NSPredicate(format: "closed = false"), sort: [("name", .ascending)])
+        self.resources = Resources.load()
         
         self.resourcePopupButton.addItem(withTitle: "")
         if self.includeAll {
@@ -350,7 +350,7 @@ class ClockingBaseViewController: NSViewController, NSTextFieldDelegate, Clockin
         
         self.customerPopupButton.removeAllItems()
         
-        self.customers = CoreData.fetch(from: "Customers", filter: NSPredicate(format: "closed = false"), sort: [("name", .ascending)])
+        self.customers = Customers.load()
         
         self.customerPopupButton.addItem(withTitle: "")
         if self.includeAll  {
@@ -370,7 +370,7 @@ class ClockingBaseViewController: NSViewController, NSTextFieldDelegate, Clockin
         if timeEntry.customer == "" {
             self.projects = []
         } else {
-            self.projects = CoreData.fetch(from: "Projects", filter: NSPredicate(format: "customerCode = %@", timeEntry.customer), sort: [("title", .ascending)])
+            self.projects = Projects.load(specificCustomer: timeEntry.customer, includeClosed: true)
         }
         self.projectPopupButton.addItem(withTitle: "")
         if self.includeAll {

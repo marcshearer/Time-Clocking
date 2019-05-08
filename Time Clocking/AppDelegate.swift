@@ -26,9 +26,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Cache main context for core data
         CoreData.context = self.persistentContainer.viewContext
         
-        // Create dummy data
-        CreateData.create()
-        
         // Build status menu
         StatusMenu.shared.update()
         

@@ -12,13 +12,14 @@
 		B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF1227E5299001CC666 /* ResourceViewModel.swift */; };
 		B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */; };
 		B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */; };
-		B241BEFB227E945B001CC666 /* ResourceMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */; };
-		B241BEFD227E95B6001CC666 /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customer.swift */; };
-		B241BEFF227E9979001CC666 /* ProjectMaintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */; };
+		B241BEFB227E945B001CC666 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
+		B241BEFD227E95B6001CC666 /* Customers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customers.swift */; };
+		B241BEFF227E9979001CC666 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* Projects.swift */; };
 		B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustommerViewModel.swift */; };
 		B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
 		B241BF05228094A1001CC666 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF04228094A1001CC666 /* ViewModel.swift */; };
 		B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
+		B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
 		B2869871227DD81400377112 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
 		B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
 		B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
@@ -26,7 +27,6 @@
 		B2869875227DD81400377112 /* ClockingBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869855227DD81200377112 /* ClockingBaseViewController.swift */; };
 		B2869876227DD81400377112 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869856227DD81200377112 /* Main.storyboard */; };
 		B2869877227DD81400377112 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869857227DD81200377112 /* ClockingViewController.swift */; };
-		B2869878227DD81400377112 /* Create Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869858227DD81200377112 /* Create Data.swift */; };
 		B2869879227DD81400377112 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869859227DD81200377112 /* AppDelegate.swift */; };
 		B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */; };
 		B286987B227DD81400377112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B286985B227DD81200377112 /* Assets.xcassets */; };
@@ -82,13 +82,14 @@
 		B241BEF1227E5299001CC666 /* ResourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceViewModel.swift; sourceTree = "<group>"; };
 		B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceDetailViewController.swift; sourceTree = "<group>"; };
 		B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ResourceDetailViewController.storyboard; sourceTree = "<group>"; };
-		B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceMaintenance.swift; sourceTree = "<group>"; };
-		B241BEFC227E95B6001CC666 /* Customer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
-		B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectMaintenance.swift; sourceTree = "<group>"; };
+		B241BEFA227E945B001CC666 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		B241BEFC227E95B6001CC666 /* Customers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customers.swift; sourceTree = "<group>"; };
+		B241BEFE227E9979001CC666 /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
 		B241BF0022805EA1001CC666 /* CustommerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommerViewModel.swift; sourceTree = "<group>"; };
 		B241BF022280650B001CC666 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		B241BF04228094A1001CC666 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
+		B24F5BDA228306FA005600F4 /* Clockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clockings.swift; sourceTree = "<group>"; };
 		B2869850227DD81200377112 /* Core Data Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Class.swift"; sourceTree = "<group>"; };
 		B2869851227DD81200377112 /* ClockingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingDetailViewController.swift; sourceTree = "<group>"; };
 		B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingDetailViewController.storyboard; sourceTree = "<group>"; };
@@ -97,7 +98,6 @@
 		B2869855227DD81200377112 /* ClockingBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingBaseViewController.swift; sourceTree = "<group>"; };
 		B2869856227DD81200377112 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B2869857227DD81200377112 /* ClockingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
-		B2869858227DD81200377112 /* Create Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Create Data.swift"; sourceTree = "<group>"; };
 		B2869859227DD81200377112 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProjectDetailViewController.storyboard; sourceTree = "<group>"; };
 		B286985B227DD81200377112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -191,7 +191,6 @@
 			isa = PBXGroup;
 			children = (
 				B2869890227DD82C00377112 /* Standard Components */,
-				B2869858227DD81200377112 /* Create Data.swift */,
 				B2869891227DD85D00377112 /* Main Classes */,
 				B2869892227DD86D00377112 /* Clockings */,
 				B241BEF9227E93E1001CC666 /* Maintenance */,
@@ -259,6 +258,7 @@
 		B2869892227DD86D00377112 /* Clockings */ = {
 			isa = PBXGroup;
 			children = (
+				B24F5BDA228306FA005600F4 /* Clockings.swift */,
 				B2869899227DD90600377112 /* Clocking Base */,
 				B286989A227DD91500377112 /* Clockings Entry */,
 				B286989B227DD91D00377112 /* Clockings Detail */,
@@ -281,7 +281,7 @@
 		B2869894227DD8A200377112 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B241BEFA227E945B001CC666 /* ResourceMaintenance.swift */,
+				B241BEFA227E945B001CC666 /* Resources.swift */,
 				B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */,
 				B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */,
 				B241BEF1227E5299001CC666 /* ResourceViewModel.swift */,
@@ -292,7 +292,7 @@
 		B2869895227DD8AB00377112 /* Customers */ = {
 			isa = PBXGroup;
 			children = (
-				B241BEFC227E95B6001CC666 /* Customer.swift */,
+				B241BEFC227E95B6001CC666 /* Customers.swift */,
 				B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */,
 				B2869869227DD81300377112 /* CustomerDetailViewController.swift */,
 				B241BF0022805EA1001CC666 /* CustommerViewModel.swift */,
@@ -303,7 +303,7 @@
 		B2869896227DD8B300377112 /* Projects */ = {
 			isa = PBXGroup;
 			children = (
-				B241BEFE227E9979001CC666 /* ProjectMaintenance.swift */,
+				B241BEFE227E9979001CC666 /* Projects.swift */,
 				B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */,
 				B2869865227DD81300377112 /* ProjectDetailViewController.swift */,
 				B241BF022280650B001CC666 /* ProjectViewModel.swift */,
@@ -555,14 +555,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */,
-				B241BEFB227E945B001CC666 /* ResourceMaintenance.swift in Sources */,
+				B241BEFB227E945B001CC666 /* Resources.swift in Sources */,
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
 				B2869885227DD81400377112 /* Settings.swift in Sources */,
 				B286987C227DD81400377112 /* ReportingViewController.swift in Sources */,
 				B2869882227DD81400377112 /* Status Menu.swift in Sources */,
 				B241BF05228094A1001CC666 /* ViewModel.swift in Sources */,
+				B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */,
 				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
-				B241BEFD227E95B6001CC666 /* Customer.swift in Sources */,
+				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
@@ -579,8 +580,7 @@
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
 				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
 				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
-				B2869878227DD81400377112 /* Create Data.swift in Sources */,
-				B241BEFF227E9979001CC666 /* ProjectMaintenance.swift in Sources */,
+				B241BEFF227E9979001CC666 /* Projects.swift in Sources */,
 				B286987E227DD81400377112 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -33,7 +33,7 @@ class ProjectViewModel: ViewModel {
     
         super.init()
     
-        self.customers = Customer.load()
+        self.customers = Customers.load()
         self.customerNames = self.customers.map {$0.name!}
     
         // Only allow save if project code and title complete

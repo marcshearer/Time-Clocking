@@ -20,6 +20,7 @@ class ResourceViewModel: ViewModel {
     public var name = Observable<String>("")
     public var closed = Observable<Int>(0)
     public var canSave = Observable<Bool>(false)
+    public var canClose = Observable<Bool>(false)
     
     init(from record: NSManagedObject?) {
         
@@ -35,6 +36,7 @@ class ResourceViewModel: ViewModel {
             self.resourceCode.value = resourceMO.resourceCode ?? ""
             self.name.value = resourceMO.name ?? ""
             self.closed.value = (resourceMO.closed ? 1 : 0)
+            self.canClose.value = true
         }
     }
     

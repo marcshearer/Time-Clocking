@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-class ProjectMaintenance: NSObject, MaintenanceViewControllerDelegate {
+class Projects: NSObject, MaintenanceViewControllerDelegate {
     
     let recordType = "Projects"
     let detailStoryBoardName = "ProjectDetailViewController"
@@ -29,9 +29,9 @@ class ProjectMaintenance: NSObject, MaintenanceViewControllerDelegate {
         switch key {
         case "customer":
             if let customerCode = record.value(forKey: "customerCode") as? String {
-                let customerMO = CoreData.fetch(from: "Customers", filter: NSPredicate(format: "customerCode = %@", customerCode)) as [CustomerMO]
-                if customerMO.count == 1 {
-                    result = customerMO[0].name ?? customerMO[0].customerCode!
+                let customers = Customers.load(specific: customerCode, includeClosed: true)
+                if customers.count == 1 {
+                    result = customers[0].name ?? customers[0].customerCode!
                 }
             }
             
@@ -40,5 +40,21 @@ class ProjectMaintenance: NSObject, MaintenanceViewControllerDelegate {
         }
         
         return result
+    }
+    
+    static func load(specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ProjectMO] {
+        
+        var predicate: [NSPredicate] = []
+        if !includeClosed {
+            predicate.append(NSPredicate(format: "closed = false"))
+        }
+        if let specificCustomer = specificCustomer {
+            predicate.append(NSPredicate(format: "customerCode = %@", specificCustomer))
+        }
+        if let specificProject = specificProject {
+            predicate.append(NSPredicate(format: "specificProject = %@", specificProject))
+        }
+        
+        return CoreData.fetch(from: "Projects", filter: predicate, sort: [("customerCode", .ascending), ("title", .ascending)])
     }
 }

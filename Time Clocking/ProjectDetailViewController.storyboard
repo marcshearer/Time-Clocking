@@ -24,16 +24,10 @@
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iJi-xp-zcp">
                                 <rect key="frame" x="174" y="254" width="317" height="25"/>
-                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="V2C-QS-6IO" id="kQ8-Pt-32i">
-                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="kQ8-Pt-32i">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
-                                    <menu key="menu" id="G1t-OQ-ORG">
-                                        <items>
-                                            <menuItem title="Item 1" state="on" hidden="YES" id="V2C-QS-6IO"/>
-                                            <menuItem title="Item 2" id="U4w-GK-FV5"/>
-                                            <menuItem title="Item 3" id="Xd6-2p-dOM"/>
-                                        </items>
-                                    </menu>
+                                    <menu key="menu" id="G1t-OQ-ORG"/>
                                 </popUpButtonCell>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPh-23-rlV">
@@ -175,6 +169,11 @@ Gw
                         <outlet property="titleTextField" destination="xJT-hy-420" id="y2C-GJ-vGA"/>
                     </connections>
                 </viewController>
+                <arrayController mode="entity" entityName="Customers" id="Xzz-2e-aGl">
+                    <connections>
+                        <outlet property="content" destination="G1t-OQ-ORG" id="0iv-e4-iIH"/>
+                    </connections>
+                </arrayController>
             </objects>
             <point key="canvasLocation" x="79" y="489"/>
         </scene>

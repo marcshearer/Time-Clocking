@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class Customer: NSObject, MaintenanceViewControllerDelegate {
+class Customers: NSObject, MaintenanceViewControllerDelegate {
     
     let recordType = "Customers"
     let detailStoryBoardName = "CustomerDetailViewController"
@@ -32,20 +32,5 @@ class Customer: NSObject, MaintenanceViewControllerDelegate {
         }
         
         return CoreData.fetch(from: "Customers", filter: predicate, sort: [("name", .ascending)])
-    }
-    
-    static func fill(_ popupButton: NSPopUpButton, includeAll: String? = nil) {
-        
-        let customers: [CustomerMO] = Customer.load()
-        popupButton.removeAllItems()
-        popupButton.addItem(withTitle: "")
-        if let includeAll = includeAll {
-            popupButton.addItem(withTitle: includeAll)
-            popupButton.lastItem?.tag = -1
-        }
-        for (index, customerMO) in customers.enumerated() {
-            popupButton.addItem(withTitle: customerMO.name ?? customerMO.customerCode!)
-            popupButton.lastItem?.tag = index
-        }
     }
 }

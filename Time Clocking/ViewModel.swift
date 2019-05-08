@@ -60,6 +60,9 @@ class ViewModelClass: NSObject {
                         // Update clocking records
                         for index in 0...keyColumn.count-1 {
                             CoreData.updateKey(in: "Clockings", for: keyColumn[index], from : beforeValue[index], to: afterValue[index])
+                            if self.recordType == "Customers" {
+                                CoreData.updateKey(in: "Projects", for: keyColumn[index], from : beforeValue[index], to: afterValue[index])
+                            }
                         }
                     }
             }) {

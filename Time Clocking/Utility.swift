@@ -295,17 +295,17 @@ class Utility {
         alert.addButton(withTitle: cancelButtonText)
         if otherButtonText != nil {
             alert.addButton(withTitle: otherButtonText!)
-            alert.beginSheetModal(for: NSApp.keyWindow!, completionHandler: { (response) in
-                switch response {
-                case .alertFirstButtonReturn:
-                    okHandler?()
-                case .alertSecondButtonReturn:
-                    cancelHandler?()
-                default:
-                    otherHandler?()
-                }
-            })
         }
+        alert.beginSheetModal(for: NSApp.keyWindow!, completionHandler: { (response) in
+            switch response {
+            case .alertFirstButtonReturn:
+                okHandler?()
+            case .alertSecondButtonReturn:
+                cancelHandler?()
+            default:
+                otherHandler?()
+            }
+        })
     }
     
     // MARK: - Debug message ======================================================================== -

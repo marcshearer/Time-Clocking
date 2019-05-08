@@ -87,7 +87,7 @@ class ReportingViewController: ClockingBaseViewController, CoreDataTableViewerDe
               Layout(key: "startTime",           title: "From",             width: 115,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "=duration",           title: "For",              width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "invoiceNumber",       title: "Invoice",          width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "amount",              title: "Value",            width:  80,      alignment: .right,  type: .double,      total: true,    pad: false)
+              Layout(key: "amount",              title: "Value",            width:  90,      alignment: .right,  type: .double,      total: true,    pad: false)
         ]
     }
     
