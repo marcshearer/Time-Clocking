@@ -53,9 +53,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="resourceChanged:" target="17r-Bf-WdO" id="u07-Lg-Rfa"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X7Z-1x-oof">
                                         <rect key="frame" x="10" y="531" width="67" height="17"/>
@@ -78,9 +75,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="customerChanged:" target="17r-Bf-WdO" id="ZaM-r2-FT1"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9C-w9-OUl">
                                         <rect key="frame" x="10" y="477" width="51" height="17"/>
@@ -103,9 +97,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="projectChanged:" target="17r-Bf-WdO" id="UfV-3K-gHk"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bOu-uc-Fik">
                                         <rect key="frame" x="10" y="423" width="39" height="17"/>
@@ -125,9 +116,6 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </datePickerCell>
-                                        <connections>
-                                            <action selector="fromChanged:" target="17r-Bf-WdO" id="AH0-Wm-3Hd"/>
-                                        </connections>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ioh-ea-XfF">
                                         <rect key="frame" x="10" y="368" width="23" height="17"/>
@@ -147,9 +135,6 @@
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </datePickerCell>
-                                        <connections>
-                                            <action selector="toChanged:" target="17r-Bf-WdO" id="ebE-Ro-h7a"/>
-                                        </connections>
                                     </datePicker>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c4C-Cz-4SB">
                                         <rect key="frame" x="117" y="1" width="75" height="32"/>
@@ -157,9 +142,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="closePressed:" target="17r-Bf-WdO" id="tvn-IT-l6e"/>
-                                        </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PT6-ET-OvY">
                                         <rect key="frame" x="10" y="313" width="120" height="17"/>
@@ -175,9 +157,6 @@
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="includeInvoicedPressed:" target="17r-Bf-WdO" id="WH2-X3-73v"/>
-                                        </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJE-rv-Idb">
                                         <rect key="frame" x="10" y="266" width="101" height="17"/>
@@ -197,9 +176,6 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <outlet property="delegate" destination="17r-Bf-WdO" id="Klz-ie-RbS"/>
-                                        </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ji1-af-vYI">
                                         <rect key="frame" x="10" y="191" width="54" height="17"/>
@@ -218,9 +194,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="markInvoicedPressed:" target="17r-Bf-WdO" id="vb0-TP-br2"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -317,15 +290,16 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="customerPopupButton" destination="DGl-ZT-xw8" id="sZK-vI-EoP"/>
-                        <outlet property="fromDatePicker" destination="CoX-fg-VZS" id="gPo-27-iUX"/>
+                        <outlet property="closeButton" destination="c4C-Cz-4SB" id="OMi-pZ-mvq"/>
+                        <outlet property="customerCodePopupButton" destination="DGl-ZT-xw8" id="VzP-5C-tvC"/>
+                        <outlet property="endTimeDatePicker" destination="DdF-7u-0B1" id="Xgo-ZB-8C1"/>
                         <outlet property="includeInvoicedButton" destination="zq8-0O-nhe" id="VOP-tx-7sK"/>
                         <outlet property="invoiceNumberTextField" destination="wT4-fE-ppe" id="W0n-vM-xVM"/>
                         <outlet property="markInvoicedButton" destination="TvT-cq-diX" id="Qh4-Sr-t6c"/>
-                        <outlet property="projectPopupButton" destination="g8r-Qv-iwq" id="QO7-Pm-lxY"/>
-                        <outlet property="resourcePopupButton" destination="WOO-Bk-W8O" id="cP0-bi-xLQ"/>
+                        <outlet property="projectCodePopupButton" destination="g8r-Qv-iwq" id="1q1-ya-3ve"/>
+                        <outlet property="resourceCodePopupButton" destination="WOO-Bk-W8O" id="BEz-EU-3iB"/>
+                        <outlet property="startTimeDatePicker" destination="CoX-fg-VZS" id="0bl-dr-hPZ"/>
                         <outlet property="tableView" destination="BOn-Yc-R9v" id="d39-xo-uY5"/>
-                        <outlet property="toDatePicker" destination="DdF-7u-0B1" id="42y-ox-YL7"/>
                     </connections>
                 </viewController>
                 <customObject id="tdT-6O-qec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

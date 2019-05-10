@@ -9,7 +9,7 @@
 import Foundation
 import Bond
 
-class CustomerDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate, NSTextDelegate {
+class CustomerDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate {
     
     public var record: NSManagedObject!
     public var completion: ((NSManagedObject, Bool)->())?
@@ -24,41 +24,60 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     @IBOutlet private weak var defaultHourlyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
     @IBOutlet private weak var saveButton: NSButton!
-    
-    @IBAction func savePressed(_ sender: NSButton) {
-        let record = customerViewModel.save(record:  self.customerMO,
-                                  keyColumn:         ["customerCode"],
-                                  beforeValue:       [self.originalCustomerCode],
-                                  afterValue:        [self.customerViewModel.customerCode.value],
-                                  recordDescription: "Customer code")
-        if let record = record {
-            self.completion?(record, false)
-            self.view.window?.close()
-        }
-    }
-    
-    @IBAction func cancelPressed(_ sender: NSButton) {
-        self.view.window?.close()
-    }
+    @IBOutlet private weak var cancelButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup record
         self.customerMO = record as? CustomerMO
         self.originalCustomerCode = self.customerMO?.customerCode ?? ""
         self.originalClosed = self.customerMO?.closed ?? false
-        customerViewModel = CustomerViewModel(from: self.customerMO)
         
+        // Setup view model
+        customerViewModel = CustomerViewModel(from: self.customerMO)
+        self.setupBindings()
+    }
+    
+    private func setupBindings() {
+
+        // Setup field bindings
         self.customerViewModel.customerCode.bidirectionalBind(to: customerCodeTextField.reactive.editingString)
         self.customerViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
-        self.customerViewModel.defaultHourlyRate.bidirectionalBind(to: defaultHourlyRateTextField.reactive.editingString)
+        self.customerViewModel.defaultHourlyRate.bidirectionalBind(to: defaultHourlyRateTextField)
         self.customerViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
+        
+        // Setup enabled bindings
+        self.customerViewModel.canClose.bind(to: self.closedButton.reactive.isEnabled)
         self.customerViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        
+        // Setup button bindings
+        _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
+            self.saveRecord()
+        }
+        
+        _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
+            self.closeWindow()
+        }
         
         // Trigger option to delete if closing a record with no dependents
         _ = self.customerViewModel.closed.observeNext { (closed) in
             if closed != 0 && self.originalClosed != true {
                 self.closeOrDeleteRecord()
             }
+        }
+    }
+    
+    private func saveRecord() {
+        let record = Maintenance.save(record:  self.customerMO,
+                                      keyColumn:         ["customerCode"],
+                                      beforeValue:       [self.originalCustomerCode],
+                                      afterValue:        [self.customerViewModel.customerCode.value],
+                                      recordDescription: "Customer code",
+                                      viewModel:         customerViewModel)
+        if let record = record {
+            self.completion?(record, false)
+            self.closeWindow()
         }
     }
     
@@ -75,7 +94,12 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
             CoreData.delete(record: self.record)
         }) {
             self.completion?(record, true)
-            self.view.window?.close()
+            self.closeWindow()
         }
-    }}
+    }
+    
+    private func closeWindow() {
+        self.view.window?.close()
+    }
+}
 

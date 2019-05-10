@@ -10,11 +10,9 @@ import Foundation
 import Bond
 import ReactiveKit
 
-class ResourceViewModel: ViewModel {
+class ResourceViewModel : NSObject, ViewModelDelegate{
     
-    override public var recordType: String! {
-        get {return "Resources"}
-    }
+    let recordType = "Resources"
     
     public var resourceCode = Observable<String>("")
     public var name = Observable<String>("")
@@ -27,20 +25,24 @@ class ResourceViewModel: ViewModel {
         super.init()
         
         let resourceMO = record as! ResourceMO?
-        
-        _ = combineLatest(self.resourceCode, self.name).observeNext {_ in
-            self.canSave.value = (self.resourceCode.value != "" && self.name.value != "")
-        }
-        
+        self.setupMappings(createMode: resourceMO == nil)
         if let resourceMO = resourceMO {
-            self.resourceCode.value = resourceMO.resourceCode ?? ""
-            self.name.value = resourceMO.name ?? ""
-            self.closed.value = (resourceMO.closed ? 1 : 0)
-            self.canClose.value = true
+            self.copy(from: resourceMO)
         }
     }
     
-    override func save(to record: NSManagedObject) {
+    func setupMappings(createMode: Bool) {
+        
+        // Can only save if resource code and name non-blank
+        _ = combineLatest(self.resourceCode, self.name).observeNext { _ in
+            self.canSave.value = (self.resourceCode.value != "" && self.name.value != "")
+        }
+        
+        // Can only close if not in create mode
+        self.canClose.value = !createMode
+    }
+    
+    func copy(to record: NSManagedObject) {
         
         let resourceMO = record as! ResourceMO
         
@@ -48,4 +50,14 @@ class ResourceViewModel: ViewModel {
         resourceMO.name = self.name.value
         resourceMO.closed = (self.closed.value != 0)
     }
+    
+    func copy(from record: NSManagedObject) {
+        
+        let resourceMO = record as! ResourceMO
+        
+        self.resourceCode.value = resourceMO.resourceCode ?? ""
+        self.name.value = resourceMO.name ?? ""
+        self.closed.value = (resourceMO.closed ? 1 : 0)
+    }
+    
 }

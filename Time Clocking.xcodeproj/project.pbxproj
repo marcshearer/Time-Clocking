@@ -17,16 +17,14 @@
 		B241BEFF227E9979001CC666 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* Projects.swift */; };
 		B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustommerViewModel.swift */; };
 		B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
-		B241BF05228094A1001CC666 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF04228094A1001CC666 /* ViewModel.swift */; };
+		B241BF05228094A1001CC666 /* ViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF04228094A1001CC666 /* ViewModelDelegate.swift */; };
 		B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
 		B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
 		B2869871227DD81400377112 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
 		B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
 		B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
 		B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869853227DD81200377112 /* MaintenanceViewController.storyboard */; };
-		B2869875227DD81400377112 /* ClockingBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869855227DD81200377112 /* ClockingBaseViewController.swift */; };
 		B2869876227DD81400377112 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869856227DD81200377112 /* Main.storyboard */; };
-		B2869877227DD81400377112 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869857227DD81200377112 /* ClockingViewController.swift */; };
 		B2869879227DD81400377112 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869859227DD81200377112 /* AppDelegate.swift */; };
 		B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */; };
 		B286987B227DD81400377112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B286985B227DD81200377112 /* Assets.xcassets */; };
@@ -43,11 +41,17 @@
 		B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */; };
 		B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869869227DD81300377112 /* CustomerDetailViewController.swift */; };
 		B2869889227DD81400377112 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986A227DD81300377112 /* String Extensions.swift */; };
-		B286988A227DD81400377112 /* Time Entry Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986B227DD81300377112 /* Time Entry Class.swift */; };
+		B286988A227DD81400377112 /* ClockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986B227DD81300377112 /* ClockingViewModel.swift */; };
 		B286988B227DD81400377112 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986C227DD81300377112 /* Date Extensions.swift */; };
 		B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */; };
 		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
 		B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
+		B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */; };
+		B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
+		B2C8CC05228428A50040CA46 /* TimeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC04228428A50040CA46 /* TimeEntry.swift */; };
+		B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC062284356D0040CA46 /* Maintenance.swift */; };
+		B2C8CC0922848C070040CA46 /* ObservableTextFieldDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */; };
 		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,7 +91,7 @@
 		B241BEFE227E9979001CC666 /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
 		B241BF0022805EA1001CC666 /* CustommerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommerViewModel.swift; sourceTree = "<group>"; };
 		B241BF022280650B001CC666 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
-		B241BF04228094A1001CC666 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		B241BF04228094A1001CC666 /* ViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDelegate.swift; sourceTree = "<group>"; };
 		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
 		B24F5BDA228306FA005600F4 /* Clockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clockings.swift; sourceTree = "<group>"; };
 		B2869850227DD81200377112 /* Core Data Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Class.swift"; sourceTree = "<group>"; };
@@ -95,9 +99,7 @@
 		B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingDetailViewController.storyboard; sourceTree = "<group>"; };
 		B2869853227DD81200377112 /* MaintenanceViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MaintenanceViewController.storyboard; sourceTree = "<group>"; };
 		B2869854227DD81200377112 /* Time_Clocking.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Time_Clocking.entitlements; sourceTree = "<group>"; };
-		B2869855227DD81200377112 /* ClockingBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingBaseViewController.swift; sourceTree = "<group>"; };
 		B2869856227DD81200377112 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		B2869857227DD81200377112 /* ClockingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
 		B2869859227DD81200377112 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProjectDetailViewController.storyboard; sourceTree = "<group>"; };
 		B286985B227DD81200377112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -114,12 +116,18 @@
 		B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CustomerDetailViewController.storyboard; sourceTree = "<group>"; };
 		B2869869227DD81300377112 /* CustomerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerDetailViewController.swift; sourceTree = "<group>"; };
 		B286986A227DD81300377112 /* String Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
-		B286986B227DD81300377112 /* Time Entry Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Time Entry Class.swift"; sourceTree = "<group>"; };
+		B286986B227DD81300377112 /* ClockingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingViewModel.swift; sourceTree = "<group>"; };
 		B286986C227DD81300377112 /* Date Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date Extensions.swift"; sourceTree = "<group>"; };
 		B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingInvoicePromptViewController.swift; sourceTree = "<group>"; };
 		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2869870227DD81400377112 /* Core Data Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Viewer.swift"; sourceTree = "<group>"; };
+		B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
+		B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePopupString.swift; sourceTree = "<group>"; };
+		B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePickerDate.swift; sourceTree = "<group>"; };
+		B2C8CC04228428A50040CA46 /* TimeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeEntry.swift; sourceTree = "<group>"; };
+		B2C8CC062284356D0040CA46 /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
+		B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTextFieldDouble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +233,7 @@
 		B241BEF9227E93E1001CC666 /* Maintenance */ = {
 			isa = PBXGroup;
 			children = (
+				B2C8CC062284356D0040CA46 /* Maintenance.swift */,
 				B2869853227DD81200377112 /* MaintenanceViewController.storyboard */,
 				B2869867227DD81300377112 /* MaintenanceViewController.swift */,
 			);
@@ -247,10 +256,11 @@
 		B2869891227DD85D00377112 /* Main Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B286986B227DD81300377112 /* Time Entry Class.swift */,
+				B241BF04228094A1001CC666 /* ViewModelDelegate.swift */,
+				B286986B227DD81300377112 /* ClockingViewModel.swift */,
+				B2C8CC04228428A50040CA46 /* TimeEntry.swift */,
 				B2869862227DD81300377112 /* Status Menu.swift */,
 				B2869866227DD81300377112 /* Settings.swift */,
-				B241BF04228094A1001CC666 /* ViewModel.swift */,
 			);
 			name = "Main Classes";
 			sourceTree = "<group>";
@@ -258,7 +268,6 @@
 		B2869892227DD86D00377112 /* Clockings */ = {
 			isa = PBXGroup;
 			children = (
-				B24F5BDA228306FA005600F4 /* Clockings.swift */,
 				B2869899227DD90600377112 /* Clocking Base */,
 				B286989A227DD91500377112 /* Clockings Entry */,
 				B286989B227DD91D00377112 /* Clockings Detail */,
@@ -273,6 +282,9 @@
 				B2869870227DD81400377112 /* Core Data Viewer.swift */,
 				B286986C227DD81300377112 /* Date Extensions.swift */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
+				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
+				B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */,
+				B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */,
 				B2869860227DD81300377112 /* Utility.swift */,
 			);
 			name = "Utility & Data Classes";
@@ -332,7 +344,7 @@
 		B2869899227DD90600377112 /* Clocking Base */ = {
 			isa = PBXGroup;
 			children = (
-				B2869855227DD81200377112 /* ClockingBaseViewController.swift */,
+				B24F5BDA228306FA005600F4 /* Clockings.swift */,
 			);
 			name = "Clocking Base";
 			sourceTree = "<group>";
@@ -341,7 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				B286986E227DD81300377112 /* ClockingViewController.storyboard */,
-				B2869857227DD81200377112 /* ClockingViewController.swift */,
+				B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */,
 			);
 			name = "Clockings Entry";
 			sourceTree = "<group>";
@@ -556,30 +568,34 @@
 			files = (
 				B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */,
 				B241BEFB227E945B001CC666 /* Resources.swift in Sources */,
+				B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */,
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
 				B2869885227DD81400377112 /* Settings.swift in Sources */,
+				B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */,
 				B286987C227DD81400377112 /* ReportingViewController.swift in Sources */,
 				B2869882227DD81400377112 /* Status Menu.swift in Sources */,
-				B241BF05228094A1001CC666 /* ViewModel.swift in Sources */,
+				B241BF05228094A1001CC666 /* ViewModelDelegate.swift in Sources */,
 				B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */,
 				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
+				B2C8CC05228428A50040CA46 /* TimeEntry.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
+				B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */,
 				B2869880227DD81400377112 /* Utility.swift in Sources */,
-				B286988A227DD81400377112 /* Time Entry Class.swift in Sources */,
-				B2869877227DD81400377112 /* ClockingViewController.swift in Sources */,
+				B286988A227DD81400377112 /* ClockingViewModel.swift in Sources */,
 				B2869871227DD81400377112 /* Core Data Class.swift in Sources */,
 				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
-				B2869875227DD81400377112 /* ClockingBaseViewController.swift in Sources */,
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
 				B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */,
+				B2C8CC0922848C070040CA46 /* ObservableTextFieldDouble.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
 				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
 				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
+				B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */,
 				B241BEFF227E9979001CC666 /* Projects.swift in Sources */,
 				B286987E227DD81400377112 /* SettingsViewController.swift in Sources */,
 			);

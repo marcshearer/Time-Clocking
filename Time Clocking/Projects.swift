@@ -52,9 +52,20 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
             predicate.append(NSPredicate(format: "customerCode = %@", specificCustomer))
         }
         if let specificProject = specificProject {
-            predicate.append(NSPredicate(format: "specificProject = %@", specificProject))
+            predicate.append(NSPredicate(format: "projectCode = %@", specificProject))
         }
         
         return CoreData.fetch(from: "Projects", filter: predicate, sort: [("customerCode", .ascending), ("title", .ascending)])
+    }
+    
+    static func getName(customerCode: String, projectCode: String) -> String {
+        var projectName = ""
+        if customerCode != "" && projectCode != "" {
+            let projects = Projects.load(specificCustomer: customerCode, specificProject: projectCode, includeClosed: true)
+            if projects.count == 1 {
+                projectName = projects[0].title!
+            }
+        }
+        return projectName
     }
 }

@@ -80,41 +80,42 @@ class StatusMenu: NSObject, NSMenuDelegate {
         
         // Set up project and state
         var projectTitle = ""
-        if timeEntry.project == "" {
+        if timeEntry.projectCode.value == "" {
             // No project setup - only allow access to detail
             projectTitle = "No project selected"
-            timeEntry.state = .notStarted
+            timeEntry.state.value = State.notStarted.rawValue
         } else {
-            if timeEntry.customerName != "" {
-                projectTitle = "\(timeEntry.customerName) - \(timeEntry.projectTitle)"
+            let customerTitle = timeEntry.customerCode.description
+            if customerTitle != "" {
+                projectTitle = "\(customerTitle) - \(timeEntry.projectCode.description)"
             } else {
-                projectTitle = timeEntry.projectTitle
+                projectTitle = timeEntry.projectCode.description
             }
-            if timeEntry.description != "" {
-                projectTitle = projectTitle + " (\(timeEntry.description))"
+            if timeEntry.notes.value != "" {
+                projectTitle = projectTitle + " (\(timeEntry.notes.value))"
             }
         }
         self.projectStatusMenuItem?.title = projectTitle
-        self.stateMenuItem?.title = timeEntry.stateDescription()
+        self.stateMenuItem?.title = timeEntry.getStateDescription()
         
         // Enable / disable / hide options
-        self.startMenuItem?.isEnabled = (timeEntry.project != "" && timeEntry.resource != "")
-        self.startMenuItem?.isHidden = (timeEntry.state != .notStarted && timeEntry.project != "" && timeEntry.resource != "")
-        self.stopMenuItem?.isHidden = (timeEntry.state != .started || timeEntry.project == "" || timeEntry.resource == "")
-        self.resetMenuItem?.isHidden = (timeEntry.state == .notStarted || timeEntry.project == "" || timeEntry.resource == "")
+        self.startMenuItem?.isEnabled = (timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
+        self.startMenuItem?.isHidden = (timeEntry.state.value != State.notStarted.rawValue && timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
+        self.stopMenuItem?.isHidden = (timeEntry.state.value != State.started.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
+        self.resetMenuItem?.isHidden = (timeEntry.state.value == State.notStarted.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
         
         // Update menu bar image
         if let button = self.statusItem.button {
-            if timeEntry.project == "" {
+            if timeEntry.projectCode.value == "" {
                 button.image = NSImage(named: NSImage.Name("notStarted"))
             } else {
-                switch timeEntry.state {
-                case .notStarted:
-                    button.image = NSImage(named: NSImage.Name("notStarted"))
+                switch State(rawValue: timeEntry.state.value)! {
                 case .started:
                     button.image = NSImage(named: NSImage.Name("started"))
                 case .stopped:
                     button.image = NSImage(named: NSImage.Name("stopped"))
+                default:
+                    button.image = NSImage(named: NSImage.Name("notStarted"))
                 }
             }
         }
@@ -150,22 +151,22 @@ class StatusMenu: NSObject, NSMenuDelegate {
     }
     
     @objc private func startTimer(_ sender: Any?) {
-        TimeEntry.current.state = .started
-        TimeEntry.current.startTime = Date()
+        TimeEntry.current.state.value = State.started.rawValue
+        TimeEntry.current.startTime.value = Date()
         StatusMenu.shared.update()
     }
     
     @objc private func stopTimer(_ sender: Any?) {
-        TimeEntry.current.state = .notStarted
-        TimeEntry.current.endTime = Date()
+        TimeEntry.current.state.value = State.notStarted.rawValue
+        TimeEntry.current.endTime.value = Date()
         StatusMenu.shared.update()
         _ = TimeEntry.current.writeToDatabase()
     }
     
     @objc private func resetTimer(_ sender: Any?) {
-        TimeEntry.current.state = .notStarted
-        TimeEntry.current.startTime = Date()
-        TimeEntry.current.endTime = Date()
+        TimeEntry.current.state.value = State.notStarted.rawValue
+        TimeEntry.current.startTime.value = Date()
+        TimeEntry.current.endTime.value = Date()
         StatusMenu.shared.update()
     }
     
@@ -278,6 +279,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
     }
     
     private func setMenuTitle(_ sender: Any) {
-        self.stateMenuItem?.title = TimeEntry.current.stateDescription()
+        self.stateMenuItem?.title = TimeEntry.current.getStateDescription()
     }
 }

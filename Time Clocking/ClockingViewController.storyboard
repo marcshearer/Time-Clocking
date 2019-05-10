@@ -37,9 +37,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="resourceChanged:" target="Kkw-Om-yfU" id="V9N-4L-Eyc"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X5y-2i-iqL">
                                         <rect key="frame" x="10" y="539" width="67" height="17"/>
@@ -62,9 +59,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="customerChanged:" target="Kkw-Om-yfU" id="iYj-Mi-IuF"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oiz-Bl-TT2">
                                         <rect key="frame" x="10" y="493" width="51" height="17"/>
@@ -87,9 +81,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="projectChanged:" target="Kkw-Om-yfU" id="5um-aD-0P0"/>
-                                        </connections>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yEm-Md-lP9">
                                         <rect key="frame" x="10" y="447" width="78" height="17"/>
@@ -109,9 +100,6 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <outlet property="delegate" destination="Kkw-Om-yfU" id="d9k-yN-EEl"/>
-                                        </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="O0U-Dh-Gah">
                                         <rect key="frame" x="10" y="312" width="75" height="17"/>
@@ -127,16 +115,13 @@
                                             <constraint firstAttribute="width" constant="96" id="qDK-Kt-RPt"/>
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="FJU-Xm-GxO">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="882-c8-cfw">
+                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="882-c8-cfw">
                                                 <real key="minimum" value="0.0"/>
                                             </numberFormatter>
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
-                                        <connections>
-                                            <outlet property="delegate" destination="Kkw-Om-yfU" id="QaR-G6-QbA"/>
-                                        </connections>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ke5-8T-Yar">
                                         <rect key="frame" x="10" y="265" width="39" height="17"/>
@@ -157,9 +142,6 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
                                         </datePickerCell>
-                                        <connections>
-                                            <action selector="fromChanged:" target="Kkw-Om-yfU" id="z4a-Ac-6F0"/>
-                                        </connections>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exa-1o-DSE">
                                         <rect key="frame" x="10" y="218" width="23" height="17"/>
@@ -180,9 +162,6 @@
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
                                         </datePickerCell>
-                                        <connections>
-                                            <action selector="toChanged:" target="Kkw-Om-yfU" id="4ob-xD-Lbz"/>
-                                        </connections>
                                     </datePicker>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5L1-Jj-EW8">
                                         <rect key="frame" x="186" y="186" width="112" height="32"/>
@@ -190,9 +169,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="stopAndAddPressed:" target="Kkw-Om-yfU" id="ghs-SL-wHZ"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jao-P1-ek1">
                                         <rect key="frame" x="186" y="153" width="112" height="32"/>
@@ -200,9 +176,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="stopPressed:" target="Kkw-Om-yfU" id="56U-QI-UtB"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RWh-re-LvW">
                                         <rect key="frame" x="186" y="120" width="112" height="32"/>
@@ -210,9 +183,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="addPressed:" target="Kkw-Om-yfU" id="h9U-XZ-7ay"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1R-YI-BDj">
                                         <rect key="frame" x="186" y="87" width="112" height="32"/>
@@ -220,9 +190,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="resetPressed:" target="Kkw-Om-yfU" id="kkt-6k-EWh"/>
-                                        </connections>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="brQ-tR-wkh">
                                         <rect key="frame" x="10" y="69" width="60" height="17"/>
@@ -246,9 +213,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="closePressed:" target="Kkw-Om-yfU" id="DAt-VS-UkA"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boy-Sb-pvV" userLabel="Start Button">
                                         <rect key="frame" x="186" y="233" width="112" height="32"/>
@@ -259,9 +223,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="startPressed:" target="Kkw-Om-yfU" id="FhX-Dn-C55"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -397,20 +358,21 @@
                     </view>
                     <connections>
                         <outlet property="addButton" destination="RWh-re-LvW" id="wCx-7t-6D1"/>
-                        <outlet property="customerPopupButton" destination="7ml-Kc-6Mp" id="nnx-ka-37a"/>
-                        <outlet property="descriptionTextField" destination="wFp-6s-dMQ" id="pXQ-i4-XBM"/>
+                        <outlet property="closeButton" destination="53W-ya-xMn" id="tuy-IS-2Rz"/>
+                        <outlet property="customerCodePopupButton" destination="7ml-Kc-6Mp" id="nnx-ka-37a"/>
                         <outlet property="durationTextField" destination="NIs-Om-XX7" id="5CZ-CZ-dG4"/>
-                        <outlet property="fromDatePicker" destination="lWF-IU-m66" id="tQr-kl-XLp"/>
+                        <outlet property="endTimeDatePicker" destination="EzP-oy-cq1" id="gvo-hW-TLq"/>
                         <outlet property="hourlyRateTextField" destination="bqf-mS-55n" id="0Lq-00-ZNO"/>
-                        <outlet property="projectPopupButton" destination="Wmv-IV-xOT" id="A72-mY-1sx"/>
+                        <outlet property="notesTextField" destination="wFp-6s-dMQ" id="pXQ-i4-XBM"/>
+                        <outlet property="projectCodePopupButton" destination="Wmv-IV-xOT" id="A72-mY-1sx"/>
                         <outlet property="resetButton" destination="f1R-YI-BDj" id="3Ze-2e-h9B"/>
-                        <outlet property="resourcePopupButton" destination="x6v-AR-spK" id="j07-kC-O4l"/>
+                        <outlet property="resourceCodePopupButton" destination="x6v-AR-spK" id="j07-kC-O4l"/>
                         <outlet property="startButton" destination="boy-Sb-pvV" id="cjF-p2-01t"/>
+                        <outlet property="startTimeDatePicker" destination="lWF-IU-m66" id="tQr-kl-XLp"/>
                         <outlet property="stopAndAddButton" destination="5L1-Jj-EW8" id="Hfh-Pu-A4r"/>
                         <outlet property="stopButton" destination="Jao-P1-ek1" id="2tX-ln-cDf"/>
                         <outlet property="tableView" destination="xoe-Dp-tSS" id="Wvc-S0-ER3"/>
                         <outlet property="titleLabel" destination="WJr-8K-IWT" id="PLq-n6-EC3"/>
-                        <outlet property="toDatePicker" destination="EzP-oy-cq1" id="gvo-hW-TLq"/>
                     </connections>
                 </viewController>
                 <customObject id="go7-lC-bNg" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

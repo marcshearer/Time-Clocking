@@ -13,6 +13,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+
+        // Cache main context for core data
+        CoreData.context = self.persistentContainer.viewContext
         
         // Set up defaults
         registerDefaults()
@@ -21,10 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Settings.current.load()
         
         // Load latest time entry
-        TimeEntry.current.load()
-        
-        // Cache main context for core data
-        CoreData.context = self.persistentContainer.viewContext
+        TimeEntry.current.loadDefaults()
         
         // Build status menu
         StatusMenu.shared.update()

@@ -73,9 +73,6 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="savePressed:" target="ueS-zQ-wJi" id="cLn-sz-QM5"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GWi-E4-hrB">
                                 <rect key="frame" x="234" y="5" width="82" height="32"/>
@@ -89,9 +86,6 @@
 Gw
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="cancelPressed:" target="ueS-zQ-wJi" id="pUG-LS-jQ1"/>
-                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W4d-Kv-0nT">
                                 <rect key="frame" x="22" y="177" width="121" height="17"/>
@@ -139,6 +133,7 @@ Gw
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="GWi-E4-hrB" id="G4E-gR-Lzh"/>
                         <outlet property="closedButton" destination="myM-HX-pzl" id="t7o-ff-oFt"/>
                         <outlet property="customerCodeTextField" destination="xqD-d9-VAw" id="CJ0-Pp-Yrm"/>
                         <outlet property="defaultHourlyRateTextField" destination="GaH-YQ-IXl" id="hom-ti-R7e"/>

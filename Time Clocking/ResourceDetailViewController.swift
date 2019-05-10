@@ -9,7 +9,7 @@
 import Foundation
 import Bond
 
-class ResourceDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate, NSTextDelegate {
+class ResourceDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate {
     
     public var record: NSManagedObject!
     public var completion: ((NSManagedObject, Bool)->())?
@@ -23,41 +23,59 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     @IBOutlet private weak var nameTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
     @IBOutlet private weak var saveButton: NSButton!
-    
-    @IBAction func savePressed(_ sender: NSButton) {
-        let record = self.resourceViewModel.save(record:    resourceMO,
-                                  keyColumn:                ["resourceCode"],
-                                  beforeValue:              [self.originalResourceCode],
-                                  afterValue:               [self.resourceViewModel.resourceCode.value],
-                                  recordDescription:        "Resource code")
-        if let record = record {
-            self.completion?(record, false)
-            self.view.window?.close()
-        }
-    }
-    
-    @IBAction func cancelPressed(_ sender: NSButton) {
-        self.view.window?.close()
-    }
+    @IBOutlet private weak var cancelButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setup record
         self.resourceMO = record as? ResourceMO
         self.originalResourceCode = self.resourceMO?.resourceCode ?? ""
         self.originalClosed = self.resourceMO?.closed ?? false
-        self.resourceViewModel = ResourceViewModel(from: self.resourceMO)
         
+        // Setup view model
+        self.resourceViewModel = ResourceViewModel(from: self.resourceMO)
+        self.setupBindings()
+    }
+    
+    private func setupBindings() {
+        
+        // Setup field bindings
         self.resourceViewModel.resourceCode.bidirectionalBind(to: resourceCodeTextField.reactive.editingString)
         self.resourceViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
         self.resourceViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
-        self.resourceViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        
+        // Set up enabled bindings
         self.resourceViewModel.canClose.bind(to: self.closedButton.reactive.isEnabled)
+        self.resourceViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        
+        // Set up button bindings
+        _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
+            self.saveRecord()
+        }
+        
+        _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
+            self.closeWindow()
+        }
         
         // Trigger option to delete if closing a record with no dependents
         _ = self.resourceViewModel.closed.observeNext { (closed) in
             if closed != 0 && self.originalClosed != true {
                 self.closeOrDeleteRecord()
             }
+        }
+    }
+    
+    private func saveRecord() {
+        let record = Maintenance.save(record:                   resourceMO,
+                                      keyColumn:                ["resourceCode"],
+                                      beforeValue:              [self.originalResourceCode],
+                                      afterValue:               [self.resourceViewModel.resourceCode.value],
+                                      recordDescription:        "Resource code",
+                                      viewModel:                self.resourceViewModel)
+        if let record = record {
+            self.completion?(record, false)
+            self.closeWindow()
         }
     }
     
@@ -73,8 +91,12 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
             CoreData.delete(record: self.record)
         }) {
             self.completion?(record, true)
-            self.view.window?.close()
+            self.closeWindow()
         }
+    }
+    
+    private func closeWindow() {
+        self.view.window?.close()
     }
 }
 

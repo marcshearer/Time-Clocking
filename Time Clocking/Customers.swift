@@ -33,4 +33,15 @@ class Customers: NSObject, MaintenanceViewControllerDelegate {
         
         return CoreData.fetch(from: "Customers", filter: predicate, sort: [("name", .ascending)])
     }
+    
+    static func getName(customerCode: String) -> String {
+        var customerName = ""
+        if customerCode != "" {
+            let customers = Customers.load(specific: customerCode, includeClosed: true)
+            if customers.count == 1 {
+                customerName = customers[0].name!
+            }
+        }
+        return customerName
+    }
 }

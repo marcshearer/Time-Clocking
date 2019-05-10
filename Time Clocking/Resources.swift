@@ -32,4 +32,15 @@ class Resources: NSObject, MaintenanceViewControllerDelegate {
         
         return CoreData.fetch(from: "Resources", filter: predicate, sort: [("name", .ascending)])
     }
+    
+    static func getName(resourceCode: String) -> String {
+        var resourceName = ""
+        if resourceCode != "" {
+            let resources = Resources.load(specific: resourceCode, includeClosed: true)
+            if resources.count == 1 {
+                resourceName = resources[0].name!
+            }
+        }
+        return resourceName
+    }
 }

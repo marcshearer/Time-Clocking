@@ -18,7 +18,7 @@ class ReportingInvoicePromptViewController : NSViewController, NSTextDelegate {
     @IBOutlet private weak var invoiceDatePicker: NSDatePicker!
     
     @IBAction func okPressed(_ sender: NSButton) {
-        self.reportingViewController.markAsInvoiced(invoiceNumber: invoiceNumberTextField.stringValue,
+        self.reportingViewController.setToInvoiced(invoiceNumber: invoiceNumberTextField.stringValue,
                                                     invoiceDate: invoiceDatePicker.dateValue)
         self.popover.performClose(self)
     }

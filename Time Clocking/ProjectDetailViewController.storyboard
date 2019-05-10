@@ -24,7 +24,7 @@
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iJi-xp-zcp">
                                 <rect key="frame" x="174" y="254" width="317" height="25"/>
-                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="center" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="kQ8-Pt-32i">
+                                <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" id="kQ8-Pt-32i">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="G1t-OQ-ORG"/>
@@ -89,9 +89,6 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="savePressed:" target="97T-ho-5rV" id="020-pd-QdV"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jfe-67-Mqf">
                                 <rect key="frame" x="284" y="5" width="82" height="32"/>
@@ -105,9 +102,6 @@
 Gw
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="cancelPressed:" target="97T-ho-5rV" id="0Y2-e0-dPg"/>
-                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qMD-gC-rfG">
                                 <rect key="frame" x="22" y="136" width="75" height="17"/>
@@ -160,9 +154,9 @@ Gw
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="CustomerCodePopupButton" destination="iJi-xp-zcp" id="Ion-6k-OG0"/>
+                        <outlet property="cancelButton" destination="jfe-67-Mqf" id="sCn-qO-pSD"/>
                         <outlet property="closedButton" destination="LvT-eW-wHm" id="bG8-Z9-eUX"/>
-                        <outlet property="customerCodePopupButton" destination="iJi-xp-zcp" id="NjF-VQ-xxC"/>
+                        <outlet property="customerCodePopupButton" destination="iJi-xp-zcp" id="Ion-6k-OG0"/>
                         <outlet property="hourlyRateTextField" destination="RGy-fr-7db" id="tlT-FW-60J"/>
                         <outlet property="projectCodeTextField" destination="nCp-x2-sJx" id="lmm-Wp-RsS"/>
                         <outlet property="saveButton" destination="uxW-z6-xBO" id="PiK-wH-IR1"/>

@@ -72,9 +72,6 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="savePressed:" target="Svh-9Q-BX4" id="2Jn-wI-d5W"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ve8-rW-igc">
                                 <rect key="frame" x="234" y="5" width="82" height="32"/>
@@ -88,9 +85,6 @@
 Gw
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="cancelPressed:" target="Svh-9Q-BX4" id="IvM-hi-ZdW"/>
-                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -114,6 +108,7 @@ Gw
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="Ve8-rW-igc" id="q92-Wt-GH3"/>
                         <outlet property="closedButton" destination="bmD-X9-BK3" id="WLt-PJ-Zyq"/>
                         <outlet property="nameTextField" destination="leh-4D-vem" id="mNi-tF-qut"/>
                         <outlet property="resourceCodeTextField" destination="eOh-Pe-Kri" id="Zdh-7H-coX"/>

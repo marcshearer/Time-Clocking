@@ -270,7 +270,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                 let column = self.layout[columnNumber]
                 if row >= self.records.count {
                     // Total line
-                    if self.total[columnNumber] == nil {
+                    if self.records.count == 0 || self.total[columnNumber] == nil {
                         // Not totalled column
                         cell = NSCell(textCell: "")
                     } else {

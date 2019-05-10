@@ -9,7 +9,7 @@
 import Foundation
 import Bond
 
-class ProjectDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate, NSTextDelegate {
+class ProjectDetailViewController: NSViewController, MaintenanceDetailViewControllerDelegate {
     
     public var record: NSManagedObject!
     public var completion: ((NSManagedObject, Bool)->())?
@@ -20,47 +20,51 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     private var originalClosed: Bool!
     private var projectMO: ProjectMO!
     
-    @IBOutlet private weak var CustomerCodePopupButton: NSPopUpButton!
+    @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodeTextField: NSTextField!
     @IBOutlet private weak var titleTextField: NSTextField!
     @IBOutlet private weak var hourlyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
+    @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var saveButton: NSButton!
     
-    @IBAction func savePressed(_ sender: NSButton) {
-        let record = projectViewModel.save(record:   projectMO,
-                                  keyColumn:         ["customerCode", "projectCode"],
-                                  beforeValue:       [self.originalCustomerCode, self.originalProjectCode],
-                                  afterValue:        [self.projectViewModel.customerCode.value, self.projectViewModel.projectCode.value],
-                                  recordDescription: "Project code")
-        if let record = record {
-            self.completion?(record, false)
-            self.view.window?.close()
-        }
-    }
-    
-    @IBAction func cancelPressed(_ sender: NSButton) {
-        self.view.window?.close()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Setup record
         self.projectMO = record as? ProjectMO
         self.originalCustomerCode = self.projectMO?.customerCode ?? ""
         self.originalProjectCode = self.projectMO?.projectCode ?? ""
         self.originalClosed = self.projectMO?.closed ?? false
-        self.projectViewModel = ProjectViewModel(from: self.projectMO)
-        self.CustomerCodePopupButton.removeAllItems()
-        self.CustomerCodePopupButton.addItem(withTitle: "")
-        self.CustomerCodePopupButton.addItems(withTitles: projectViewModel.customerNames!)
         
-        self.projectViewModel.customerIndex.bidirectionalBind(to: CustomerCodePopupButton.reactive.indexOfSelectedItem)
-        self.projectViewModel.customerName.bind(to: CustomerCodePopupButton.reactive.title)
+        // Setup view model
+        self.projectViewModel = ProjectViewModel(from: self.projectMO)
+        self.setupBingings(createMode: projectMO == nil)
+    }
+    
+    private func setupBingings(createMode: Bool) {
+        
+        // Set up field bindings
+        self.projectViewModel.customer.bidirectionalBind(to: customerCodePopupButton)
         self.projectViewModel.projectCode.bidirectionalBind(to: projectCodeTextField.reactive.editingString)
         self.projectViewModel.title.bidirectionalBind(to: titleTextField.reactive.editingString)
-        self.projectViewModel.hourlyRate.bidirectionalBind(to: hourlyRateTextField.reactive.editingString)
+        self.projectViewModel.hourlyRate.bidirectionalBind(to: hourlyRateTextField)
         self.projectViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
+        
+        // Set up enabled bindings
+        self.projectViewModel.canEditCustomer.bind(to: self.customerCodePopupButton.reactive.isEnabled)
+        self.projectViewModel.canClose.bind(to: self.closedButton.reactive.isEnabled)
         self.projectViewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        
+        // Set up button action bindings
+        _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
+            self.saveRecord()
+        }
+        
+        _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
+            self.closeWindow()
+        }
         
         // Trigger option to delete if closing a record with no dependents
         _ = self.projectViewModel.closed.observeNext { (closed) in
@@ -68,19 +72,27 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
                 self.closeOrDeleteRecord()
             }
         }
-        
-        if self.projectMO != nil {
-            // Not in create mode so disable customer
-            CustomerCodePopupButton.isEnabled = false
-        }
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         if self.projectMO == nil {
-            self.CustomerCodePopupButton.becomeFirstResponder()
+            self.customerCodePopupButton.becomeFirstResponder()
         } else {
             self.projectCodeTextField.becomeFirstResponder()
+        }
+    }
+    
+    private func saveRecord() {
+        let record = Maintenance.save(record:        projectMO,
+                                      keyColumn:         ["customerCode", "projectCode"],
+                                      beforeValue:       [self.originalCustomerCode, self.originalProjectCode],
+                                      afterValue:        [self.projectViewModel.customer.value, self.projectViewModel.projectCode.value],
+                                      recordDescription: "Project code",
+                                      viewModel:         self.projectViewModel)
+        if let record = record {
+            self.completion?(record, false)
+            self.closeWindow()
         }
     }
     
@@ -96,8 +108,12 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
             CoreData.delete(record: self.record)
         }) {
             self.completion?(record, true)
-            self.view.window?.close()
+            self.closeWindow()
         }
+    }
+    
+    private func closeWindow() {
+        self.view.window?.close()
     }
 }
 
