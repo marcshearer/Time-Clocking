@@ -39,7 +39,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     private let projectsPopover = NSPopover()
     private var settingsViewController: SettingsViewController?
     private let settingsPopover = NSPopover()
-    private var popover: NSPopover!
+    private var popover: NSPopover?
     
     public static let shared = StatusMenu()
     
@@ -72,6 +72,11 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.statusMenu.delegate = self
         
         self.statusItem.menu = self.statusMenu
+    }
+    
+    internal func menuWillOpen(_ menu: NSMenu) {
+        self.popover?.performClose(self)
+        self.setMenuTitle(self)
     }
     
     public func update() {
@@ -121,10 +126,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
         }
     }
     
-    internal func menuWillOpen(_ menu: NSMenu) {
-        self.setMenuTitle(self)
-    }
-      
     private func addItem(_ text: String, action: Selector? = nil, keyEquivalent: String = "", to menu: NSMenu? = nil) -> NSMenuItem? {
         var menu = menu
         if menu == nil {
@@ -227,11 +228,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
             popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
             popover.becomeFirstResponder()
             
-            // Change the menu bar button to a close button
-            self.statusItem.menu = nil
-            button.target = self
-            button.action = #selector(StatusMenu.hidePopover(_:))
-            
             // Save current popover
             self.popover = popover
             
@@ -240,24 +236,9 @@ class StatusMenu: NSObject, NSMenuDelegate {
     
     @objc public func hidePopover(_ sender: Any?) {
         
-        let statusItem = self.statusItem
-        
-        if let popover = self.popover {
-            
-            // Close the popover
-            popover.performClose(self)
-            
-            // Restore the menu
-            statusItem.menu = self.statusMenu
-            
-            // Disable the button
-            if let button = statusItem.button {
-                
-                button.target = nil
-                button.action = nil
-                
-            }
-        }
+        // Close the popover
+        self.popover?.performClose(self)
+
     }
     
     @objc private func quit(_ sender: Any?) {
