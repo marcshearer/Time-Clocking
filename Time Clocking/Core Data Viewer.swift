@@ -164,13 +164,11 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         }
     }
     
-    public func forEachRecord(recordType: String, action: (NSManagedObject) -> ()) {
-        if recordType == self.recordType {
-            for record in self.records {
-                action(record)
-            }
-            self.displayTableView.reloadData()
+    public func forEachRecord(action: (NSManagedObject) -> ()) {
+        for record in self.records {
+            action(record)
         }
+        self.displayTableView.reloadData()
     }
     
     private func setupGrid(displayTableView: NSTableView, layout: [Layout]) {

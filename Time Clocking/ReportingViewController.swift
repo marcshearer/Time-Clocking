@@ -12,7 +12,7 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     
     private var clockingsLayout: [Layout]!
     private var tableViewer: CoreDataTableViewer!
-    private var timeEntry: TimeEntry!
+    private var viewModel: ClockingViewModel!
     
     @IBOutlet private weak var resourceCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
@@ -25,7 +25,7 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var tableView: NSTableView!
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
@@ -34,11 +34,11 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         self.setupLayouts()
     }
     
-    override func viewDidAppear() {
-        self.timeEntry = TimeEntry(loadDefaults: false)
-        self.timeEntry.state.value = State.stopped.rawValue
-        self.timeEntry.startTime.value = Date().startOfYear(years: 2)!
-        self.timeEntry.endTime.value = Date()
+    override internal func viewDidAppear() {
+        self.viewModel = ClockingViewModel()
+        self.viewModel.state.value = State.stopped.rawValue
+        self.viewModel.startTime.value = Date().startOfYear(years: 2)!
+        self.viewModel.endTime.value = Date()
         self.setupBindings()
         self.loadClockings()
     }
@@ -46,27 +46,27 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private func setupBindings() {
         
         // Bind data
-        self.timeEntry.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
-        self.timeEntry.customerCode.bidirectionalBind(to: customerCodePopupButton)
-        self.timeEntry.projectCode.bidirectionalBind(to: projectCodePopupButton)
-        self.timeEntry.startTime.bidirectionalBind(to: self.startTimeDatePicker)
-        self.timeEntry.endTime.bidirectionalBind(to: self.endTimeDatePicker)
-        self.timeEntry.includeInvoiced.bidirectionalBind(to: self.includeInvoicedButton.reactive.integerValue)
-        self.timeEntry.invoiceNumber.bidirectionalBind(to: self.invoiceNumberTextField.reactive.editingString)
+        self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
+        self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
+        self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
+        self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
+        self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
+        self.viewModel.includeInvoiced.bidirectionalBind(to: self.includeInvoicedButton.reactive.integerValue)
+        self.viewModel.invoiceNumber.bidirectionalBind(to: self.invoiceNumberTextField.reactive.editingString)
         
         // Bind enablers
         self.resourceCodePopupButton.isEnabled = true
         self.customerCodePopupButton.isEnabled = true
-        self.timeEntry.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
+        self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
         self.startTimeDatePicker.isEnabled = true
         self.endTimeDatePicker.isEnabled = true
-        self.timeEntry.canEditInvoiceNumber.bind(to: self.invoiceNumberTextField.reactive.isEnabled)
-        self.timeEntry.canMarkInvoiced.bind(to: self.markInvoicedButton.reactive.isEnabled)
+        self.viewModel.canEditInvoiceNumber.bind(to: self.invoiceNumberTextField.reactive.isEnabled)
+        self.viewModel.canMarkInvoiced.bind(to: self.markInvoicedButton.reactive.isEnabled)
         self.closeButton.isEnabled = true
         
         // Bind button actions
         _ = self.markInvoicedButton.reactive.controlEvent.observeNext { (_) in
-            self.markInvoiced()
+            ReportingInvoicePromptViewController.show(relativeTo: self.markInvoicedButton, clockingIterator: self.tableViewer!.forEachRecord)
         }
         
         _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
@@ -75,7 +75,7 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
         
         // Observe data change
-        _ = self.timeEntry.anyChange.observeNext { (_) in
+        _ = self.viewModel.anyChange.observeNext { (_) in
             self.loadClockings()
         }
     }
@@ -105,52 +105,25 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         return Clockings.derivedKey(recordType: recordType, key: key, record: record)
     }
     
-    private func markInvoiced() {
-        
-        // Create the view controller
-        let storyboard = NSStoryboard(name: NSStoryboard.Name("ReportingInvoicePromptViewController"), bundle: nil)
-        let sceneIdentifier = NSStoryboard.SceneIdentifier(stringLiteral: "ReportingInvoicePromptViewController")
-        let viewController = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! ReportingInvoicePromptViewController
-        let popover = NSPopover()
-        popover.contentViewController = viewController
-        viewController.popover = popover
-        viewController.reportingViewController = self
-        
-        // Show the popover
-        popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
-        popover.show(relativeTo: markInvoicedButton.bounds, of: markInvoicedButton, preferredEdge: .maxX)
-        
-    }
-    
-    public func setToInvoiced(invoiceNumber: String, invoiceDate: Date) {
-        _ = CoreData.update {
-            self.tableViewer.forEachRecord(recordType: "Clockings", action: { (record) in
-                let clockingMO = record as! ClockingMO
-                clockingMO.invoiceNumber = invoiceNumber
-                clockingMO.invoiceDate = invoiceDate
-            })
-        }
-    }
-    
     private func loadClockings() {
         var predicate: [NSPredicate]? = []
-        if self.timeEntry.resourceCode.value != "" {
-            predicate?.append(NSPredicate(format: "resourceCode = %@", self.timeEntry.resourceCode.value))
+        if self.viewModel.resourceCode.value != "" {
+            predicate?.append(NSPredicate(format: "resourceCode = %@", self.viewModel.resourceCode.value))
         }
-        if self.timeEntry.customerCode.value != "" {
-            predicate?.append(NSPredicate(format: "customerCode = %@", self.timeEntry.customerCode.value))
+        if self.viewModel.customerCode.value != "" {
+            predicate?.append(NSPredicate(format: "customerCode = %@", self.viewModel.customerCode.value))
         }
-        if self.timeEntry.projectCode.value != "" {
-            predicate?.append(NSPredicate(format: "projectCode = %@", self.timeEntry.projectCode.value))
+        if self.viewModel.projectCode.value != "" {
+            predicate?.append(NSPredicate(format: "projectCode = %@", self.viewModel.projectCode.value))
         }
-        predicate?.append(NSPredicate(format: "startTime >= %@", self.timeEntry.startTime.value as NSDate))
-        predicate?.append(NSPredicate(format: "startTime <= %@", self.timeEntry.endTime.value as NSDate))
+        predicate?.append(NSPredicate(format: "startTime >= %@", self.viewModel.startTime.value as NSDate))
+        predicate?.append(NSPredicate(format: "startTime <= %@", self.viewModel.endTime.value as NSDate))
         
-        if self.timeEntry.includeInvoiced.value != 0 && self.timeEntry.invoiceNumber.value != "" {
-            predicate?.append(NSPredicate(format: "invoiceNumber like %@", "\(self.timeEntry.invoiceNumber.value)*"))
+        if self.viewModel.includeInvoiced.value != 0 && self.viewModel.invoiceNumber.value != "" {
+            predicate?.append(NSPredicate(format: "invoiceNumber like %@", "\(self.viewModel.invoiceNumber.value)*"))
         }
         
-        if self.timeEntry.includeInvoiced.value == 0 {
+        if self.viewModel.includeInvoiced.value == 0 {
             predicate?.append(NSPredicate(format: "invoiceNumber == ''"))
         }
         

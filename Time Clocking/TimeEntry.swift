@@ -11,71 +11,36 @@ import CoreData
 
 class TimeEntry: ClockingViewModel {
     
-    public static var current = TimeEntry()
+    public static var current = ClockingViewModel()
     
-    private let defaults = UserDefaults.standard
+    private static let defaults = UserDefaults.standard
     
-    init(loadDefaults: Bool = false) {
+    static public func loadDefaults() {
         
-        super.init()
-        
-        if loadDefaults {
-            self.loadDefaults()
-        }
+        TimeEntry.current.resourceCode.value = self.defaults.string(forKey: "resourceCode") ?? ""
+        TimeEntry.current.customerCode.value = self.defaults.string(forKey: "customerCode") ?? ""
+        TimeEntry.current.projectCode.value = self.defaults.string(forKey: "projectCode") ?? ""
+        TimeEntry.current.notes.value = self.defaults.string(forKey: "notes") ?? ""
+        TimeEntry.current.startTime.value = self.defaults.object(forKey: "startTime") as? Date ?? Date()
+        TimeEntry.current.endTime.value = self.defaults.object(forKey: "endTime") as? Date ?? Date()
+        TimeEntry.current.hourlyRate.value = self.defaults.object(forKey: "hourlyRate") as? Double ?? 0.0
+        TimeEntry.current.invoiceNumber.value = self.defaults.string(forKey: "invoiceNumber") ?? ""
+        TimeEntry.current.invoiceDate.value = self.defaults.object(forKey: "invoiceDate") as? Date ?? Date()
+        TimeEntry.current.state.value = self.defaults.string(forKey: "state") ?? State.notStarted.rawValue
     }
     
-    override init(from record: NSManagedObject?, state: State) {
-        super.init(from: record, state: state)
-    }
-    
-    public func loadDefaults() {
+    static public func saveDefaults() {
         
-        self.resourceCode.value = self.defaults.string(forKey: "resourceCode") ?? ""
-        self.customerCode.value = self.defaults.string(forKey: "customerCode") ?? ""
-        self.projectCode.value = self.defaults.string(forKey: "projectCode") ?? ""
-        self.notes.value = self.defaults.string(forKey: "notes") ?? ""
-        self.startTime.value = self.defaults.object(forKey: "startTime") as? Date ?? Date()
-        self.endTime.value = self.defaults.object(forKey: "endTime") as? Date ?? Date()
-        self.hourlyRate.value = self.defaults.object(forKey: "hourlyRate") as? Double ?? 0.0
-        self.invoiceNumber.value = self.defaults.string(forKey: "invoiceNumber") ?? ""
-        self.invoiceDate.value = self.defaults.object(forKey: "invoiceDate") as? Date ?? Date()
-        self.state.value = self.defaults.string(forKey: "state") ?? State.notStarted.rawValue
-    }
-    
-    public func saveDefaults() {
+        self.defaults.set(TimeEntry.current.resourceCode.value, forKey: "resourceCode")
+        self.defaults.set(TimeEntry.current.customerCode.value, forKey: "customerCode")
+        self.defaults.set(TimeEntry.current.projectCode.value, forKey: "projectCode")
+        self.defaults.set(TimeEntry.current.notes.value, forKey: "notes")
+        self.defaults.set(TimeEntry.current.startTime.value, forKey: "startTime")
+        self.defaults.set(TimeEntry.current.endTime.value, forKey: "endTime")
+        self.defaults.set(TimeEntry.current.hourlyRate.value, forKey: "hourlyRate")
+        self.defaults.set(TimeEntry.current.invoiceNumber.value, forKey: "invoiceNumber")
+        self.defaults.set(TimeEntry.current.invoiceDate.value, forKey: "invoiceDate")
+        self.defaults.set(TimeEntry.current.state.value, forKey: "state")
         
-        self.defaults.set(self.resourceCode.value, forKey: "resourceCode")
-        self.defaults.set(self.customerCode.value, forKey: "customerCode")
-        self.defaults.set(self.projectCode.value, forKey: "projectCode")
-        self.defaults.set(self.notes.value, forKey: "notes")
-        self.defaults.set(self.startTime.value, forKey: "startTime")
-        self.defaults.set(self.endTime.value, forKey: "endTime")
-        self.defaults.set(self.hourlyRate.value, forKey: "hourlyRate")
-        self.defaults.set(self.invoiceNumber.value, forKey: "invoiceNumber")
-        self.defaults.set(self.invoiceDate.value, forKey: "invoiceDate")
-        self.defaults.set(self.state.value, forKey: "state")
-        
-    }
-    
-    public func writeToDatabase() -> ClockingMO {
-        var clockingMO: ClockingMO!
-        _ = CoreData.update {
-            clockingMO = CoreData.create(from: "Clockings") as ClockingMO
-            self.copy(to: clockingMO)
-        }
-        
-        return clockingMO
-    }
-    
-    public func updateDatabase(_ clockingMO: ClockingMO) {
-        _ = CoreData.update {
-            self.copy(to: clockingMO)
-        }
-    }
-    
-    public func removeFromDatabase(_ clockingMO: ClockingMO) {
-        _ = CoreData.update {
-            CoreData.delete(record: clockingMO)
-        }
     }
 }

@@ -160,7 +160,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         TimeEntry.current.state.value = State.notStarted.rawValue
         TimeEntry.current.endTime.value = Date()
         StatusMenu.shared.update()
-        _ = TimeEntry.current.writeToDatabase()
+        _ = Clockings.writeToDatabase(viewModel: TimeEntry.current)
     }
     
     @objc private func resetTimer(_ sender: Any?) {
@@ -218,7 +218,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.showPopover(self.projectsPopover)
     }
     
-    func showPopover(_ popover: NSPopover) {
+    private func showPopover(_ popover: NSPopover) {
         
         if let button = self.statusItem.button {
             

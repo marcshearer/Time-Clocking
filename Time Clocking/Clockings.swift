@@ -11,7 +11,7 @@ import CoreData
 
 class Clockings {
     
-    static func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ClockingMO] {
+    static public  func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ClockingMO] {
         
         var predicate: [NSPredicate] = []
         if !includeClosed {
@@ -28,6 +28,28 @@ class Clockings {
         }
         
         return CoreData.fetch(from: "Clockings", filter: predicate, sort: [("startTime", .ascending)])
+    }
+    
+    static public func writeToDatabase(viewModel: ClockingViewModel) -> ClockingMO {
+        var clockingMO: ClockingMO!
+        _ = CoreData.update {
+            clockingMO = CoreData.create(from: "Clockings") as ClockingMO
+            viewModel.copy(to: clockingMO)
+        }
+        
+        return clockingMO
+    }
+    
+    static public func updateDatabase(from viewModel: ClockingViewModel, clockingMO: ClockingMO) {
+        _ = CoreData.update {
+            viewModel.copy(to: clockingMO)
+        }
+    }
+    
+    static public func removeFromDatabase(_ clockingMO: ClockingMO) {
+        _ = CoreData.update {
+            CoreData.delete(record: clockingMO)
+        }
     }
     
     static func editClocking(_ clockingMO: ClockingMO, delegate: ClockingDetailDelegate, from viewController: NSViewController) {

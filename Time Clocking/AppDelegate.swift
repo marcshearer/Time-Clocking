@@ -12,7 +12,7 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    internal func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         // Cache main context for core data
         CoreData.context = self.persistentContainer.viewContext
@@ -24,18 +24,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Settings.current.load()
         
         // Load latest time entry
-        TimeEntry.current.loadDefaults()
+        TimeEntry.loadDefaults()
         
         // Build status menu
         StatusMenu.shared.update()
         
     }
     
-    func applicationWillTerminate(_ aNotification: Notification) {
+    internal func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
-    func registerDefaults() {
+    private func registerDefaults() {
         UserDefaults.standard.register(defaults: [
             "showUnit":         TimeUnit.months.rawValue,
             "showQuantity":     1,

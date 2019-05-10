@@ -17,7 +17,7 @@ public enum State: String {
     case editing = "Editing"
 }
 
-class ClockingViewModel: NSObject, ViewModelDelegate {
+class ClockingViewModel {
     
     public let recordType = "Clockings"
     
@@ -55,16 +55,12 @@ class ClockingViewModel: NSObject, ViewModelDelegate {
 
     public var anyChange = Observable<Bool>(false)
     
-    override init() {
-        
-        super.init()
+    init() {
         
         self.setupMappings()
     }
     
     init(from record: NSManagedObject?, state: State) {
-        
-        super.init()
         
         self.setupMappings()
         
