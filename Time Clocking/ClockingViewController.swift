@@ -43,6 +43,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     }
     
     override func viewDidAppear() {
+        super.viewDidAppear()
         self.loadClockings()
         self.startUpdateTimer()
     }
@@ -233,7 +234,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
               Layout(key: "notes",               title: "Description",      width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
               Layout(key: "startTime",           title: "From",             width: 115,      alignment: .center, type: .dateTime,    total: false,   pad: false),
               Layout(key: "=duration",           title: "For",              width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "amount",              title: "Value",            width:  90,      alignment: .right,  type: .double,      total: true,    pad: false)
+              Layout(key: "amount",              title: "Value",            width: 100,      alignment: .right,  type: .double,      total: true,    pad: false)
         ]
     }
     
