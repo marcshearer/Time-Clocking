@@ -13,6 +13,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uji-qY-f9I" userLabel="Title container">
+                                <rect key="frame" x="0.0" y="376" width="600" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="eVw-s0-8R0"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="TSb-l8-PbS">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c2M-tY-JKD">
+                                <rect key="frame" x="0.0" y="376" width="600" height="20"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Maintenance" drawsBackground="YES" id="BgG-NL-sQ3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="jRW-XD-bks">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
                                 <subviews>
@@ -41,13 +60,13 @@
                                 </constraints>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rFQ-MM-7OC">
-                                <rect key="frame" x="0.0" y="30" width="600" height="370"/>
+                                <rect key="frame" x="0.0" y="30" width="600" height="246"/>
                                 <clipView key="contentView" id="lzI-Og-26j">
-                                    <rect key="frame" x="1" y="0.0" width="598" height="369"/>
+                                    <rect key="frame" x="1" y="0.0" width="598" height="245"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="IVO-pc-zYr" id="1qH-GG-cxZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="598" height="344"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="598" height="220"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -68,21 +87,40 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="S5J-KK-1E2">
+                                <rect key="frame" x="0.0" y="276" width="600" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="ACy-9E-zmd"/>
+                                </constraints>
+                            </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="c2M-tY-JKD" firstAttribute="trailing" secondItem="Uji-qY-f9I" secondAttribute="trailing" id="0Oj-IL-SbO"/>
                             <constraint firstItem="jRW-XD-bks" firstAttribute="top" secondItem="rFQ-MM-7OC" secondAttribute="bottom" id="2zd-bv-3Vf"/>
-                            <constraint firstItem="rFQ-MM-7OC" firstAttribute="top" secondItem="Ad6-F3-Hgo" secondAttribute="top" id="J5G-0Q-a2l"/>
+                            <constraint firstAttribute="trailing" secondItem="Uji-qY-f9I" secondAttribute="trailing" id="6fy-Le-3Eg"/>
+                            <constraint firstItem="rFQ-MM-7OC" firstAttribute="top" secondItem="S5J-KK-1E2" secondAttribute="bottom" id="Ld1-Rz-H3W"/>
+                            <constraint firstItem="S5J-KK-1E2" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="OxR-bI-CXm"/>
+                            <constraint firstItem="S5J-KK-1E2" firstAttribute="top" secondItem="Uji-qY-f9I" secondAttribute="bottom" id="RG4-zU-2uh"/>
                             <constraint firstAttribute="bottom" secondItem="jRW-XD-bks" secondAttribute="bottom" id="RWq-qw-cPI"/>
+                            <constraint firstAttribute="trailing" secondItem="S5J-KK-1E2" secondAttribute="trailing" id="Wdm-Ae-Ewg"/>
+                            <constraint firstItem="c2M-tY-JKD" firstAttribute="top" secondItem="Uji-qY-f9I" secondAttribute="top" constant="4" id="ahf-6h-KGb"/>
+                            <constraint firstItem="Uji-qY-f9I" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="b70-nA-nnB"/>
                             <constraint firstAttribute="trailing" secondItem="rFQ-MM-7OC" secondAttribute="trailing" id="bzO-0w-4Ir"/>
                             <constraint firstItem="rFQ-MM-7OC" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="dyE-F8-c26"/>
+                            <constraint firstItem="c2M-tY-JKD" firstAttribute="leading" secondItem="Uji-qY-f9I" secondAttribute="leading" id="s1e-Cf-5GM"/>
                             <constraint firstAttribute="trailing" secondItem="jRW-XD-bks" secondAttribute="trailing" id="sv2-gW-xAU"/>
                             <constraint firstItem="jRW-XD-bks" firstAttribute="leading" secondItem="Ad6-F3-Hgo" secondAttribute="leading" id="uxy-64-nw3"/>
+                            <constraint firstItem="c2M-tY-JKD" firstAttribute="bottom" secondItem="Uji-qY-f9I" secondAttribute="bottom" id="yDB-pt-UTt"/>
+                            <constraint firstItem="Uji-qY-f9I" firstAttribute="top" secondItem="Ad6-F3-Hgo" secondAttribute="top" id="yeC-bW-d0q"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addButton" destination="Xxe-np-g62" id="u5e-Fi-B6V"/>
                         <outlet property="closeButton" destination="RCa-c1-f8n" id="rZc-BZ-tYC"/>
+                        <outlet property="filterView" destination="S5J-KK-1E2" id="imV-No-WK7"/>
+                        <outlet property="filterViewHeightConstraint" destination="ACy-9E-zmd" id="cAK-tt-79e"/>
                         <outlet property="tableView" destination="1qH-GG-cxZ" id="guw-ZY-gzD"/>
+                        <outlet property="titleLabel" destination="c2M-tY-JKD" id="GHP-AB-nge"/>
                     </connections>
                 </viewController>
                 <customObject id="Xdh-el-cxj" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

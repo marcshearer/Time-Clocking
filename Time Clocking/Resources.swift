@@ -11,6 +11,7 @@ import Foundation
 class Resources: NSObject, MaintenanceViewControllerDelegate {
     
     public let recordType = "Resources"
+    public let title = "Resource Maintenance"
     public let detailStoryBoardName = "ResourceDetailViewController"
     public let detailViewControllerIdentifier = "ResourceDetailViewController"
     

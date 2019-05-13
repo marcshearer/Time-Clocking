@@ -23,11 +23,15 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     public var canClose = Observable<Bool>(false)
     public var canEditCustomer = Observable<Bool>(false)
 
-    init(from projectMO: ProjectMO?) {
-    
+    init(blankTitle: String = "") {
         super.init()
         
-        self.setupMappings(createMode: projectMO == nil)
+        self.setupMappings(createMode: false, blankTitle: blankTitle)
+    }
+    
+    convenience init(from projectMO: ProjectMO?, blankTitle: String = "") {
+        self.init(blankTitle: blankTitle)
+        
         if let projectMO = projectMO {
             self.copy(from: projectMO)
         }
@@ -35,9 +39,9 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     
     // MARK: - Setup view model mappings
 
-    private func setupMappings(createMode: Bool) {
+    private func setupMappings(createMode: Bool, blankTitle: String = "") {
         
-        self.customer = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name")
+        self.customer = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name", blankTitle: blankTitle)
         
         // Only allow save if project code and title complete
         _ = combineLatest(self.projectCode, self.title).observeNext { (_) in

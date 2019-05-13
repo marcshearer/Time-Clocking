@@ -202,8 +202,11 @@ class StatusMenu: NSObject, NSMenuDelegate {
     
     @objc private func showProjects(_ sender: Any?) {
         // Retrieve or create the view controller
+        let growHeight = CGFloat(self.projectsViewController == nil ? 50.0 : 0.0)
         self.projectsViewController = self.showMenubarWindow(menubarViewController: self.projectsViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
         self.projectsViewController?.delegate = Projects()
+        let size = projectsViewController!.view.frame.size
+        self.projectsViewController?.view.setFrameSize(NSSize(width: size.width, height: size.height + growHeight))
         self.showPopover(self.projectsViewController!)
     }
     

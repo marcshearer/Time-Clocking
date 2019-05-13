@@ -12,9 +12,12 @@ import CoreData
 class Projects: NSObject, MaintenanceViewControllerDelegate {
     
     public let recordType = "Projects"
+    public let title = "Project Maintenance"
     public let detailStoryBoardName = "ProjectDetailViewController"
     public let detailViewControllerIdentifier = "ProjectDetailViewController"
     public let sequence = ["customerCode", "projectCode"]
+    public let filterStoryboardName = "ProjectFilterViewController"
+    public let filterViewControllerName = "ProjectFilterViewController"
     
     public let layout: [Layout]! =
         [ Layout(key: "=customer",    title: "Customer",      width:  -50, alignment: .left,   type: .string, total: false,   pad: false),

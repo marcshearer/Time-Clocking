@@ -52,6 +52,8 @@
 		B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC062284356D0040CA46 /* Maintenance.swift */; };
 		B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0822848C070040CA46 /* ObservableTextField.swift */; };
 		B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0C2286CCEB0040CA46 /* Settings.swift */; };
+		B2C8CC0F228977F00040CA46 /* ProjectFilterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */; };
+		B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */; };
 		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +130,8 @@
 		B2C8CC062284356D0040CA46 /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
 		B2C8CC0822848C070040CA46 /* ObservableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTextField.swift; sourceTree = "<group>"; };
 		B2C8CC0C2286CCEB0040CA46 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProjectFilterViewController.storyboard; sourceTree = "<group>"; };
+		B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +318,8 @@
 			isa = PBXGroup;
 			children = (
 				B241BEFE227E9979001CC666 /* Projects.swift */,
+				B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */,
+				B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */,
 				B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */,
 				B2869865227DD81300377112 /* ProjectDetailViewController.swift */,
 				B241BF022280650B001CC666 /* ProjectViewModel.swift */,
@@ -494,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */,
+				B2C8CC0F228977F00040CA46 /* ProjectFilterViewController.storyboard in Resources */,
 				B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */,
 				B2869876227DD81400377112 /* Main.storyboard in Resources */,
 				B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */,
@@ -577,6 +584,7 @@
 				B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */,
 				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
 				B2C8CC05228428A50040CA46 /* TimeEntry.swift in Sources */,
+				B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */,

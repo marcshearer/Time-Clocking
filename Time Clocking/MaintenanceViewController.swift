@@ -11,20 +11,28 @@ import Cocoa
 @objc protocol MaintenanceViewControllerDelegate {
     
     var recordType: String! {get}
-    var detailStoryBoardName: String! {get}
-    var detailViewControllerIdentifier: String! {get}
     var layout: [Layout]! {get}
-    @objc optional var sequence: [String]! {get}
+    
+    @objc optional var title: String! {get}
+    @objc optional var detailStoryBoardName: String! {get}
+    @objc optional var detailViewControllerIdentifier: String! {get}
+    @objc optional var sequence: [String] {get}
+    @objc optional var filterStoryboardName: String {get}
+    @objc optional var filterViewControllerName: String {get}
     
     @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
     
 }
 
-public protocol MaintenanceDetailViewControllerDelegate {
+protocol MaintenanceDetailViewControllerDelegate {
     
     var record: NSManagedObject! {get set}
     var completion: ((NSManagedObject, Bool)->())? {get set}
     
+}
+
+protocol MaintenanceFilterViewControllerDelegate: NSViewController {
+     var parentController: MaintenanceViewController! {get set}
 }
 
 class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
@@ -32,13 +40,19 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     public var delegate: MaintenanceViewControllerDelegate!
     
     private var tableViewer: CoreDataTableViewer!
+    private var filterViewController: MaintenanceFilterViewControllerDelegate!
+    private var sort: [(String, SortDirection)]!
 
     @IBOutlet private weak var addButton: NSButton!
     @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var filterView: NSView!
+    @IBOutlet private weak var filterViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var titleLabel: NSTextField!
     
     override internal func viewDidLoad() {
         super.viewDidLoad()
+        self.setupFilterViewController()
         self.setupBindings()
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.delegate = self
@@ -46,14 +60,26 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     
     override internal func viewDidAppear() {
         super.viewDidAppear()
+
+        if let filterViewController = self.filterViewController {
+            filterViewController.view.frame = self.filterView.frame
+        }
+
+        if let title = delegate?.title {
+            self.titleLabel.stringValue = title!
+        }
         
-        var sort: [(String, SortDirection)] = []
+        self.sort = []
         if let sequence = delegate.sequence {
-            for element in sequence! {
-                sort.append((element, .ascending))
+            for element in sequence {
+                self.sort.append((element, .ascending))
             }
         }
-        self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout, sort: sort)
+        self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout, sort: self.sort)
+    }
+    
+    public func applyFilter(filter: [NSPredicate]?) {
+        self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout, sort: self.sort, predicate: filter)
     }
     
     // MARK: - Core Data Table Viewer Delegate Handlers ==========================================================
@@ -70,12 +96,29 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     }
     
     private func editRecord(_ record: NSManagedObject? = nil, completion: ((NSManagedObject, Bool)->())? = nil) {
-        let storyboard = NSStoryboard(name: NSStoryboard.Name(self.delegate.detailStoryBoardName), bundle: nil)
-        let viewController = storyboard.instantiateController(withIdentifier: self.delegate.detailViewControllerIdentifier) as! NSViewController
-        var maintenanceDetailViewController = viewController as? MaintenanceDetailViewControllerDelegate
-        maintenanceDetailViewController?.record = record
-        maintenanceDetailViewController?.completion = completion
-        self.presentAsSheet(viewController)
+        if let storyboardName = self.delegate.detailStoryBoardName, let viewControllerIdentifier = self.delegate.detailViewControllerIdentifier {
+            let storyboard = NSStoryboard(name: NSStoryboard.Name(storyboardName!), bundle: nil)
+            let viewController = storyboard.instantiateController(withIdentifier: viewControllerIdentifier!) as! NSViewController
+            var maintenanceDetailViewController = viewController as? MaintenanceDetailViewControllerDelegate
+            maintenanceDetailViewController?.record = record
+            maintenanceDetailViewController?.completion = completion
+            self.presentAsSheet(viewController)
+        }
+    }
+    
+    // MARK: - Filter view controller ============================================================================
+    
+    private func setupFilterViewController() {
+        if let storyboardName = delegate.filterStoryboardName, let viewControllerName = delegate.filterViewControllerName {
+            let storyboard = NSStoryboard(name: NSStoryboard.Name(storyboardName), bundle: nil)
+            self.filterViewController = storyboard.instantiateController(withIdentifier: viewControllerName) as? MaintenanceFilterViewControllerDelegate
+            self.addChild(self.filterViewController)
+            self.filterViewHeightConstraint.constant = self.filterViewController.view.frame.height
+            self.filterViewController.parentController = self
+            self.view.addSubview(self.filterViewController.view)
+        } else {
+            self.filterViewHeightConstraint.constant = 0
+        }
     }
     
     // MARK: - Completion handlers for edit record================================================================ 

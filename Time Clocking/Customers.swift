@@ -11,6 +11,7 @@ import Cocoa
 class Customers: NSObject, MaintenanceViewControllerDelegate {
     
     public let recordType = "Customers"
+    public let title = "Customer Maintenance"
     public let detailStoryBoardName = "CustomerDetailViewController"
     public let detailViewControllerIdentifier = "CustomerDetailViewController"
     

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Project Filter View Controller-->
+        <scene sceneID="HHW-gb-hwF">
+            <objects>
+                <viewController storyboardIdentifier="ProjectFilterViewController" id="Yir-13-re9" customClass="ProjectFilterViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" focusRingType="none" id="caa-dS-fuq">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="72"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kb7-tk-Jzx">
+                                <rect key="frame" x="10" y="43" width="99" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Customer filter:" id="IwM-MW-MEj">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SYh-HU-IRJ">
+                                <rect key="frame" x="21" y="11" width="158" height="25"/>
+                                <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="Mxt-JN-BHO" id="8Nk-Hj-uPY">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="Fi3-zc-NU2">
+                                        <items>
+                                            <menuItem title="Item 1" state="on" hidden="YES" id="Mxt-JN-BHO"/>
+                                            <menuItem title="Item 2" id="q1o-BA-ReW"/>
+                                            <menuItem title="Item 3" id="6pw-OG-vcK"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="SYh-HU-IRJ" firstAttribute="leading" secondItem="caa-dS-fuq" secondAttribute="leading" constant="24" id="0J7-gj-c1B"/>
+                            <constraint firstItem="SYh-HU-IRJ" firstAttribute="top" secondItem="Kb7-tk-Jzx" secondAttribute="bottom" constant="8" id="3C9-t5-uHV"/>
+                            <constraint firstItem="Kb7-tk-Jzx" firstAttribute="top" secondItem="caa-dS-fuq" secondAttribute="top" constant="12" id="AyH-WU-2xe"/>
+                            <constraint firstItem="Kb7-tk-Jzx" firstAttribute="leading" secondItem="caa-dS-fuq" secondAttribute="leading" constant="12" id="Uye-EM-zai"/>
+                            <constraint firstAttribute="trailing" secondItem="SYh-HU-IRJ" secondAttribute="trailing" constant="24" id="cOn-ff-AwR"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="customerPopupButton" destination="SYh-HU-IRJ" id="hbN-bX-z05"/>
+                    </connections>
+                </viewController>
+                <customObject id="3bn-gb-A5r" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-8" y="-32"/>
+        </scene>
+    </scenes>
+</document>
