@@ -14,6 +14,7 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
     public let recordType = "Projects"
     public let detailStoryBoardName = "ProjectDetailViewController"
     public let detailViewControllerIdentifier = "ProjectDetailViewController"
+    public let sequence = ["customerCode", "projectCode"]
     
     public let layout: [Layout]! =
         [ Layout(key: "=customer",    title: "Customer",      width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
@@ -22,6 +23,20 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
           Layout(key: "hourlyRate",   title: "Hourly rate",   width:   80, alignment: .right,  type: .double, total: false,   pad: false),
           Layout(key: "closed",       title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
+    
+    public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+        var result = ""
+        let projectMO = record as! ProjectMO
+        
+        switch key {
+        case "customer":
+            result = Customers.getName(customerCode: projectMO.customerCode!)
+        default:
+            break
+        }
+        
+        return result
+    }
     
     static public func load(specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ProjectMO] {
         

@@ -10,9 +10,9 @@
 
 import CoreData
 
-public enum SortDirection {
-    case ascending
-    case descending
+@objc public enum SortDirection: Int {
+    case ascending = 0
+    case descending = 1
 }
 
 class CoreData {

@@ -14,6 +14,7 @@ import Cocoa
     var detailStoryBoardName: String! {get}
     var detailViewControllerIdentifier: String! {get}
     var layout: [Layout]! {get}
+    @objc optional var sequence: [String]! {get}
     
     @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
     
@@ -45,7 +46,14 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     
     override internal func viewDidAppear() {
         super.viewDidAppear()
-        self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout)
+        
+        var sort: [(String, SortDirection)] = []
+        if let sequence = delegate.sequence {
+            for element in sequence! {
+                sort.append((element, .ascending))
+            }
+        }
+        self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout, sort: sort)
     }
     
     // MARK: - Core Data Table Viewer Delegate Handlers ==========================================================
