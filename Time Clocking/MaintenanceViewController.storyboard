@@ -22,9 +22,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="20"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="addPressed:" target="CJA-Nb-0iZ" id="oz0-iO-EqV"/>
-                                        </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RCa-c1-f8n">
                                         <rect key="frame" x="527" y="-2" width="75" height="32"/>
@@ -32,9 +29,6 @@
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
-                                        <connections>
-                                            <action selector="closePressed:" target="CJA-Nb-0iZ" id="gH1-G1-07r"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -86,6 +80,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addButton" destination="Xxe-np-g62" id="u5e-Fi-B6V"/>
+                        <outlet property="closeButton" destination="RCa-c1-f8n" id="rZc-BZ-tYC"/>
                         <outlet property="tableView" destination="1qH-GG-cxZ" id="guw-ZY-gzD"/>
                     </connections>
                 </viewController>

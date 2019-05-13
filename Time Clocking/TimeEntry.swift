@@ -11,9 +11,9 @@ import CoreData
 
 class TimeEntry: ClockingViewModel {
     
-    public static var current = ClockingViewModel()
+    static public var current = ClockingViewModel()
     
-    private static let defaults = UserDefaults.standard
+    static private let defaults = UserDefaults.standard
     
     static public func loadDefaults() {
         

@@ -35,7 +35,7 @@
 		B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869861227DD81300377112 /* SettingsViewController.storyboard */; };
 		B2869882227DD81400377112 /* Status Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869862227DD81300377112 /* Status Menu.swift */; };
 		B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
-		B2869885227DD81400377112 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869866227DD81300377112 /* Settings.swift */; };
+		B2869885227DD81400377112 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869866227DD81300377112 /* SettingsViewModel.swift */; };
 		B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869867227DD81300377112 /* MaintenanceViewController.swift */; };
 		B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */; };
 		B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869869227DD81300377112 /* CustomerDetailViewController.swift */; };
@@ -50,7 +50,8 @@
 		B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
 		B2C8CC05228428A50040CA46 /* TimeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC04228428A50040CA46 /* TimeEntry.swift */; };
 		B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC062284356D0040CA46 /* Maintenance.swift */; };
-		B2C8CC0922848C070040CA46 /* ObservableTextFieldDouble.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */; };
+		B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0822848C070040CA46 /* ObservableTextField.swift */; };
+		B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0C2286CCEB0040CA46 /* Settings.swift */; };
 		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
 /* End PBXBuildFile section */
 
@@ -109,7 +110,7 @@
 		B2869861227DD81300377112 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		B2869862227DD81300377112 /* Status Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status Menu.swift"; sourceTree = "<group>"; };
 		B2869865227DD81300377112 /* ProjectDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectDetailViewController.swift; sourceTree = "<group>"; };
-		B2869866227DD81300377112 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		B2869866227DD81300377112 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		B2869867227DD81300377112 /* MaintenanceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintenanceViewController.swift; sourceTree = "<group>"; };
 		B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CustomerDetailViewController.storyboard; sourceTree = "<group>"; };
 		B2869869227DD81300377112 /* CustomerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerDetailViewController.swift; sourceTree = "<group>"; };
@@ -125,7 +126,8 @@
 		B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePickerDate.swift; sourceTree = "<group>"; };
 		B2C8CC04228428A50040CA46 /* TimeEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeEntry.swift; sourceTree = "<group>"; };
 		B2C8CC062284356D0040CA46 /* Maintenance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maintenance.swift; sourceTree = "<group>"; };
-		B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTextFieldDouble.swift; sourceTree = "<group>"; };
+		B2C8CC0822848C070040CA46 /* ObservableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableTextField.swift; sourceTree = "<group>"; };
+		B2C8CC0C2286CCEB0040CA46 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,8 +257,8 @@
 			isa = PBXGroup;
 			children = (
 				B2869862227DD81300377112 /* Status Menu.swift */,
-				B2869866227DD81300377112 /* Settings.swift */,
 				B2C8CC04228428A50040CA46 /* TimeEntry.swift */,
+				B2C8CC0C2286CCEB0040CA46 /* Settings.swift */,
 			);
 			name = "Main Classes";
 			sourceTree = "<group>";
@@ -280,7 +282,7 @@
 				B286986A227DD81300377112 /* String Extensions.swift */,
 				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
 				B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */,
-				B2C8CC0822848C070040CA46 /* ObservableTextFieldDouble.swift */,
+				B2C8CC0822848C070040CA46 /* ObservableTextField.swift */,
 				B2869860227DD81300377112 /* Utility.swift */,
 			);
 			name = "Utility & Data Classes";
@@ -324,6 +326,7 @@
 			children = (
 				B2869861227DD81300377112 /* SettingsViewController.storyboard */,
 				B286985E227DD81300377112 /* SettingsViewController.swift */,
+				B2869866227DD81300377112 /* SettingsViewModel.swift */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -567,7 +570,7 @@
 				B241BEFB227E945B001CC666 /* Resources.swift in Sources */,
 				B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */,
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
-				B2869885227DD81400377112 /* Settings.swift in Sources */,
+				B2869885227DD81400377112 /* SettingsViewModel.swift in Sources */,
 				B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */,
 				B286987C227DD81400377112 /* ReportingViewController.swift in Sources */,
 				B2869882227DD81400377112 /* Status Menu.swift in Sources */,
@@ -585,10 +588,11 @@
 				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
 				B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */,
-				B2C8CC0922848C070040CA46 /* ObservableTextFieldDouble.swift in Sources */,
+				B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
+				B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */,
 				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
 				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
 				B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */,

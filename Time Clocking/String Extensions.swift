@@ -59,7 +59,7 @@ extension String {
         return self.replacingCharacters(in: leadingWhitespace!, with: "")
     }
     
-    public func toNumber() -> Double? {
+    public func toNumber<T>() -> T? where T: BinaryFloatingPoint {
         var amount: Double?
         
         amount = Double(self)
@@ -73,7 +73,24 @@ extension String {
                 amount = number.doubleValue
             }
         }
-        
-        return amount
+        return T(amount!)
     }
+    
+    public func toNumber<T>() -> T? where T: BinaryInteger {
+        var amount: Double?
+        
+        amount = Double(self)
+        
+        if amount == nil {
+            // Didn't convert - try currency
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .currency
+            
+            if let number = formatter.number(from: self) {
+                amount = number.doubleValue
+            }
+        }
+        return T(amount!)
+    }
+    
 }

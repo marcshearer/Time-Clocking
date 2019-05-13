@@ -10,60 +10,44 @@ import Cocoa
 
 class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
     
-    private var editSettings: Settings!
-    
-    private var showQuantityTextFieldTag = 1
+    private var editSettings: SettingsViewModel!
+    private var viewModel: SettingsViewModel!
     
     @IBOutlet private weak var showUnitSegmentedControl: NSSegmentedControl!
+    @IBOutlet private weak var showQuantityLabel: NSTextField!
     @IBOutlet private weak var showQuantityTextField: NSTextField!
     @IBOutlet private weak var saveButton: NSButton!
+    @IBOutlet private weak var cancelButton: NSButton!
     
-    @IBAction func showUnitChanged(_ sender: NSSegmentedControl) {
-        self.editSettings.showUnit = TimeUnit(rawValue: self.showUnitSegmentedControl.tag(forSegment: self.showUnitSegmentedControl.selectedSegment))
-        self.checkValues()
-    }
-    
-    @IBAction func savePressed(_ sender: NSButton) {
-        Settings.current = self.editSettings.copy() as! Settings
-        Settings.current.save()
-        StatusMenu.shared.hidePopover(sender)
-    }
-    
-    @IBAction func cancelPressed(_ sender: NSButton) {
-        StatusMenu.shared.hidePopover(sender)
-    }
-    
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.editSettings = Settings.current.copy() as? Settings
-        self.reflectValues()
-        self.checkValues()
+        self.viewModel = Settings.current
+        self.editSettings = self.viewModel.copy() as? SettingsViewModel
+        self.setupBindings()
         
     }
     
-    func controlTextDidChange(_ notification: Notification) {
+    // MARK: - Setup bindings to view model ======================================================================
+    
+    private func setupBindings() {
         
-        if let textField = notification.object as? NSTextField {
-            
-            switch textField.tag {
-            case showQuantityTextFieldTag:
-                // Show quantity
-                self.editSettings.showQuantity = self.showQuantityTextField.integerValue
-            default:
-                break
-            }
-            self.checkValues()
+        // Setup field bindings
+        self.editSettings.showUnit.bidirectionalBind(to: self.showUnitSegmentedControl.reactive.integerValue)
+        self.editSettings.showQuantity.bidirectionalBind(to: self.showQuantityTextField)
+        self.editSettings.showQUantityLabel.bind(to: self.showQuantityLabel.reactive.editingString)
+        
+        // Setup enabled bindings
+        self.editSettings.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        
+        // Setup button bindings
+        _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
+            Settings.current = self.editSettings.copy() as! SettingsViewModel
+            Settings.saveDefaults()
+            StatusMenu.shared.hidePopover(self.saveButton)
+        }
+        
+        _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
+            StatusMenu.shared.hidePopover(self.cancelButton)
         }
     }
-    
-    private func checkValues() {
-        self.saveButton.isEnabled = true
-    }
-    
-    private func reflectValues() {
-        self.showUnitSegmentedControl.selectSegment(withTag: self.editSettings.showUnit.rawValue)
-        self.showQuantityTextField.integerValue = self.editSettings.showQuantity
-    }
-    
 }

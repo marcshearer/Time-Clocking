@@ -10,18 +10,18 @@ import Cocoa
 
 class Customers: NSObject, MaintenanceViewControllerDelegate {
     
-    let recordType = "Customers"
-    let detailStoryBoardName = "CustomerDetailViewController"
-    let detailViewControllerIdentifier = "CustomerDetailViewController"
+    public let recordType = "Customers"
+    public let detailStoryBoardName = "CustomerDetailViewController"
+    public let detailViewControllerIdentifier = "CustomerDetailViewController"
     
-    var layout: [Layout]! =
+    public var layout: [Layout]! =
         [ Layout(key: "customerCode",      title: "Customer code", width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
           Layout(key: "name",              title: "Name",          width: -100, alignment: .left,   type: .string, total: false,   pad: true),
-          Layout(key: "defaultHourlyRate", title: "Hourly rate",   width:   60, alignment: .right,  type: .double, total: false,   pad: false),
+          Layout(key: "defaultHourlyRate", title: "Hourly rate",   width:   90, alignment: .right,  type: .double, total: false,   pad: false),
           Layout(key: "closed",            title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     
-    static func load(specific: String? = nil, includeClosed: Bool = false) -> [CustomerMO] {
+    static public func load(specific: String? = nil, includeClosed: Bool = false) -> [CustomerMO] {
         
         var predicate: [NSPredicate] = []
         if !includeClosed {
@@ -34,7 +34,7 @@ class Customers: NSObject, MaintenanceViewControllerDelegate {
         return CoreData.fetch(from: "Customers", filter: predicate, sort: [("name", .ascending)])
     }
     
-    static func getName(customerCode: String) -> String {
+    static public func getName(customerCode: String) -> String {
         var customerName = ""
         if customerCode != "" {
             let customers = Customers.load(specific: customerCode, includeClosed: true)

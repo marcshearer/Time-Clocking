@@ -10,6 +10,8 @@ import Cocoa
 
 class StatusMenu: NSObject, NSMenuDelegate {
     
+    public static let shared = StatusMenu()
+    
     private let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
     
     private var statusMenu: NSMenu
@@ -28,20 +30,12 @@ class StatusMenu: NSObject, NSMenuDelegate {
     private var updateTimer: Timer!
 
     private var clockingViewController: ClockingViewController?
-    private let clockingsPopover = NSPopover()
     private var reportingViewController: ReportingViewController?
-    private let reportingPopover = NSPopover()
     private var resourcesViewController: MaintenanceViewController?
-    private let resourcesPopover = NSPopover()
     private var customersViewController: MaintenanceViewController?
-    private let customersPopover = NSPopover()
     private var projectsViewController: MaintenanceViewController?
-    private let projectsPopover = NSPopover()
     private var settingsViewController: SettingsViewController?
-    private let settingsPopover = NSPopover()
-    private var popover: NSPopover?
-    
-    public static let shared = StatusMenu()
+    private var popover = NSPopover()
     
     override init() {
         
@@ -75,8 +69,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
     }
     
     internal func menuWillOpen(_ menu: NSMenu) {
-        self.popover?.performClose(self)
-        self.setMenuTitle(self)
+        self.popover.performClose(self)
+        self.update()
     }
     
     public func update() {
@@ -175,69 +169,60 @@ class StatusMenu: NSObject, NSMenuDelegate {
         
         // Retrieve or create the view controller
         self.clockingViewController = self.showMenubarWindow(menubarViewController: self.clockingViewController, identifier: "ClockingViewController") as? ClockingViewController
-        self.clockingsPopover.contentViewController = self.clockingViewController
-        self.showPopover(self.clockingsPopover)
+        self.showPopover(self.clockingViewController!)
     }
     
     @objc private func showSettings(_ sender: Any?) {
         
         // Retrieve or create the view controller
         self.settingsViewController = self.showMenubarWindow(menubarViewController: self.settingsViewController, identifier: "SettingsViewController") as? SettingsViewController
-        self.settingsPopover.contentViewController = self.settingsViewController
-        self.showPopover(self.settingsPopover)
+        self.showPopover(self.settingsViewController!)
     }
     
     @objc private func showReporting(_ sender: Any?) {
         
         // Retrieve or create the view controller
         self.reportingViewController = self.showMenubarWindow(menubarViewController: self.reportingViewController, identifier: "ReportingViewController") as? ReportingViewController
-        self.reportingPopover.contentViewController = self.reportingViewController
-        self.showPopover(self.reportingPopover)
+        self.showPopover(self.reportingViewController!)
     }
     
     @objc private func showResources(_ sender: Any?) {
         // Retrieve or create the view controller
         self.resourcesViewController = self.showMenubarWindow(menubarViewController: self.resourcesViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
         self.resourcesViewController?.delegate = Resources()
-        self.resourcesPopover.contentViewController = self.resourcesViewController
-        self.showPopover(self.resourcesPopover)
+        self.showPopover(self.resourcesViewController!)
     }
     
     @objc private func showCustomers(_ sender: Any?) {
         // Retrieve or create the view controller
         self.customersViewController = self.showMenubarWindow(menubarViewController: self.customersViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
         self.customersViewController?.delegate = Customers()
-        self.customersPopover.contentViewController = self.customersViewController
-        self.showPopover(self.customersPopover)
+        self.showPopover(self.customersViewController!)
     }
     
     @objc private func showProjects(_ sender: Any?) {
         // Retrieve or create the view controller
         self.projectsViewController = self.showMenubarWindow(menubarViewController: self.projectsViewController, identifier: "MaintenanceViewController") as? MaintenanceViewController
         self.projectsViewController?.delegate = Projects()
-        self.projectsPopover.contentViewController = self.projectsViewController
-        self.showPopover(self.projectsPopover)
+        self.showPopover(self.projectsViewController!)
     }
     
-    private func showPopover(_ popover: NSPopover) {
+    private func showPopover(_ viewController: NSViewController) {
         
         if let button = self.statusItem.button {
             
             // Show the popover
-            popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
-            popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-            popover.becomeFirstResponder()
-            
-            // Save current popover
-            self.popover = popover
-            
+            self.popover.contentViewController = viewController
+            self.popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
+            self.popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+            self.popover.becomeFirstResponder()
         }
     }
     
     @objc public func hidePopover(_ sender: Any?) {
         
         // Close the popover
-        self.popover?.performClose(self)
+        self.popover.performClose(self)
 
     }
     
@@ -257,9 +242,5 @@ class StatusMenu: NSObject, NSMenuDelegate {
         }
         
         return returnedViewController
-    }
-    
-    private func setMenuTitle(_ sender: Any) {
-        self.stateMenuItem?.title = TimeEntry.current.getStateDescription()
     }
 }

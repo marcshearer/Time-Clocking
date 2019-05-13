@@ -10,7 +10,7 @@ import Foundation
 import Bond
 import ReactiveKit
 
-class ResourceViewModel : NSObject, ViewModelDelegate{
+class ResourceViewModel : NSObject, MaintenanceViewModelDelegate{
     
     let recordType = "Resources"
     
@@ -31,6 +31,8 @@ class ResourceViewModel : NSObject, ViewModelDelegate{
         }
     }
     
+    // MARK: - Setup view model mappings
+    
     func setupMappings(createMode: Bool) {
         
         // Can only save if resource code and name non-blank
@@ -41,6 +43,8 @@ class ResourceViewModel : NSObject, ViewModelDelegate{
         // Can only close if not in create mode
         self.canClose.value = !createMode
     }
+    
+    // MARK: - Methods to copy to / from managed object =================================================================
     
     func copy(to record: NSManagedObject) {
         

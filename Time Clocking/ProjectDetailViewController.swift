@@ -29,7 +29,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     @IBOutlet private weak var saveButton: NSButton!
     
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
 
         // Setup record
@@ -41,6 +41,15 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         // Setup view model
         self.projectViewModel = ProjectViewModel(from: self.projectMO)
         self.setupBingings(createMode: projectMO == nil)
+    }
+    
+    override internal func viewDidAppear() {
+        super.viewDidAppear()
+        if self.projectMO == nil {
+            self.customerCodePopupButton.becomeFirstResponder()
+        } else {
+            self.projectCodeTextField.becomeFirstResponder()
+        }
     }
     
     private func setupBingings(createMode: Bool) {
@@ -74,14 +83,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         }
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        if self.projectMO == nil {
-            self.customerCodePopupButton.becomeFirstResponder()
-        } else {
-            self.projectCodeTextField.becomeFirstResponder()
-        }
-    }
+    // MARK: - Methods to save / delete records =================================================================
     
     private func saveRecord() {
         let record = Maintenance.save(record:        projectMO,

@@ -8,13 +8,13 @@
         <!--Reporting Invoice Prompt View Controller-->
         <scene sceneID="CXn-Ip-910">
             <objects>
-                <viewController storyboardIdentifier="ReportingInvoicePromptViewController" id="LaL-pz-WOJ" customClass="ReportingInvoicePromptViewController" customModule="Time_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportingInvoicePromptViewController" id="LaL-pz-WOJ" customClass="ReportingInvoicePromptViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="6TW-QM-tl8">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="150"/>
+                        <rect key="frame" x="0.0" y="0.0" width="290" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IJu-Ff-bKp">
-                                <rect key="frame" x="18" y="113" width="101" height="17"/>
+                                <rect key="frame" x="18" y="233" width="101" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Invoice number:" id="KVu-ZJ-q6b">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -22,7 +22,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tuv-0v-nAV">
-                                <rect key="frame" x="127" y="108" width="96" height="22"/>
+                                <rect key="frame" x="127" y="228" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="qJe-bJ-OTU"/>
                                 </constraints>
@@ -33,7 +33,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wXA-IU-Twg">
-                                <rect key="frame" x="134" y="13" width="82" height="32"/>
+                                <rect key="frame" x="174" y="13" width="82" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="JTy-3p-yrX"/>
                                 </constraints>
@@ -44,13 +44,10 @@
 Gw
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="cancelPressed:" target="LaL-pz-WOJ" id="sIA-3D-72M"/>
-                                </connections>
                             </button>
                             <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXc-9G-G61">
-                                <rect key="frame" x="127" y="73" width="100" height="27"/>
-                                <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="fw0-cg-uzA">
+                                <rect key="frame" x="127" y="65" width="139" height="148"/>
+                                <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="clockAndCalendar" id="fw0-cg-uzA">
                                     <font key="font" metaFont="system"/>
                                     <date key="date" timeIntervalSinceReferenceDate="-595929600">
                                         <!--1982-02-12 16:00:00 +0000-->
@@ -60,7 +57,7 @@ Gw
                                 </datePickerCell>
                             </datePicker>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3vb-1s-mBT">
-                                <rect key="frame" x="20" y="76" width="83" height="17"/>
+                                <rect key="frame" x="20" y="196" width="83" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Invoice Date:" id="7U4-M6-dau">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -79,20 +76,17 @@ Gw
 DQ
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="okPressed:" target="LaL-pz-WOJ" id="bhr-xf-uys"/>
-                                </connections>
                             </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="tuv-0v-nAV" firstAttribute="top" secondItem="6TW-QM-tl8" secondAttribute="top" constant="20" id="0g3-De-evE"/>
-                            <constraint firstItem="YXc-9G-G61" firstAttribute="centerY" secondItem="3vb-1s-mBT" secondAttribute="centerY" id="6hA-u7-rKL"/>
                             <constraint firstItem="1Ir-WD-DRK" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="40" id="8F0-tS-pYz"/>
                             <constraint firstItem="3vb-1s-mBT" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="22" id="CCH-LU-FTV"/>
                             <constraint firstAttribute="bottom" secondItem="1Ir-WD-DRK" secondAttribute="bottom" constant="20" id="GaJ-ZS-pCK"/>
                             <constraint firstItem="IJu-Ff-bKp" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="20" id="Heg-sq-csq"/>
                             <constraint firstAttribute="bottom" secondItem="wXA-IU-Twg" secondAttribute="bottom" constant="20" id="IST-xK-pSX"/>
                             <constraint firstItem="IJu-Ff-bKp" firstAttribute="top" secondItem="6TW-QM-tl8" secondAttribute="top" constant="20" id="L8J-OQ-8EV"/>
+                            <constraint firstItem="YXc-9G-G61" firstAttribute="top" secondItem="3vb-1s-mBT" secondAttribute="top" id="Mkh-Rl-EQx"/>
                             <constraint firstAttribute="trailing" secondItem="wXA-IU-Twg" secondAttribute="trailing" constant="40" id="fZI-ng-x0W"/>
                             <constraint firstItem="YXc-9G-G61" firstAttribute="leading" secondItem="tuv-0v-nAV" secondAttribute="leading" id="hYm-Re-bPS"/>
                             <constraint firstItem="tuv-0v-nAV" firstAttribute="leading" secondItem="IJu-Ff-bKp" secondAttribute="trailing" constant="10" id="oae-4X-Wgi"/>
@@ -100,7 +94,8 @@ DQ
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="invoiceDatePicker" destination="YXc-9G-G61" id="XMC-AJ-Sw2"/>
+                        <outlet property="cancelButton" destination="wXA-IU-Twg" id="nJd-wp-ovi"/>
+                        <outlet property="invoiceDateDatePicker" destination="YXc-9G-G61" id="XMC-AJ-Sw2"/>
                         <outlet property="invoiceNumberTextField" destination="tuv-0v-nAV" id="HOc-Iy-5Xe"/>
                         <outlet property="okButton" destination="1Ir-WD-DRK" id="qWI-RP-iYx"/>
                     </connections>

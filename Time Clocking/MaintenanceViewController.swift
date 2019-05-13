@@ -32,35 +32,32 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     
     private var tableViewer: CoreDataTableViewer!
 
+    @IBOutlet private weak var addButton: NSButton!
+    @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var tableView: NSTableView!
     
-    @IBAction func addPressed(_ sender: NSButton) {
-        self.editRecord(completion: addCompletion)
-    }
-
-    @IBAction func closePressed(_ sender: NSButton) {
-        StatusMenu.shared.hidePopover(sender)
-    }
-
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
+        self.setupBindings()
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.delegate = self
     }
     
-    override func viewDidAppear() {
+    override internal func viewDidAppear() {
         super.viewDidAppear()
         self.tableViewer.show(recordType: self.delegate.recordType, layout: self.delegate.layout)
     }
     
-    func shouldSelect(recordType: String, record: NSManagedObject) -> Bool {
+    // MARK: - Core Data Table Viewer Delegate Handlers ==========================================================
+    
+    internal func shouldSelect(recordType: String, record: NSManagedObject) -> Bool {
         if recordType == self.delegate.recordType {
             self.editRecord(record, completion: editCompletion)
          }
         return false
     }
     
-    func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
         return self.delegate?.derivedKey?(recordType: recordType, key: key, record: record) ?? ""
     }
     
@@ -73,12 +70,26 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
         self.presentAsSheet(viewController)
     }
     
+    // MARK: - Completion handlers for edit record================================================================ 
+    
     private func addCompletion(_ record: NSManagedObject, deleted: Bool) {
         tableViewer.append(recordType: self.delegate.recordType, record: record)
     }
     
     private func editCompletion(_ record: NSManagedObject, deleted: Bool) {
         tableViewer.commit(recordType: self.delegate.recordType, record: record, action: (deleted ? .delete : .update))
+    }
+    
+    // MARK: - Setup bindings to view model ======================================================================
+    
+    private func setupBindings() {
+        _ = addButton.reactive.controlEvent.observeNext { (_) in
+            self.editRecord(completion: self.addCompletion)
+        }
+        
+        _ = closeButton.reactive.controlEvent.observeNext { (_) in
+            StatusMenu.shared.hidePopover(self.closeButton)
+        }
     }
     
 }

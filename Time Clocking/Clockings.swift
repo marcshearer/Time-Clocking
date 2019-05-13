@@ -52,7 +52,7 @@ class Clockings {
         }
     }
     
-    static func editClocking(_ clockingMO: ClockingMO, delegate: ClockingDetailDelegate, from viewController: NSViewController) {
+    static public func editClocking(_ clockingMO: ClockingMO, delegate: ClockingDetailDelegate, from viewController: NSViewController) {
         let storyboard = NSStoryboard(name: NSStoryboard.Name("ClockingDetailViewController"), bundle: nil)
         let clockingDetailViewController = storyboard.instantiateController(withIdentifier: "ClockingDetailViewController") as! ClockingDetailViewController
         clockingDetailViewController.clockingMO = clockingMO
@@ -60,29 +60,20 @@ class Clockings {
         viewController.presentAsSheet(clockingDetailViewController)
     }
     
-    static func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    static public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
         var result = ""
         switch recordType {
         case "Clockings":
             let clockingMO = record as! ClockingMO
             switch key {
             case "customer":
-                let customers = Customers.load(specific: clockingMO.customerCode, includeClosed: true)
-                if customers.count == 1 {
-                    result = customers[0].name ?? customers[0].customerCode!
-                }
+                result = Customers.getName(customerCode: clockingMO.customerCode!)
                 
             case "project":
-                let projects = Projects.load(specificCustomer: clockingMO.customerCode, specificProject: clockingMO.projectCode, includeClosed: true)
-                if projects.count == 1 {
-                    result = projects[0].title ?? projects[0].projectCode!
-                }
+                result = Projects.getName(customerCode: clockingMO.customerCode!, projectCode: clockingMO.projectCode!)
                 
             case "resource":
-                let resources = Resources.load(specific: clockingMO.resourceCode, includeClosed: true)
-                if resources.count == 1 {
-                    result = resources[0].name ?? resources[0].resourceCode!
-                }
+                result = Resources.getName(resourceCode: clockingMO.resourceCode!)
                 
             case "duration":
                 result = TimeEntry.getDurationText(start: clockingMO.startTime!, end: clockingMO.endTime!)

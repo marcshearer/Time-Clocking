@@ -11,11 +11,11 @@ import CoreData
 
 class Projects: NSObject, MaintenanceViewControllerDelegate {
     
-    let recordType = "Projects"
-    let detailStoryBoardName = "ProjectDetailViewController"
-    let detailViewControllerIdentifier = "ProjectDetailViewController"
+    public let recordType = "Projects"
+    public let detailStoryBoardName = "ProjectDetailViewController"
+    public let detailViewControllerIdentifier = "ProjectDetailViewController"
     
-    let layout: [Layout]! =
+    public let layout: [Layout]! =
         [ Layout(key: "=customer",    title: "Customer",      width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
           Layout(key: "projectCode",  title: "Project code",  width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
           Layout(key: "title",        title: "Project title", width: -100, alignment: .left,   type: .string, total: false,   pad: true),
@@ -23,26 +23,7 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
           Layout(key: "closed",       title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     
-    func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        var result = ""
-        
-        switch key {
-        case "customer":
-            if let customerCode = record.value(forKey: "customerCode") as? String {
-                let customers = Customers.load(specific: customerCode, includeClosed: true)
-                if customers.count == 1 {
-                    result = customers[0].name ?? customers[0].customerCode!
-                }
-            }
-            
-        default:
-            break
-        }
-        
-        return result
-    }
-    
-    static func load(specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ProjectMO] {
+    static public func load(specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ProjectMO] {
         
         var predicate: [NSPredicate] = []
         if !includeClosed {
@@ -58,7 +39,7 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
         return CoreData.fetch(from: "Projects", filter: predicate, sort: [("customerCode", .ascending), ("title", .ascending)])
     }
     
-    static func getName(customerCode: String, projectCode: String) -> String {
+    static public func getName(customerCode: String, projectCode: String) -> String {
         var projectName = ""
         if customerCode != "" && projectCode != "" {
             let projects = Projects.load(specificCustomer: customerCode, specificProject: projectCode, includeClosed: true)

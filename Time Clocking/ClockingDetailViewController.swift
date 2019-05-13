@@ -38,6 +38,8 @@ class ClockingDetailViewController: NSViewController {
         self.setupBindings()
     }
     
+    // MARK: - Setup bindings to view model ======================================================================
+    
     private func setupBindings() {
         // Get view model
         self.viewModel = ClockingViewModel(from: self.clockingMO, state: .editing)
@@ -61,12 +63,12 @@ class ClockingDetailViewController: NSViewController {
         self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.invoiceNumberTextField.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.invoiceDateDatePicker.reactive.isEnabled)
-        self.viewModel.canEditProjectValuesAlpha.bind(to: self.invoiceDateDatePicker.reactive.alphaValue)
+        self.viewModel.canEditInvoiceDate.bind(to: self.invoiceDateDatePicker.reactive.isEnabled)
+        self.viewModel.canEditInvoiceDate.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.invoiceDateDatePicker.reactive.alphaValue)
         self.viewModel.canEditTimes.bind(to: self.startTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimesAlpha.bind(to: self.startTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
         self.viewModel.canEditTimes.bind(to: self.endTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimesAlpha.bind(to: self.endTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
         self.viewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
         self.deleteButton.isEnabled = true
         self.cancelButton.isEnabled = true

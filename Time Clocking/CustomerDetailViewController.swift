@@ -26,7 +26,7 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup record
@@ -38,6 +38,8 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
         customerViewModel = CustomerViewModel(from: self.customerMO)
         self.setupBindings()
     }
+    
+    // MARK: - Setup bindings to view model ======================================================================
     
     private func setupBindings() {
 
@@ -68,7 +70,10 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
         }
     }
     
+    // MARK: - Methods to save / delete records =================================================================
+    
     private func saveRecord() {
+        
         let record = Maintenance.save(record:  self.customerMO,
                                       keyColumn:         ["customerCode"],
                                       beforeValue:       [self.originalCustomerCode],

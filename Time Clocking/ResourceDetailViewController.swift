@@ -25,7 +25,7 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
         
         // Setup record
@@ -37,6 +37,8 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
         self.resourceViewModel = ResourceViewModel(from: self.resourceMO)
         self.setupBindings()
     }
+    
+    // MARK: - Setup bindings to view model ======================================================================
     
     private func setupBindings() {
         
@@ -66,7 +68,10 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
         }
     }
     
+    // MARK: - Methods to save / delete records ================================================================= 
+    
     private func saveRecord() {
+        
         let record = Maintenance.save(record:                   resourceMO,
                                       keyColumn:                ["resourceCode"],
                                       beforeValue:              [self.originalResourceCode],

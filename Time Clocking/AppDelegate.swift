@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         registerDefaults()
         
         // Load settings
-        Settings.current.load()
+        Settings.loadDefaults()
         
         // Load latest time entry
         TimeEntry.loadDefaults()
@@ -38,8 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func registerDefaults() {
         UserDefaults.standard.register(defaults: [
             "showUnit":         TimeUnit.months.rawValue,
-            "showQuantity":     1,
-            "showFromStart":    true
+            "showQuantity":     2,
             ])
     }
 

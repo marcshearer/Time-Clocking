@@ -10,14 +10,14 @@ import Foundation
 import Bond
 import ReactiveKit
 
-class ProjectViewModel: NSObject, ViewModelDelegate {
+class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
 
-    let recordType = "Projects"
+    public let recordType = "Projects"
     
     public var customer: ObservablePopupString!
     public var projectCode = Observable<String>("")
     public var title = Observable<String>("")
-    public var hourlyRate = ObservableTextFieldDouble()
+    public var hourlyRate = ObservableTextFieldFloat<Double>()
     public var closed = Observable<Int>(0)
     public var canSave = Observable<Bool>(false)
     public var canClose = Observable<Bool>(false)
@@ -33,6 +33,8 @@ class ProjectViewModel: NSObject, ViewModelDelegate {
         }
     }
     
+    // MARK: - Setup view model mappings
+
     private func setupMappings(createMode: Bool) {
         
         self.customer = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name")
@@ -57,6 +59,8 @@ class ProjectViewModel: NSObject, ViewModelDelegate {
         self.canEditCustomer.value = createMode
         
     }
+    
+    // MARK: - Methods to copy to / from managed object =================================================================
     
     public func copy(to record: NSManagedObject) {
         

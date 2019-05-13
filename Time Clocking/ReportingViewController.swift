@@ -27,20 +27,23 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     
     override internal func viewDidLoad() {
         super.viewDidLoad()
-        self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
-        self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleFormat = "£ %.2f"
-        self.tableViewer.delegate = self
+        self.setupTableViewer()
         self.setupLayouts()
     }
     
     override internal func viewDidAppear() {
+        self.setupViewModel()
+        self.setupBindings()
+        self.loadClockings()
+    }
+    
+    // MARK: - Setup bindings to view model ======================================================================
+    
+    private func setupViewModel() {
         self.viewModel = ClockingViewModel()
         self.viewModel.state.value = State.stopped.rawValue
         self.viewModel.startTime.value = Date().startOfYear(years: 2)!
         self.viewModel.endTime.value = Date()
-        self.setupBindings()
-        self.loadClockings()
     }
     
     private func setupBindings() {
@@ -80,6 +83,8 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
     }
     
+    // MARK: - Core Data Viewer Delegate Handlers ======================================================================
+    
     internal func shouldSelect(recordType: String, record: NSManagedObject) -> Bool {
         switch recordType {
         case "Clockings":
@@ -91,9 +96,15 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         return false
     }
     
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
+    }
+    
     private func editClocking(_ clockingMO: ClockingMO) {
         Clockings.editClocking(clockingMO, delegate: self, from: self)
     }
+    
+    // MARK: - Clocking Detail Delegate Handlers ======================================================================
     
     internal func clockingDetailComplete(clockingMO: ClockingMO, action: Action) {
         if action != .none {
@@ -101,9 +112,7 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
-    }
+    // MARK: - Clocking management methods ======================================================================
     
     private func loadClockings() {
         var predicate: [NSPredicate]? = []
@@ -128,6 +137,15 @@ class ReportingViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
         
         self.tableViewer.show(recordType: "Clockings", layout: clockingsLayout, sort: [("startTime", .ascending)], predicate: predicate)
+    }
+    
+    // MARK: - Core Data table viewer setup methods ======================================================================
+    
+    private func setupTableViewer() {
+        self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
+        self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
+        self.tableViewer.doubleFormat = "£ %.2f"
+        self.tableViewer.delegate = self
     }
     
     private func setupLayouts() {

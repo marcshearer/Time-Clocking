@@ -10,13 +10,13 @@ import Foundation
 import Bond
 import ReactiveKit
 
-class CustomerViewModel: NSObject, ViewModelDelegate {
+class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
     
     let recordType = "Customers"
     
     var customerCode = Observable<String>("")
     var name = Observable<String>("")
-    var defaultHourlyRate = ObservableTextFieldDouble()
+    var defaultHourlyRate = ObservableTextFieldFloat<Double>()
     var closed = Observable<Int>(0)
     var canSave = Observable<Bool>(false)
     var canClose = Observable<Bool>(false)
@@ -30,6 +30,8 @@ class CustomerViewModel: NSObject, ViewModelDelegate {
         }
     }
     
+    // MARK: - Setup view model mappings
+
     private func setupMappings(createMode: Bool) {
         
         // Can only save with non-blank customer code and name
@@ -41,6 +43,8 @@ class CustomerViewModel: NSObject, ViewModelDelegate {
         self.canClose.value = !createMode
         
     }
+    
+    // MARK: - Methods to copy to / from managed object =================================================================
     
     public func copy(to record: NSManagedObject) {
         

@@ -37,10 +37,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
-        self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleFormat = "£ %.2f"
-        self.tableViewer.delegate = self
+        self.setupTableViewer()
         self.setupLayouts()
         self.setupBindings()
     }
@@ -53,6 +50,8 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     override func viewDidDisappear() {
         self.stopUpdateTimer()
     }
+    
+    // MARK: - Setup bindings to view model ====================================================================== 
 
     private func setupBindings() {
         // Get view model
@@ -76,9 +75,9 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
         self.viewModel.canEditTimes.bind(to: self.startTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimesAlpha.bind(to: self.startTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
         self.viewModel.canEditTimes.bind(to: self.endTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimesAlpha.bind(to: self.endTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
         self.viewModel.canStart.bind(to: self.startButton.reactive.isEnabled)
         self.viewModel.canStop.bind(to: self.stopButton.reactive.isEnabled)
         self.viewModel.canStop.bind(to: self.stopAndAddButton.reactive.isEnabled)
@@ -89,29 +88,35 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         
         // Bind button actions
         _ = self.startButton.reactive.controlEvent.observeNext { (_) in
+            // Start button
             self.viewModel.state.value = State.started.rawValue
         }
         
         _ = self.stopButton.reactive.controlEvent.observeNext { (_) in
+            // Stop button
             self.viewModel.state.value = State.stopped.rawValue
         }
         
         _ = self.stopAndAddButton.reactive.controlEvent.observeNext { (_) in
+            // Stop and add button
             self.viewModel.state.value = State.stopped.rawValue
             self.addClocking()
             self.viewModel.state.value = State.notStarted.rawValue
         }
         
         _ = self.addButton.reactive.controlEvent.observeNext { (_) in
+            // Add button
             self.addClocking()
             self.viewModel.state.value = State.notStarted.rawValue
         }
         
         _ = self.resetButton.reactive.controlEvent.observeNext { (_) in
+            // Reset button
             self.viewModel.state.value = State.notStarted.rawValue
         }
         
         _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
+            // Close button
             self.stopUpdateTimer()
             TimeEntry.saveDefaults()
             StatusMenu.shared.hidePopover(self.closeButton)
@@ -122,35 +127,39 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             TimeEntry.saveDefaults()
         }
     }
-    
+
+    // MARK: - Core Data Viewer Delegate Handlers ======================================================================
+
     internal func shouldSelect(recordType: String, record: NSManagedObject) -> Bool {
+        // Triggered when a row is clicked
+        
         switch recordType {
         case "Clockings":
-            let clockingMO = record as! ClockingMO
-            self.editClocking(clockingMO)
+            // Call the generic clocking detail routine
+            Clockings.editClocking(record as! ClockingMO, delegate: self, from: self)
         default:
             break
         }
         return false
     }
     
-    private func editClocking(_ clockingMO: ClockingMO) {
-       Clockings.editClocking(clockingMO, delegate: self, from: self)
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
     }
-    
+
+    // MARK: - Clocking Detail Delegate Handlers ======================================================================
+
     internal func clockingDetailComplete(clockingMO: ClockingMO, action: Action) {
         if action != .none {
             self.tableViewer.commit(recordType: "Clockings", record: clockingMO, action: action)
         }
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
-    }
+    // MARK: - Timer methods ==========================================================================================
     
     private func startUpdateTimer() {
         self.updateTimer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(1),
+            timeInterval: TimeInterval(5),
             target: self,
             selector: #selector(ClockingViewController.timerActivated(_:)),
             userInfo: nil,
@@ -174,6 +183,8 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         }
     }
     
+    // MARK: - Clocking management methods ======================================================================
+    
     private func loadClockings() {
         var predicate: [NSPredicate]? = [NSPredicate(format: "invoiceNumber = ''")]
         if let startDate = self.startDate() {
@@ -188,20 +199,29 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     }
     
     private func startDate() -> Date? {
-        switch Settings.current.showUnit! {
+        switch TimeUnit(rawValue: Settings.current.showUnit.value)! {
         case .weeks:
-            return Date().startOfWeek(weeks: Settings.current.showQuantity - 1)
+            return Date().startOfWeek(weeks: Settings.current.showQuantity.value - 1)
             
         case .months:
-            return Date().startOfMonth(months: Settings.current.showQuantity - 1)
+            return Date().startOfMonth(months: Settings.current.showQuantity.value - 1)
             
         case .years:
-            return Date().startOfYear(years: Settings.current.showQuantity - 1)
+            return Date().startOfYear(years: Settings.current.showQuantity.value - 1)
             
         default:
-            return Date().startOfDay(days: Settings.current.showQuantity - 1)
+            return Date().startOfDay(days: Settings.current.showQuantity.value - 1)
             
         }
+    }
+
+    // MARK: - Core Data table viewer setup methods ======================================================================
+    
+    private func setupTableViewer() {
+        self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
+        self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
+        self.tableViewer.doubleFormat = "£ %.2f"
+        self.tableViewer.delegate = self
     }
     
     private func setupLayouts() {

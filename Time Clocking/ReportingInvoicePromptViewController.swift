@@ -8,30 +8,62 @@
 
 import Cocoa
 
-class ReportingInvoicePromptViewController : NSViewController, NSTextDelegate {
+class ReportingInvoicePromptViewController : NSViewController {
     
     public var popover: NSPopover!
     public var reportingViewController: ReportingViewController!
+    
     private var clockingIterator: (((NSManagedObject)->())->())!
+    private let viewModel = ClockingViewModel()
     
     @IBOutlet private weak var okButton: NSButton!
+    @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var invoiceNumberTextField: NSTextField!
-    @IBOutlet private weak var invoiceDatePicker: NSDatePicker!
+    @IBOutlet private weak var invoiceDateDatePicker: NSDatePicker!
     
-    @IBAction func okPressed(_ sender: NSButton) {
-        self.setToInvoiced(invoiceNumber: invoiceNumberTextField.stringValue,
-                                                    invoiceDate: invoiceDatePicker.dateValue)
-        self.popover.performClose(self)
-    }
-    
-    @IBAction func cancelPressed(_ sender: NSButton) {
-        self.popover.performClose(self)
-    }
-    
-    override func viewDidLoad() {
+    override internal func viewDidLoad() {
         super.viewDidLoad()
-        invoiceDatePicker.dateValue = Date()
+        self.setupBindings()
     }
+    
+    // MARK: - Setup bindings to view model ====================================================================== -
+    
+    private func setupBindings() {
+        
+        // Setup field bindings
+        self.viewModel.invoiceNumber.bidirectionalBind(to: self.invoiceNumberTextField.reactive.editingString)
+        self.viewModel.invoiceDate.bidirectionalBind(to: self.invoiceDateDatePicker)
+        
+        // Setup enabled bindings
+        self.viewModel.canEditInvoiceDateMarkInvoiced.bind(to: self.invoiceDateDatePicker.reactive.isEnabled)
+        self.viewModel.canEditInvoiceDateMarkInvoiced.map { $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.invoiceDateDatePicker.reactive.alphaValue)
+        
+        // Setup button bindings
+        _ = self.okButton.reactive.controlEvent.observeNext { (_) in
+            self.setToInvoiced(invoiceNumber: self.invoiceNumberTextField.stringValue,
+                               invoiceDate: self.invoiceDateDatePicker.dateValue)
+            self.popover.performClose(self.okButton)
+        }
+        
+        _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
+            self.popover.performClose(self.cancelButton)
+        }
+        
+    }
+    
+    // MARK: - Action method - to set invoice details ===================================================== -
+    
+    public func setToInvoiced(invoiceNumber: String, invoiceDate: Date) {
+        _ = CoreData.update {
+            self.clockingIterator({ (record) in
+                let clockingMO = record as! ClockingMO
+                clockingMO.invoiceNumber = invoiceNumber
+                clockingMO.invoiceDate = invoiceDate
+            })
+        }
+    }
+    
+    // MARK: - Method to show this view =================================================================== -
     
     static public func show(relativeTo: NSView, clockingIterator: @escaping ((NSManagedObject)->())->()) {
         
@@ -49,15 +81,4 @@ class ReportingInvoicePromptViewController : NSViewController, NSTextDelegate {
         popover.show(relativeTo: relativeTo.bounds, of: relativeTo, preferredEdge: .maxX)
         
     }
-    
-    public func setToInvoiced(invoiceNumber: String, invoiceDate: Date) {
-        _ = CoreData.update {
-            self.clockingIterator({ (record) in
-                let clockingMO = record as! ClockingMO
-                clockingMO.invoiceNumber = invoiceNumber
-                clockingMO.invoiceDate = invoiceDate
-            })
-        }
-    }
 }
-

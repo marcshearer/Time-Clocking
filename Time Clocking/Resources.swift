@@ -10,17 +10,17 @@ import Foundation
 
 class Resources: NSObject, MaintenanceViewControllerDelegate {
     
-    let recordType = "Resources"
-    let detailStoryBoardName = "ResourceDetailViewController"
-    let detailViewControllerIdentifier = "ResourceDetailViewController"
+    public let recordType = "Resources"
+    public let detailStoryBoardName = "ResourceDetailViewController"
+    public let detailViewControllerIdentifier = "ResourceDetailViewController"
     
-    let layout: [Layout]! =
+    public let layout: [Layout]! =
         [ Layout(key: "resourceCode", title: "Resource code", width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
           Layout(key: "name",         title: "Name",          width: -100, alignment: .left,   type: .string, total: false,   pad: true),
           Layout(key: "closed",       title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     
-    static func load(specific: String? = nil, includeClosed: Bool = false) -> [ResourceMO] {
+    static public func load(specific: String? = nil, includeClosed: Bool = false) -> [ResourceMO] {
         
         var predicate: [NSPredicate] = []
         if !includeClosed {
@@ -33,7 +33,7 @@ class Resources: NSObject, MaintenanceViewControllerDelegate {
         return CoreData.fetch(from: "Resources", filter: predicate, sort: [("name", .ascending)])
     }
     
-    static func getName(resourceCode: String) -> String {
+    static public func getName(resourceCode: String) -> String {
         var resourceName = ""
         if resourceCode != "" {
             let resources = Resources.load(specific: resourceCode, includeClosed: true)

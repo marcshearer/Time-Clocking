@@ -28,7 +28,7 @@ class ClockingViewModel {
     public var notes = Observable<String>("")
     public var startTime = ObservablePickerDate()
     public var endTime = ObservablePickerDate()
-    public var hourlyRate = ObservableTextFieldDouble()
+    public var hourlyRate = ObservableTextFieldFloat<Double>()
     public var amount = Observable<Double>(0)
     public var invoiceNumber = Observable<String>("")
     public var invoiceDate = ObservablePickerDate()
@@ -41,10 +41,10 @@ class ClockingViewModel {
 
     public var canEditProjectCode = Observable<Bool>(false)
     public var canEditProjectValues = Observable<Bool>(false)
-    public var canEditProjectValuesAlpha = Observable<CGFloat>(1.0)
     public var canEditTimes = Observable<Bool>(false)
-    public var canEditTimesAlpha = Observable<CGFloat>(1.0)
     public var canEditInvoiceNumber = Observable<Bool>(false)
+    public var canEditInvoiceDate = Observable<Bool>(false)
+    public var canEditInvoiceDateMarkInvoiced = Observable<Bool>(false)
     public var canEditOther = Observable<Bool>(false)
     public var canStart = Observable<Bool>(false)
     public var canStop = Observable<Bool>(false)
@@ -74,23 +74,25 @@ class ClockingViewModel {
 
     private func setupMappings() {
         
+        // Set up special observable classes
         self.resourceCode = ObservablePopupString(recordType: "Resources", codeKey: "resourceCode", titleKey: "name")
         self.customerCode = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name")
         self.projectCode = ObservablePopupString(recordType: "Projects", codeKey: "projectCode", titleKey: "title", where: (self.customerCode.value == "" ? nil : "customerCode"), equals: self.customerCode.value)
         
+        // Customer Change
         _ = self.customerCode.observable.observeNext { (_) in
             // Editable for project code - requires customer
             self.canEditProjectCode.value = (self.customerCode.value != "")
-            // Reload project list
+            // Reload project list when customer changes
             self.projectCode.reloadValues(where: (self.customerCode.value == "" ? nil : "customerCode"), equals: self.customerCode.value)
-            // Clear project code
+            // Clear project code when customer changes
             self.projectCode.value = ""
         }
 
+        // Project changes
         _ = self.projectCode.observable.observeNext { (_) in
             // Editable for project values - requires project code to be non-blank
             self.canEditProjectValues.value = (self.projectCode.value != "")
-            self.canEditProjectValuesAlpha.value = (self.canEditProjectValues.value ? 1.0 : 0.3)
             
             // Load rate from project
             let projects = Projects.load(specificCustomer: self.customerCode.value, specificProject: self.projectCode.value, includeClosed: true)
@@ -99,26 +101,29 @@ class ClockingViewModel {
             }
         }
 
+        // State or resource or project changes
         _ = ReactiveKit.combineLatest(self.state, self.resourceCode.observable, self.projectCode.observable).observeNext { (_) in
             // Editable for start and end times
             self.canEditTimes.value = ((self.state.value == State.stopped.rawValue || self.state.value == State.editing.rawValue) &&
                                             self.resourceCode.value != "" && self.projectCode.value != "")
-            self.canEditTimesAlpha.value = (self.canEditTimes.value ? 1.0 : 0.3)
             
             // Can save record
             self.canSave.value = (self.projectCode.value != "" && self.resourceCode.value != "")
         }
         
+        // State or start or end time changes
         _ = ReactiveKit.combineLatest(self.state, self.startTime.observable, self.endTime.observable).observeNext { (_) in
             // Update state description
             self.stateDescription.value = self.getStateDescription()
         }
         
+        // Start or end time changes
         _ = ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable).observeNext { (_) in
             // Update duration text
             self.durationText.value = TimeEntry.getDurationText(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute")
         }
-        
+
+        // State or resource code or project code changes
         _ = ReactiveKit.combineLatest(self.state, self.resourceCode.observable, self.projectCode.observable).observeNext { (_) in
             // Update which buttons can be enabled
             self.canStart.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.state.value == State.notStarted.rawValue)
@@ -127,12 +132,27 @@ class ClockingViewModel {
             self.canReset.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.state.value != State.notStarted.rawValue)
         }
         
+        // Customer code or include invoiced flag changes
         _ = ReactiveKit.combineLatest(self.customerCode.observable, self.includeInvoiced).observeNext { (_) in
+            // Can mark as invoiced if we have a customer and the include invoiced flag is unchecked
             self.canMarkInvoiced.value = (self.customerCode.value != "" && self.includeInvoiced.value == 0)
         }
         
+        // Include invoiced flag changes
         _ = self.includeInvoiced.observeNext { (_) in
+            // Can edit invoice number if include invoiced is unchecked
             self.canEditInvoiceNumber.value = (self.includeInvoiced.value != 0)
+        }
+        
+        // Project code or invoice number changes
+        _ = ReactiveKit.combineLatest(self.projectCode.observable, self.invoiceNumber).observeNext { (_) in
+            // Can edit invoice date if project code is set and invoice number is non-blank
+            self.canEditInvoiceDate.value = (self.projectCode.value != "" && self.invoiceNumber.value != "")
+        }
+        
+        _ = self.invoiceNumber.observeNext { (_) in
+            // Can edit invoice date (in mark invoice prompt window) if invoice number is non-blank
+            self.canEditInvoiceDateMarkInvoiced.value = (self.invoiceNumber.value != "")
         }
         
         _ = ReactiveKit.combineLatest(self.resourceCode.observable, self.customerCode.observable, self.projectCode.observable, self.notes, self.invoiceNumber, self.state).observeNext { (_) in
@@ -164,8 +184,8 @@ class ClockingViewModel {
             }
         }
 
+        // Update state when time changes
         _ = self.state.observeNext { (_) in
-            // Update times when state changes
             if self.state.value != self.lastState?.rawValue {
                 self.lastState = State(rawValue: self.state.value)
                 switch State(rawValue: self.state.value)! {
@@ -179,11 +199,7 @@ class ClockingViewModel {
                 }
             }
         }
-
-        // Editable for other properties - not allowed
-        self.canEditOther.value = false
-        
-    }
+   }
     
     public func copy(to record: NSManagedObject) {
         
@@ -242,7 +258,7 @@ class ClockingViewModel {
         return description
     }
     
-    public static func getDurationText(start: Date, end: Date, suffix: String = "", short: String = "") -> String {
+    static public func getDurationText(start: Date, end: Date, suffix: String = "", short: String = "") -> String {
         if start > end {
             return ""
         } else {

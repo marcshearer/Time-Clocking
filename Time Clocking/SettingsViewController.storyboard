@@ -8,33 +8,25 @@
         <!--Settings View Controller-->
         <scene sceneID="fkI-V4-eh2">
             <objects>
-                <viewController storyboardIdentifier="SettingsViewController" id="MJF-UV-VT2" customClass="SettingsViewController" customModule="Time_Clock" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingsViewController" id="MJF-UV-VT2" customClass="SettingsViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="RuK-6O-p37">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ak9-IQ-BvS">
-                                <rect key="frame" x="22" y="229" width="118" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Time units to show" id="MjU-4A-Awo">
+                                <rect key="frame" x="22" y="229" width="122" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Time units to show:" id="MjU-4A-Awo">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UdA-3Z-fpo">
-                                <rect key="frame" x="22" y="196" width="153" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Number of units to show" id="a7U-Tn-lEy">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="73w-JY-l9g">
-                                <rect key="frame" x="189" y="194" width="96" height="22"/>
+                                <rect key="frame" x="200" y="194" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="4SG-2N-5TY"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="pUf-dY-ia7">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="pUf-dY-ia7">
                                     <numberFormatter key="formatter" formatterBehavior="custom10_4" numberStyle="decimal" usesGroupingSeparator="NO" roundingMode="ceiling" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="3" id="scg-Jg-BRt">
                                         <integer key="roundingIncrement" value="1"/>
                                         <real key="minimum" value="1"/>
@@ -43,9 +35,14 @@
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
-                                <connections>
-                                    <outlet property="delegate" destination="MJF-UV-VT2" id="iPd-Sm-7gX"/>
-                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UdA-3Z-fpo">
+                                <rect key="frame" x="22" y="196" width="157" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Number of units to show:" id="a7U-Tn-lEy">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZM-3T-0fS">
                                 <rect key="frame" x="10" y="263" width="287" height="17"/>
@@ -64,9 +61,6 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="savePressed:" target="MJF-UV-VT2" id="Ysq-hn-9x0"/>
-                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="14S-p1-gac">
                                 <rect key="frame" x="234" y="3" width="82" height="32"/>
@@ -80,12 +74,9 @@
 Gw
 </string>
                                 </buttonCell>
-                                <connections>
-                                    <action selector="cancelPressed:" target="MJF-UV-VT2" id="Heg-1j-cxo"/>
-                                </connections>
                             </button>
-                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XGr-sh-E8T">
-                                <rect key="frame" x="187" y="225" width="244" height="24"/>
+                            <segmentedControl verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="XGr-sh-E8T">
+                                <rect key="frame" x="198" y="225" width="244" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="Abd-lB-0Mp">
                                     <font key="font" metaFont="system"/>
                                     <segments>
@@ -95,21 +86,17 @@ Gw
                                         <segment label="Years" tag="4"/>
                                     </segments>
                                 </segmentedCell>
-                                <connections>
-                                    <action selector="showUnitChanged:" target="MJF-UV-VT2" id="rzA-0n-w30"/>
-                                </connections>
                             </segmentedControl>
                         </subviews>
                         <constraints>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="centerY" secondItem="UdA-3Z-fpo" secondAttribute="centerY" id="3Dk-gz-LDz"/>
+                            <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="200" id="3ue-pa-IJB"/>
+                            <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="A0W-AX-jyU"/>
                             <constraint firstItem="dZM-3T-0fS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="Iw8-97-fPc"/>
                             <constraint firstItem="ak9-IQ-BvS" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" constant="54" id="JxC-2b-gfu"/>
                             <constraint firstAttribute="trailing" secondItem="14S-p1-gac" secondAttribute="trailing" constant="140" id="O9n-Kz-1mf"/>
-                            <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="OJO-7I-HkJ"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="top" secondItem="ak9-IQ-BvS" secondAttribute="bottom" constant="16" id="Pxy-6g-txv"/>
-                            <constraint firstItem="XGr-sh-E8T" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="189" id="Q9f-7m-xOr"/>
                             <constraint firstItem="fUr-uL-Ss2" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="140" id="Un4-Co-1vn"/>
-                            <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="VKq-mg-663"/>
                             <constraint firstItem="XGr-sh-E8T" firstAttribute="centerY" secondItem="ak9-IQ-BvS" secondAttribute="centerY" id="XF6-PL-osq"/>
                             <constraint firstAttribute="bottom" secondItem="fUr-uL-Ss2" secondAttribute="bottom" constant="10" id="fxW-u6-fgq"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="gfr-VI-HQq"/>
@@ -117,11 +104,12 @@ Gw
                             <constraint firstItem="dZM-3T-0fS" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" constant="20" id="lzV-3G-mco"/>
                             <constraint firstItem="ak9-IQ-BvS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="nsv-JQ-ZLo"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="qKa-wP-pbl"/>
-                            <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="189" id="sg3-ho-4sT"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="14S-p1-gac" id="oVa-8F-9Ox"/>
                         <outlet property="saveButton" destination="fUr-uL-Ss2" id="e3Z-qK-Nkr"/>
+                        <outlet property="showQuantityLabel" destination="UdA-3Z-fpo" id="B7a-dO-Bt8"/>
                         <outlet property="showQuantityTextField" destination="73w-JY-l9g" id="Idd-YR-lge"/>
                         <outlet property="showUnitSegmentedControl" destination="XGr-sh-E8T" id="dkl-3Q-wHk"/>
                     </connections>
