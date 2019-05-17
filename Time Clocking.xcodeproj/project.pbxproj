@@ -27,10 +27,10 @@
 		B2869879227DD81400377112 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869859227DD81200377112 /* AppDelegate.swift */; };
 		B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */; };
 		B286987B227DD81400377112 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B286985B227DD81200377112 /* Assets.xcassets */; };
-		B286987C227DD81400377112 /* ReportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985C227DD81200377112 /* ReportingViewController.swift */; };
-		B286987D227DD81400377112 /* ReportingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985D227DD81200377112 /* ReportingViewController.storyboard */; };
+		B286987C227DD81400377112 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985C227DD81200377112 /* SelectionViewController.swift */; };
+		B286987D227DD81400377112 /* SelectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985D227DD81200377112 /* SelectionViewController.storyboard */; };
 		B286987E227DD81400377112 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985E227DD81300377112 /* SettingsViewController.swift */; };
-		B286987F227DD81400377112 /* ReportingInvoicePromptViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */; };
+		B286987F227DD81400377112 /* InvoiceViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985F227DD81300377112 /* InvoiceViewController.storyboard */; };
 		B2869880227DD81400377112 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869860227DD81300377112 /* Utility.swift */; };
 		B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869861227DD81300377112 /* SettingsViewController.storyboard */; };
 		B2869882227DD81400377112 /* Status Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869862227DD81300377112 /* Status Menu.swift */; };
@@ -42,7 +42,7 @@
 		B2869889227DD81400377112 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986A227DD81300377112 /* String Extensions.swift */; };
 		B286988A227DD81400377112 /* ClockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986B227DD81300377112 /* ClockingViewModel.swift */; };
 		B286988B227DD81400377112 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986C227DD81300377112 /* Date Extensions.swift */; };
-		B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */; };
+		B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
 		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
 		B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
 		B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
@@ -54,6 +54,8 @@
 		B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0C2286CCEB0040CA46 /* Settings.swift */; };
 		B2C8CC0F228977F00040CA46 /* ProjectFilterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */; };
 		B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */; };
+		B2C8CC15228C19ED0040CA46 /* Documents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC14228C19ED0040CA46 /* Documents.swift */; };
+		B2C8CC18228D4A420040CA46 /* InvoiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */; };
 		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,10 +106,10 @@
 		B2869859227DD81200377112 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProjectDetailViewController.storyboard; sourceTree = "<group>"; };
 		B286985B227DD81200377112 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B286985C227DD81200377112 /* ReportingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingViewController.swift; sourceTree = "<group>"; };
-		B286985D227DD81200377112 /* ReportingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportingViewController.storyboard; sourceTree = "<group>"; };
+		B286985C227DD81200377112 /* SelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
+		B286985D227DD81200377112 /* SelectionViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SelectionViewController.storyboard; sourceTree = "<group>"; };
 		B286985E227DD81300377112 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReportingInvoicePromptViewController.storyboard; sourceTree = "<group>"; };
+		B286985F227DD81300377112 /* InvoiceViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InvoiceViewController.storyboard; sourceTree = "<group>"; };
 		B2869860227DD81300377112 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		B2869861227DD81300377112 /* SettingsViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingsViewController.storyboard; sourceTree = "<group>"; };
 		B2869862227DD81300377112 /* Status Menu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Status Menu.swift"; sourceTree = "<group>"; };
@@ -119,7 +121,7 @@
 		B286986A227DD81300377112 /* String Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
 		B286986B227DD81300377112 /* ClockingViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingViewModel.swift; sourceTree = "<group>"; };
 		B286986C227DD81300377112 /* Date Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date Extensions.swift"; sourceTree = "<group>"; };
-		B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportingInvoicePromptViewController.swift; sourceTree = "<group>"; };
+		B286986D227DD81300377112 /* InvoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2869870227DD81400377112 /* Core Data Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Viewer.swift"; sourceTree = "<group>"; };
@@ -132,6 +134,8 @@
 		B2C8CC0C2286CCEB0040CA46 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProjectFilterViewController.storyboard; sourceTree = "<group>"; };
 		B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilterViewController.swift; sourceTree = "<group>"; };
+		B2C8CC14228C19ED0040CA46 /* Documents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Documents.swift; sourceTree = "<group>"; };
+		B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -205,11 +209,13 @@
 				B2869890227DD82C00377112 /* Standard Components */,
 				B2869891227DD85D00377112 /* Main Classes */,
 				B2869892227DD86D00377112 /* Clockings */,
+				B2C8CC16228C1A1F0040CA46 /* Documents */,
 				B241BEF9227E93E1001CC666 /* Maintenance */,
 				B2869894227DD8A200377112 /* Resources */,
 				B2869895227DD8AB00377112 /* Customers */,
 				B2869896227DD8B300377112 /* Projects */,
-				B2869898227DD8CF00377112 /* Reporting */,
+				B286989D227DD96600377112 /* Invoices and Credits */,
+				B2869898227DD8CF00377112 /* Reporting and Invoice Selection */,
 				B2869897227DD8BA00377112 /* Settings */,
 				B2869893227DD87700377112 /* Utility & Data Classes */,
 			);
@@ -337,13 +343,13 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
-		B2869898227DD8CF00377112 /* Reporting */ = {
+		B2869898227DD8CF00377112 /* Reporting and Invoice Selection */ = {
 			isa = PBXGroup;
 			children = (
-				B286989C227DD95B00377112 /* Reporting List */,
-				B286989D227DD96600377112 /* Reporting Invoice Prompt */,
+				B286985D227DD81200377112 /* SelectionViewController.storyboard */,
+				B286985C227DD81200377112 /* SelectionViewController.swift */,
 			);
-			name = Reporting;
+			name = "Reporting and Invoice Selection";
 			sourceTree = "<group>";
 		};
 		B2869899227DD90600377112 /* Clocking Base */ = {
@@ -373,22 +379,22 @@
 			name = "Clockings Detail";
 			sourceTree = "<group>";
 		};
-		B286989C227DD95B00377112 /* Reporting List */ = {
+		B286989D227DD96600377112 /* Invoices and Credits */ = {
 			isa = PBXGroup;
 			children = (
-				B286985D227DD81200377112 /* ReportingViewController.storyboard */,
-				B286985C227DD81200377112 /* ReportingViewController.swift */,
+				B286985F227DD81300377112 /* InvoiceViewController.storyboard */,
+				B286986D227DD81300377112 /* InvoiceViewController.swift */,
+				B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */,
 			);
-			name = "Reporting List";
+			name = "Invoices and Credits";
 			sourceTree = "<group>";
 		};
-		B286989D227DD96600377112 /* Reporting Invoice Prompt */ = {
+		B2C8CC16228C1A1F0040CA46 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
-				B286985F227DD81300377112 /* ReportingInvoicePromptViewController.storyboard */,
-				B286986D227DD81300377112 /* ReportingInvoicePromptViewController.swift */,
+				B2C8CC14228C19ED0040CA46 /* Documents.swift */,
 			);
-			name = "Reporting Invoice Prompt";
+			name = Documents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -507,9 +513,9 @@
 				B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */,
 				B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */,
 				B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */,
-				B286987D227DD81400377112 /* ReportingViewController.storyboard in Resources */,
+				B286987D227DD81400377112 /* SelectionViewController.storyboard in Resources */,
 				B286987B227DD81400377112 /* Assets.xcassets in Resources */,
-				B286987F227DD81400377112 /* ReportingInvoicePromptViewController.storyboard in Resources */,
+				B286987F227DD81400377112 /* InvoiceViewController.storyboard in Resources */,
 				B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -579,7 +585,7 @@
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
 				B2869885227DD81400377112 /* SettingsViewModel.swift in Sources */,
 				B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */,
-				B286987C227DD81400377112 /* ReportingViewController.swift in Sources */,
+				B286987C227DD81400377112 /* SelectionViewController.swift in Sources */,
 				B2869882227DD81400377112 /* Status Menu.swift in Sources */,
 				B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */,
 				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
@@ -587,7 +593,7 @@
 				B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
-				B286988C227DD81400377112 /* ReportingInvoicePromptViewController.swift in Sources */,
+				B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
 				B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */,
 				B2869880227DD81400377112 /* Utility.swift in Sources */,
@@ -597,6 +603,7 @@
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
 				B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */,
 				B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */,
+				B2C8CC18228D4A420040CA46 /* InvoiceViewModel.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
@@ -605,6 +612,7 @@
 				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
 				B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */,
 				B241BEFF227E9979001CC666 /* Projects.swift in Sources */,
+				B2C8CC15228C19ED0040CA46 /* Documents.swift in Sources */,
 				B286987E227DD81400377112 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

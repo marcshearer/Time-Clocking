@@ -17,6 +17,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     public var customer: ObservablePopupString!
     public var projectCode = Observable<String>("")
     public var title = Observable<String>("")
+    public var purchaseOrder = Observable<String>("")
     public var hourlyRate = ObservableTextFieldFloat<Double>()
     public var closed = Observable<Int>(0)
     public var canSave = Observable<Bool>(false)
@@ -73,6 +74,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         projectMO.customerCode = self.customer.value
         projectMO.projectCode = self.projectCode.value
         projectMO.title = self.title.value
+        projectMO.purchaseOrder = self.purchaseOrder.value
         projectMO.hourlyRate = Float(self.hourlyRate.value)
         projectMO.closed = (self.closed.value != 0)
     }
@@ -84,6 +86,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         self.customer.value = projectMO.customerCode ?? ""
         self.projectCode.value = projectMO.projectCode ?? ""
         self.title.value = projectMO.title ?? ""
+        self.purchaseOrder.value = projectMO.purchaseOrder ?? ""
         self.hourlyRate.value = Double(projectMO.hourlyRate)
         self.closed.value = (projectMO.closed ? 1 : 0)
         

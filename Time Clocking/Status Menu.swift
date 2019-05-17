@@ -30,15 +30,18 @@ class StatusMenu: NSObject, NSMenuDelegate {
         super.init()
         
         // Construct skeleton
-        self.addItem("Project status")
-        self.addItem("State")
+        self.addItem(id: "Project")
+        self.addItem(id: "State")
         self.addSeparator()
-        self.addItem("Start timer", action: #selector(StatusMenu.startTimer(_:)), keyEquivalent: "s")
-        self.addItem("Stop timer", action: #selector(StatusMenu.stopTimer(_:)), keyEquivalent: "x")
-        self.addItem("Reset timer", action: #selector(StatusMenu.resetTimer(_:)), keyEquivalent: "r")
+        self.addItem(id: "Start", "Start timer", action: #selector(StatusMenu.startTimer(_:)), keyEquivalent: "s")
+        self.addItem(id: "Stop", "Stop timer", action: #selector(StatusMenu.stopTimer(_:)), keyEquivalent: "x")
+        self.addItem(id: "Reset", "Reset timer", action: #selector(StatusMenu.resetTimer(_:)), keyEquivalent: "r")
         self.addSeparator()
         self.addItem("Clocking Entries", action: #selector(StatusMenu.showEntries(_:)))
         self.addSeparator()
+        let invoicingMenu = self.addSubmenu("Invoicing")
+        self.addItem("Invoices", action: #selector(StatusMenu.showInvoiceSelection(_:)), to: invoicingMenu)
+        self.addItem("Credit notes", action: #selector(StatusMenu.showCreditSelection(_:)), to: invoicingMenu)
         self.addItem("Reporting", action: #selector(StatusMenu.showReporting(_:)))
         let maintenanceMenu = self.addSubmenu("Setup")
         self.addItem("Resources", action: #selector(StatusMenu.showResources(_:)), to: maintenanceMenu)
@@ -67,7 +70,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         if timeEntry.projectCode.value == "" {
             // No project setup - only allow access to detail
             projectTitle = "No project selected"
-            timeEntry.state.value = State.notStarted.rawValue
+            timeEntry.timerState.value = TimerState.notStarted.rawValue
         } else {
             let customerTitle = timeEntry.customerCode.description
             if customerTitle != "" {
@@ -79,21 +82,21 @@ class StatusMenu: NSObject, NSMenuDelegate {
                 projectTitle = projectTitle + " (\(timeEntry.notes.value))"
             }
         }
-        self.menuItemList["Project status"]?.title = projectTitle
+        self.menuItemList["Project"]?.title = projectTitle
         self.menuItemList["State"]?.title = timeEntry.getStateDescription()
         
         // Enable / disable / hide options
-        self.menuItemList["Start timer"]?.isEnabled = (timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
-        self.menuItemList["Start timer"]?.isHidden = (timeEntry.state.value != State.notStarted.rawValue && timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
-        self.menuItemList["Stop timer"]?.isHidden = (timeEntry.state.value != State.started.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
-        self.menuItemList["Reset timer"]?.isHidden = (timeEntry.state.value == State.notStarted.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
+        self.menuItemList["Start"]?.isEnabled = (timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
+        self.menuItemList["Start"]?.isHidden = (timeEntry.timerState.value != TimerState.notStarted.rawValue && timeEntry.projectCode.value != "" && timeEntry.resourceCode.value != "")
+        self.menuItemList["Stop"]?.isHidden = (timeEntry.timerState.value != TimerState.started.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
+        self.menuItemList["Reset"]?.isHidden = (timeEntry.timerState.value == TimerState.notStarted.rawValue || timeEntry.projectCode.value == "" || timeEntry.resourceCode.value == "")
         
         // Update menu bar image
         if let button = self.statusItem.button {
             if timeEntry.projectCode.value == "" {
                 button.image = NSImage(named: NSImage.Name("notStarted"))
             } else {
-                switch State(rawValue: timeEntry.state.value)! {
+                switch TimerState(rawValue: timeEntry.timerState.value)! {
                 case .started:
                     button.image = NSImage(named: NSImage.Name("started"))
                 case .stopped:
@@ -105,7 +108,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         }
     }
     
-    private func addItem(_ text: String, action: Selector? = nil, keyEquivalent: String = "", to menu: NSMenu? = nil) {
+    private func addItem(id: String? = nil, _ text: String = "", action: Selector? = nil, keyEquivalent: String = "", to menu: NSMenu? = nil) {
         var menu = menu
         if menu == nil {
             menu = self.statusMenu
@@ -116,7 +119,9 @@ class StatusMenu: NSObject, NSMenuDelegate {
         } else {
             menuItem.target = self
         }
-        self.menuItemList[text] = menuItem
+        if id != nil {
+            self.menuItemList[id!] = menuItem
+        }
     }
     
     private func addSubmenu(_ text: String) -> NSMenu {
@@ -131,20 +136,23 @@ class StatusMenu: NSObject, NSMenuDelegate {
     }
     
     @objc private func startTimer(_ sender: Any?) {
-        TimeEntry.current.state.value = State.started.rawValue
+        Utility.playSound("Morse")
+        TimeEntry.current.timerState.value = TimerState.started.rawValue
         TimeEntry.current.startTime.value = Date()
         StatusMenu.shared.update()
     }
     
     @objc private func stopTimer(_ sender: Any?) {
-        TimeEntry.current.state.value = State.notStarted.rawValue
+        Utility.playSound("Frog")
+        TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
         TimeEntry.current.endTime.value = Date()
         StatusMenu.shared.update()
         _ = Clockings.writeToDatabase(viewModel: TimeEntry.current)
     }
     
     @objc private func resetTimer(_ sender: Any?) {
-        TimeEntry.current.state.value = State.notStarted.rawValue
+        Utility.playSound("Blow")
+        TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
         TimeEntry.current.startTime.value = Date()
         TimeEntry.current.endTime.value = Date()
         StatusMenu.shared.update()
@@ -167,7 +175,23 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func showReporting(_ sender: Any?) {
         
         // Retrieve or create the view controller
-        let viewController = self.createController("Reporting", "ReportingViewController") as? ReportingViewController
+        let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        self.showPopover("Reporting", viewController!)
+    }
+    
+    @objc private func showInvoiceSelection(_ sender: Any?) {
+        
+        // Retrieve or create the view controller
+        let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        viewController?.documentType = .invoice
+        self.showPopover("Reporting", viewController!)
+    }
+    
+    @objc private func showCreditSelection(_ sender: Any?) {
+        
+        // Retrieve or create the view controller
+        let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        viewController?.documentType = .credit
         self.showPopover("Reporting", viewController!)
     }
     

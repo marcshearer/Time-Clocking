@@ -6,8 +6,7 @@
         <attribute name="customerCode" attributeType="String" syncable="YES"/>
         <attribute name="endTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="hourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="invoiceDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="invoiceNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="invoiceState" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="projectCode" attributeType="String" syncable="YES"/>
         <attribute name="resourceCode" attributeType="String" syncable="YES"/>
@@ -19,13 +18,43 @@
         </uniquenessConstraints>
     </entity>
     <entity name="Customers" representedClassName="CustomerMO" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="closed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="customerCode" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="defaultHourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hoursPerDay" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceNotes" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceTimeDetail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceUnit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="customerCode"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="DocumentDetails" representedClassName="DocumentDetailMO" syncable="YES" codeGenerationType="class">
+        <attribute name="clockingUUID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="documentUUID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="generated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="documentUUID"/>
+                <constraint value="clockingUUID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Documents" representedClassName="DocumentMO" syncable="YES" codeGenerationType="class">
+        <attribute name="customerCode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="documentDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="documentNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="documentType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="documentUUID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="generated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="documentUUID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -34,6 +63,7 @@
         <attribute name="customerCode" attributeType="String" syncable="YES"/>
         <attribute name="hourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="projectCode" attributeType="String" syncable="YES"/>
+        <attribute name="purchaseOrder" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
@@ -53,9 +83,11 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Clockings" positionX="-36" positionY="45" width="128" height="210"/>
-        <element name="Customers" positionX="-63" positionY="-18" width="128" height="105"/>
-        <element name="Projects" positionX="-54" positionY="9" width="128" height="120"/>
+        <element name="Clockings" positionX="-36" positionY="45" width="128" height="195"/>
+        <element name="Customers" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Projects" positionX="-54" positionY="9" width="128" height="135"/>
         <element name="Resources" positionX="-18" positionY="90" width="128" height="90"/>
+        <element name="Documents" positionX="-36" positionY="99" width="128" height="150"/>
+        <element name="DocumentDetails" positionX="-27" positionY="108" width="128" height="90"/>
     </elements>
 </model>

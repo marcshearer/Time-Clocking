@@ -11,7 +11,7 @@ import CoreData
 
 class TimeEntry: ClockingViewModel {
     
-    static public var current = ClockingViewModel()
+    static public var current = ClockingViewModel(mode: .clocking)
     
     static private let defaults = UserDefaults.standard
     
@@ -24,9 +24,7 @@ class TimeEntry: ClockingViewModel {
         TimeEntry.current.startTime.value = self.defaults.object(forKey: "startTime") as? Date ?? Date()
         TimeEntry.current.endTime.value = self.defaults.object(forKey: "endTime") as? Date ?? Date()
         TimeEntry.current.hourlyRate.value = self.defaults.object(forKey: "hourlyRate") as? Double ?? 0.0
-        TimeEntry.current.invoiceNumber.value = self.defaults.string(forKey: "invoiceNumber") ?? ""
-        TimeEntry.current.invoiceDate.value = self.defaults.object(forKey: "invoiceDate") as? Date ?? Date()
-        TimeEntry.current.state.value = self.defaults.string(forKey: "state") ?? State.notStarted.rawValue
+        TimeEntry.current.timerState.value = self.defaults.string(forKey: "state") ?? TimerState.notStarted.rawValue
     }
     
     static public func saveDefaults() {
@@ -38,9 +36,7 @@ class TimeEntry: ClockingViewModel {
         self.defaults.set(TimeEntry.current.startTime.value, forKey: "startTime")
         self.defaults.set(TimeEntry.current.endTime.value, forKey: "endTime")
         self.defaults.set(TimeEntry.current.hourlyRate.value, forKey: "hourlyRate")
-        self.defaults.set(TimeEntry.current.invoiceNumber.value, forKey: "invoiceNumber")
-        self.defaults.set(TimeEntry.current.invoiceDate.value, forKey: "invoiceDate")
-        self.defaults.set(TimeEntry.current.state.value, forKey: "state")
+        self.defaults.set(TimeEntry.current.timerState.value, forKey: "state")
         
     }
 }

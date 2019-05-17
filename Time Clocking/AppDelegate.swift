@@ -29,6 +29,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Build status menu
         StatusMenu.shared.update()
         
+        /*
+        // TODO: Remove    
+        // Remove all document history!!
+        CoreData.clearTable("Documents")
+        CoreData.clearTable("DocumentDetails")
+        let clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        _ = CoreData.update {
+            for clockingMO in clockings {
+                clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
+            }
+        }
+        */
+        
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {

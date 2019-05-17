@@ -356,5 +356,11 @@ class Utility {
             }
         })
     }
+
+    // MARK: - Play sound ============================================================================== -
+    
+    static public func playSound(_ named: String) {
+        NSSound(named: named)?.play()
+    }
     
 }

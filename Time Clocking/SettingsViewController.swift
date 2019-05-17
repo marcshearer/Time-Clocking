@@ -16,6 +16,8 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
     @IBOutlet private weak var showUnitSegmentedControl: NSSegmentedControl!
     @IBOutlet private weak var showQuantityLabel: NSTextField!
     @IBOutlet private weak var showQuantityTextField: NSTextField!
+    @IBOutlet private weak var nextInvoiceNoTextField: NSTextField!
+    @IBOutlet private weak var nextCreditNoTextField: NSTextField!
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     
@@ -34,6 +36,8 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
         // Setup field bindings
         self.editSettings.showUnit.bidirectionalBind(to: self.showUnitSegmentedControl.reactive.integerValue)
         self.editSettings.showQuantity.bidirectionalBind(to: self.showQuantityTextField)
+        self.editSettings.nextInvoiceNo.bidirectionalBind(to: self.nextInvoiceNoTextField)
+        self.editSettings.nextCreditNo.bidirectionalBind(to: self.nextCreditNoTextField)
         self.editSettings.showQUantityLabel.bind(to: self.showQuantityLabel.reactive.editingString)
         
         // Setup enabled bindings

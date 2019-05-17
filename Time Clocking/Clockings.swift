@@ -78,6 +78,13 @@ class Clockings {
             case "duration":
                 result = TimeEntry.getDurationText(start: clockingMO.startTime!, end: clockingMO.endTime!)
                 
+            case "documentNumber":
+                if clockingMO.invoiceState == InvoiceState.notInvoiced.rawValue || clockingMO.invoiceState == "" {
+                    result = ""
+                } else {
+                    result = Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) ?? ""
+                }
+                
             default:
                 break
             }

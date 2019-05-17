@@ -22,6 +22,8 @@ class SettingsViewModel: NSObject, NSCopying {
     var showUnit = Observable<Int>(TimeUnit.months.rawValue)
     var showQuantity = ObservableTextFieldInt<Int>()
     var showQUantityLabel = Observable<String>("")
+    var nextInvoiceNo = ObservableTextFieldInt<Int>()
+    var nextCreditNo = ObservableTextFieldInt<Int>()
     var canSave = Observable<Bool>(false)
     
     override init() {
@@ -29,10 +31,12 @@ class SettingsViewModel: NSObject, NSCopying {
         self.setupMapping()
     }
     
-    convenience init(showUnit: TimeUnit, showQuantity: Int) {
+    convenience init(showUnit: TimeUnit, showQuantity: Int, nextInvoiceNo: Int, nextCreditNo: Int) {
         self.init()
         self.showUnit.value = showUnit.rawValue
         self.showQuantity.value = showQuantity
+        self.nextInvoiceNo.value = nextInvoiceNo
+        self.nextCreditNo.value = nextCreditNo
     }
     
     // MARK: - Setup view model mappings ================================================================ -
@@ -49,7 +53,7 @@ class SettingsViewModel: NSObject, NSCopying {
     // MARK: - Method to copy view model ================================================================= -
     
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = SettingsViewModel(showUnit: TimeUnit(rawValue: self.showUnit.value)!, showQuantity: self.showQuantity.value)
+        let copy = SettingsViewModel(showUnit: TimeUnit(rawValue: self.showUnit.value)!, showQuantity: self.showQuantity.value, nextInvoiceNo: self.nextInvoiceNo.value, nextCreditNo: self.nextCreditNo.value)
         return copy
     }
     

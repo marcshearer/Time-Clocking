@@ -124,8 +124,8 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ke5-8T-Yar">
-                                        <rect key="frame" x="10" y="265" width="39" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="From:" id="cob-B1-Pbz">
+                                        <rect key="frame" x="10" y="265" width="68" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Start time:" id="cob-B1-Pbz">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -144,8 +144,8 @@
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Exa-1o-DSE">
-                                        <rect key="frame" x="10" y="218" width="23" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="To:" id="V1j-0h-cRY">
+                                        <rect key="frame" x="10" y="218" width="61" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="End time:" id="V1j-0h-cRY">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -165,30 +165,38 @@
                                     </datePicker>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5L1-Jj-EW8">
                                         <rect key="frame" x="186" y="186" width="112" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Stop &amp; Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="egE-1i-JkH">
+                                        <buttonCell key="cell" type="push" title="Stop &amp; Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Frog" inset="2" id="egE-1i-JkH">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">x</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jao-P1-ek1">
                                         <rect key="frame" x="186" y="153" width="112" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="viE-5C-9kt">
+                                        <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Pop" inset="2" id="viE-5C-9kt">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">s</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RWh-re-LvW">
                                         <rect key="frame" x="186" y="120" width="112" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="EGB-9v-8cg">
+                                        <buttonCell key="cell" type="push" title="Add" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Frog" inset="2" id="EGB-9v-8cg">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">a</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f1R-YI-BDj">
                                         <rect key="frame" x="186" y="87" width="112" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mdO-gO-Cvk">
+                                        <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Blow" inset="2" id="mdO-gO-Cvk">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">r</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="brQ-tR-wkh">
@@ -212,6 +220,9 @@
                                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qgO-Ga-Zaz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="boy-Sb-pvV" userLabel="Start Button">
@@ -219,9 +230,11 @@
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="LTD-bI-ijp"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="C1e-Hz-mIk">
+                                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" sound="Morse" inset="2" id="C1e-Hz-mIk">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
+                                            <string key="keyEquivalent">s</string>
+                                            <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                         </buttonCell>
                                     </button>
                                 </subviews>
@@ -380,4 +393,10 @@
             <point key="canvasLocation" x="143" y="105"/>
         </scene>
     </scenes>
+    <resources>
+        <sound name="Blow"/>
+        <sound name="Frog"/>
+        <sound name="Morse"/>
+        <sound name="Pop"/>
+    </resources>
 </document>

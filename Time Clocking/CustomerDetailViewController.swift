@@ -21,7 +21,13 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     
     @IBOutlet private weak var customerCodeTextField: NSTextField!
     @IBOutlet private weak var nameTextField: NSTextField!
+    @IBOutlet private weak var addressTextField: NSTextField!
     @IBOutlet private weak var defaultHourlyRateTextField: NSTextField!
+    @IBOutlet private weak var hoursPerDayTextField: NSTextField!
+    @IBOutlet private weak var invoiceUnitSegmentedControl: NSSegmentedControl!
+    @IBOutlet private weak var invoiceNotesButton: NSButton!
+    @IBOutlet private weak var invoiceTimeSegmentedControl: NSSegmentedControl!
+    
     @IBOutlet private weak var closedButton: NSButton!
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
@@ -37,6 +43,7 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
         // Setup view model
         customerViewModel = CustomerViewModel(from: self.customerMO)
         self.setupBindings()
+        self.addressTextField.maximumNumberOfLines = 6
     }
     
     // MARK: - Setup bindings to view model ======================================================================
@@ -44,10 +51,15 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     private func setupBindings() {
 
         // Setup field bindings
-        self.customerViewModel.customerCode.bidirectionalBind(to: customerCodeTextField.reactive.editingString)
-        self.customerViewModel.name.bidirectionalBind(to: nameTextField.reactive.editingString)
-        self.customerViewModel.defaultHourlyRate.bidirectionalBind(to: defaultHourlyRateTextField)
-        self.customerViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
+        self.customerViewModel.customerCode.bidirectionalBind(to: self.customerCodeTextField.reactive.editingString)
+        self.customerViewModel.name.bidirectionalBind(to: self.nameTextField.reactive.editingString)
+        self.customerViewModel.address.bidirectionalBind(to: self.addressTextField.reactive.editingString)
+        self.customerViewModel.defaultHourlyRate.bidirectionalBind(to: self.defaultHourlyRateTextField)
+        self.customerViewModel.hoursPerDay.bidirectionalBind(to: self.hoursPerDayTextField)
+        self.customerViewModel.invoiceUnit.bidirectionalBind(to: self.invoiceUnitSegmentedControl.reactive.integerValue)
+        self.customerViewModel.invoiceNotes.bidirectionalBind(to: self.invoiceNotesButton.reactive.integerValue)
+        self.customerViewModel.invoiceTimeDetail.bidirectionalBind(to: self.invoiceTimeSegmentedControl.reactive.integerValue)
+        self.customerViewModel.closed.bidirectionalBind(to: self.closedButton.reactive.integerValue)
         
         // Setup enabled bindings
         self.customerViewModel.canClose.bind(to: self.closedButton.reactive.isEnabled)

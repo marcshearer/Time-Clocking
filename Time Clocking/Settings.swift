@@ -16,10 +16,14 @@ class Settings {
     static public func loadDefaults() {
         self.current.showUnit.value = UserDefaults.standard.integer(forKey: "showUnit")
         self.current.showQuantity.value = UserDefaults.standard.integer(forKey: "showQuantity")
+        self.current.nextInvoiceNo.value = UserDefaults.standard.integer(forKey: "nextInvoiceNo")
+        self.current.nextCreditNo.value = UserDefaults.standard.integer(forKey: "nextCreditNo")
     }
     
     static public func saveDefaults() {
         UserDefaults.standard.set(self.current.showUnit.value, forKey: "showUnit")
         UserDefaults.standard.set(self.current.showQuantity.value, forKey: "showQuantity")
+        UserDefaults.standard.set(self.current.nextInvoiceNo.value, forKey: "nextInvoiceNo")
+        UserDefaults.standard.set(self.current.nextCreditNo.value, forKey: "nextCreditNo")
     }
 }

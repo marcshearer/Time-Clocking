@@ -18,6 +18,7 @@ enum VarType {
     case int
     case double
     case bool
+    case button
 }
 
 @objc class Layout: NSObject {
@@ -111,30 +112,32 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     
     public func show(recordType: String, layout: [Layout], records: [NSManagedObject]) {
         
-        // Store properties
-        self.recordType = recordType
-        self.layout = layout
-        
-        // Remove all rows from grid
-        if self.records.count != 0 {
-            displayTableView.beginUpdates()
-            displayTableView.removeRows(at: IndexSet(integersIn: 0...self.records.count-1), withAnimation: NSTableView.AnimationOptions.slideUp)
-            self.records = []
-            displayTableView.reloadData()
-            displayTableView.endUpdates()
+        Utility.mainThread {
+            
+            // Store properties
+            self.recordType = recordType
+            self.layout = layout
+            
+            // Remove all rows from grid
+            if self.records.count != 0 {
+                self.displayTableView.beginUpdates()
+                self.displayTableView.removeRows(at: IndexSet(integersIn: 0...self.records.count-1), withAnimation: NSTableView.AnimationOptions.slideUp)
+                self.records = []
+                self.displayTableView.reloadData()
+                self.displayTableView.endUpdates()
+            }
+            self.additional = 0
+            
+            // Set up grid
+            self.setupGrid(displayTableView: self.displayTableView, layout: layout)
+            
+            // Refresh grid
+            self.displayTableView.beginUpdates()
+            self.records = records
+            self.accumulateTotals()
+            self.displayTableView.reloadData()
+            self.displayTableView.endUpdates()
         }
-        additional = 0
-        
-        // Set up grid
-        self.setupGrid(displayTableView: displayTableView, layout: layout)
-        
-        // Refresh grid
-        displayTableView.beginUpdates()
-        self.records = records
-        self.accumulateTotals()
-        self.displayTableView.reloadData()
-        displayTableView.endUpdates()
-        
     }
     
     public func append(recordType: String, record: NSManagedObject) {
@@ -285,39 +288,44 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                     } else {
                         value = self.getValue(record: self.records[row], key: column.key, type: column.type)
                     }
-                    cell = NSCell(textCell: value)
-                    cell.alignment = column.alignment
-                    if column.width <= 0 && cell.cellSize.width > tableColumn!.width + 2 {
-                        Utility.mainThread {
-                            
-                            // Stretch column can't contain this value - expand it - trying to recover any padding first
-                            expand = cell.cellSize.width - tableColumn!.width + 2
-                            // Check how much padding is available
-                            if self.padColumns.count > 0 {
-                                var padAvailable:CGFloat = 0.0
-                                for index in 0...self.padColumns.count - 1 {
-                                    if self.padColumns[index].column.key == column.key {
-                                        // Any padding is no longer relevant as is still too small
-                                        self.padColumns[index].used = 0.0
-                                    } else {
-                                        padAvailable += self.padColumns[index].used
-                                    }
-                                }
+                    if column.type == .button {
+                        let image = NSImage(named: NSImage.Name((value == "X" ? "boxtick" : "box")))
+                        cell = NSCell(imageCell: image)
+                    } else {
+                        cell = NSCell(textCell: value)
+                        cell.alignment = column.alignment
+                        if column.width <= 0 && cell.cellSize.width > tableColumn!.width + 2 {
+                            Utility.mainThread {
                                 
-                                // Recover padding
-                                if padAvailable > 0 {
+                                // Stretch column can't contain this value - expand it - trying to recover any padding first
+                                expand = cell.cellSize.width - tableColumn!.width + 2
+                                // Check how much padding is available
+                                if self.padColumns.count > 0 {
+                                    var padAvailable:CGFloat = 0.0
                                     for index in 0...self.padColumns.count - 1 {
-                                        if self.padColumns[index].column.key != column.key {
-                                            // Don't take it back from yourself
-                                            let padToUse = (self.padColumns[index].used / padAvailable) * expand
-                                            self.padColumns[index].tableColumn.width -= padToUse
-                                            self.padColumns[index].used -= padToUse
+                                        if self.padColumns[index].column.key == column.key {
+                                            // Any padding is no longer relevant as is still too small
+                                            self.padColumns[index].used = 0.0
+                                        } else {
+                                            padAvailable += self.padColumns[index].used
+                                        }
+                                    }
+                                    
+                                    // Recover padding
+                                    if padAvailable > 0 {
+                                        for index in 0...self.padColumns.count - 1 {
+                                            if self.padColumns[index].column.key != column.key {
+                                                // Don't take it back from yourself
+                                                let padToUse = (self.padColumns[index].used / padAvailable) * expand
+                                                self.padColumns[index].tableColumn.width -= padToUse
+                                                self.padColumns[index].used -= padToUse
+                                            }
                                         }
                                     }
                                 }
+                                // Expand stretch column
+                                 tableColumn?.width += expand
                             }
-                            // Expand stretch column
-                             tableColumn?.width += expand
                         }
                     }
                 }
@@ -341,6 +349,8 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                 return String(format: doubleFormat, object as! Double)
             case .bool:
                 return (object as! Bool == true ? "X" : "")
+            default:
+                return ""
             }
         } else {
             return ""

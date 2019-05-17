@@ -5,10 +5,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Reporting Invoice Prompt View Controller-->
+        <!--Invoice View Controller-->
         <scene sceneID="CXn-Ip-910">
             <objects>
-                <viewController storyboardIdentifier="ReportingInvoicePromptViewController" id="LaL-pz-WOJ" customClass="ReportingInvoicePromptViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReportingInvoicePromptViewController" id="LaL-pz-WOJ" customClass="InvoiceViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="6TW-QM-tl8">
                         <rect key="frame" x="0.0" y="0.0" width="290" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -95,8 +95,8 @@ DQ
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="wXA-IU-Twg" id="nJd-wp-ovi"/>
-                        <outlet property="invoiceDateDatePicker" destination="YXc-9G-G61" id="XMC-AJ-Sw2"/>
-                        <outlet property="invoiceNumberTextField" destination="tuv-0v-nAV" id="HOc-Iy-5Xe"/>
+                        <outlet property="documentDateDatePicker" destination="YXc-9G-G61" id="XMC-AJ-Sw2"/>
+                        <outlet property="documentNumberTextField" destination="tuv-0v-nAV" id="HOc-Iy-5Xe"/>
                         <outlet property="okButton" destination="1Ir-WD-DRK" id="qWI-RP-iYx"/>
                     </connections>
                 </viewController>

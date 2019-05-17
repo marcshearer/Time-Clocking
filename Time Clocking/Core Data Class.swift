@@ -152,6 +152,15 @@ class CoreData {
         }
     }
     
+    class func clearTable(_ entityName: String) {
+        let records = CoreData.fetch(from: entityName)
+        _ = CoreData.update {
+            for record in records {
+                CoreData.delete(record: record)
+            }
+        }
+    }
+    
     class func updateKey(in table: String, for key: String, from original: String, to new: String) {
         // Already in core data update table
         self.updateKey(in: table, for: [key], from: [original], to: [new])

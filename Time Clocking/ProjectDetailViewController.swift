@@ -23,6 +23,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodeTextField: NSTextField!
     @IBOutlet private weak var titleTextField: NSTextField!
+    @IBOutlet private weak var purchaseOrderTextField: NSTextField!
     @IBOutlet private weak var hourlyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
@@ -55,11 +56,12 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     private func setupBingings(createMode: Bool) {
         
         // Set up field bindings
-        self.projectViewModel.customer.bidirectionalBind(to: customerCodePopupButton)
-        self.projectViewModel.projectCode.bidirectionalBind(to: projectCodeTextField.reactive.editingString)
-        self.projectViewModel.title.bidirectionalBind(to: titleTextField.reactive.editingString)
-        self.projectViewModel.hourlyRate.bidirectionalBind(to: hourlyRateTextField)
-        self.projectViewModel.closed.bidirectionalBind(to: closedButton.reactive.integerValue)
+        self.projectViewModel.customer.bidirectionalBind(to: self.customerCodePopupButton)
+        self.projectViewModel.projectCode.bidirectionalBind(to: self.projectCodeTextField.reactive.editingString)
+        self.projectViewModel.title.bidirectionalBind(to: self.titleTextField.reactive.editingString)
+        self.projectViewModel.purchaseOrder.bidirectionalBind(to: self.purchaseOrderTextField.reactive.editingString)
+        self.projectViewModel.hourlyRate.bidirectionalBind(to: self.hourlyRateTextField)
+        self.projectViewModel.closed.bidirectionalBind(to: self.closedButton.reactive.integerValue)
         
         // Set up enabled bindings
         self.projectViewModel.canEditCustomer.bind(to: self.customerCodePopupButton.reactive.isEnabled)

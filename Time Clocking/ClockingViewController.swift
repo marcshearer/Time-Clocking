@@ -67,7 +67,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
         self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
         self.viewModel.durationText.bind(to: self.durationTextField.reactive.editingString)
-        self.viewModel.stateDescription.bind(to: self.titleLabel.reactive.editingString)
+        self.viewModel.timerStateDescription.bind(to: self.titleLabel.reactive.editingString)
         
         // Bind enablers
         self.resourceCodePopupButton.isEnabled = true
@@ -75,10 +75,10 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
-        self.viewModel.canEditTimes.bind(to: self.startTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
-        self.viewModel.canEditTimes.bind(to: self.endTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditTimes.map{ $0 ? CGFloat(1.0) : CGFloat(0.3) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditStartTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
+        self.viewModel.canEditStartTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
+        self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
+        self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
         self.viewModel.canStart.bind(to: self.startButton.reactive.isEnabled)
         self.viewModel.canStop.bind(to: self.stopButton.reactive.isEnabled)
         self.viewModel.canStop.bind(to: self.stopAndAddButton.reactive.isEnabled)
@@ -90,30 +90,30 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         // Bind button actions
         _ = self.startButton.reactive.controlEvent.observeNext { (_) in
             // Start button
-            self.viewModel.state.value = State.started.rawValue
+            self.viewModel.timerState.value = TimerState.started.rawValue
         }
         
         _ = self.stopButton.reactive.controlEvent.observeNext { (_) in
             // Stop button
-            self.viewModel.state.value = State.stopped.rawValue
+            self.viewModel.timerState.value = TimerState.stopped.rawValue
         }
         
         _ = self.stopAndAddButton.reactive.controlEvent.observeNext { (_) in
             // Stop and add button
-            self.viewModel.state.value = State.stopped.rawValue
+            self.viewModel.timerState.value = TimerState.stopped.rawValue
             self.addClocking()
-            self.viewModel.state.value = State.notStarted.rawValue
+            self.viewModel.timerState.value = TimerState.notStarted.rawValue
         }
         
         _ = self.addButton.reactive.controlEvent.observeNext { (_) in
             // Add button
             self.addClocking()
-            self.viewModel.state.value = State.notStarted.rawValue
+            self.viewModel.timerState.value = TimerState.notStarted.rawValue
         }
         
         _ = self.resetButton.reactive.controlEvent.observeNext { (_) in
             // Reset button
-            self.viewModel.state.value = State.notStarted.rawValue
+            self.viewModel.timerState.value = TimerState.notStarted.rawValue
         }
         
         _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
@@ -172,7 +172,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     }
     
     @objc private func timerActivated(_ sender: Any) {
-        let state = State(rawValue: TimeEntry.current.state.value)
+        let state = TimerState(rawValue: TimeEntry.current.timerState.value)
         let now = Date()
         
         if state == .notStarted {
@@ -187,7 +187,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     // MARK: - Clocking management methods ======================================================================
     
     private func loadClockings() {
-        var predicate: [NSPredicate]? = [NSPredicate(format: "invoiceNumber = ''")]
+        var predicate: [NSPredicate]? = [NSPredicate(format: "invoiceState <> 'Invoiced'")]
         if let startDate = self.startDate() {
             predicate?.append(NSPredicate(format: "startTime > %@", startDate as NSDate))
         }
@@ -202,16 +202,16 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func startDate() -> Date? {
         switch TimeUnit(rawValue: Settings.current.showUnit.value)! {
         case .weeks:
-            return Date().startOfWeek(weeks: Settings.current.showQuantity.value - 1)
+            return Date.startOfWeek(weeks: Settings.current.showQuantity.value - 1)
             
         case .months:
-            return Date().startOfMonth(months: Settings.current.showQuantity.value - 1)
+            return Date.startOfMonth(months: Settings.current.showQuantity.value - 1)
             
         case .years:
-            return Date().startOfYear(years: Settings.current.showQuantity.value - 1)
+            return Date.startOfYear(years: Settings.current.showQuantity.value - 1)
             
         default:
-            return Date().startOfDay(days: Settings.current.showQuantity.value - 1)
+            return Date.startOfDay(days: Settings.current.showQuantity.value - 1)
             
         }
     }
