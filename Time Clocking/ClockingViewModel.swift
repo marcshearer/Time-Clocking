@@ -53,6 +53,7 @@ class ClockingViewModel {
     public var lastDocumentNumber = Observable<String>("")
     public var lastDocumentDate = ObservablePickerDate()
     public var documentNumber = Observable<String>("")
+    public var clockingsInvoiceable = Observable<Bool>(false)
  
     // Enabled properties
     public var canEditProjectCode = Observable<Bool>(true)
@@ -163,6 +164,13 @@ class ClockingViewModel {
                 self.startTime.value = self.endTime.value
             }
         }
+
+        // Document number changes
+        _ = self.documentNumber.observeNext { (_) in
+            // Change of document number
+            self.documentNumberChange.value = true
+        }
+
         
         // Mode dependent mappings
         
@@ -218,10 +226,13 @@ class ClockingViewModel {
         
         if mode == .invoice {
             // Customer code changes
-            _ = self.customerCode.observable.observeNext { (_) in
-                // Can invoice if we have a customer and the include invoiced flag is unchecked
-                self.canInvoice.value = (self.customerCode.value != "")
+            _ = self.clockingsInvoiceable.observeNext { (_) in
+                // Check if all selected have same customer
+                self.canInvoice.value = self.clockingsInvoiceable.value
             }
+            
+            // Can always edit document number
+            self.canEditDocumentNumber.value = true
         }
         
         if mode == .report {
@@ -230,13 +241,8 @@ class ClockingViewModel {
                 // Can edit invoice number if include invoiced is checked
                 self.canEditDocumentNumber.value = (self.includeInvoiced.value != 0)
             }
-            
-            _ = self.documentNumber.observeNext { (_) in
-                // Change of document number
-                self.documentNumberChange.value = true
-            }
         }
-   }
+    }
     
     public func copy(to record: NSManagedObject) {
         

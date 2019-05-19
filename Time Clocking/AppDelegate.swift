@@ -40,8 +40,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
             }
         }
+        Settings.current.nextInvoiceNo.value = 100001
+        Settings.current.nextCreditNo.value = 200001
+        Settings.saveDefaults()
         */
-        
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {

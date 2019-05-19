@@ -39,4 +39,8 @@ class Documents {
         
         return result
     }
+    
+    static func load(documentNumber: String) -> [DocumentMO] {
+        return CoreData.fetch(from: "Documents", filter: NSPredicate(format: "documentNumber = %@", documentNumber))
+    }
 }

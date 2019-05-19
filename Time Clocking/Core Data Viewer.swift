@@ -47,12 +47,15 @@ enum Action {
     case none
 }
 
-public protocol CoreDataTableViewerDelegate : class {
+@objc public protocol CoreDataTableViewerDelegate : class {
     
     func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
     
     func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
     
+    @objc optional func checkEnabled(record: NSManagedObject) -> Bool
+    
+    @objc optional func buttonPressed(record: NSManagedObject) -> Bool
 }
 
 class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
@@ -75,6 +78,9 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     private var totals = false
     private var padColumns: [PadColumn] = []
     private var additional = 0
+    private let boxImage = NSImage(named: NSImage.Name("box"))!
+    private let boxTickImage = NSImage(named: NSImage.Name("boxtick"))!
+    private var buttonXref: [NSManagedObject?] = []
     
     public var delegate: CoreDataTableViewerDelegate?
     
@@ -150,10 +156,32 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         }
     }
     
+    public func insert(recordType: String, record: NSManagedObject, before: NSManagedObject?) {
+        if self.recordType == recordType {
+            if let before = before {
+                if let index = self.records.firstIndex(where: {$0 == before}) {
+                    self.displayTableView.beginUpdates()
+                    self.records.insert(record, at: index)
+                    self.displayTableView.insertRows(at: IndexSet(integer: index), withAnimation: .slideDown)
+                    self.displayTableView.endUpdates()
+                    self.accumulateTotals()
+                }
+            } else {
+                // No before record - append
+                self.append(recordType: recordType, record: record)
+            }
+        }
+    }
+    
     public func commit(recordType: String, record: NSManagedObject, action: Action) {
         if self.recordType == recordType {
             
             if action == .delete {
+                // Clear xref entry
+                if let xrefIndex = buttonXref.firstIndex(where: {$0 == record}) {
+                    buttonXref[xrefIndex] = nil
+                }
+                // Update array and table view
                 if let index = records.firstIndex(where: {$0 == record}) {
                     self.displayTableView.beginUpdates()
                     self.records.remove(at: index)
@@ -263,42 +291,60 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         return false
     }
     
-    internal func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        var cell: NSCell!
+    internal func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        var cell: NSView?
         if let identifier = tableColumn?.identifier.rawValue {
             var expand: CGFloat = 0.0
             if let columnNumber = Int(identifier) {
                 let column = self.layout[columnNumber]
-                if row >= self.records.count {
-                    // Total line
-                    if self.records.count == 0 || self.total[columnNumber] == nil {
-                        // Not totalled column
-                        cell = NSCell(textCell: "")
-                    } else {
-                        let format = (column.type == .int ? "%d" : self.doubleFormat)
-                        cell = NSCell(textCell: String(format: format, self.total[columnNumber]!))
-                        cell.font = NSFont.boldSystemFont(ofSize: 12)
-                    }
-                    cell.alignment = column.alignment
-                } else {
-                    // Normal line
-                    var value: String
+                var value: String?
+                var enabled = true
+                if row < self.records.count {
                     if column.key.left(1) == "=" {
                         value = self.delegate?.derivedKey(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: self.records[row]) ?? ""
                     } else {
                         value = self.getValue(record: self.records[row], key: column.key, type: column.type)
                     }
-                    if column.type == .button {
-                        let image = NSImage(named: NSImage.Name((value == "X" ? "boxtick" : "box")))
-                        cell = NSCell(imageCell: image)
+                    enabled = delegate?.checkEnabled?(record: self.records[row]) ?? true
+                }
+                if column.type == .button {
+                    if row < self.records.count {
+                        buttonXref.append(records[row])
+                        let image = (value == "" ? self.boxImage : self.boxTickImage)
+                        let action = (enabled ? #selector(CoreDataTableViewer.buttonPressed(_:)) : nil)
+                        let button = NSButton(title: "", image: image, target: self, action: action)
+                        button.isBordered = false
+                        button.tag = buttonXref.count - 1
+                        button.isEnabled = enabled
+                        cell = button
+                    }
+                } else {
+                    var textField = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(column.key), owner: nil) as? NSTextField
+                    if textField == nil {
+                        textField = NSTextField()
+                        textField?.identifier = NSUserInterfaceItemIdentifier(column.key)
+                        textField?.isBordered = false
+                    }
+                    if row >= self.records.count {
+                        // Total line
+                        if self.records.count == 0 || self.total[columnNumber] == nil {
+                            // Not totalled column
+                            textField?.stringValue = ""
+                        } else {
+                            let format = (column.type == .int ? "%d" : self.doubleFormat)
+                            textField?.stringValue = String(format: format, self.total[columnNumber]!)
+                            textField?.font = NSFont.boldSystemFont(ofSize: 12)
+                        }
+                        textField?.alignment = column.alignment
                     } else {
-                        cell = NSCell(textCell: value)
-                        cell.alignment = column.alignment
-                        if column.width <= 0 && cell.cellSize.width > tableColumn!.width + 2 {
+                        // Normal line
+                        textField?.stringValue = value!
+                        textField?.alignment = column.alignment
+                        if column.width <= 0 && (textField?.cell?.cellSize.width)! > tableColumn!.width + 2 {
                             Utility.mainThread {
                                 
                                 // Stretch column can't contain this value - expand it - trying to recover any padding first
-                                expand = cell.cellSize.width - tableColumn!.width + 2
+                                expand = (textField?.cell?.cellSize.width)! - tableColumn!.width + 2
                                 // Check how much padding is available
                                 if self.padColumns.count > 0 {
                                     var padAvailable:CGFloat = 0.0
@@ -328,6 +374,8 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                             }
                         }
                     }
+                    textField?.isEnabled = enabled
+                    cell = textField
                 }
             }
         }
@@ -354,6 +402,14 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
             }
         } else {
             return ""
+        }
+    }
+    
+    @objc internal func buttonPressed(_ button: NSButton) {
+        if let record = buttonXref[button.tag] {
+            if let selected = self.delegate?.buttonPressed?(record: record) {
+                button.image = (selected ? self.boxTickImage : self.boxImage)
+            }
         }
     }
     

@@ -8,9 +8,9 @@
         <!--Invoice View Controller-->
         <scene sceneID="CXn-Ip-910">
             <objects>
-                <viewController storyboardIdentifier="ReportingInvoicePromptViewController" id="LaL-pz-WOJ" customClass="InvoiceViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InvoiceViewController" id="LaL-pz-WOJ" customClass="InvoiceViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="6TW-QM-tl8">
-                        <rect key="frame" x="0.0" y="0.0" width="290" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IJu-Ff-bKp">
@@ -22,7 +22,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tuv-0v-nAV">
-                                <rect key="frame" x="127" y="228" width="96" height="22"/>
+                                <rect key="frame" x="157" y="228" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="qJe-bJ-OTU"/>
                                 </constraints>
@@ -46,7 +46,7 @@ Gw
                                 </buttonCell>
                             </button>
                             <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YXc-9G-G61">
-                                <rect key="frame" x="127" y="65" width="139" height="148"/>
+                                <rect key="frame" x="157" y="65" width="139" height="148"/>
                                 <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="clockAndCalendar" id="fw0-cg-uzA">
                                     <font key="font" metaFont="system"/>
                                     <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -65,7 +65,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Ir-WD-DRK">
-                                <rect key="frame" x="34" y="13" width="82" height="32"/>
+                                <rect key="frame" x="64" y="13" width="82" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="UYK-es-dj1"/>
                                 </constraints>
@@ -80,22 +80,24 @@ DQ
                         </subviews>
                         <constraints>
                             <constraint firstItem="tuv-0v-nAV" firstAttribute="top" secondItem="6TW-QM-tl8" secondAttribute="top" constant="20" id="0g3-De-evE"/>
-                            <constraint firstItem="1Ir-WD-DRK" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="40" id="8F0-tS-pYz"/>
+                            <constraint firstItem="1Ir-WD-DRK" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="70" id="8F0-tS-pYz"/>
                             <constraint firstItem="3vb-1s-mBT" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="22" id="CCH-LU-FTV"/>
                             <constraint firstAttribute="bottom" secondItem="1Ir-WD-DRK" secondAttribute="bottom" constant="20" id="GaJ-ZS-pCK"/>
                             <constraint firstItem="IJu-Ff-bKp" firstAttribute="leading" secondItem="6TW-QM-tl8" secondAttribute="leading" constant="20" id="Heg-sq-csq"/>
                             <constraint firstAttribute="bottom" secondItem="wXA-IU-Twg" secondAttribute="bottom" constant="20" id="IST-xK-pSX"/>
                             <constraint firstItem="IJu-Ff-bKp" firstAttribute="top" secondItem="6TW-QM-tl8" secondAttribute="top" constant="20" id="L8J-OQ-8EV"/>
                             <constraint firstItem="YXc-9G-G61" firstAttribute="top" secondItem="3vb-1s-mBT" secondAttribute="top" id="Mkh-Rl-EQx"/>
-                            <constraint firstAttribute="trailing" secondItem="wXA-IU-Twg" secondAttribute="trailing" constant="40" id="fZI-ng-x0W"/>
+                            <constraint firstAttribute="trailing" secondItem="wXA-IU-Twg" secondAttribute="trailing" constant="70" id="fZI-ng-x0W"/>
                             <constraint firstItem="YXc-9G-G61" firstAttribute="leading" secondItem="tuv-0v-nAV" secondAttribute="leading" id="hYm-Re-bPS"/>
-                            <constraint firstItem="tuv-0v-nAV" firstAttribute="leading" secondItem="IJu-Ff-bKp" secondAttribute="trailing" constant="10" id="oae-4X-Wgi"/>
+                            <constraint firstItem="tuv-0v-nAV" firstAttribute="leading" secondItem="IJu-Ff-bKp" secondAttribute="trailing" constant="40" id="oae-4X-Wgi"/>
                             <constraint firstItem="3vb-1s-mBT" firstAttribute="top" secondItem="IJu-Ff-bKp" secondAttribute="bottom" constant="20" id="tHZ-0F-4Of"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="wXA-IU-Twg" id="nJd-wp-ovi"/>
                         <outlet property="documentDateDatePicker" destination="YXc-9G-G61" id="XMC-AJ-Sw2"/>
+                        <outlet property="documentDateLabel" destination="3vb-1s-mBT" id="n9q-4U-2UO"/>
+                        <outlet property="documentNumberLabel" destination="IJu-Ff-bKp" id="Pss-FC-fRb"/>
                         <outlet property="documentNumberTextField" destination="tuv-0v-nAV" id="HOc-Iy-5Xe"/>
                         <outlet property="okButton" destination="1Ir-WD-DRK" id="qWI-RP-iYx"/>
                     </connections>

@@ -18,6 +18,8 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private var tableViewer: CoreDataTableViewer!
     private var viewModel: ClockingViewModel!
     private var lastDocumentNumber = ""
+    private var clockings: [ClockingMO]!
+    private var clockingExcluded: [String:Bool] = [:]
     
     @IBOutlet private weak var resourceCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
@@ -53,15 +55,15 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     // MARK: - Setup bindings to view model ======================================================================
     
     private func setupViewModel() {
-        self.viewModel = ClockingViewModel(mode: .report, allResources: "All resources", allCustomers: "All customers", allProjects: "All projects")
+        self.viewModel = ClockingViewModel(mode: self.mode, allResources: "All resources", allCustomers: "All customers", allProjects: "All projects")
         self.viewModel.timerState.value = TimerState.stopped.rawValue
         self.viewModel.startTime.value = Date(timeIntervalSinceReferenceDate: 0)
-        self.viewModel.endTime.value = Date(timeInterval: -1, since: Date.startOfDay(days: 1, from: Date())!) // Forward 1 day - back 1 minute
+        self.viewModel.endTime.value = Date(timeInterval: -1, since: Date.startOfDay(days: -1, from: Date())!) // Forward 1 day - back 1 second
     }
     
     private func setupBindings() {
         
-        // Bind date
+        // Bind data
         self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
         self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
         self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
@@ -77,17 +79,15 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         self.startTimeDatePicker.isEnabled = true
         self.endTimeDatePicker.isEnabled = true
         self.viewModel.canEditDocumentNumber.bind(to: self.documentNumberTextField.reactive.isEnabled)
-        self.viewModel.canInvoice.bind(to: self.includeInvoicedButton.reactive.isEnabled)
+        self.viewModel.canInvoice.bind(to: self.invoiceButton.reactive.isEnabled)
         self.closeButton.isEnabled = true
         
-        // Bind button actions
-        _ = self.includeInvoicedButton.reactive.controlEvent.observeNext { (_) in
-            InvoiceViewController.show(relativeTo: self.includeInvoicedButton, customerCode: self.viewModel.customerCode.value, documentType: .invoice, clockingIterator: self.tableViewer!.forEachRecord)
+        _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
+            self.closePopover()
         }
         
-        _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
-            self.becomeFirstResponder()
-            StatusMenu.shared.hidePopover(self.closeButton)
+        _ = self.invoiceButton.reactive.controlEvent.observeNext { (_) in
+            self.invoiceAction()
         }
         
         // Observe data change
@@ -109,11 +109,11 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     func setupForm() {
         
         if self.mode == .report {
-            self.includeInvoicedButton.isHidden = true
             self.documentNumberLabel.isHidden = false
             self.documentNumberTextField.isHidden = false
             self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = false
             self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = true
+            self.invoiceButton.isHidden = true
             self.closeButtonCenterConstraint.isActive = true
             self.closeButtonTrailingConstraint.isActive = false
         }
@@ -121,15 +121,16 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         if self.mode == .invoice {
             self.includeInvoicedLabel.isHidden = true
             self.includeInvoicedButton.isHidden = true
+            self.invoiceButton.isHidden = false
             self.closeButtonCenterConstraint.isActive = false
             self.closeButtonTrailingConstraint.isActive = true
             if self.documentType == .invoice {
-                self.includeInvoicedButton.title = "Invoice"
+                self.invoiceButton.title = "Invoice"
                 self.documentNumberLabel.isHidden = true
                 self.documentNumberTextField.isHidden = true
                 self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
             } else {
-                self.includeInvoicedButton.title = "Credit"
+                self.invoiceButton.title = "Credit"
                 self.documentNumberLabel.isHidden = false
                 self.documentNumberTextField.isHidden = false
                 self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
@@ -153,11 +154,50 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     }
     
     internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
+        var result = ""
+        
+        if key == "selected" {
+            let clockingMO = record as! ClockingMO
+            result = ((self.clockingExcluded[clockingMO.clockingUUID!] ?? false) ? "" : "X")
+        } else {
+            result = Clockings.derivedKey(recordType: recordType, key: key, record: record)
+        }
+        
+        return result
     }
     
     private func editClocking(_ clockingMO: ClockingMO) {
         Clockings.editClocking(clockingMO, delegate: self, from: self)
+    }
+    
+    internal func checkEnabled(record: NSManagedObject) -> Bool {
+        let clockingMO = record as! ClockingMO
+        switch self.mode! {
+        case .invoice:
+            switch self.documentType! {
+            case .invoice:
+                return (clockingMO.invoiceState != InvoiceState.invoiced.rawValue)
+            case .credit:
+                return (clockingMO.invoiceState == InvoiceState.invoiced.rawValue)
+            }
+        default:
+            return true
+        }
+    }
+    
+    internal func buttonPressed(record: NSManagedObject) -> Bool {
+        
+        // Get current value
+        let clockingMO = record as! ClockingMO
+        var included = !(clockingExcluded[clockingMO.clockingUUID!] ?? false)
+        
+        // Invert current value and store
+        included = !included
+        clockingExcluded[clockingMO.clockingUUID!] = !included
+        
+       self.checkClockingsInvoiceable()
+        
+        return included
     }
     
     // MARK: - Clocking Detail Delegate Handlers ======================================================================
@@ -168,17 +208,93 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
     }
     
+    // MARK: - Invoice / credit note production======================================================================= -
+    
+    private func checkClockingsInvoiceable() {
+        var invoiceable = false
+        var customerCode: String?
+        var invoiceNumber: String?
+        
+        if self.mode == .invoice {
+            
+            for clockingMO in self.clockings {
+                if !(clockingExcluded[clockingMO.clockingUUID!] ?? false) {
+                    if customerCode == nil {
+                        // First clocking - keep customer code
+                        customerCode = clockingMO.customerCode!
+                        invoiceable = true
+                    } else if customerCode != clockingMO.customerCode! {
+                        // Different customers are not invoiceable
+                        invoiceable = false
+                        break
+                    }
+                    if self.documentType == .credit {
+                        if invoiceNumber == nil {
+                            // First clocking - keep invoice number
+                            invoiceNumber = Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!)
+                        } else if invoiceNumber != Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) {
+                            invoiceable = false
+                            break
+                        }
+                    }
+                }
+            }
+            self.viewModel.clockingsInvoiceable.value = invoiceable
+        }
+    }
+    
+    private func invoiceAction() {
+        
+        let invoiceClockings = self.clockings.filter{!(clockingExcluded[$0.clockingUUID!] ?? false)}
+        
+        func clockingIterator(_ action: (NSManagedObject)->()) {
+            for clockingMO in invoiceClockings {
+                action(clockingMO)
+            }
+        }
+        
+        func invoiceCompletion(successful: Bool) {
+            if successful {
+                // Deselect clockings that have just been invoiced, refresh clockings and disable invoice button
+                for clockingMO in invoiceClockings {
+                    self.clockingExcluded[clockingMO.clockingUUID!] = true
+                }
+                self.showClockings()
+                self.viewModel.clockingsInvoiceable.value = false
+            }
+        }
+        
+        if invoiceClockings.count > 0 {
+            InvoiceViewController.show(relativeTo: self.invoiceButton, customerCode: invoiceClockings[0].customerCode!, documentType: self.documentType, originalInvoiceNumber: (self.documentType == .credit ? self.viewModel.documentNumber.value : ""), clockingIterator: clockingIterator, completion: invoiceCompletion)
+        }
+    }
+    
+    private func closePopover() {
+        StatusMenu.shared.hidePopover(self.closeButton)
+    }
+    
     // MARK: - Clocking management methods ======================================================================
     
     private func loadClockings() {
-        var clockings: [ClockingMO]
         
-        if self.viewModel.documentNumber.value == "" {
-            clockings = self.loadFromClockings()
-        } else {
+        // Reset all to unselected
+        clockingExcluded = [:]
+        
+        // Load clockings from database
+        if self.viewModel.documentNumber.value != ""  || (self.mode == .invoice && self.documentType == .credit) {
             clockings = self.loadFromDocuments()
+        } else {
+            clockings = self.loadFromClockings()
         }
         
+        // Show clockngs
+        self.showClockings()
+        
+        // Check if invoiceable (i.e. all same customer / same invoice for credits)
+        self.checkClockingsInvoiceable()
+    }
+    
+    private func showClockings() {
         self.tableViewer.show(recordType: "Clockings", layout: clockingsLayout,records: clockings)
     }
     
@@ -196,8 +312,19 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         predicate?.append(NSPredicate(format: "startTime >= %@", self.viewModel.startTime.value as NSDate))
         predicate?.append(NSPredicate(format: "endTime <= %@", self.viewModel.endTime.value as NSDate))
         
-        if self.viewModel.includeInvoiced.value == 0 {
-            predicate?.append(NSPredicate(format: "invoiceState <> 'Invoiced'"))
+        switch mode! {
+        case .report:
+            if self.viewModel.includeInvoiced.value == 0 {
+                predicate?.append(NSPredicate(format: "invoiceState <> 'Invoiced'"))
+            }
+        case .invoice:
+            if self.documentType == .invoice {
+                predicate?.append(NSPredicate(format: "invoiceState <> 'Invoiced'"))
+            } else {
+                predicate?.append(NSPredicate(format: "invoiceState == 'Invoiced'"))
+            }
+        default:
+            break
         }
         
         let clockings = CoreData.fetch(from: "Clockings", filter: predicate, sort: [("startTime", .ascending)]) as! [ClockingMO]
@@ -208,7 +335,16 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private func loadFromDocuments() -> [ClockingMO] {
         var results: [ClockingMO] = []
 
-        let documents = CoreData.fetch(from: "Documents", filter: [NSPredicate(format: "documentNumber like %@", "\(self.viewModel.documentNumber.value)*")], sort: [("documentNumber", .ascending)]) as! [DocumentMO]
+        var format: String
+        var value = "\(self.viewModel.documentNumber.value)"
+        if self.mode == .invoice && self.documentType == .credit {
+            format = "documentNumber = %@"
+        } else {
+            format = "documentNumber like %@"
+            value += "*"
+        }
+        
+        let documents = CoreData.fetch(from: "Documents", filter: [NSPredicate(format: format, value)], sort: [("documentNumber", .ascending)]) as! [DocumentMO]
 
         for documentMO in documents {
             
@@ -225,6 +361,11 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                     }
                 }
             }
+        }
+        
+        if results.count > 0 {
+            // Sort by start time
+            results.sort{$0.startTime! < $1.startTime!}
         }
         
         return results
@@ -253,6 +394,13 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
         if clockingMO.endTime! > self.viewModel.endTime.value {
             included = false
+        }
+        
+        if self.mode == .invoice && self.documentType == .credit {
+            // Check that this is the last document number
+            if self.viewModel.documentNumber.value != Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) {
+                included = false
+            }
         }
         
         return included
