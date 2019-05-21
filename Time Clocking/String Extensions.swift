@@ -73,7 +73,7 @@ extension String {
                 amount = number.doubleValue
             }
         }
-        return T(amount!)
+        return T(amount ?? 0.0)
     }
     
     public func toNumber<T>() -> T? where T: BinaryInteger {

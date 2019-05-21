@@ -137,7 +137,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         switch recordType {
         case "Clockings":
             // Call the generic clocking detail routine
-            Clockings.editClocking(record as! ClockingMO, delegate: self, from: self)
+            ClockingDetailViewController.show(record as! ClockingMO, delegate: self, from: self)
         default:
             break
         }
@@ -202,16 +202,16 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func startDate() -> Date? {
         switch TimeUnit(rawValue: Settings.current.showUnit.value)! {
         case .weeks:
-            return Date.startOfWeek(weeks: Settings.current.showQuantity.value - 1)
+            return Date.startOfWeek(weeks: -Settings.current.showQuantity.value + 1)
             
         case .months:
-            return Date.startOfMonth(months: Settings.current.showQuantity.value - 1)
+            return Date.startOfMonth(months: -Settings.current.showQuantity.value + 1)
             
         case .years:
-            return Date.startOfYear(years: Settings.current.showQuantity.value - 1)
+            return Date.startOfYear(years: -Settings.current.showQuantity.value + 1)
             
         default:
-            return Date.startOfDay(days: Settings.current.showQuantity.value - 1)
+            return Date.startOfDay(days: -Settings.current.showQuantity.value + 1)
             
         }
     }

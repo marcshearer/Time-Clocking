@@ -10,18 +10,11 @@ import Cocoa
 import Bond
 import ReactiveKit
 
-enum TimeUnit: Int {
-    case days = 0
-    case weeks = 1
-    case months = 2
-    case years = 3
-}
-
 class SettingsViewModel: NSObject, NSCopying {
     
     var showUnit = Observable<Int>(TimeUnit.months.rawValue)
     var showQuantity = ObservableTextFieldInt<Int>()
-    var showQUantityLabel = Observable<String>("")
+    var showQuantityLabel = Observable<String>("")
     var nextInvoiceNo = ObservableTextFieldInt<Int>()
     var nextCreditNo = ObservableTextFieldInt<Int>()
     var canSave = Observable<Bool>(false)
@@ -43,7 +36,7 @@ class SettingsViewModel: NSObject, NSCopying {
 
     private func setupMapping() {
         _ = self.showUnit.observeNext { (_) in
-            self.showQUantityLabel.value = "Number of \(TimeUnit(rawValue: self.showUnit.value) ?? .days) to show:"
+            self.showQuantityLabel.value = "Number of \(TimeUnit(rawValue: self.showUnit.value) ?? .days) to show:"
         }
         _ = self.showQuantity.observable.observeNext { (_) in
             self.canSave.value = (self.showQuantity.value > 0)

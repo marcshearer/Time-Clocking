@@ -12,7 +12,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     
     public static let shared = StatusMenu()
     
-    private let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
+    public let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.squareLength)
     
     private var statusMenu: NSMenu
     private var updateTimer: Timer!
@@ -42,7 +42,9 @@ class StatusMenu: NSObject, NSMenuDelegate {
         let invoicingMenu = self.addSubmenu("Invoicing")
         self.addItem("Invoices", action: #selector(StatusMenu.showInvoiceSelection(_:)), to: invoicingMenu)
         self.addItem("Credit notes", action: #selector(StatusMenu.showCreditSelection(_:)), to: invoicingMenu)
-        self.addItem("Reporting", action: #selector(StatusMenu.showReporting(_:)))
+        let reportingMenu = self.addSubmenu("Reporting")
+        self.addItem("Clockings", action: #selector(StatusMenu.showReportingClockings(_:)), to: reportingMenu)
+        self.addItem("Documents", action: #selector(StatusMenu.showReportingDocuments(_:)), to: reportingMenu)
         let maintenanceMenu = self.addSubmenu("Setup")
         self.addItem("Resources", action: #selector(StatusMenu.showResources(_:)), to: maintenanceMenu)
         self.addItem("Customers", action: #selector(StatusMenu.showCustomers(_:)), to: maintenanceMenu)
@@ -172,10 +174,11 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.showPopover("Settings", viewController!)
     }
     
-    @objc private func showReporting(_ sender: Any?) {
+    @objc private func showReportingClockings(_ sender: Any?) {
         
         // Retrieve or create the view controller
         let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        viewController?.mode = .reportClockings
         self.showPopover("Reporting", viewController!)
     }
     
@@ -183,6 +186,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         
         // Retrieve or create the view controller
         let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        viewController?.mode = .invoiceCredit
         viewController?.documentType = .invoice
         self.showPopover("Reporting", viewController!)
     }
@@ -191,8 +195,16 @@ class StatusMenu: NSObject, NSMenuDelegate {
         
         // Retrieve or create the view controller
         let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        viewController?.mode = .invoiceCredit
         viewController?.documentType = .credit
         self.showPopover("Reporting", viewController!)
+    }
+    
+    @objc private func showReportingDocuments(_ sender: Any?) {
+        
+        // Retrieve or create the view controller
+        let viewController = self.createController("Documents", "DocumentViewController") as? DocumentViewController
+        self.showPopover("Documents", viewController!)
     }
     
     @objc private func showResources(_ sender: Any?) {

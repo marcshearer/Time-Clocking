@@ -44,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Settings.current.nextCreditNo.value = 200001
         Settings.saveDefaults()
         */
+        
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {

@@ -23,10 +23,13 @@
         <attribute name="customerCode" attributeType="String" minValueString="1" syncable="YES"/>
         <attribute name="defaultHourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hoursPerDay" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="invoiceNotes" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="invoiceTimeDetail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceDescription" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceDetail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoicePer" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="invoiceUnit" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="termsType" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="termsValue" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
                 <constraint value="customerCode"/>
@@ -51,6 +54,7 @@
         <attribute name="documentType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="documentUUID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="generated" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="headerText" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="originalInvoiceNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <uniquenessConstraints>
@@ -85,10 +89,10 @@
     </entity>
     <elements>
         <element name="Clockings" positionX="-36" positionY="45" width="128" height="195"/>
-        <element name="Customers" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Customers" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="Projects" positionX="-54" positionY="9" width="128" height="135"/>
         <element name="Resources" positionX="-18" positionY="90" width="128" height="90"/>
-        <element name="Documents" positionX="-36" positionY="99" width="128" height="165"/>
+        <element name="Documents" positionX="-36" positionY="99" width="128" height="180"/>
         <element name="DocumentDetails" positionX="-27" positionY="108" width="128" height="90"/>
     </elements>
 </model>

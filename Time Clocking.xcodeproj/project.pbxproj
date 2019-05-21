@@ -15,7 +15,7 @@
 		B241BEFB227E945B001CC666 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
 		B241BEFD227E95B6001CC666 /* Customers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customers.swift */; };
 		B241BEFF227E9979001CC666 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* Projects.swift */; };
-		B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustommerViewModel.swift */; };
+		B241BF0122805EA1001CC666 /* CustomerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustomerViewModel.swift */; };
 		B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
 		B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
 		B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
@@ -55,7 +55,12 @@
 		B2C8CC0F228977F00040CA46 /* ProjectFilterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */; };
 		B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */; };
 		B2C8CC15228C19ED0040CA46 /* Documents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC14228C19ED0040CA46 /* Documents.swift */; };
-		B2C8CC18228D4A420040CA46 /* InvoiceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */; };
+		B2C8CC18228D4A420040CA46 /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC17228D4A420040CA46 /* DocumentViewModel.swift */; };
+		B2C8CC1A22912AF90040CA46 /* CustomerDetailMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1922912AF90040CA46 /* CustomerDetailMainViewController.swift */; };
+		B2C8CC1C22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1B22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift */; };
+		B2C8CC1E2292EC040040CA46 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1D2292EC040040CA46 /* DocumentViewController.swift */; };
+		B2C8CC202292EC590040CA46 /* DocumentViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC1F2292EC590040CA46 /* DocumentViewController.storyboard */; };
+		B2C8CC2222930D870040CA46 /* SingleDocumentViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC2122930D870040CA46 /* SingleDocumentViewController.storyboard */; };
 		F85B3FBBBC5288E74E25D57A /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
 /* End PBXBuildFile section */
 
@@ -93,7 +98,7 @@
 		B241BEFA227E945B001CC666 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		B241BEFC227E95B6001CC666 /* Customers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Customers.swift; sourceTree = "<group>"; };
 		B241BEFE227E9979001CC666 /* Projects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Projects.swift; sourceTree = "<group>"; };
-		B241BF0022805EA1001CC666 /* CustommerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustommerViewModel.swift; sourceTree = "<group>"; };
+		B241BF0022805EA1001CC666 /* CustomerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerViewModel.swift; sourceTree = "<group>"; };
 		B241BF022280650B001CC666 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
 		B24F5BDA228306FA005600F4 /* Clockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clockings.swift; sourceTree = "<group>"; };
@@ -135,7 +140,12 @@
 		B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProjectFilterViewController.storyboard; sourceTree = "<group>"; };
 		B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectFilterViewController.swift; sourceTree = "<group>"; };
 		B2C8CC14228C19ED0040CA46 /* Documents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Documents.swift; sourceTree = "<group>"; };
-		B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoiceViewModel.swift; sourceTree = "<group>"; };
+		B2C8CC17228D4A420040CA46 /* DocumentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewModel.swift; sourceTree = "<group>"; };
+		B2C8CC1922912AF90040CA46 /* CustomerDetailMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerDetailMainViewController.swift; sourceTree = "<group>"; };
+		B2C8CC1B22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomerDetailInvoiceViewController.swift; sourceTree = "<group>"; };
+		B2C8CC1D2292EC040040CA46 /* DocumentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentViewController.swift; sourceTree = "<group>"; };
+		B2C8CC1F2292EC590040CA46 /* DocumentViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DocumentViewController.storyboard; sourceTree = "<group>"; };
+		B2C8CC2122930D870040CA46 /* SingleDocumentViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SingleDocumentViewController.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,7 +325,9 @@
 				B241BEFC227E95B6001CC666 /* Customers.swift */,
 				B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */,
 				B2869869227DD81300377112 /* CustomerDetailViewController.swift */,
-				B241BF0022805EA1001CC666 /* CustommerViewModel.swift */,
+				B2C8CC1922912AF90040CA46 /* CustomerDetailMainViewController.swift */,
+				B2C8CC1B22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift */,
+				B241BF0022805EA1001CC666 /* CustomerViewModel.swift */,
 			);
 			name = Customers;
 			sourceTree = "<group>";
@@ -347,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				B286985D227DD81200377112 /* SelectionViewController.storyboard */,
+				B2C8CC2122930D870040CA46 /* SingleDocumentViewController.storyboard */,
 				B286985C227DD81200377112 /* SelectionViewController.swift */,
 			);
 			name = "Reporting and Invoice Selection";
@@ -384,7 +397,6 @@
 			children = (
 				B286985F227DD81300377112 /* InvoiceViewController.storyboard */,
 				B286986D227DD81300377112 /* InvoiceViewController.swift */,
-				B2C8CC17228D4A420040CA46 /* InvoiceViewModel.swift */,
 			);
 			name = "Invoices and Credits";
 			sourceTree = "<group>";
@@ -393,6 +405,9 @@
 			isa = PBXGroup;
 			children = (
 				B2C8CC14228C19ED0040CA46 /* Documents.swift */,
+				B2C8CC1F2292EC590040CA46 /* DocumentViewController.storyboard */,
+				B2C8CC1D2292EC040040CA46 /* DocumentViewController.swift */,
+				B2C8CC17228D4A420040CA46 /* DocumentViewModel.swift */,
 			);
 			name = Documents;
 			sourceTree = "<group>";
@@ -513,6 +528,8 @@
 				B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */,
 				B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */,
 				B286987A227DD81400377112 /* ProjectDetailViewController.storyboard in Resources */,
+				B2C8CC2222930D870040CA46 /* SingleDocumentViewController.storyboard in Resources */,
+				B2C8CC202292EC590040CA46 /* DocumentViewController.storyboard in Resources */,
 				B286987D227DD81400377112 /* SelectionViewController.storyboard in Resources */,
 				B286987B227DD81400377112 /* Assets.xcassets in Resources */,
 				B286987F227DD81400377112 /* InvoiceViewController.storyboard in Resources */,
@@ -597,21 +614,24 @@
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
 				B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */,
 				B2869880227DD81400377112 /* Utility.swift in Sources */,
+				B2C8CC1A22912AF90040CA46 /* CustomerDetailMainViewController.swift in Sources */,
 				B286988A227DD81400377112 /* ClockingViewModel.swift in Sources */,
 				B2869871227DD81400377112 /* Core Data Class.swift in Sources */,
 				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
-				B241BF0122805EA1001CC666 /* CustommerViewModel.swift in Sources */,
+				B241BF0122805EA1001CC666 /* CustomerViewModel.swift in Sources */,
 				B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */,
-				B2C8CC18228D4A420040CA46 /* InvoiceViewModel.swift in Sources */,
+				B2C8CC18228D4A420040CA46 /* DocumentViewModel.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
 				B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */,
 				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
+				B2C8CC1E2292EC040040CA46 /* DocumentViewController.swift in Sources */,
 				B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */,
 				B2C8CC072284356D0040CA46 /* Maintenance.swift in Sources */,
 				B241BEFF227E9979001CC666 /* Projects.swift in Sources */,
+				B2C8CC1C22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift in Sources */,
 				B2C8CC15228C19ED0040CA46 /* Documents.swift in Sources */,
 				B286987E227DD81400377112 /* SettingsViewController.swift in Sources */,
 			);

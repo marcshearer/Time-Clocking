@@ -52,14 +52,6 @@ class Clockings {
         }
     }
     
-    static public func editClocking(_ clockingMO: ClockingMO, delegate: ClockingDetailDelegate, from viewController: NSViewController) {
-        let storyboard = NSStoryboard(name: NSStoryboard.Name("ClockingDetailViewController"), bundle: nil)
-        let clockingDetailViewController = storyboard.instantiateController(withIdentifier: "ClockingDetailViewController") as! ClockingDetailViewController
-        clockingDetailViewController.clockingMO = clockingMO
-        clockingDetailViewController.delegate = delegate
-        viewController.presentAsSheet(clockingDetailViewController)
-    }
-    
     static public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
         var result = ""
         switch recordType {
@@ -84,7 +76,14 @@ class Clockings {
                 } else {
                     result = Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) ?? ""
                 }
-                
+            case "amount":
+                let amount = clockingMO.amount as NSNumber
+                let formatter = NumberFormatter()
+                formatter.locale = Locale.current
+                formatter.numberStyle = .currency
+                if let formatted = formatter.string(from: amount) {
+                    result = formatted
+                }
             default:
                 break
             }

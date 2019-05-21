@@ -11,8 +11,8 @@ import ReactiveKit
 
 class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, ClockingDetailDelegate {
     
+    public var mode: ClockingMode!
     public var documentType: DocumentType! // Set to invoice / credit for invoicing or nil for reporting
-    private var mode: ClockingMode!
     
     private var clockingsLayout: [Layout]!
     private var tableViewer: CoreDataTableViewer!
@@ -20,6 +20,8 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private var lastDocumentNumber = ""
     private var clockings: [ClockingMO]!
     private var clockingExcluded: [String:Bool] = [:]
+    public var popover: NSPopover!
+    public var specificDocumentNumber: String!
     
     @IBOutlet private weak var resourceCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
@@ -40,7 +42,6 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
 
     override internal func viewDidLoad() {
         super.viewDidLoad()
-        self.mode = (documentType == nil ? .report : .invoice)
         self.setupTableViewer()
         self.setupLayouts()
     }
@@ -49,6 +50,9 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         self.setupViewModel()
         self.setupBindings()
         self.setupForm()
+        if self.mode == .documentDetail {
+            self.viewModel.documentNumber.value = self.specificDocumentNumber ?? ""
+        }
         self.loadClockings()
     }
     
@@ -58,84 +62,98 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         self.viewModel = ClockingViewModel(mode: self.mode, allResources: "All resources", allCustomers: "All customers", allProjects: "All projects")
         self.viewModel.timerState.value = TimerState.stopped.rawValue
         self.viewModel.startTime.value = Date(timeIntervalSinceReferenceDate: 0)
-        self.viewModel.endTime.value = Date(timeInterval: -1, since: Date.startOfDay(days: -1, from: Date())!) // Forward 1 day - back 1 second
+        self.viewModel.endTime.value = Date(timeInterval: -1, since: Date.startOfDay(days: 1, from: Date())!) // Forward 1 day - back 1 second
     }
     
     private func setupBindings() {
         
         // Bind data
-        self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
-        self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
-        self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
-        self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
-        self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
-        self.viewModel.includeInvoiced.bidirectionalBind(to: self.includeInvoicedButton.reactive.integerValue)
-        self.viewModel.documentNumber.bidirectionalBind(to: self.documentNumberTextField.reactive.editingString)
         
-        // Bind enablers
-        self.resourceCodePopupButton.isEnabled = true
-        self.customerCodePopupButton.isEnabled = true
-        self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
-        self.startTimeDatePicker.isEnabled = true
-        self.endTimeDatePicker.isEnabled = true
-        self.viewModel.canEditDocumentNumber.bind(to: self.documentNumberTextField.reactive.isEnabled)
-        self.viewModel.canInvoice.bind(to: self.invoiceButton.reactive.isEnabled)
+        if mode != .documentDetail {
+            self.viewModel.documentNumber.bidirectionalBind(to: self.documentNumberTextField.reactive.editingString)
+            self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
+            self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
+            self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
+            self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
+            self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
+            self.viewModel.includeInvoiced.bidirectionalBind(to: self.includeInvoicedButton.reactive.integerValue)
+        
+            // Bind enablers
+            self.resourceCodePopupButton.isEnabled = true
+            self.customerCodePopupButton.isEnabled = true
+            self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
+            self.startTimeDatePicker.isEnabled = true
+            self.endTimeDatePicker.isEnabled = true
+            self.viewModel.canEditDocumentNumber.bind(to: self.documentNumberTextField.reactive.isEnabled)
+            self.viewModel.canInvoice.bind(to: self.invoiceButton.reactive.isEnabled)
+        
+            // Observe data change
+            _ = self.viewModel.anyChange.observeNext { (_) in
+                self.loadClockings()
+            }
+            let throttle = self.viewModel.documentNumberChange.throttle(seconds: 1.0)
+            let debounce = self.viewModel.documentNumberChange.debounce(interval: 0.5)
+            _ = merge(throttle, debounce).observeNext { (_) in
+                if self.lastDocumentNumber != self.viewModel.documentNumber.value {
+                    self.loadClockings()
+                    self.lastDocumentNumber = self.viewModel.documentNumber.value
+                }
+            }
+        } else {
+            self.invoiceButton.isEnabled = true
+        }
+        
+        // Setup invoice action button
+        _ = self.invoiceButton.reactive.controlEvent.observeNext { (_) in
+            self.invoiceAction()
+        }
+        
+        // Setup close button
         self.closeButton.isEnabled = true
         
         _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
             self.closePopover()
         }
         
-        _ = self.invoiceButton.reactive.controlEvent.observeNext { (_) in
-            self.invoiceAction()
-        }
-        
-        // Observe data change
-        _ = self.viewModel.anyChange.observeNext { (_) in
-            self.loadClockings()
-        }
-        let throttle = self.viewModel.documentNumberChange.throttle(seconds: 1.0)
-        let debounce = self.viewModel.documentNumberChange.debounce(interval: 0.5)
-        _ = merge(throttle, debounce).observeNext { (_) in
-            if self.lastDocumentNumber != self.viewModel.documentNumber.value {
-                self.loadClockings()
-                self.lastDocumentNumber = self.viewModel.documentNumber.value
-            }
-        }
     }
     
     // MARK: - Form setup ============================================================================================== -
     
     func setupForm() {
         
-        if self.mode == .report {
-            self.documentNumberLabel.isHidden = false
-            self.documentNumberTextField.isHidden = false
-            self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = false
-            self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = true
-            self.invoiceButton.isHidden = true
-            self.closeButtonCenterConstraint.isActive = true
-            self.closeButtonTrailingConstraint.isActive = false
-        }
+        if self.mode != .documentDetail {
         
-        if self.mode == .invoice {
-            self.includeInvoicedLabel.isHidden = true
-            self.includeInvoicedButton.isHidden = true
-            self.invoiceButton.isHidden = false
-            self.closeButtonCenterConstraint.isActive = false
-            self.closeButtonTrailingConstraint.isActive = true
-            if self.documentType == .invoice {
-                self.invoiceButton.title = "Invoice"
-                self.documentNumberLabel.isHidden = true
-                self.documentNumberTextField.isHidden = true
-                self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
-            } else {
-                self.invoiceButton.title = "Credit"
+            if self.mode == .reportClockings {
                 self.documentNumberLabel.isHidden = false
                 self.documentNumberTextField.isHidden = false
-                self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
-                self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = false
+                self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = false
+                self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = true
+                self.invoiceButton.isHidden = true
+                self.closeButtonCenterConstraint.isActive = true
+                self.closeButtonTrailingConstraint.isActive = false
+            }
+            
+            if self.mode == .invoiceCredit {
+                self.includeInvoicedLabel.isHidden = true
+                self.includeInvoicedButton.isHidden = true
+                self.invoiceButton.isHidden = false
+                self.closeButtonCenterConstraint.isActive = false
+                self.closeButtonTrailingConstraint.isActive = true
+                if self.documentType == .invoice {
+                    self.invoiceButton.title = "Invoice"
+                    self.documentNumberLabel.isHidden = true
+                    self.documentNumberTextField.isHidden = true
+                    self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
+                } else {
+                    self.invoiceButton.title = "Credit"
+                    self.documentNumberLabel.isHidden = false
+                    self.documentNumberTextField.isHidden = false
+                    self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
+                    self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = false
+                    self.documentNumberLabel.stringValue = "Original invoice number:"
+                    self.documentNumberTextField.becomeFirstResponder()
 
+                }
             }
         }
     }
@@ -167,21 +185,25 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     }
     
     private func editClocking(_ clockingMO: ClockingMO) {
-        Clockings.editClocking(clockingMO, delegate: self, from: self)
+        ClockingDetailViewController.show(clockingMO, delegate: self, displayOnly: self.mode != .reportClockings, from: self)
     }
     
     internal func checkEnabled(record: NSManagedObject) -> Bool {
-        let clockingMO = record as! ClockingMO
-        switch self.mode! {
-        case .invoice:
-            switch self.documentType! {
-            case .invoice:
-                return (clockingMO.invoiceState != InvoiceState.invoiced.rawValue)
-            case .credit:
-                return (clockingMO.invoiceState == InvoiceState.invoiced.rawValue)
-            }
-        default:
+        if self.mode != .documentDetail {
             return true
+        } else {
+            let clockingMO = record as! ClockingMO
+            switch self.mode! {
+            case .invoiceCredit:
+                switch self.documentType! {
+                case .invoice:
+                    return (clockingMO.invoiceState != InvoiceState.invoiced.rawValue)
+                case .credit:
+                    return (clockingMO.invoiceState == InvoiceState.invoiced.rawValue)
+                }
+            default:
+                return true
+            }
         }
     }
     
@@ -208,14 +230,14 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
     }
     
-    // MARK: - Invoice / credit note production======================================================================= -
+    // MARK: - Invoice / credit note production ======================================================================= -
     
     private func checkClockingsInvoiceable() {
         var invoiceable = false
         var customerCode: String?
         var invoiceNumber: String?
         
-        if self.mode == .invoice {
+        if self.mode == .invoiceCredit {
             
             for clockingMO in self.clockings {
                 if !(clockingExcluded[clockingMO.clockingUUID!] ?? false) {
@@ -254,7 +276,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
         
         func invoiceCompletion(successful: Bool) {
-            if successful {
+            if successful && self.mode != .documentDetail {
                 // Deselect clockings that have just been invoiced, refresh clockings and disable invoice button
                 for clockingMO in invoiceClockings {
                     self.clockingExcluded[clockingMO.clockingUUID!] = true
@@ -265,12 +287,38 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         }
         
         if invoiceClockings.count > 0 {
-            InvoiceViewController.show(relativeTo: self.invoiceButton, customerCode: invoiceClockings[0].customerCode!, documentType: self.documentType, originalInvoiceNumber: (self.documentType == .credit ? self.viewModel.documentNumber.value : ""), clockingIterator: clockingIterator, completion: invoiceCompletion)
+            
+            var defaultDocumentDate = self.viewModel.endTime.value
+            var reprintDocumentNumber: String?
+            var originalInvoiceNumber: String?
+            var headerText: String?
+
+            if self.mode == .documentDetail {
+                reprintDocumentNumber = self.viewModel.documentNumber.value
+                let documents = Documents.load(documentNumber: reprintDocumentNumber!)
+                if documents.count == 1 {
+                    defaultDocumentDate = documents.first!.documentDate!
+                    originalInvoiceNumber = documents.first!.originalInvoiceNumber!
+                    headerText = documents.first!.headerText!
+                }
+            } else if self.documentType == .credit {
+                originalInvoiceNumber = self.viewModel.documentNumber.value
+                let documents = Documents.load(documentNumber: originalInvoiceNumber!)
+                if documents.count == 1 {
+                    defaultDocumentDate = documents.first!.documentDate!
+                }
+            }
+            
+            InvoiceViewController.show(relativeTo: self.invoiceButton, customerCode: invoiceClockings[0].customerCode!, documentType: self.documentType, reprintDocumentNumber: reprintDocumentNumber, originalInvoiceNumber: originalInvoiceNumber, defaultDocumentDate: defaultDocumentDate, headerText: headerText, clockingIterator: clockingIterator, completion: invoiceCompletion)
         }
     }
     
     private func closePopover() {
-        StatusMenu.shared.hidePopover(self.closeButton)
+        if self.mode == .documentDetail {
+            self.view.window?.close()
+        } else {
+            StatusMenu.shared.hidePopover(self.closeButton)
+        }
     }
     
     // MARK: - Clocking management methods ======================================================================
@@ -281,7 +329,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         clockingExcluded = [:]
         
         // Load clockings from database
-        if self.viewModel.documentNumber.value != ""  || (self.mode == .invoice && self.documentType == .credit) {
+        if self.viewModel.documentNumber.value != ""  || (self.mode == .invoiceCredit && self.documentType == .credit) {
             clockings = self.loadFromDocuments()
         } else {
             clockings = self.loadFromClockings()
@@ -313,11 +361,11 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         predicate?.append(NSPredicate(format: "endTime <= %@", self.viewModel.endTime.value as NSDate))
         
         switch mode! {
-        case .report:
+        case .reportClockings:
             if self.viewModel.includeInvoiced.value == 0 {
                 predicate?.append(NSPredicate(format: "invoiceState <> 'Invoiced'"))
             }
-        case .invoice:
+        case .invoiceCredit:
             if self.documentType == .invoice {
                 predicate?.append(NSPredicate(format: "invoiceState <> 'Invoiced'"))
             } else {
@@ -337,7 +385,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
 
         var format: String
         var value = "\(self.viewModel.documentNumber.value)"
-        if self.mode == .invoice && self.documentType == .credit {
+        if self.mode == .invoiceCredit && self.documentType == .credit {
             format = "documentNumber = %@"
         } else {
             format = "documentNumber like %@"
@@ -396,7 +444,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
             included = false
         }
         
-        if self.mode == .invoice && self.documentType == .credit {
+        if self.mode == .invoiceCredit && self.documentType == .credit {
             // Check that this is the last document number
             if self.viewModel.documentNumber.value != Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) {
                 included = false
@@ -407,7 +455,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         
     }
     
-    // MARK: - Core Data table viewer setup methods ======================================================================
+    // MARK: - Core Data table viewer setup methods ====================================================================== -
     
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
@@ -426,12 +474,31 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
               Layout(key: "startTime",           title: "On",               width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "=duration",           title: "For",              width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=documentNumber",     title: "Last doc",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "amount",              title: "Value",            width: 100,      alignment: .right,  type: .double,      total: true,    pad: false)
+              Layout(key: "=amount",             title: "Value",            width: 100,      alignment: .right,  type: .string,      total: true,    pad: false)
         ]
-        if self.mode == .invoice {
+        if self.mode == .invoiceCredit {
             self.clockingsLayout.insert(
               Layout(key: "=selected",           title: "Include",          width: 50,       alignment: .center, type: .button,      total: false,   pad: false)
                 , at: 0)
         }
     }
+    
+    // MARK: - Method to show this view (in single document mode) ========================================================= -
+    
+    static public func show(mode: ClockingMode ,documentType: DocumentType, documentNumber: String, from parentViewController: NSViewController) {
+        
+        let storyboard = NSStoryboard(name: NSStoryboard.Name("SingleDocumentViewController"), bundle: nil)
+        let sceneIdentifier = NSStoryboard.SceneIdentifier(stringLiteral: "SingleDocumentViewController")
+        if let viewController = storyboard.instantiateController(withIdentifier: sceneIdentifier) as? SelectionViewController {
+            viewController.mode = mode
+            viewController.documentType = documentType
+            viewController.specificDocumentNumber = documentNumber
+            let popover = NSPopover()
+            popover.contentViewController = viewController
+            popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
+            viewController.popover = popover
+            parentViewController.presentAsSheet(viewController)
+        }
+    }
+    
 }

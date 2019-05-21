@@ -16,6 +16,7 @@ class ClockingDetailViewController: NSViewController {
     
     public var clockingMO: ClockingMO!
     public var delegate: ClockingDetailDelegate?
+    public var displayOnly = false
     
     private var viewModel: ClockingViewModel!
     
@@ -33,6 +34,8 @@ class ClockingDetailViewController: NSViewController {
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var deleteButton: NSButton!
+    @IBOutlet private weak var cancelButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var cancelButtonCenterConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +52,7 @@ class ClockingDetailViewController: NSViewController {
     
     private func setupBindings() {
         // Get view model
-        self.viewModel = ClockingViewModel(mode: .detail, from: self.clockingMO)
+        self.viewModel = ClockingViewModel(mode: .clockingDetail, from: self.clockingMO)
         
         // Bind data
         self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
@@ -65,22 +68,40 @@ class ClockingDetailViewController: NSViewController {
         self.viewModel.lastDocumentDate.bidirectionalBind(to: self.lastDocumentDateDatePicker)
         
         // Bind enablers
-        self.resourceCodePopupButton.isEnabled = true
-        self.customerCodePopupButton.isEnabled = true
-        self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
-        self.viewModel.canEditEndTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
-        self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
-        self.viewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+        if self.displayOnly {
+            self.projectCodePopupButton.isEnabled = false
+            self.notesTextField.isEnabled = false
+            self.hourlyRateTextField.isEnabled = false
+            self.startTimeDatePicker.isEnabled = false
+            self.startTimeDatePicker.alphaValue = 0.4
+            self.endTimeDatePicker.isEnabled = false
+            self.endTimeDatePicker.alphaValue = 0.4
+            self.saveButton.isHidden = true
+            self.cancelButton.title = "Close"
+            self.cancelButtonCenterConstraint.isActive = true
+            self.cancelButtonTrailingConstraint.isActive = false
+        } else {
+            self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
+            self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
+            self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
+            self.viewModel.canEditEndTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
+            self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
+            self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
+            self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
+            self.viewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
+            self.deleteButton.isEnabled = true
+            self.cancelButtonCenterConstraint.isActive = false
+            self.cancelButtonTrailingConstraint.isActive = true
+
+        }
+        self.resourceCodePopupButton.isEnabled = !displayOnly
+        self.customerCodePopupButton.isEnabled = !displayOnly
         self.durationTextField.isEnabled = false
         self.invoiceStateTextField.isEnabled = false
         self.lastDocumentNumberTextField.isEnabled = false
         self.lastDocumentDateDatePicker.isEnabled = false
         self.lastDocumentDateDatePicker.alphaValue = 0.4
-        self.deleteButton.isEnabled = true
+        self.deleteButton.isHidden = displayOnly
         self.cancelButton.isEnabled = true
         
         // Bind button actions
@@ -99,5 +120,14 @@ class ClockingDetailViewController: NSViewController {
             self.delegate?.clockingDetailComplete(clockingMO: self.clockingMO, action: .none)
             self.view.window?.close()
         }
+    }
+    
+    static public func show(_ clockingMO: ClockingMO, delegate: ClockingDetailDelegate, displayOnly: Bool = false, from viewController: NSViewController) {
+        let storyboard = NSStoryboard(name: NSStoryboard.Name("ClockingDetailViewController"), bundle: nil)
+        let clockingDetailViewController = storyboard.instantiateController(withIdentifier: "ClockingDetailViewController") as! ClockingDetailViewController
+        clockingDetailViewController.clockingMO = clockingMO
+        clockingDetailViewController.delegate = delegate
+        clockingDetailViewController.displayOnly = displayOnly
+        viewController.presentAsSheet(clockingDetailViewController)
     }
 }

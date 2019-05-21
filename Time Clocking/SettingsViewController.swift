@@ -38,7 +38,7 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
         self.editSettings.showQuantity.bidirectionalBind(to: self.showQuantityTextField)
         self.editSettings.nextInvoiceNo.bidirectionalBind(to: self.nextInvoiceNoTextField)
         self.editSettings.nextCreditNo.bidirectionalBind(to: self.nextCreditNoTextField)
-        self.editSettings.showQUantityLabel.bind(to: self.showQuantityLabel.reactive.editingString)
+        self.editSettings.showQuantityLabel.bind(to: self.showQuantityLabel.reactive.editingString)
         
         // Setup enabled bindings
         self.editSettings.canSave.bind(to: self.saveButton.reactive.isEnabled)

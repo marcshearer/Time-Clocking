@@ -11,10 +11,11 @@ import Bond
 import ReactiveKit
 
 public enum ClockingMode {
-    case clocking
-    case detail
-    case report
-    case invoice
+    case clockingEntry
+    case clockingDetail
+    case reportClockings
+    case invoiceCredit
+    case documentDetail
 }
 
 public enum TimerState: String {
@@ -174,13 +175,13 @@ class ClockingViewModel {
         
         // Mode dependent mappings
         
-        if mode == .clocking || mode == .detail {
+        if mode == .clockingEntry || mode == .clockingDetail {
             // Timer, resource or project changes
             _ = ReactiveKit.combineLatest(self.timerState, self.resourceCode.observable, self.projectCode.observable).observeNext { (_) in
                 // Editable for start and end times
-                self.canEditStartTime.value = ((self.mode != .clocking || self.timerState.value != TimerState.notStarted.rawValue) &&
+                self.canEditStartTime.value = ((self.mode != .clockingEntry || self.timerState.value != TimerState.notStarted.rawValue) &&
                     self.resourceCode.value != "" && self.projectCode.value != "")
-                self.canEditEndTime.value = ((self.mode != .clocking || self.timerState.value == TimerState.stopped.rawValue) &&
+                self.canEditEndTime.value = ((self.mode != .clockingEntry || self.timerState.value == TimerState.stopped.rawValue) &&
                     self.resourceCode.value != "" && self.projectCode.value != "")
             }
             
@@ -200,7 +201,7 @@ class ClockingViewModel {
             }
         }
         
-        if mode == .clocking {
+        if mode == .clockingEntry {
             // Update state when time changes
             _ = self.timerState.observeNext { (_) in
                 if self.timerState.value != self.lastTimerState?.rawValue {
@@ -224,7 +225,7 @@ class ClockingViewModel {
             }
         }
         
-        if mode == .invoice {
+        if mode == .invoiceCredit {
             // Customer code changes
             _ = self.clockingsInvoiceable.observeNext { (_) in
                 // Check if all selected have same customer
@@ -235,7 +236,7 @@ class ClockingViewModel {
             self.canEditDocumentNumber.value = true
         }
         
-        if mode == .report {
+        if mode == .reportClockings {
             // Include invoiced flag changes
             _ = self.includeInvoiced.observeNext { (_) in
                 // Can edit invoice number if include invoiced is checked

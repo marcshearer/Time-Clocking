@@ -127,6 +127,13 @@ class Utility {
         return Int(quotient)
     }
     
+    class func round(_ value: Double, _ decimalPlaces: Int) -> Double {
+        let factor = Double(10 ^ decimalPlaces)
+        var result = (value * factor)
+        result.round()
+        return result / factor
+    }
+    
     //MARK: Cloud functions - get field from cloud for various types =====================================
     
     class func objectString(cloudObject: CKRecord, forKey: String) -> String! {

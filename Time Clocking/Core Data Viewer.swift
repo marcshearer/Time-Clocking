@@ -6,7 +6,7 @@
 //  Copyright © 2018 Marc Shearer. All rights reserved.
 //
 
-// Note that the Table View must be cell-based (property of the Table View (in the Clip View))
+// Note that the Table View must be view-based (property of the Table View (in the Clip View))
 
 import Cocoa
 import CoreData
@@ -49,9 +49,9 @@ enum Action {
 
 @objc public protocol CoreDataTableViewerDelegate : class {
     
-    func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
+    @objc optional func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
     
-    func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
+    @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
     
     @objc optional func checkEnabled(record: NSManagedObject) -> Bool
     
@@ -176,7 +176,8 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     public func commit(recordType: String, record: NSManagedObject, action: Action) {
         if self.recordType == recordType {
             
-            if action == .delete {
+            switch action {
+            case .delete:
                 // Clear xref entry
                 if let xrefIndex = buttonXref.firstIndex(where: {$0 == record}) {
                     buttonXref[xrefIndex] = nil
@@ -188,6 +189,15 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                     self.displayTableView.removeRows(at: IndexSet(integer: index), withAnimation: .slideUp)
                     self.displayTableView.endUpdates()
                 }
+            case .update:
+                // Refresh row
+                if let index = records.firstIndex(where: {$0 == record}) {
+                    self.displayTableView.beginUpdates()
+                    self.displayTableView.reloadData(forRowIndexes: IndexSet(integer: index), columnIndexes: IndexSet(integersIn: 0...self.layout!.count-1))
+                    self.displayTableView.endUpdates()
+                }
+            default:
+                break
             }
             
             // Table view seems to refresh itself so just need to accumulate totals
@@ -258,7 +268,8 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                     for record in self.records {
                         var value: Double
                         if column.key.left(1) == "=" {
-                            value = Double(delegate?.derivedKey(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: record) ?? "0") ?? 0.0
+                            let stringValue = delegate?.derivedKey?(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: record) ?? "0.0"
+                            value = stringValue.toNumber() ?? 0.0
                         } else {
                             value = self.getNumericValue(record: record, key: column.key, type: column.type)
                         }
@@ -277,7 +288,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         var result: Bool?
         
         if row < self.records.count {
-            result = self.delegate?.shouldSelect(recordType: self.recordType, record: self.records[row])
+            result = self.delegate?.shouldSelect?(recordType: self.recordType, record: self.records[row]) ?? false
         }
         
         if result != nil {
@@ -301,7 +312,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                 var enabled = true
                 if row < self.records.count {
                     if column.key.left(1) == "=" {
-                        value = self.delegate?.derivedKey(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: self.records[row]) ?? ""
+                        value = self.delegate?.derivedKey?(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: self.records[row]) ?? ""
                     } else {
                         value = self.getValue(record: self.records[row], key: column.key, type: column.type)
                     }
