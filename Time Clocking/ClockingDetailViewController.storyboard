@@ -303,7 +303,7 @@ Gw
                                     <constraint firstItem="vGZ-0V-Tif" firstAttribute="top" secondItem="pPt-UP-wPB" secondAttribute="bottom" constant="4" id="cPQ-2Z-v0H"/>
                                     <constraint firstItem="374-Le-gnc" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="30" id="cSU-AY-F0P"/>
                                     <constraint firstItem="3jb-Xo-wnQ" firstAttribute="top" secondItem="vDH-LZ-nuH" secondAttribute="bottom" constant="4" id="dPb-NM-BOM"/>
-                                    <constraint firstItem="b6W-GQ-3zo" firstAttribute="centerX" secondItem="gUh-KE-VHu" secondAttribute="centerX" id="eZK-nC-nLl"/>
+                                    <constraint firstItem="b6W-GQ-3zo" firstAttribute="centerX" secondItem="gUh-KE-VHu" secondAttribute="centerX" priority="1" id="eZK-nC-nLl"/>
                                     <constraint firstAttribute="trailing" secondItem="fJo-CG-h0S" secondAttribute="trailing" constant="12" id="gMJ-e4-ssX"/>
                                     <constraint firstAttribute="bottom" secondItem="ktb-O3-KH2" secondAttribute="bottom" constant="8" id="gUt-qh-fdd"/>
                                     <constraint firstItem="w0A-et-q2R" firstAttribute="top" secondItem="rIj-FZ-K93" secondAttribute="bottom" constant="4" id="h2e-dD-Q4s"/>

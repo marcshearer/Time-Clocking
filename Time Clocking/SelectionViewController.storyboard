@@ -178,7 +178,7 @@
                                         </buttonCell>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c4C-Cz-4SB">
-                                        <rect key="frame" x="64" y="1" width="181" height="32"/>
+                                        <rect key="frame" x="170" y="1" width="75" height="32"/>
                                         <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="r4w-Q6-gah">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -187,6 +187,15 @@ Gw
 </string>
                                         </buttonCell>
                                     </button>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4ND-nK-snp">
+                                        <rect key="frame" x="18" y="68" width="273" height="149"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" selectable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" id="JHq-ay-0iC">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="zJE-rv-Idb" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="leading" constant="12" id="0ZS-KZ-wRe"/>
@@ -204,7 +213,7 @@ Gw
                                     <constraint firstItem="Ioh-ea-XfF" firstAttribute="leading" secondItem="CoX-fg-VZS" secondAttribute="trailing" constant="12" id="Ip4-7n-dBP"/>
                                     <constraint firstItem="TvT-cq-diX" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="leading" constant="70" id="Kpa-7Q-er3"/>
                                     <constraint firstItem="CoX-fg-VZS" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="leading" constant="24" id="LTh-zZ-ewb"/>
-                                    <constraint firstItem="c4C-Cz-4SB" firstAttribute="centerX" secondItem="TN0-Kj-LU5" secondAttribute="centerX" id="QtI-AZ-PLg"/>
+                                    <constraint firstItem="c4C-Cz-4SB" firstAttribute="centerX" secondItem="TN0-Kj-LU5" secondAttribute="centerX" priority="1" id="QtI-AZ-PLg"/>
                                     <constraint firstItem="DdF-7u-0B1" firstAttribute="leading" secondItem="Ioh-ea-XfF" secondAttribute="trailing" constant="12" id="R2x-kU-CJZ"/>
                                     <constraint firstItem="bOu-uc-Fik" firstAttribute="top" secondItem="g8r-Qv-iwq" secondAttribute="bottom" constant="12" id="R3X-qi-FNm"/>
                                     <constraint firstAttribute="trailing" secondItem="WOO-Bk-W8O" secondAttribute="trailing" constant="12" id="S5J-S2-H5P"/>
@@ -224,7 +233,7 @@ Gw
                                     <constraint firstItem="Ioh-ea-XfF" firstAttribute="centerY" secondItem="CoX-fg-VZS" secondAttribute="centerY" id="lma-Sp-fhX"/>
                                     <constraint firstItem="WOO-Bk-W8O" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="leading" constant="24" id="peM-rf-zGn"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q9C-w9-OUl" secondAttribute="trailing" constant="20" symbolic="YES" id="qn0-6Z-e6A"/>
-                                    <constraint firstItem="zJE-rv-Idb" firstAttribute="top" secondItem="CoX-fg-VZS" secondAttribute="bottom" constant="12" id="qn2-6Q-e0m"/>
+                                    <constraint firstItem="zJE-rv-Idb" firstAttribute="top" secondItem="CoX-fg-VZS" secondAttribute="bottom" priority="1" constant="12" id="qn2-6Q-e0m"/>
                                     <constraint firstItem="X7Z-1x-oof" firstAttribute="top" secondItem="WOO-Bk-W8O" secondAttribute="bottom" constant="12" id="s19-Lx-Gwf"/>
                                     <constraint firstItem="CoX-fg-VZS" firstAttribute="top" secondItem="bOu-uc-Fik" secondAttribute="bottom" constant="4" id="tIE-qL-o7X"/>
                                     <constraint firstItem="bOu-uc-Fik" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="leading" constant="12" id="vre-uU-Fdq"/>
@@ -265,7 +274,7 @@ Gw
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HFl-Ym-Ndu">
                                                                     <rect key="frame" x="0.0" y="0.0" width="64" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="wPQ-6s-QHx">
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" id="wPQ-6s-QHx">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -327,6 +336,7 @@ Gw
                         <outlet property="includeInvoicedButton" destination="zq8-0O-nhe" id="M1H-Lo-HQS"/>
                         <outlet property="includeInvoicedLabel" destination="PT6-ET-OvY" id="gm7-8t-rBH"/>
                         <outlet property="invoiceButton" destination="TvT-cq-diX" id="RDv-4k-rLT"/>
+                        <outlet property="invoiceInstructions" destination="4ND-nK-snp" id="Ws4-TC-k64"/>
                         <outlet property="projectCodePopupButton" destination="g8r-Qv-iwq" id="1q1-ya-3ve"/>
                         <outlet property="resourceCodePopupButton" destination="WOO-Bk-W8O" id="BEz-EU-3iB"/>
                         <outlet property="startTimeDatePicker" destination="CoX-fg-VZS" id="0bl-dr-hPZ"/>

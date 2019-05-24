@@ -32,6 +32,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private weak var includeInvoicedLabel: NSTextField!
     @IBOutlet private weak var documentNumberLabel: NSTextField!
     @IBOutlet private weak var documentNumberTextField: NSTextField!
+    @IBOutlet private weak var invoiceInstructions: NSTextField!
     @IBOutlet private weak var invoiceButton: NSButton!
     @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var closeButtonCenterConstraint: NSLayoutConstraint!
@@ -131,6 +132,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                 self.invoiceButton.isHidden = true
                 self.closeButtonCenterConstraint.isActive = true
                 self.closeButtonTrailingConstraint.isActive = false
+                self.invoiceInstructions.isHidden = true
             }
             
             if self.mode == .invoiceCredit {
@@ -139,11 +141,14 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                 self.invoiceButton.isHidden = false
                 self.closeButtonCenterConstraint.isActive = false
                 self.closeButtonTrailingConstraint.isActive = true
+                self.invoiceInstructions.isHidden = false
+                self.invoiceInstructions.layer?.cornerRadius = 5.0
                 if self.documentType == .invoice {
                     self.invoiceButton.title = "Invoice"
                     self.documentNumberLabel.isHidden = true
                     self.documentNumberTextField.isHidden = true
                     self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
+                    self.invoiceInstructions.stringValue = "Select clockings to invoice using the filters and the inclusion check boxes. \n\nNote that you should only select clockings for one customer. \n\nYou cannot mix clockings for more than one customer on an invoice."
                 } else {
                     self.invoiceButton.title = "Credit"
                     self.documentNumberLabel.isHidden = false
@@ -152,6 +157,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                     self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = false
                     self.documentNumberLabel.stringValue = "Original invoice number:"
                     self.documentNumberTextField.becomeFirstResponder()
+                    self.invoiceInstructions.stringValue = "Select the invoice to credit using the filters (especially the original invoice number) and then select the clockings you wish to credit using the inclusion check boxes. \n\nYou can only credit the clockings from one invoice at a time."
 
                 }
             }
@@ -185,7 +191,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     }
     
     private func editClocking(_ clockingMO: ClockingMO) {
-        ClockingDetailViewController.show(clockingMO, delegate: self, displayOnly: self.mode != .reportClockings, from: self)
+        ClockingDetailViewController.show(clockingMO, delegate: self, displayOnly: false && self.mode != .reportClockings, from: self)
     }
     
     internal func checkEnabled(record: NSManagedObject) -> Bool {
@@ -226,6 +232,16 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     
     internal func clockingDetailComplete(clockingMO: ClockingMO, action: Action) {
         if action != .none {
+            switch action {
+            case .delete:
+                // Remove clocking
+                if let index = clockings.firstIndex(where: {$0 == clockingMO}) {
+                    self.clockings.remove(at: index)
+                }
+            default:
+                break
+            }
+            // Update table viewer
             self.tableViewer.commit(recordType: "Clockings", record: clockingMO, action: action)
         }
     }
@@ -329,7 +345,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         clockingExcluded = [:]
         
         // Load clockings from database
-        if self.viewModel.documentNumber.value != ""  || (self.mode == .invoiceCredit && self.documentType == .credit) {
+        if self.viewModel.documentNumber.value != "" {
             clockings = self.loadFromDocuments()
         } else {
             clockings = self.loadFromClockings()
@@ -467,14 +483,15 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private func setupLayouts() {
         
         self.clockingsLayout =
-            [ Layout(key: "=resource",           title: "Resource",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=customer",           title: "Customer",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "=project",            title: "Project",          width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "notes",               title: "Description",      width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "startTime",           title: "On",               width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
-              Layout(key: "=duration",           title: "For",              width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=documentNumber",     title: "Last doc",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=amount",             title: "Value",            width: 100,      alignment: .right,  type: .string,      total: true,    pad: false)
+            [ Layout(key: "=resource",       title: "Resource",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false, maxWidth: 100),
+              Layout(key: "=customer",       title: "Customer",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
+              Layout(key: "=project",        title: "Project",     width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
+              Layout(key: "notes",           title: "Description", width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
+              Layout(key: "startTime",       title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
+              Layout(key: "=abbrevDuration", title: "For",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
+              Layout(key: "=documentNumber", title: "Last doc",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
+              Layout(key: "=amount",         title: "Value",       width: -50,      alignment: .right,  type: .string,      total: true,    pad: false),
+              Layout(key: "=",               title: "",            width:   0,      alignment: .left,   type: .string,      total: false,   pad: false)
         ]
         if self.mode == .invoiceCredit {
             self.clockingsLayout.insert(

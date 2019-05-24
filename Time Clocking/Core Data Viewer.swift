@@ -25,15 +25,18 @@ enum VarType {
     var key: String
     var title: String
     var width: CGFloat
+    var maxWidth: CGFloat
     var alignment: NSTextAlignment
     var type: VarType
     var total: Bool
     var pad: Bool
+    var dataWidth:CGFloat = 0.0
     
-    init(key: String, title: String, width: CGFloat, alignment: NSTextAlignment, type: VarType, total: Bool, pad: Bool) {
+    init(key: String, title: String, width: CGFloat, alignment: NSTextAlignment, type: VarType, total: Bool, pad: Bool, maxWidth: CGFloat=0) {
         self.key = key
         self.title = title
         self.width = width
+        self.maxWidth = maxWidth
         self.alignment = alignment
         self.type = type
         self.total = total
@@ -63,7 +66,6 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     private struct PadColumn {
         let tableColumn: NSTableColumn
         let column: Layout
-        var used: CGFloat
     }
     
     public var dateFormat = "dd/MM/yyyy"
@@ -217,6 +219,10 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         for tableColumn in displayTableView.tableColumns {
             displayTableView.removeTableColumn(tableColumn)
         }
+        // Clear max widths
+        for column in layout {
+            column.dataWidth = abs(column.width)
+        }
         self.total = []
         self.totals = false
         self.padColumns = []
@@ -241,7 +247,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
             self.total.append(column.total ? 0 : nil)
             self.totals = self.totals || column.total
             if column.pad {
-                self.padColumns.append(PadColumn(tableColumn: tableColumn, column: column, used: 0.0))
+                self.padColumns.append(PadColumn(tableColumn: tableColumn, column: column))
             }
         }
         
@@ -249,8 +255,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         if widthUsed < self.displayTableView.frame.width {
             let padUsed = (self.displayTableView.frame.width - widthUsed)
             for index in 0...padColumns.count - 1 {
-                padColumns[index].used = (padUsed / CGFloat(self.padColumns.count))
-                padColumns[index].tableColumn.width += padColumns[index].used
+                padColumns[index].tableColumn.width += (padUsed / CGFloat(self.padColumns.count))
             }
         }
     
@@ -261,9 +266,11 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     }
     
     private func accumulateTotals() {
+        var changed = false
         if self.totals {
             for (index, column) in self.layout.enumerated() {
                 if column.total {
+                    let currentValue = total[index]
                     total[index] = 0
                     for record in self.records {
                         var value: Double
@@ -275,8 +282,15 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                         }
                         total[index]! += value
                     }
+                    if currentValue != total[index] {
+                        changed = true
+                    }
                 }
             }
+        }
+        if changed {
+            // Refresh total line in table view
+            self.displayTableView.reloadData(forRowIndexes: IndexSet(integer: self.records.count), columnIndexes: IndexSet(integersIn: 0...self.layout!.count-1))
         }
     }
     
@@ -351,40 +365,45 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                         // Normal line
                         textField?.stringValue = value!
                         textField?.alignment = column.alignment
-                        if column.width <= 0 && (textField?.cell?.cellSize.width)! > tableColumn!.width + 2 {
-                            Utility.mainThread {
-                                
-                                // Stretch column can't contain this value - expand it - trying to recover any padding first
-                                expand = (textField?.cell?.cellSize.width)! - tableColumn!.width + 2
-                                // Check how much padding is available
-                                if self.padColumns.count > 0 {
-                                    var padAvailable:CGFloat = 0.0
-                                    for index in 0...self.padColumns.count - 1 {
-                                        if self.padColumns[index].column.key == column.key {
-                                            // Any padding is no longer relevant as is still too small
-                                            self.padColumns[index].used = 0.0
-                                        } else {
-                                            padAvailable += self.padColumns[index].used
-                                        }
+                    }
+                    
+                    // Sort out width
+                    column.dataWidth = max(column.dataWidth, textField!.cell!.cellSize.width+2)
+                    if column.maxWidth != 0 {
+                        column.dataWidth = min(column.maxWidth, column.dataWidth)
+                    }
+                    if column.width <= 0 && column.dataWidth > tableColumn!.width {
+                        Utility.mainThread {
+                            
+                            // Stretch column can't contain this value - expand it - trying to recover any padding first
+                            expand = column.dataWidth - tableColumn!.width
+                            // Check how much padding is available
+                            if self.padColumns.count > 0 {
+                                var padAvailable:CGFloat = 0.0
+                                for index in 0...self.padColumns.count - 1 {
+                                    if self.padColumns[index].column.key != column.key {
+                                        padAvailable += max(0, self.padColumns[index].tableColumn.width - self.padColumns[index].column.dataWidth)
                                     }
-                                    
-                                    // Recover padding
-                                    if padAvailable > 0 {
-                                        for index in 0...self.padColumns.count - 1 {
-                                            if self.padColumns[index].column.key != column.key {
-                                                // Don't take it back from yourself
-                                                let padToUse = (self.padColumns[index].used / padAvailable) * expand
+                                }
+                                
+                                // Recover padding
+                                if padAvailable > 0 {
+                                    for index in 0...self.padColumns.count - 1 {
+                                        if self.padColumns[index].column.key != column.key {
+                                            // Don't take it back from yourself
+                                            let padToUse = (max(0, self.padColumns[index].tableColumn.width - self.padColumns[index].column.dataWidth) / padAvailable) * expand
+                                            if padToUse > 0 {
                                                 self.padColumns[index].tableColumn.width -= padToUse
-                                                self.padColumns[index].used -= padToUse
                                             }
                                         }
                                     }
                                 }
-                                // Expand stretch column
-                                 tableColumn?.width += expand
                             }
+                            // Expand stretch column
+                            tableColumn?.width = column.dataWidth
                         }
                     }
+                    
                     textField?.isEnabled = enabled
                     cell = textField
                 }

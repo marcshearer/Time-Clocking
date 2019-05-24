@@ -28,6 +28,8 @@ class DocumentViewModel {
     public var originalInvoiceNumber = Observable<String>("")
     public var headerText = Observable<String>("")
     public var generated = ObservablePickerDate()
+    public var clockingDuration = Observable<String>("")
+    public var clockingValue = ObservableTextFieldFloat<Double>()
     public var value = ObservableTextFieldFloat<Double>()
     
     // Derived / transient properties
@@ -100,6 +102,11 @@ class DocumentViewModel {
             if self.documentDate.value > self.documentDateMax.value {
                 self.documentDateMax.value = self.documentDate.value
             }
+        }
+        
+        _ = ReactiveKit.combineLatest(self.clockingValue.observable, self.sundryValue.observable).observeNext { (_) in
+            // Values changed - update total
+            self.value.value = self.clockingValue.value + self.sundryValue.value
         }
     }
     

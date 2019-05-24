@@ -44,6 +44,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     override func viewDidAppear() {
         super.viewDidAppear()
+        self.viewModel.reload()
         self.loadClockings()
         self.startUpdateTimer()
     }
@@ -123,9 +124,14 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             StatusMenu.shared.hidePopover(self.closeButton)
         }
         
-        // Observe data change
+        // Observe data changes
         _ = self.viewModel.anyChange.observeNext { (_) in
             TimeEntry.saveDefaults()
+        }
+        
+        // Observe notes change
+        _ = self.viewModel.notes.observeNext { (_) in
+            self.saveLastNotes()
         }
     }
 
@@ -215,6 +221,17 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             
         }
     }
+    
+    private func saveLastNotes() {
+        if self.viewModel.projectCode.value != "" && self.viewModel.notes.value != "" {
+            let projects = Projects.load(specificCustomer: self.viewModel.customerCode.value, specificProject: self.viewModel.projectCode.value, includeClosed: true)
+            if projects.count == 1 {
+                _ = CoreData.update {
+                    projects[0].lastNotes = self.viewModel.notes.value
+                }
+            }
+        }
+    }
 
     // MARK: - Core Data table viewer setup methods ======================================================================
     
@@ -228,13 +245,14 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func setupLayouts() {
         
         clockingsLayout =
-            [ Layout(key: "=resource",           title: "Resource",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=customer",           title: "Customer",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "=project",            title: "Project",          width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "notes",               title: "Description",      width: -20,      alignment: .left,   type: .string,      total: false,   pad: true),
-              Layout(key: "startTime",           title: "From",             width: 115,      alignment: .center, type: .dateTime,    total: false,   pad: false),
-              Layout(key: "=duration",           title: "For",              width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "amount",              title: "Value",            width: 100,      alignment: .right,  type: .double,      total: true,    pad: false)
+            [ Layout(key: "=resource",       title: "Resource",    width: -20, alignment: .left,   type: .string,   total: false, pad: false, maxWidth: 100),
+              Layout(key: "=customer",       title: "Customer",    width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
+              Layout(key: "=project",        title: "Project",     width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
+              Layout(key: "notes",           title: "Description", width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
+              Layout(key: "startTime",       title: "From",        width: 115, alignment: .center, type: .dateTime, total: false, pad: false),
+              Layout(key: "=abbrevDuration", title: "For",         width: -10, alignment: .left,   type: .string,   total: false, pad: false),
+              Layout(key: "amount",          title: "Value",       width: -50, alignment: .right,  type: .double,   total: true,  pad: false),
+              Layout(key: "=",               title: "",            width:   0, alignment: .left,   type: .string,   total: false, pad: false)
         ]
     }
     

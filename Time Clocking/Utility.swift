@@ -128,7 +128,7 @@ class Utility {
     }
     
     class func round(_ value: Double, _ decimalPlaces: Int) -> Double {
-        let factor = Double(10 ^ decimalPlaces)
+        let factor = pow(Double(10), Double(decimalPlaces))
         var result = (value * factor)
         result.round()
         return result / factor
@@ -362,6 +362,24 @@ class Utility {
                 Utility.debugMessage(message, "Delayed closure executed", mainThread: false)
             }
         })
+    }
+    
+    // MARK: - String to array method ============================================================================== -
+    
+    public static func stringToArray(_ string: String, lines: Int? = nil) -> [String] {
+        var array: [String] = string.components(separatedBy: "\u{2028}")
+        if let lines = lines {
+            if array.count < lines {
+                for _ in array.count+1...lines {
+                    array.append("")
+                }
+            } else if array.count > lines {
+                for _ in lines+1...array.count {
+                    array.remove(at: array.count)
+                }
+            }
+        }
+        return array
     }
 
     // MARK: - Play sound ============================================================================== -

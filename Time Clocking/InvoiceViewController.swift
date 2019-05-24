@@ -27,12 +27,15 @@ class InvoiceViewController : NSViewController {
     @IBOutlet private weak var sundryTextTextField: NSTextField!
     @IBOutlet private weak var sundryValueLabel: NSTextField!
     @IBOutlet private weak var sundryValueTextField: NSTextField!
+    @IBOutlet private weak var totalValueTextField: NSTextField!
+    @IBOutlet private weak var totalDurationTextField: NSTextField!
     
     override internal func viewDidLoad() {
         super.viewDidLoad()
         self.setupForm()
         self.setupBindings()
         self.setupDocumentNumber()
+        self.setupValues()
     }
     
     // MARK: - Set up initial form ============================================================================== -
@@ -74,6 +77,8 @@ class InvoiceViewController : NSViewController {
         self.viewModel.headerText.bidirectionalBind(to: self.headerTextTextField.reactive.editingString)
         self.viewModel.sundryText.bidirectionalBind(to: self.sundryTextTextField.reactive.editingString)
         self.viewModel.sundryValue.bidirectionalBind(to: self.sundryValueTextField)
+        self.viewModel.value.bidirectionalBind(to: self.totalValueTextField)
+        self.viewModel.clockingDuration.bidirectionalBind(to: self.totalDurationTextField.reactive.editingString)
         
         // Setup enabled bindings
         self.documentNumberTextField.isEnabled = false
@@ -85,11 +90,16 @@ class InvoiceViewController : NSViewController {
         _ = self.okButton.reactive.controlEvent.observeNext { (_) in
             let (ok, errorMessage) = self.createInvoiceInClipboard()
             if ok {
-                if !self.viewModel.reprintMode.value {
+                if self.viewModel.reprintMode.value {
+                } else {
                     self.setToInvoiced()
                 }
                 self.popover.performClose(self.okButton)
-                Utility.alertMessage("A copy of the document details have been inserted into the paste buffer", title: "Note", okHandler: {
+                var message = "A copy of the document details have been inserted into the paste buffer"
+                if self.viewModel.reprintMode.value {
+                    message += "\n\nNote that reprinted documents are produced using the current customer settings rather than those which applied at the time of the original document and hence the document produced may differ from the original."
+                }
+                Utility.alertMessage(message, title: "Note", okHandler: {
                     self.completion?(true)
                 })
             } else {
@@ -106,9 +116,9 @@ class InvoiceViewController : NSViewController {
         
     }
     
-    // MARK: - Document number ============================================================================ -
+    // MARK: - Document number and totals====================================================================== -
     
-    public func setupDocumentNumber() {
+    private func setupDocumentNumber() {
         if !self.viewModel.reprintMode.value {
         switch DocumentType(rawValue: self.viewModel.documentType.value)! {
             case .invoice:
@@ -117,6 +127,24 @@ class InvoiceViewController : NSViewController {
                 self.viewModel.documentNumber.value = "\(Settings.current.nextCreditNo.value)"
             }
         }
+    }
+    
+    private func setupValues() {
+        
+        var hours: Double = 0
+        self.viewModel.clockingValue.value = 0
+        
+        self.clockingIterator { (record) in
+            
+            let clockingMO = record as! ClockingMO
+            
+            hours += Clockings.hours(clockingMO)
+            self.viewModel.clockingValue.value += Double(clockingMO.amount)
+            
+        }
+        
+        self.viewModel.clockingDuration.value = Clockings.duration(hours * 3600.0)
+            
     }
     
     // MARK: - Action methods - to set invoice details and put document in clipboard ===================================================== -
@@ -185,7 +213,7 @@ class InvoiceViewController : NSViewController {
         var invoiceData = ""
         var hoursPerDay: Double
         var lines: [(description: String, purchaseOrder: String, date: Date?, hours: Double, rate: Double, value: Double)] = []
-        let headerText = self.stringToArray(self.viewModel.headerText.value, lines: 5)
+        let headerText = Utility.stringToArray(self.viewModel.headerText.value, lines: 5)
         
         repeat {
             let customers = Customers.load(specific: self.viewModel.customerCode.value, includeClosed: true)
@@ -195,7 +223,7 @@ class InvoiceViewController : NSViewController {
             }
             let customerMO = customers.first!
             hoursPerDay = Double(customerMO.hoursPerDay)
-            let address: [String] = self.stringToArray(customerMO.address!, lines: 6)
+            let address: [String] = Utility.stringToArray(customerMO.address!, lines: 6)
             
             self.clockingIterator { (record) in
                 let clockingMO = record as! ClockingMO
@@ -206,7 +234,7 @@ class InvoiceViewController : NSViewController {
                 }
                 let projectMO = projects.first!
                 
-                let hours = Utility.round(Double(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!)) / 3600.0 ,2)
+                let hours = Clockings.hours(clockingMO)
                 var description = ""
                 var value = 0.0
                 if hours == 0 {
@@ -363,22 +391,6 @@ class InvoiceViewController : NSViewController {
         }
     }
     
-    private func stringToArray(_ string: String, lines: Int? = nil) -> [String] {
-        var array: [String] = string.components(separatedBy: "\u{2028}")
-        if let lines = lines {
-            if array.count < lines {
-                for _ in array.count+1...lines {
-                    array.append("")
-                }
-            } else if array.count > lines {
-                for _ in lines+1...array.count {
-                    array.remove(at: array.count)
-                }
-            }
-        }
-        return array
-    }
-    
     private func dueDate(documentDate: Date, termsType: TermsType, termsValue: Int) -> Date {
         var dueDate: Date
         
@@ -439,10 +451,13 @@ class InvoiceViewController : NSViewController {
         viewController.viewModel.headerText.value = headerText ?? ""
         viewController.clockingIterator = clockingIterator
         viewController.completion = completion
-        
+
         // Show the popover
         popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
         popover.show(relativeTo: relativeTo.bounds, of: relativeTo, preferredEdge: .maxX)
+        
+        // Add it to the list to be auto-closed by menu
+        StatusMenu.addPopover(popover)
         
     }
 }

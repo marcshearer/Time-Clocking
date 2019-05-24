@@ -75,7 +75,7 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     public func closeOrDeleteRecord() {
         if self.originalClosed != true {
             if Projects.load(specificCustomer: self.originalCustomerCode).count == 0 &&
-               Clockings.load(specificCustomer: self.originalCustomerCode, includeClosed: true).count == 0 {
+               Clockings.load(specificCustomer: self.originalCustomerCode).count == 0 {
                 let customerCode = self.customerViewModel.customerCode.value
                 Utility.alertDecision("Customer '\(customerCode)' does not have any projects or clockings.\n\nWould you like to delete it?", title: "", okButtonText: "Delete Customer", okHandler: { self.deleteRecord() }, cancelButtonText: "Keep as Closed")
             }

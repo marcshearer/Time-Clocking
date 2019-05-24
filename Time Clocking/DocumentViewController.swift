@@ -44,7 +44,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
     
     private func setupViewModel() {
         self.viewModel.documentDate.value = Date(timeIntervalSinceReferenceDate: 0)
-        self.viewModel.documentDateMax.value = Date(timeInterval: -1, since: Date.startOfDay(days: 1, from: Date())!) // Forward 1 day - back 1 second
+        self.viewModel.documentDateMax.value = Date.endOfDay()!
     }
     
     private func setupBindings() {
@@ -143,11 +143,9 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
         
         if self.viewModel.documentNumber.value != "" {
              predicate?.append(NSPredicate(format: "documentNumber >= %@", self.viewModel.documentNumber.value))
-            print(">=\(self.viewModel.documentNumber.value)")
         }
         if self.viewModel.documentNumberMax.value != "" {
             predicate?.append(NSPredicate(format: "documentNumber <= %@", self.viewModel.documentNumberMax.value))
-            print("<=\(self.viewModel.documentNumberMax.value)")
         }
         
         self.documents = CoreData.fetch(from: "Documents", filter: predicate, sort: [("generated", .ascending)]) as? [DocumentMO]

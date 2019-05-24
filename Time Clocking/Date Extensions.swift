@@ -16,6 +16,16 @@ extension Date {
         return calendar.date(byAdding: .day, value: days, to: startOfDay)
     }
     
+    static public func endOfDay(days: Int = 0, from date: Date = Date()) -> Date? {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        if let startOfNextDay = calendar.date(byAdding: .day, value: days + 1, to: startOfDay) {
+            return Date(timeInterval: -1, since: startOfNextDay)
+        } else {
+            return nil
+        }
+    }
+    
     static public func startOfWeek(weeks: Int = 0, from date: Date = Date()) -> Date? {
         let calendar = Calendar.current
         guard let sunday = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)) else { return nil }

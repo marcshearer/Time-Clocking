@@ -11,12 +11,10 @@ import CoreData
 
 class Clockings {
     
-    static public  func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, includeClosed: Bool = false) -> [ClockingMO] {
+    static public  func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, fromTime: Date? = nil, toTime: Date? = nil) -> [ClockingMO] {
         
         var predicate: [NSPredicate] = []
-        if !includeClosed {
-            predicate.append(NSPredicate(format: "closed = false"))
-        }
+        
         if let specificResource = specificResource {
             predicate.append(NSPredicate(format: "resourceCode = %@", specificResource))
         }
@@ -26,7 +24,13 @@ class Clockings {
         if let specificProject = specificProject {
             predicate.append(NSPredicate(format: "projectCode = %@", specificProject))
         }
-        
+        if let fromTime = fromTime {
+            predicate.append(NSPredicate(format: "startTime >= %@", fromTime as NSDate))
+        }
+        if let toTime = toTime {
+            predicate.append(NSPredicate(format: "endTime <= %@", toTime as NSDate))
+        }
+
         return CoreData.fetch(from: "Clockings", filter: predicate, sort: [("startTime", .ascending)])
     }
     
@@ -67,8 +71,8 @@ class Clockings {
             case "resource":
                 result = Resources.getName(resourceCode: clockingMO.resourceCode!)
                 
-            case "duration":
-                result = TimeEntry.getDurationText(start: clockingMO.startTime!, end: clockingMO.endTime!)
+            case "duration", "abbrevDuration":
+                result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: (key == "abbrevDuration"))
                 
             case "documentNumber":
                 if clockingMO.invoiceState == InvoiceState.notInvoiced.rawValue || clockingMO.invoiceState == "" {
@@ -91,6 +95,79 @@ class Clockings {
             break
         }
         return result
+    }
+    
+    public static func todaysClockings(includeStarted: Bool = true) -> (hours: Double, value: Double){
+        var result: (hours: Double, value: Double) = (hours: 0.0, value: 0.0)
+        
+        let clockings = Clockings.load(fromTime: Date.startOfDay(), toTime: Date.endOfDay())
+        
+        for clockingMO in clockings {
+            result.hours += Clockings.hours(clockingMO)
+            result.value += Double(clockingMO.amount)
+        }
+        
+        if includeStarted {
+            let timeEntry = TimeEntry.current
+            if timeEntry.timerState.value != TimerState.notStarted.rawValue {
+                let hours = Clockings.hours(timeEntry)
+                result.hours += hours
+                result.value += Utility.round(hours * timeEntry.hourlyRate.value, 2)
+            }
+        }
+        
+        return result
+    }
+    
+    static public func duration(start: Date, end: Date, suffix: String = "", short: String = "", abbreviated: Bool = false) -> String {
+        if start > end {
+            return ""
+        } else {
+            let timeInterval = end.timeIntervalSince(start)
+            
+            if timeInterval < 60 {
+                return short
+            } else {
+                return Clockings.duration(timeInterval, abbreviated: true)
+            }
+        }
+    }
+    
+    static public func duration(_ timeInterval: TimeInterval, abbreviated: Bool = false) -> String {
+        let formatter = DateComponentsFormatter()
+        let hours = timeInterval / 3600.0
+        
+        if hours < 1 {
+            formatter.allowedUnits = [ .minute ]
+        } else if hours < 24 {
+            formatter.allowedUnits = [ .hour, .minute]
+        } else {
+            formatter.allowedUnits = [ .day, .hour, .minute]
+        }
+        formatter.unitsStyle = (abbreviated ? .abbreviated : .full)
+        formatter.zeroFormattingBehavior = [ .pad ]
+        
+        if let result = formatter.string(from: timeInterval) {
+            return result
+        } else {
+            return ""
+        }
+    }
+    
+    public static func minutes(_ clockingMO: ClockingMO) -> Double {
+        return Utility.round(Double(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!)) / 60.0 ,2)
+    }
+    
+    public static func minutes(_ viewModel: ClockingViewModel) -> Double {
+        return Utility.round(Double(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value)) / 60.0 ,2)
+    }
+    
+    public static func hours(_ clockingMO: ClockingMO) -> Double {
+        return Utility.round(Double(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!)) / 3600.0 ,2)
+    }
+    
+    public static func hours(_ viewModel: ClockingViewModel) -> Double {
+        return Utility.round(Double(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value)) / 3600.0 ,2)
     }
     
 }

@@ -85,7 +85,7 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     }
     
     private func closeOrDeleteRecord() {
-        if Clockings.load(specificResource: self.originalResourceCode, includeClosed: true).count == 0 {
+        if Clockings.load(specificResource: self.originalResourceCode).count == 0 {
             let resourceCode = self.resourceViewModel.resourceCode.value
             Utility.alertDecision("Resource '\(resourceCode)' does not have any clockings.\n\nWould you like to delete it?", title: "", okButtonText: "Delete Resource", okHandler: { self.deleteRecord() }, cancelButtonText: "Keep as Closed")
         }

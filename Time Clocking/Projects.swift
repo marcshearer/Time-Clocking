@@ -20,11 +20,12 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
     public let filterViewControllerName = "ProjectFilterViewController"
     
     public let layout: [Layout]! =
-        [ Layout(key: "=customer",    title: "Customer",      width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
-          Layout(key: "projectCode",  title: "Project code",  width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
-          Layout(key: "title",        title: "Project title", width: -100, alignment: .left,   type: .string, total: false,   pad: true),
-          Layout(key: "hourlyRate",   title: "Hourly rate",   width:   80, alignment: .right,  type: .double, total: false,   pad: false),
-          Layout(key: "closed",       title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
+        [ Layout(key: "=customer",      title: "Customer",      width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
+          Layout(key: "projectCode",    title: "Project code",  width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
+          Layout(key: "title",          title: "Project title", width: -100, alignment: .left,   type: .string, total: false,   pad: true),
+          Layout(key: "statusBarTitle", title: "Status bar",    width:   60, alignment: .left,   type: .string, total: false,   pad: false),
+          Layout(key: "hourlyRate",     title: "Hourly rate",   width:   80, alignment: .right,  type: .double, total: false,   pad: false),
+          Layout(key: "closed",         title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     
     public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {

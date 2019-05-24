@@ -53,23 +53,25 @@ class ObservablePopupString {
         self.setupObservers()
     }
     
-    init(recordType: String, codeKey: String, titleKey: String, where filterKey: String? = nil, equals filterValue: String? = nil, blankTitle: String? = nil) {
+    init(recordType: String, codeKey: String, titleKey: String, where predicate: [NSPredicate]! = nil, blankTitle: String? = nil) {
         self.values = []
         self.recordType = recordType
         self.codeKey = codeKey
         self.titleKey = titleKey
         self.blankTitle = blankTitle
-        self.reloadValues(where: filterKey, equals: filterValue)
+        self.reloadValues(where: predicate)
         self.setupObservers()
     }
     
-    public func reloadValues(where filterKey: String? = nil, equals filterValue: String? = nil) {
+    public func reloadValues(where predicate: [NSPredicate]! = nil) {
         
-        var predicate: NSPredicate?
-        if let filterKey = filterKey, let filterValue = filterValue {
-            predicate = NSPredicate(format: "\(filterKey) = %@", filterValue)
-        }
-        let records = CoreData.fetch(from: self.recordType, filter: predicate, sort: (self.titleKey, direction: .ascending))
+        let value = self.observable.value
+        
+        self.lastPopupIndexValue = nil
+        self.lastObservableValue = nil
+        self.popupIndex.value = nil
+        
+        let records = CoreData.fetch(from: self.recordType, filter: predicate, sort: [(self.titleKey, direction: .ascending)])
         
         self.values = []
         if let blankTitle = self.blankTitle {
@@ -78,7 +80,10 @@ class ObservablePopupString {
         for record in records {
             self.values.append((code: record.value(forKey: self.codeKey) as! String, record.value(forKey: self.titleKey) as! String))
         }
+        
         self.fillPopup()
+        
+        self.observable.value = value
     }
     
     public func bidirectionalBind(to popUpButton: NSPopUpButton) {

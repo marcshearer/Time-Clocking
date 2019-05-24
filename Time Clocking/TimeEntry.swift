@@ -11,7 +11,7 @@ import CoreData
 
 class TimeEntry: ClockingViewModel {
     
-    static public var current = ClockingViewModel(mode: .clockingEntry)
+    static public var current: ClockingViewModel = ClockingViewModel(mode: .clockingEntry)
     
     static private let defaults = UserDefaults.standard
     
@@ -26,7 +26,7 @@ class TimeEntry: ClockingViewModel {
         TimeEntry.current.hourlyRate.value = self.defaults.object(forKey: "hourlyRate") as? Double ?? 0.0
         TimeEntry.current.timerState.value = self.defaults.string(forKey: "state") ?? TimerState.notStarted.rawValue
     }
-    
+
     static public func saveDefaults() {
         
         self.defaults.set(TimeEntry.current.resourceCode.value, forKey: "resourceCode")

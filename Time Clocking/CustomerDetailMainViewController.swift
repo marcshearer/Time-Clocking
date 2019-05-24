@@ -24,6 +24,9 @@ class CustomerDetailMainViewController: NSViewController {
         
         // Setup view model
         self.setupBindings()
+        self.addressTextField?.cell?.wraps = true
+        self.addressTextField?.cell?.isScrollable = false
+        self.addressTextField?.cell?.truncatesLastVisibleLine = true
         self.addressTextField.maximumNumberOfLines = 6
     }
     

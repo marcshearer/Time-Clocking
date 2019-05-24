@@ -19,12 +19,7 @@ class ObservableTextFieldFloat<T: BinaryFloatingPoint> {
     }
     
     public func bidirectionalBind(to textField: NSTextField) {
-        _ = self.observable.observeNext { (value) in
-            textField.stringValue = value
-        }
-        _ = textField.reactive.editingString.observeNext { (value) in
-            self.observable.value = value
-        }
+        self.observable.bidirectionalBind(to: textField.reactive.stringValue)
     }
 }
 
@@ -37,11 +32,6 @@ class ObservableTextFieldInt<T: BinaryInteger> {
     }
     
     public func bidirectionalBind(to textField: NSTextField) {
-        _ = self.observable.observeNext { (value) in
-            textField.stringValue = value
-        }
-        _ = textField.reactive.editingString.observeNext { (value) in
-            self.observable.value = value
-        }
+        self.observable.bidirectionalBind(to: textField.reactive.stringValue)
     }
 }

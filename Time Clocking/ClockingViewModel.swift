@@ -78,11 +78,15 @@ class ClockingViewModel {
     // Private state
     private let mode: ClockingMode
     private var lastTimerState: TimerState!
+    private var initialising = true
+    private let notClosedPredicate = [NSPredicate(format: "closed = false")]
+    private var reloading = false
     
     init(mode: ClockingMode, allResources: String? = nil, allCustomers: String? = nil, allProjects: String? = nil) {
         
         self.mode = mode
         self.setupMappings(allResources: allResources, allCustomers: allCustomers, allProjects: allProjects)
+        self.initialising = false
     }
     
     init(mode: ClockingMode, from record: NSManagedObject?) {
@@ -95,23 +99,36 @@ class ClockingViewModel {
         if let clockingMO = clockingMO {
             self.copy(from: clockingMO)
          }
+        
+        self.initialising = false
+    }
+    
+    public func reload() {
+        // Reload all dropdowns
+        self.reloading = true
+        self.resourceCode.reloadValues(where: self.notClosedPredicate)
+        self.customerCode.reloadValues(where: self.notClosedPredicate)
+        self.projectCode.reloadValues(where: self.projectPredicate(self.customerCode.value))
+        self.reloading = false
     }
 
     private func setupMappings(allResources: String? = nil, allCustomers: String? = nil, allProjects: String? = nil) {
         
         // Set up special observable classes
-        self.resourceCode = ObservablePopupString(recordType: "Resources", codeKey: "resourceCode", titleKey: "name", blankTitle: allResources)
-        self.customerCode = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name", blankTitle: allCustomers)
-        self.projectCode = ObservablePopupString(recordType: "Projects", codeKey: "projectCode", titleKey: "title", where: (self.customerCode.value == "" ? nil : "customerCode"), equals: self.customerCode.value, blankTitle: allProjects)
+        self.resourceCode = ObservablePopupString(recordType: "Resources", codeKey: "resourceCode", titleKey: "name", where: self.notClosedPredicate, blankTitle: allResources)
+        self.customerCode = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name", where: self.notClosedPredicate, blankTitle: allCustomers)
+        self.projectCode = ObservablePopupString(recordType: "Projects", codeKey: "projectCode", titleKey: "title", where: self.projectPredicate(self.customerCode.value), blankTitle: allProjects)
         
         // Customer Change
         _ = self.customerCode.observable.observeNext { (_) in
             // Editable for project code - requires customer
             self.canEditProjectCode.value = (self.customerCode.value != "")
             // Reload project list when customer changes
-            self.projectCode.reloadValues(where: (self.customerCode.value == "" ? nil : "customerCode"), equals: self.customerCode.value)
-            // Clear project code when customer changes
-            self.projectCode.value = ""
+            self.projectCode.reloadValues(where: self.projectPredicate(self.customerCode.value))
+            if !self.reloading {
+                // Clear project code when customer changes
+                self.projectCode.value = ""
+            }
         }
 
         // Project changes
@@ -123,6 +140,7 @@ class ClockingViewModel {
             let projects = Projects.load(specificCustomer: self.customerCode.value, specificProject: self.projectCode.value, includeClosed: true)
             if projects.count == 1 {
                 self.hourlyRate.value = Double(projects[0].hourlyRate)
+                self.notes.value = projects[0].lastNotes ?? ""
             }
         }
 
@@ -165,13 +183,20 @@ class ClockingViewModel {
                 self.startTime.value = self.endTime.value
             }
         }
+        
+        // Timer state changes
+        _ = self.anyChange.observeNext { (_) in
+            // Update toolbar
+            if !self.initialising {
+                StatusMenu.shared.update()
+            }
+        }
 
         // Document number changes
         _ = self.documentNumber.observeNext { (_) in
             // Change of document number
             self.documentNumberChange.value = true
         }
-
         
         // Mode dependent mappings
         
@@ -188,7 +213,7 @@ class ClockingViewModel {
             // Start or end time changes
             _ = ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable).observeNext { (_) in
                 // Update duration text
-                self.durationText.value = TimeEntry.getDurationText(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute")
+                self.durationText.value = Clockings.duration(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute")
             }
             
             // State or resource code or project code changes
@@ -245,6 +270,14 @@ class ClockingViewModel {
         }
     }
     
+    private func projectPredicate(_ customerCode: String) -> [NSPredicate] {
+        var predicate = self.notClosedPredicate
+        if customerCode != "" {
+            predicate.append(NSPredicate(format: "customerCode == %@", customerCode))
+        }
+        return predicate
+    }
+    
     public func copy(to record: NSManagedObject) {
         
         let clockingMO = record as! ClockingMO
@@ -287,40 +320,13 @@ class ClockingViewModel {
             description = "Not started"
             
         case .started:
-            description = "Started \(TimeEntry.getDurationText(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now"))"
+            description = "Started \(Clockings.duration(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now"))"
             
         case .stopped:
-            description = "Stopped after \(TimeEntry.getDurationText(start: self.startTime.value, end: self.endTime.value, suffix: "", short: "less than 1 minute"))"
+            description = "Stopped after \(Clockings.duration(start: self.startTime.value, end: self.endTime.value, suffix: "", short: "less than 1 minute"))"
             
         }
         
         return description
-    }
-    
-    static public func getDurationText(start: Date, end: Date, suffix: String = "", short: String = "") -> String {
-        if start > end {
-            return ""
-        } else {
-            let duration = end.timeIntervalSince(start)
-            
-            if duration < 60 {
-                return short
-            } else {
-                let formatter = DateComponentsFormatter()
-                if duration < 3600 {
-                    formatter.allowedUnits = [ .minute ]
-                } else {
-                    formatter.allowedUnits = [ .hour, .minute]
-                }
-                formatter.unitsStyle = .full
-                formatter.zeroFormattingBehavior = [ .pad ]
-                
-                if let result = formatter.string(from: duration) {
-                    return "\(result) \(suffix)"
-                } else {
-                    return ""
-                }
-            }
-        }
     }
 }

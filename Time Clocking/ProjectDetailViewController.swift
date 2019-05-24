@@ -23,6 +23,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodeTextField: NSTextField!
     @IBOutlet private weak var titleTextField: NSTextField!
+    @IBOutlet private weak var statusBarTitleTextField: NSTextField!
     @IBOutlet private weak var purchaseOrderTextField: NSTextField!
     @IBOutlet private weak var hourlyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
@@ -59,6 +60,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         self.projectViewModel.customer.bidirectionalBind(to: self.customerCodePopupButton)
         self.projectViewModel.projectCode.bidirectionalBind(to: self.projectCodeTextField.reactive.editingString)
         self.projectViewModel.title.bidirectionalBind(to: self.titleTextField.reactive.editingString)
+        self.projectViewModel.statusBarTitle.bidirectionalBind(to: self.statusBarTitleTextField.reactive.editingString)
         self.projectViewModel.purchaseOrder.bidirectionalBind(to: self.purchaseOrderTextField.reactive.editingString)
         self.projectViewModel.hourlyRate.bidirectionalBind(to: self.hourlyRateTextField)
         self.projectViewModel.closed.bidirectionalBind(to: self.closedButton.reactive.integerValue)
@@ -101,7 +103,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     }
     
     private func closeOrDeleteRecord() {
-        if Clockings.load(specificCustomer: self.originalCustomerCode, specificProject: self.originalProjectCode, includeClosed: true).count == 0 {
+        if Clockings.load(specificCustomer: self.originalCustomerCode, specificProject: self.originalProjectCode).count == 0 {
             let projectCode = self.projectViewModel.projectCode.value
             Utility.alertDecision("Project '\(projectCode)' does not have any clockings.\n\nWould you like to delete it?", title: "",  okButtonText: "Delete Project", okHandler: { self.deleteRecord() }, cancelButtonText: "Keep as Closed")
         }

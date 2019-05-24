@@ -378,8 +378,8 @@ Gw
                                     </segments>
                                 </segmentedCell>
                             </segmentedControl>
-                            <segmentedControl verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="phr-WI-r2d">
-                                <rect key="frame" x="178" y="227" width="265" height="24"/>
+                            <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="phr-WI-r2d">
+                                <rect key="frame" x="178" y="225" width="265" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="261" id="rmH-uh-Zy4"/>
                                 </constraints>
@@ -397,6 +397,8 @@ Gw
                             <constraint firstItem="yzZ-Nm-I6I" firstAttribute="leading" secondItem="Yam-l4-5GN" secondAttribute="leading" constant="24" id="4a4-2Z-Zjt"/>
                             <constraint firstItem="qB2-mr-pif" firstAttribute="leading" secondItem="Yam-l4-5GN" secondAttribute="leading" constant="24" id="6Qy-Lg-Jrm"/>
                             <constraint firstItem="p1v-b4-wet" firstAttribute="leading" secondItem="ujq-3A-1qJ" secondAttribute="leading" id="JTe-cD-ywx"/>
+                            <constraint firstItem="phr-WI-r2d" firstAttribute="centerY" secondItem="qB2-mr-pif" secondAttribute="centerY" id="JUO-jS-8x9"/>
+                            <constraint firstItem="phr-WI-r2d" firstAttribute="leading" secondItem="ujq-3A-1qJ" secondAttribute="leading" id="LME-tR-7Nd"/>
                             <constraint firstItem="ujq-3A-1qJ" firstAttribute="leading" secondItem="Yam-l4-5GN" secondAttribute="leading" constant="180" id="N0H-y0-yh6"/>
                             <constraint firstItem="1KM-KA-4DQ" firstAttribute="leading" secondItem="Yam-l4-5GN" secondAttribute="leading" constant="24" id="NU4-1K-Ud3"/>
                             <constraint firstItem="All-bT-9Gv" firstAttribute="leading" secondItem="ujq-3A-1qJ" secondAttribute="leading" id="OEW-BH-vNL"/>
