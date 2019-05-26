@@ -70,7 +70,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
     private func setupBindings() {
         
         _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
-            self.view.window?.close()
+            self.dismiss(self.closeButton)
         }
         
     }
@@ -108,8 +108,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
         
         // Create the view controller
         let storyboard = NSStoryboard(name: NSStoryboard.Name("InvoicePreviewViewController"), bundle: nil)
-        let sceneIdentifier = NSStoryboard.SceneIdentifier(stringLiteral: "InvoicePreviewViewController")
-        let viewController = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! InvoicePreviewViewController
+        let viewController = storyboard.instantiateController(withIdentifier: "InvoicePreviewViewController") as! InvoicePreviewViewController
         viewController.printLines = printLines
         parentViewController.presentAsSheet(viewController)
     }

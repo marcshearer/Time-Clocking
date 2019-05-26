@@ -38,8 +38,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Build status menu
         StatusMenu.shared.update()
         
-        
-        // TODO: Remove    
+        /*
+        // TODO: Remove ====================== REMOVES ALL INVOICING ======================== -
         // Remove all document history!!
         CoreData.clearTable("Documents")
         CoreData.clearTable("DocumentDetails")
@@ -74,8 +74,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.dailyRate = projects.first!.dailyRate
                 clockingMO.hoursPerDay = customers.first!.hoursPerDay
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
+                let hours = (clockingMO.invoiceOverride ? clockingMO.invoiceHours : Float(Clockings.hours(clockingMO)))
+                clockingMO.amount = Float(Utility.round(Double((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate), 2))
             }
         }
+        */
+        // MARK: ========================================================================== -
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {

@@ -40,9 +40,9 @@ class PrintDocument {
         self.totalValue += line.linePrice
     }
     
-    public func add(resourceCode: String = "", projectCode: String = "", deliveryDate: Date = Date(), quantity: Double = 0.0, unit: TimeUnit = .none, description: String = "", unitPrice: Double = 0.0, per: String = "", linePrice: Double = 0,  purchaseOrder: String = "", sundryLine: Bool = false) {
+    public func add(resourceCode: String = "", projectCode: String = "", deliveryDate: Date = Date(), quantity: Double = 0.0, unit: TimeUnit = .none, description: String = "", unitPrice: Double = 0.0, per: String = "", unitsPerPer: Double = 1.0, linePrice: Double = 0,  purchaseOrder: String = "", sundryLine: Bool = false) {
         
-        self.add(PrintDocumentLine(resourceCode: resourceCode, projectCode: projectCode, deliveryDate: deliveryDate, quantity: quantity, unit: unit, description: description, unitPrice: unitPrice, per: per, linePrice: linePrice, purchaseOrder: purchaseOrder, sundryLine: sundryLine))
+        self.add(PrintDocumentLine(resourceCode: resourceCode, projectCode: projectCode, deliveryDate: deliveryDate, quantity: quantity, unit: unit, description: description, unitPrice: unitPrice, per: per, unitsPerPer: unitsPerPer, linePrice: linePrice, purchaseOrder: purchaseOrder, sundryLine: sundryLine))
     }
     
     public func iterateLines(sundryOnly: Bool = false, action: (PrintDocumentLine)->()) {
@@ -95,7 +95,7 @@ class PrintDocument {
                     
                     if consolidate {
                         previous.quantity += line.quantity
-                        previous.linePrice += line.linePrice
+                        previous.linePrice = Utility.round(Double((previous.quantity / previous.unitsPerPer) * previous.unitPrice), 2)
                         remove.append(index)
                     }
                 }
@@ -129,6 +129,8 @@ class PrintDocument {
             var quantity: String
             if line.unit == .hours && line.quantity != Double(Int(line.quantity)) {
                 quantity = Clockings.duration(line.quantity * 3600, abbreviated: true)
+            } else if line.quantity == 0 {
+                quantity = ""
             } else {
                 quantity = String(format: "%.4f", line.quantity)
             }

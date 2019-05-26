@@ -36,6 +36,7 @@ class InvoiceViewController : NSViewController {
         self.setupBindings()
         self.setupDocumentNumber()
         self.setupValues()
+
     }
     
     // MARK: - Set up initial form ============================================================================== -
@@ -58,13 +59,7 @@ class InvoiceViewController : NSViewController {
             sundryValueLabel.isHidden = true
             sundryValueTextField.isHidden = true
         }
-        if self.viewModel.reprintMode.value {
-            // No changes in reprint mode
-            self.documentNumberTextField.isEnabled = false
-            self.documentDateDatePicker.isEnabled = false
-            self.documentDateDatePicker.alphaValue = 0.4
-            self.headerTextTextField.isEnabled = false
-        }
+        headerTextTextField.isEnabled = !self.viewModel.reprintMode.value
     }
     
     // MARK: - Setup bindings to view model ====================================================================== -
@@ -88,44 +83,51 @@ class InvoiceViewController : NSViewController {
         
         // Setup button bindings
         _ = self.okButton.reactive.controlEvent.observeNext { (_) in
-            var (printDocument, ok, errorMessage) = self.createPrintDocument()
-            if ok {
-                self.printDocument = printDocument
-                printDocument.copyToClipboard()
-                if self.viewModel.reprintMode.value {
-                    // Reprinting - no action required
-                } else {
-                    ok = self.updateDocument()
-                    errorMessage = "Error updating database"
-                }
-                self.view.window?.close()
+            let event = NSApp.currentEvent!
+            if event.type != NSEvent.EventType.leftMouseDown {
+                var (printDocument, ok, errorMessage) = self.createPrintDocument()
                 if ok {
-                    var message = "A copy of the document details have been inserted into the paste buffer"
+                    self.printDocument = printDocument
+                    printDocument.copyToClipboard()
                     if self.viewModel.reprintMode.value {
-                        message += "\n\nNote that reprinted documents are produced using the current customer settings rather than those which applied at the time of the original document and hence the document produced may differ from the original."
+                        // Reprinting - no action required
+                    } else {
+                        ok = self.updateDocument()
+                        errorMessage = "Error updating database"
                     }
-                    Utility.alertMessage(message, title: "Note", okHandler: {
-                        self.completion?(true)
+                    if ok {
+                        var message = "A copy of the document details have been inserted into the paste buffer"
+                        if self.viewModel.reprintMode.value {
+                            message += "\n\nNote that reprinted documents are produced using the current customer settings rather than those which applied at the time of the original document and hence the document produced may differ from the original."
+                        }
+                        Utility.alertMessage(message, title: "Note", okHandler: {
+                            self.dismiss(self.okButton)
+                            self.completion?(true)
+                        })
+                    }
+                }
+                if !ok {
+                    Utility.alertMessage("Invoicing failed - \(errorMessage)", okHandler: {
+                        self.dismiss(self.okButton)
+                        self.completion?(false)
                     })
                 }
-            }
-            if !ok {
-                Utility.alertMessage("Invoicing failed - \(errorMessage)", okHandler: {
-                    self.completion?(false)
-                })
             }
         }
         
         // Setup button bindings
-        _ = self.previewButton.reactive.controlEvent.observeNext { (_) in
-            let (printDocument, ok, _) = self.createPrintDocument()
-            if ok {
-                printDocument.preview(from: self)
+        _ = self.previewButton.reactive.controlEvent.observeNext { (value) in
+            let event = NSApp.currentEvent!
+            if event.type != NSEvent.EventType.leftMouseDown {
+                let (printDocument, ok, _) = self.createPrintDocument()
+                if ok {
+                    printDocument.preview(from: self)
+                }
             }
         }
         
         _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
-            self.view.window?.close()
+            self.dismiss(self.okButton)
             self.completion?(false)
         }
         
@@ -229,17 +231,21 @@ class InvoiceViewController : NSViewController {
                 }
                 
                 // Set up unit price and per
+                var unitsPerPer: Double = 1.0
                 var unitPrice = 0.0
                 var per = ""
                 if dailyRate != 0 {
                     if Int(customerMO.invoicePer) == TimeUnit.hours.rawValue {
                         unitPrice = Utility.round(dailyRate / hoursPerDay, 2)
                         per = "Hour"
+                        unitsPerPer /= hoursPerDay
                     } else {
                         unitPrice = dailyRate
                         per = "Day"
                     }
                 }
+                
+                
                 
                 // Set up quantity and unit
                 var unit = TimeUnit.none
@@ -248,6 +254,7 @@ class InvoiceViewController : NSViewController {
                     if Int(customerMO.invoiceUnit) == TimeUnit.hours.rawValue {
                         quantity = hours
                         unit = .hours
+                        unitsPerPer *= hoursPerDay
                     } else {
                         quantity = Utility.round(hours / hoursPerDay, 4)
                         unit = .days
@@ -288,6 +295,7 @@ class InvoiceViewController : NSViewController {
                                   description: description,
                                   unitPrice: unitPrice,
                                   per: per,
+                                  unitsPerPer: unitsPerPer,
                                   linePrice: linePrice,
                                   purchaseOrder: projectMO.purchaseOrder!)
             }
@@ -407,8 +415,7 @@ class InvoiceViewController : NSViewController {
         
         // Create the view controller
         let storyboard = NSStoryboard(name: NSStoryboard.Name("InvoiceViewController"), bundle: nil)
-        let sceneIdentifier = NSStoryboard.SceneIdentifier(stringLiteral: "InvoiceViewController")
-        let viewController = storyboard.instantiateController(withIdentifier: sceneIdentifier) as! InvoiceViewController
+        let viewController = storyboard.instantiateController(withIdentifier: "InvoiceViewController") as! InvoiceViewController
         viewController.viewModel.customerCode.value = customerCode
         viewController.viewModel.documentType.value = documentType.rawValue
         viewController.viewModel.documentNumber.value = reprintDocumentNumber ?? ""

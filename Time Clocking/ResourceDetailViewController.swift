@@ -101,7 +101,7 @@ class ResourceDetailViewController: NSViewController, MaintenanceDetailViewContr
     }
     
     private func closeWindow() {
-        self.view.window?.close()
+        self.dismiss(self.cancelButton)
     }
 }
 

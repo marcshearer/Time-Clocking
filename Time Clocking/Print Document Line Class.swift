@@ -18,11 +18,12 @@ class PrintDocumentLine: NSObject, DataTableViewerDataSource {
     public var desc: String!
     public var unitPrice: Double!
     public var per: String!
+    public var unitsPerPer: Double!
     public var linePrice: Double!
     public var purchaseOrder: String!
     public var sundryLine: Bool!
     
-    convenience init(resourceCode: String = "", projectCode: String = "", deliveryDate: Date = Date(), quantity: Double = 0.0, unit: TimeUnit, description: String = "", unitPrice: Double = 0.0, per: String = "", linePrice: Double = 0,  purchaseOrder: String = "", sundryLine: Bool = false) {
+    convenience init(resourceCode: String = "", projectCode: String = "", deliveryDate: Date = Date(), quantity: Double = 0.0, unit: TimeUnit, description: String = "", unitPrice: Double = 0.0, per: String = "", unitsPerPer: Double = 1.0, linePrice: Double = 0,  purchaseOrder: String = "", sundryLine: Bool = false) {
         self.init()
         self.resourceCode = resourceCode
         self.projectCode = projectCode
@@ -32,6 +33,7 @@ class PrintDocumentLine: NSObject, DataTableViewerDataSource {
         self.desc = description
         self.unitPrice = unitPrice
         self.per = per
+        self.unitsPerPer = unitsPerPer
         self.linePrice = linePrice
         self.purchaseOrder = purchaseOrder
         self.sundryLine = sundryLine

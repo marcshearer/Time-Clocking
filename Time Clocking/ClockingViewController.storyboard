@@ -301,7 +301,7 @@ Gw
                                 </constraints>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9s-KX-wOY" userLabel="Title container">
-                                <rect key="frame" x="0.0" y="618" width="309" height="12"/>
+                                <rect key="frame" x="0.0" y="606" width="309" height="24"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="QWZ-iv-iVy">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -309,7 +309,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WJr-8K-IWT">
-                                <rect key="frame" x="0.0" y="618" width="309" height="8"/>
+                                <rect key="frame" x="0.0" y="606" width="309" height="20"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" drawsBackground="YES" id="IRq-CS-c4I">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -383,7 +383,7 @@ Gw
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="xcG-Dl-iOm" secondAttribute="bottom" id="2B8-8a-C8p"/>
                             <constraint firstItem="f9s-KX-wOY" firstAttribute="leading" secondItem="yMU-iI-nry" secondAttribute="leading" id="2pc-06-ZGj"/>
-                            <constraint firstItem="1XK-vr-nEB" firstAttribute="top" secondItem="f9s-KX-wOY" secondAttribute="bottom" constant="12" id="3O1-KC-RLe"/>
+                            <constraint firstItem="1XK-vr-nEB" firstAttribute="top" secondItem="f9s-KX-wOY" secondAttribute="bottom" id="3O1-KC-RLe"/>
                             <constraint firstItem="1XK-vr-nEB" firstAttribute="leading" secondItem="yMU-iI-nry" secondAttribute="leading" id="AhW-pP-zO2"/>
                             <constraint firstItem="WJr-8K-IWT" firstAttribute="top" secondItem="f9s-KX-wOY" secondAttribute="top" constant="4" id="CPc-5w-OtK"/>
                             <constraint firstItem="WJr-8K-IWT" firstAttribute="trailing" secondItem="f9s-KX-wOY" secondAttribute="trailing" id="OgR-8I-ejG"/>

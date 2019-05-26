@@ -92,7 +92,7 @@ class CustomerDetailViewController: NSViewController, MaintenanceDetailViewContr
     }
     
     private func closeWindow() {
-        self.view.window?.close()
+        self.dismiss(self.cancelButton)
     }
     
     override func prepare(for segue: NSStoryboardSegue, sender: Any?) {

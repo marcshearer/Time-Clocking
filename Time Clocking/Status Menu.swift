@@ -130,7 +130,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
             self.statusButtonText.textColor = NSColor.white
             self.statusButtonImage.image = getImage(alternate: true)
         }
-        
     }
     
     internal func menuDidClose(_ menu: NSMenu) {

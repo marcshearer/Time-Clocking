@@ -119,7 +119,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     }
     
     private func closeWindow() {
-        self.view.window?.close()
+        self.dismiss(self.cancelButton)
     }
 }
 

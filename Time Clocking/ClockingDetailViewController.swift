@@ -118,17 +118,17 @@ class ClockingDetailViewController: NSViewController {
         _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
             Clockings.updateDatabase(from: self.viewModel, clockingMO: self.clockingMO)
             self.delegate?.clockingDetailComplete(clockingMO: self.clockingMO, action: .update)
-            self.view.window?.close()
+            self.dismiss(self.saveButton)
         }
         
         _ = self.deleteButton.reactive.controlEvent.observeNext { (_) in
             self.delegate?.clockingDetailComplete(clockingMO: self.clockingMO, action: .delete)
             Clockings.removeFromDatabase(self.clockingMO)
-            self.view.window?.close()
+            self.dismiss(self.deleteButton)
         }
         _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
             self.delegate?.clockingDetailComplete(clockingMO: self.clockingMO, action: .none)
-            self.view.window?.close()
+            self.dismiss(self.cancelButton)
         }
     }
     

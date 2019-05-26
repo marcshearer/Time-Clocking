@@ -65,12 +65,12 @@ class DocumentViewModel {
 
         _ = self.documentNumber.observeNext { (_) in
             // Can edit document date if document number is non-blank
-            self.canEditDocumentDate.value = (self.documentNumber.value != "")
+            self.canEditDocumentDate.value = (!self.reprintMode.value && self.documentNumber.value != "")
         }
         
         _ = self.sundryText.observeNext { (_) in
             // Can only edit sundry value if sundry text non-blank
-            self.canEditSundryValue.value = (self.sundryText.value != "")
+            self.canEditSundryValue.value = (!self.reprintMode.value && self.sundryText.value != "")
             if !self.canEditSundryValue.value {
                 self.sundryValue.value = 0
             }

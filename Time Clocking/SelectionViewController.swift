@@ -195,8 +195,8 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     }
     
     internal func checkEnabled(record: NSManagedObject) -> Bool {
-        if self.mode != .documentDetail {
-            return true
+        if self.mode == .documentDetail {
+            return false
         } else {
             let clockingMO = record as! ClockingMO
             switch self.mode! {
@@ -331,7 +331,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     
     private func closePopover() {
         if self.mode == .documentDetail {
-            self.view.window?.close()
+            self.dismiss(self.closeButton)
         } else {
             StatusMenu.shared.hidePopover(self.closeButton)
         }
