@@ -27,10 +27,14 @@ class ClockingDetailViewController: NSViewController {
     @IBOutlet private weak var startTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var endTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var durationTextField: NSTextField!
-    @IBOutlet private weak var hourlyRateTextField: NSTextField!
+    @IBOutlet private weak var dailyRateTextField: NSTextField!
     @IBOutlet private weak var invoiceStateTextField: NSTextField!
+    @IBOutlet private weak var inovoiceOverrideButton: NSButton!
+    @IBOutlet private weak var invoiceHoursTextField: NSTextField!
+    @IBOutlet private weak var invoiceDateDatePicker: NSDatePicker!
     @IBOutlet private weak var lastDocumentNumberTextField: NSTextField!
     @IBOutlet private weak var lastDocumentDateDatePicker: NSDatePicker!
+    @IBOutlet private weak var valueTextField: NSTextField!
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var deleteButton: NSButton!
@@ -59,23 +63,30 @@ class ClockingDetailViewController: NSViewController {
         self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
         self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
         self.viewModel.notes.bidirectionalBind(to: self.notesTextField.reactive.editingString)
-        self.viewModel.hourlyRate.bidirectionalBind(to: self.hourlyRateTextField)
+        self.viewModel.dailyRate.bidirectionalBind(to: self.dailyRateTextField)
         self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
         self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
         self.viewModel.durationText.bind(to: self.durationTextField.reactive.editingString)
         self.viewModel.invoiceState.bind(to: self.invoiceStateTextField.reactive.editingString)
+        self.viewModel.invoiceOverride.bidirectionalBind(to: self.inovoiceOverrideButton.reactive.integerValue)
+        self.viewModel.invoiceHours.bidirectionalBind(to: self.invoiceHoursTextField)
+        self.viewModel.invoiceDate.bidirectionalBind(to: self.invoiceDateDatePicker)
         self.viewModel.lastDocumentNumber.bidirectionalBind(to: self.lastDocumentNumberTextField.reactive.editingString)
         self.viewModel.lastDocumentDate.bidirectionalBind(to: self.lastDocumentDateDatePicker)
+        self.viewModel.amount.bidirectionalBind(to: self.valueTextField)
         
         // Bind enablers
         if self.displayOnly {
             self.projectCodePopupButton.isEnabled = false
             self.notesTextField.isEnabled = false
-            self.hourlyRateTextField.isEnabled = false
+            self.dailyRateTextField.isEnabled = false
             self.startTimeDatePicker.isEnabled = false
             self.startTimeDatePicker.alphaValue = 0.4
             self.endTimeDatePicker.isEnabled = false
             self.endTimeDatePicker.alphaValue = 0.4
+            self.invoiceHoursTextField.isEnabled = false
+            self.invoiceDateDatePicker.isEnabled = false
+            self.invoiceDateDatePicker.alphaValue = 0.4
             self.saveButton.isHidden = true
             self.cancelButton.title = "Close"
             self.cancelButtonCenterConstraint.isActive = true
@@ -83,11 +94,15 @@ class ClockingDetailViewController: NSViewController {
         } else {
             self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
             self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
-            self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
+            self.viewModel.canEditProjectValues.bind(to: self.dailyRateTextField.reactive.isEnabled)
             self.viewModel.canEditEndTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
             self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
             self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
             self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
+            self.viewModel.invoiceOverride.map{$0 != 0 ? false : true}.bind(to: self.invoiceHoursTextField.reactive.isHidden)
+            self.viewModel.invoiceOverride.map{$0 != 0 ? false : true}.bind(to: self.invoiceDateDatePicker.reactive.isHidden)
+            self.viewModel.invoiceState.map{$0 == InvoiceState.notInvoiced.rawValue ? true : false}.bind(to: self.lastDocumentNumberTextField.reactive.isHidden)
+            self.viewModel.invoiceState.map{$0 == InvoiceState.notInvoiced.rawValue ? true : false}.bind(to: self.lastDocumentDateDatePicker.reactive.isHidden)
             self.viewModel.canSave.bind(to: self.saveButton.reactive.isEnabled)
             self.deleteButton.isEnabled = true
             self.cancelButtonCenterConstraint.isActive = false
@@ -96,11 +111,6 @@ class ClockingDetailViewController: NSViewController {
         }
         self.resourceCodePopupButton.isEnabled = !displayOnly
         self.customerCodePopupButton.isEnabled = !displayOnly
-        self.durationTextField.isEnabled = false
-        self.invoiceStateTextField.isEnabled = false
-        self.lastDocumentNumberTextField.isEnabled = false
-        self.lastDocumentDateDatePicker.isEnabled = false
-        self.lastDocumentDateDatePicker.alphaValue = 0.4
         self.deleteButton.isHidden = displayOnly
         self.cancelButton.isEnabled = true
         

@@ -17,11 +17,32 @@ public enum InvoiceDescription: Int {
 }
 
 public enum TimeUnit: Int {
+    case none = -1
     case hours = 0
     case days = 1
     case weeks = 2
     case months = 3
     case years = 4
+    
+    public var description: String {
+        get {
+            switch self {
+            case .none:
+                return ""
+            case .hours:
+                return "Hours"
+            case .days:
+                return "Days"
+            case .weeks:
+                return "Weeks"
+            case .months:
+                return "Months"
+            case .years:
+                return "Years"
+            }
+        }
+    }
+    
 }
 
 public enum InvoiceDetail: Int {
@@ -43,8 +64,8 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
     var customerCode = Observable<String>("")
     var name = Observable<String>("")
     var address = Observable<String>("")
-    var defaultHourlyRate = ObservableTextFieldFloat<Double>()
-    var hoursPerDay = ObservableTextFieldFloat<Double>()
+    var defaultDailyRate = ObservableTextFieldFloat<Double>(2, true)
+    var hoursPerDay = ObservableTextFieldFloat<Double>(2)
     var invoiceUnit = Observable<Int>(TimeUnit.days.rawValue)
     var invoicePer = Observable<Int>(TimeUnit.days.rawValue)
     var invoiceDescription = Observable<Int>(1)
@@ -99,7 +120,7 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
         customerMO.customerCode = self.customerCode.value
         customerMO.name = self.name.value
         customerMO.address = self.address.value
-        customerMO.defaultHourlyRate = Float(self.defaultHourlyRate.value)
+        customerMO.defaultDailyRate = Float(self.defaultDailyRate.value)
         customerMO.hoursPerDay = Float(self.hoursPerDay.value)
         customerMO.invoiceUnit = Int16(self.invoiceUnit.value)
         customerMO.invoicePer = Int16(self.invoicePer.value)
@@ -117,7 +138,7 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
         self.customerCode.value = customerMO.customerCode ?? ""
         self.name.value = customerMO.name ?? ""
         self.address.value = customerMO.address ?? ""
-        self.defaultHourlyRate.value = Double(customerMO.defaultHourlyRate)
+        self.defaultDailyRate.value = Double(customerMO.defaultDailyRate)
         self.hoursPerDay.value = Double(customerMO.hoursPerDay)
         self.invoiceUnit.value = Int(customerMO.invoiceUnit)
         self.invoicePer.value = Int(customerMO.invoicePer)

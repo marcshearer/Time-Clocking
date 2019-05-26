@@ -19,7 +19,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     public var title = Observable<String>("")
     public var statusBarTitle = Observable<String>("")
     public var purchaseOrder = Observable<String>("")
-    public var hourlyRate = ObservableTextFieldFloat<Double>()
+    public var dailyRate = ObservableTextFieldFloat<Double>(2, true)
     public var closed = Observable<Int>(0)
     public var canSave = Observable<Bool>(false)
     public var canClose = Observable<Bool>(false)
@@ -54,7 +54,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         _ = self.customer.observable.observeNext { (_) in
             let customers = Customers.load(specific: self.customer.value, includeClosed: true)
             if customers.count == 1 {
-                self.hourlyRate.value = Double(customers[0].defaultHourlyRate)
+                self.dailyRate.value = Double(customers[0].defaultDailyRate)
             }
         }
         
@@ -77,7 +77,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         projectMO.title = self.title.value
         projectMO.statusBarTitle = self.statusBarTitle.value
         projectMO.purchaseOrder = self.purchaseOrder.value
-        projectMO.hourlyRate = Float(self.hourlyRate.value)
+        projectMO.dailyRate = Float(self.dailyRate.value)
         projectMO.closed = (self.closed.value != 0)
     }
     
@@ -90,7 +90,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         self.title.value = projectMO.title ?? ""
         self.statusBarTitle.value = projectMO.statusBarTitle ?? ""
         self.purchaseOrder.value = projectMO.purchaseOrder ?? ""
-        self.hourlyRate.value = Double(projectMO.hourlyRate)
+        self.dailyRate.value = Double(projectMO.dailyRate)
         self.closed.value = (projectMO.closed ? 1 : 0)
         
     }

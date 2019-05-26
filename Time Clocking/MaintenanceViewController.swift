@@ -56,6 +56,7 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
         self.setupBindings()
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.delegate = self
+        self.tableViewer.floatNumberFormatter.numberStyle = .currency
     }
     
     override internal func viewDidAppear() {

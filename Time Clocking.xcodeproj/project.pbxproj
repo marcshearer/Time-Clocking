@@ -45,6 +45,69 @@
 		B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
 		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
 		B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
+		B2ACC710229819590036C762 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
+		B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
+		B2ACC712229819590036C762 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
+		B2ACC713229819590036C762 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869866227DD81300377112 /* SettingsViewModel.swift */; };
+		B2ACC714229819590036C762 /* ObservablePopupString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */; };
+		B2ACC715229819590036C762 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985C227DD81200377112 /* SelectionViewController.swift */; };
+		B2ACC716229819590036C762 /* Status Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869862227DD81300377112 /* Status Menu.swift */; };
+		B2ACC717229819590036C762 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
+		B2ACC718229819590036C762 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869859227DD81200377112 /* AppDelegate.swift */; };
+		B2ACC719229819590036C762 /* TimeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC04228428A50040CA46 /* TimeEntry.swift */; };
+		B2ACC71A229819590036C762 /* ProjectFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */; };
+		B2ACC71B229819590036C762 /* Customers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customers.swift */; };
+		B2ACC71C229819590036C762 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		B2ACC71D229819590036C762 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
+		B2ACC71E229819590036C762 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF1227E5299001CC666 /* ResourceViewModel.swift */; };
+		B2ACC71F229819590036C762 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
+		B2ACC720229819590036C762 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869860227DD81300377112 /* Utility.swift */; };
+		B2ACC721229819590036C762 /* CustomerDetailMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1922912AF90040CA46 /* CustomerDetailMainViewController.swift */; };
+		B2ACC722229819590036C762 /* ClockingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986B227DD81300377112 /* ClockingViewModel.swift */; };
+		B2ACC723229819590036C762 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
+		B2ACC724229819590036C762 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986A227DD81300377112 /* String Extensions.swift */; };
+		B2ACC725229819590036C762 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986C227DD81300377112 /* Date Extensions.swift */; };
+		B2ACC726229819590036C762 /* CustomerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0022805EA1001CC666 /* CustomerViewModel.swift */; };
+		B2ACC727229819590036C762 /* ObservableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0822848C070040CA46 /* ObservableTextField.swift */; };
+		B2ACC728229819590036C762 /* DocumentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC17228D4A420040CA46 /* DocumentViewModel.swift */; };
+		B2ACC729229819590036C762 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
+		B2ACC72A229819590036C762 /* MaintenanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869867227DD81300377112 /* MaintenanceViewController.swift */; };
+		B2ACC72B229819590036C762 /* ResourceDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF3227E52D8001CC666 /* ResourceDetailViewController.swift */; };
+		B2ACC72C229819590036C762 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC0C2286CCEB0040CA46 /* Settings.swift */; };
+		B2ACC72D229819590036C762 /* CustomerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869869227DD81300377112 /* CustomerDetailViewController.swift */; };
+		B2ACC72E229819590036C762 /* DocumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1D2292EC040040CA46 /* DocumentViewController.swift */; };
+		B2ACC72F229819590036C762 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
+		B2ACC730229819590036C762 /* Maintenance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC062284356D0040CA46 /* Maintenance.swift */; };
+		B2ACC731229819590036C762 /* Projects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFE227E9979001CC666 /* Projects.swift */; };
+		B2ACC732229819590036C762 /* CustomerDetailInvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1B22912B1F0040CA46 /* CustomerDetailInvoiceViewController.swift */; };
+		B2ACC733229819590036C762 /* Documents.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC14228C19ED0040CA46 /* Documents.swift */; };
+		B2ACC734229819590036C762 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286985E227DD81300377112 /* SettingsViewController.swift */; };
+		B2ACC736229819590036C762 /* Pods_Time_Clocking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 697D00EA19A18E152F102CB3 /* Pods_Time_Clocking.framework */; };
+		B2ACC738229819590036C762 /* CustomerDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869868227DD81300377112 /* CustomerDetailViewController.storyboard */; };
+		B2ACC739229819590036C762 /* ProjectFilterViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */; };
+		B2ACC73A229819590036C762 /* SettingsViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869861227DD81300377112 /* SettingsViewController.storyboard */; };
+		B2ACC73B229819590036C762 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869856227DD81200377112 /* Main.storyboard */; };
+		B2ACC73C229819590036C762 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
+		B2ACC73D229819590036C762 /* ResourceDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B241BEF7227E5349001CC666 /* ResourceDetailViewController.storyboard */; };
+		B2ACC73E229819590036C762 /* MaintenanceViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869853227DD81200377112 /* MaintenanceViewController.storyboard */; };
+		B2ACC73F229819590036C762 /* ProjectDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */; };
+		B2ACC740229819590036C762 /* SingleDocumentViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC2122930D870040CA46 /* SingleDocumentViewController.storyboard */; };
+		B2ACC741229819590036C762 /* DocumentViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2C8CC1F2292EC590040CA46 /* DocumentViewController.storyboard */; };
+		B2ACC742229819590036C762 /* SelectionViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985D227DD81200377112 /* SelectionViewController.storyboard */; };
+		B2ACC743229819590036C762 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B286985B227DD81200377112 /* Assets.xcassets */; };
+		B2ACC744229819590036C762 /* InvoiceViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286985F227DD81300377112 /* InvoiceViewController.storyboard */; };
+		B2ACC745229819590036C762 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
+		B2ACC75022984DBD0036C762 /* Print Document Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC74F22984DBD0036C762 /* Print Document Class.swift */; };
+		B2ACC75122984DBD0036C762 /* Print Document Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC74F22984DBD0036C762 /* Print Document Class.swift */; };
+		B2ACC75322984DCB0036C762 /* Print Document Line Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */; };
+		B2ACC75422984DCB0036C762 /* Print Document Line Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */; };
+		B2ACC75622999ED40036C762 /* Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Viewer.swift */; };
+		B2ACC75722999ED40036C762 /* Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Viewer.swift */; };
+		B2ACC75C2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */; };
+		B2ACC75D2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */; };
+		B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */; };
+		B2ACC7612299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */; };
 		B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
 		B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */; };
 		B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
@@ -130,6 +193,13 @@
 		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2869870227DD81400377112 /* Core Data Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Viewer.swift"; sourceTree = "<group>"; };
+		B2ACC74A229819590036C762 /* Time Clocking Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Clocking Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2ACC74B229819590036C762 /* Time Clocking Development-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Time Clocking Development-Info.plist"; path = "/Users/marcshearer/Documents/Xcode projects/Time Clocking/Time Clocking Development-Info.plist"; sourceTree = "<absolute>"; };
+		B2ACC74F22984DBD0036C762 /* Print Document Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Class.swift"; sourceTree = "<group>"; };
+		B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Line Class.swift"; sourceTree = "<group>"; };
+		B2ACC75522999ED40036C762 /* Data Viewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Viewer.swift"; sourceTree = "<group>"; };
+		B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InvoicePreviewViewController.storyboard; sourceTree = "<group>"; };
+		B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicePreviewViewController.swift; sourceTree = "<group>"; };
 		B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
 		B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePopupString.swift; sourceTree = "<group>"; };
 		B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePickerDate.swift; sourceTree = "<group>"; };
@@ -171,6 +241,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B2ACC735229819590036C762 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ACC736229819590036C762 /* Pods_Time_Clocking.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -209,6 +287,7 @@
 				B2035A40227DD2AF00BE3863 /* Time Clocking.app */,
 				B2035A52227DD2B000BE3863 /* Time ClockingTests.xctest */,
 				B2035A5D227DD2B000BE3863 /* Time ClockingUITests.xctest */,
+				B2ACC74A229819590036C762 /* Time Clocking Development.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -221,6 +300,7 @@
 				B2869892227DD86D00377112 /* Clockings */,
 				B2C8CC16228C1A1F0040CA46 /* Documents */,
 				B286989D227DD96600377112 /* Invoices and Credits */,
+				B2ACC74C22984D3A0036C762 /* Print Abstractions */,
 				B2869898227DD8CF00377112 /* Reporting and Invoice Selection */,
 				B241BEF9227E93E1001CC666 /* Maintenance */,
 				B2869894227DD8A200377112 /* Resources */,
@@ -266,6 +346,7 @@
 				B2869859227DD81200377112 /* AppDelegate.swift */,
 				B286985B227DD81200377112 /* Assets.xcassets */,
 				B286986F227DD81300377112 /* Info.plist */,
+				B2ACC74B229819590036C762 /* Time Clocking Development-Info.plist */,
 				B2869856227DD81200377112 /* Main.storyboard */,
 				B2869854227DD81200377112 /* Time_Clocking.entitlements */,
 				B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */,
@@ -298,6 +379,7 @@
 			children = (
 				B2869850227DD81200377112 /* Core Data Class.swift */,
 				B2869870227DD81400377112 /* Core Data Viewer.swift */,
+				B2ACC75522999ED40036C762 /* Data Viewer.swift */,
 				B286986C227DD81300377112 /* Date Extensions.swift */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
 				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
@@ -337,8 +419,8 @@
 			children = (
 				B241BEFE227E9979001CC666 /* Projects.swift */,
 				B2C8CC0E228977F00040CA46 /* ProjectFilterViewController.storyboard */,
-				B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */,
 				B286985A227DD81200377112 /* ProjectDetailViewController.storyboard */,
+				B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */,
 				B2869865227DD81300377112 /* ProjectDetailViewController.swift */,
 				B241BF022280650B001CC666 /* ProjectViewModel.swift */,
 			);
@@ -396,9 +478,20 @@
 			isa = PBXGroup;
 			children = (
 				B286985F227DD81300377112 /* InvoiceViewController.storyboard */,
+				B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */,
 				B286986D227DD81300377112 /* InvoiceViewController.swift */,
+				B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */,
 			);
 			name = "Invoices and Credits";
+			sourceTree = "<group>";
+		};
+		B2ACC74C22984D3A0036C762 /* Print Abstractions */ = {
+			isa = PBXGroup;
+			children = (
+				B2ACC74F22984DBD0036C762 /* Print Document Class.swift */,
+				B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */,
+			);
+			name = "Print Abstractions";
 			sourceTree = "<group>";
 		};
 		B2C8CC16228C1A1F0040CA46 /* Documents */ = {
@@ -470,6 +563,25 @@
 			productReference = B2035A5D227DD2B000BE3863 /* Time ClockingUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		B2ACC70C229819590036C762 /* Time Clocking Development */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2ACC747229819590036C762 /* Build configuration list for PBXNativeTarget "Time Clocking Development" */;
+			buildPhases = (
+				B2ACC70D229819590036C762 /* [CP] Check Pods Manifest.lock */,
+				B2ACC70E229819590036C762 /* Sources */,
+				B2ACC735229819590036C762 /* Frameworks */,
+				B2ACC737229819590036C762 /* Resources */,
+				B2ACC746229819590036C762 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Time Clocking Development";
+			productName = "Time Clocking";
+			productReference = B2ACC74A229819590036C762 /* Time Clocking Development.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -511,6 +623,7 @@
 				B2035A3F227DD2AF00BE3863 /* Time Clocking */,
 				B2035A51227DD2B000BE3863 /* Time ClockingTests */,
 				B2035A5C227DD2B000BE3863 /* Time ClockingUITests */,
+				B2ACC70C229819590036C762 /* Time Clocking Development */,
 			);
 		};
 /* End PBXProject section */
@@ -522,6 +635,7 @@
 			files = (
 				B2869887227DD81400377112 /* CustomerDetailViewController.storyboard in Resources */,
 				B2C8CC0F228977F00040CA46 /* ProjectFilterViewController.storyboard in Resources */,
+				B2ACC75C2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */,
 				B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */,
 				B2869876227DD81400377112 /* Main.storyboard in Resources */,
 				B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */,
@@ -548,6 +662,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2ACC737229819590036C762 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ACC738229819590036C762 /* CustomerDetailViewController.storyboard in Resources */,
+				B2ACC739229819590036C762 /* ProjectFilterViewController.storyboard in Resources */,
+				B2ACC75D2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */,
+				B2ACC73A229819590036C762 /* SettingsViewController.storyboard in Resources */,
+				B2ACC73B229819590036C762 /* Main.storyboard in Resources */,
+				B2ACC73C229819590036C762 /* ClockingDetailViewController.storyboard in Resources */,
+				B2ACC73D229819590036C762 /* ResourceDetailViewController.storyboard in Resources */,
+				B2ACC73E229819590036C762 /* MaintenanceViewController.storyboard in Resources */,
+				B2ACC73F229819590036C762 /* ProjectDetailViewController.storyboard in Resources */,
+				B2ACC740229819590036C762 /* SingleDocumentViewController.storyboard in Resources */,
+				B2ACC741229819590036C762 /* DocumentViewController.storyboard in Resources */,
+				B2ACC742229819590036C762 /* SelectionViewController.storyboard in Resources */,
+				B2ACC743229819590036C762 /* Assets.xcassets in Resources */,
+				B2ACC744229819590036C762 /* InvoiceViewController.storyboard in Resources */,
+				B2ACC745229819590036C762 /* ClockingViewController.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,6 +725,41 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B2ACC70D229819590036C762 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Time Clocking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2ACC746229819590036C762 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Time Clocking/Pods-Time Clocking-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -607,6 +778,7 @@
 				B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */,
 				B2869879227DD81400377112 /* AppDelegate.swift in Sources */,
 				B2C8CC05228428A50040CA46 /* TimeEntry.swift in Sources */,
+				B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
 				B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
@@ -616,6 +788,7 @@
 				B2869880227DD81400377112 /* Utility.swift in Sources */,
 				B2C8CC1A22912AF90040CA46 /* CustomerDetailMainViewController.swift in Sources */,
 				B286988A227DD81400377112 /* ClockingViewModel.swift in Sources */,
+				B2ACC75322984DCB0036C762 /* Print Document Line Class.swift in Sources */,
 				B2869871227DD81400377112 /* Core Data Class.swift in Sources */,
 				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
@@ -624,7 +797,9 @@
 				B2C8CC18228D4A420040CA46 /* DocumentViewModel.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
+				B2ACC75622999ED40036C762 /* Data Viewer.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
+				B2ACC75022984DBD0036C762 /* Print Document Class.swift in Sources */,
 				B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */,
 				B2869888227DD81400377112 /* CustomerDetailViewController.swift in Sources */,
 				B2C8CC1E2292EC040040CA46 /* DocumentViewController.swift in Sources */,
@@ -650,6 +825,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2035A62227DD2B000BE3863 /* Time_ClockingUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2ACC70E229819590036C762 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */,
+				B2ACC710229819590036C762 /* Resources.swift in Sources */,
+				B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */,
+				B2ACC712229819590036C762 /* Time Clocking.xcdatamodeld in Sources */,
+				B2ACC713229819590036C762 /* SettingsViewModel.swift in Sources */,
+				B2ACC714229819590036C762 /* ObservablePopupString.swift in Sources */,
+				B2ACC715229819590036C762 /* SelectionViewController.swift in Sources */,
+				B2ACC716229819590036C762 /* Status Menu.swift in Sources */,
+				B2ACC717229819590036C762 /* Clockings.swift in Sources */,
+				B2ACC718229819590036C762 /* AppDelegate.swift in Sources */,
+				B2ACC719229819590036C762 /* TimeEntry.swift in Sources */,
+				B2ACC7612299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
+				B2ACC71A229819590036C762 /* ProjectFilterViewController.swift in Sources */,
+				B2ACC71B229819590036C762 /* Customers.swift in Sources */,
+				B2ACC71C229819590036C762 /* Core Data Viewer.swift in Sources */,
+				B2ACC71D229819590036C762 /* InvoiceViewController.swift in Sources */,
+				B2ACC71E229819590036C762 /* ResourceViewModel.swift in Sources */,
+				B2ACC71F229819590036C762 /* ObservablePickerDate.swift in Sources */,
+				B2ACC720229819590036C762 /* Utility.swift in Sources */,
+				B2ACC721229819590036C762 /* CustomerDetailMainViewController.swift in Sources */,
+				B2ACC722229819590036C762 /* ClockingViewModel.swift in Sources */,
+				B2ACC75422984DCB0036C762 /* Print Document Line Class.swift in Sources */,
+				B2ACC723229819590036C762 /* Core Data Class.swift in Sources */,
+				B2ACC724229819590036C762 /* String Extensions.swift in Sources */,
+				B2ACC725229819590036C762 /* Date Extensions.swift in Sources */,
+				B2ACC726229819590036C762 /* CustomerViewModel.swift in Sources */,
+				B2ACC727229819590036C762 /* ObservableTextField.swift in Sources */,
+				B2ACC728229819590036C762 /* DocumentViewModel.swift in Sources */,
+				B2ACC729229819590036C762 /* ProjectViewModel.swift in Sources */,
+				B2ACC72A229819590036C762 /* MaintenanceViewController.swift in Sources */,
+				B2ACC75722999ED40036C762 /* Data Viewer.swift in Sources */,
+				B2ACC72B229819590036C762 /* ResourceDetailViewController.swift in Sources */,
+				B2ACC75122984DBD0036C762 /* Print Document Class.swift in Sources */,
+				B2ACC72C229819590036C762 /* Settings.swift in Sources */,
+				B2ACC72D229819590036C762 /* CustomerDetailViewController.swift in Sources */,
+				B2ACC72E229819590036C762 /* DocumentViewController.swift in Sources */,
+				B2ACC72F229819590036C762 /* ClockingDetailViewController.swift in Sources */,
+				B2ACC730229819590036C762 /* Maintenance.swift in Sources */,
+				B2ACC731229819590036C762 /* Projects.swift in Sources */,
+				B2ACC732229819590036C762 /* CustomerDetailInvoiceViewController.swift in Sources */,
+				B2ACC733229819590036C762 /* Documents.swift in Sources */,
+				B2ACC734229819590036C762 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -909,6 +1133,50 @@
 			};
 			name = Release;
 		};
+		B2ACC748229819590036C762 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F866EB9586651764051827B /* Pods-Time Clocking.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Time Clocking/Time_Clocking.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time Clocking Development-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-D DEVELOPMENT";
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-Clocking-Development";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B2ACC749229819590036C762 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 13BF53A8643CD37144B89B64 /* Pods-Time Clocking.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Time Clocking/Time_Clocking.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 3T7CT2S464;
+				INFOPLIST_FILE = "Time Clocking Development-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "MarcShearer.Time-Clocking-Development";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -944,6 +1212,15 @@
 			buildConfigurations = (
 				B2035A6D227DD2B000BE3863 /* Debug */,
 				B2035A6E227DD2B000BE3863 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B2ACC747229819590036C762 /* Build configuration list for PBXNativeTarget "Time Clocking Development" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2ACC748229819590036C762 /* Debug */,
+				B2ACC749229819590036C762 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

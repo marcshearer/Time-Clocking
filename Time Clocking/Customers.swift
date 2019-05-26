@@ -18,7 +18,7 @@ class Customers: NSObject, MaintenanceViewControllerDelegate {
     public var layout: [Layout]! =
         [ Layout(key: "customerCode",      title: "Customer code", width:  -50, alignment: .left,   type: .string, total: false,   pad: false),
           Layout(key: "name",              title: "Name",          width: -100, alignment: .left,   type: .string, total: false,   pad: true),
-          Layout(key: "defaultHourlyRate", title: "Hourly rate",   width:   90, alignment: .right,  type: .double, total: false,   pad: false),
+          Layout(key: "defaultDailyRate", title: "Hourly rate",    width:   90, alignment: .right,  type: .double, total: false,   pad: false),
           Layout(key: "closed",            title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     

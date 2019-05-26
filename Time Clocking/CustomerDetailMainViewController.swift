@@ -16,7 +16,7 @@ class CustomerDetailMainViewController: NSViewController {
 
     @IBOutlet private weak var nameTextField: NSTextField!
     @IBOutlet private weak var addressTextField: NSTextField!
-    @IBOutlet private weak var defaultHourlyRateTextField: NSTextField!
+    @IBOutlet private weak var defaultDailyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
     
     override internal func viewDidLoad() {
@@ -37,7 +37,7 @@ class CustomerDetailMainViewController: NSViewController {
         // Setup field bindings
         self.customerViewModel.name.bidirectionalBind(to: self.nameTextField.reactive.editingString)
         self.customerViewModel.address.bidirectionalBind(to: self.addressTextField.reactive.editingString)
-        self.customerViewModel.defaultHourlyRate.bidirectionalBind(to: self.defaultHourlyRateTextField)
+        self.customerViewModel.defaultDailyRate.bidirectionalBind(to: self.defaultDailyRateTextField)
         self.customerViewModel.closed.bidirectionalBind(to: self.closedButton.reactive.integerValue)
         
         // Setup enabled bindings

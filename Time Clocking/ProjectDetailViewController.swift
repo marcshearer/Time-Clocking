@@ -25,7 +25,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
     @IBOutlet private weak var titleTextField: NSTextField!
     @IBOutlet private weak var statusBarTitleTextField: NSTextField!
     @IBOutlet private weak var purchaseOrderTextField: NSTextField!
-    @IBOutlet private weak var hourlyRateTextField: NSTextField!
+    @IBOutlet private weak var dailyRateTextField: NSTextField!
     @IBOutlet private weak var closedButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var saveButton: NSButton!
@@ -62,7 +62,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         self.projectViewModel.title.bidirectionalBind(to: self.titleTextField.reactive.editingString)
         self.projectViewModel.statusBarTitle.bidirectionalBind(to: self.statusBarTitleTextField.reactive.editingString)
         self.projectViewModel.purchaseOrder.bidirectionalBind(to: self.purchaseOrderTextField.reactive.editingString)
-        self.projectViewModel.hourlyRate.bidirectionalBind(to: self.hourlyRateTextField)
+        self.projectViewModel.dailyRate.bidirectionalBind(to: self.dailyRateTextField)
         self.projectViewModel.closed.bidirectionalBind(to: self.closedButton.reactive.integerValue)
         
         // Set up enabled bindings

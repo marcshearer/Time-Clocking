@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18E226" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Clockings" representedClassName="ClockingMO" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="clockingUUID" attributeType="String" syncable="YES"/>
         <attribute name="customerCode" attributeType="String" syncable="YES"/>
+        <attribute name="dailyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="endTime" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="hourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="hoursPerDay" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="invoiceHours" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="invoiceOverride" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="invoiceState" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="projectCode" attributeType="String" syncable="YES"/>
@@ -21,7 +25,7 @@
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="closed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="customerCode" attributeType="String" minValueString="1" syncable="YES"/>
-        <attribute name="defaultHourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="defaultDailyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="hoursPerDay" optional="YES" attributeType="Float" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="invoiceDescription" optional="YES" attributeType="Integer 16" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="invoiceDetail" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -66,7 +70,7 @@
     <entity name="Projects" representedClassName="ProjectMO" syncable="YES" codeGenerationType="class">
         <attribute name="closed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="customerCode" attributeType="String" syncable="YES"/>
-        <attribute name="hourlyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="dailyRate" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastNotes" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="projectCode" attributeType="String" syncable="YES"/>
         <attribute name="purchaseOrder" optional="YES" attributeType="String" syncable="YES"/>
@@ -90,7 +94,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Clockings" positionX="-36" positionY="45" width="128" height="195"/>
+        <element name="Clockings" positionX="-36" positionY="45" width="128" height="255"/>
         <element name="Customers" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="DocumentDetails" positionX="-27" positionY="108" width="128" height="90"/>
         <element name="Documents" positionX="-36" positionY="99" width="128" height="180"/>

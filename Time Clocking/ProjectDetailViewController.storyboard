@@ -135,7 +135,6 @@ Gw
                                     <constraint firstAttribute="width" constant="96" id="dre-8w-0JF"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="82k-UD-szE">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="mpi-G4-Odc"/>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -203,7 +202,7 @@ Gw
                         <outlet property="cancelButton" destination="jfe-67-Mqf" id="sCn-qO-pSD"/>
                         <outlet property="closedButton" destination="LvT-eW-wHm" id="bG8-Z9-eUX"/>
                         <outlet property="customerCodePopupButton" destination="iJi-xp-zcp" id="Ion-6k-OG0"/>
-                        <outlet property="hourlyRateTextField" destination="RGy-fr-7db" id="tlT-FW-60J"/>
+                        <outlet property="dailyRateTextField" destination="RGy-fr-7db" id="tlT-FW-60J"/>
                         <outlet property="projectCodeTextField" destination="nCp-x2-sJx" id="lmm-Wp-RsS"/>
                         <outlet property="purchaseOrderTextField" destination="1jC-lR-aGE" id="DFh-xh-HQX"/>
                         <outlet property="saveButton" destination="uxW-z6-xBO" id="PiK-wH-IR1"/>

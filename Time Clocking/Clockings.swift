@@ -72,7 +72,19 @@ class Clockings {
                 result = Resources.getName(resourceCode: clockingMO.resourceCode!)
                 
             case "duration", "abbrevDuration":
-                result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: (key == "abbrevDuration"))
+                let abbreviated = (key == "abbrevDuration")
+                if clockingMO.invoiceOverride {
+                    result = Clockings.duration(Double(clockingMO.invoiceHours) * 3600.0, abbreviated: abbreviated)
+                } else {
+                    result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
+                }
+                
+            case "invoiceDate":
+                if clockingMO.invoiceOverride {
+                    result = Utility.dateString(clockingMO.invoiceDate!)
+                } else {
+                    result = Utility.dateString(clockingMO.startTime!)
+                }
                 
             case "documentNumber":
                 if clockingMO.invoiceState == InvoiceState.notInvoiced.rawValue || clockingMO.invoiceState == "" {
@@ -112,7 +124,7 @@ class Clockings {
             if timeEntry.timerState.value != TimerState.notStarted.rawValue {
                 let hours = Clockings.hours(timeEntry)
                 result.hours += hours
-                result.value += Utility.round(hours * timeEntry.hourlyRate.value, 2)
+                result.value += Utility.round((hours / timeEntry.hoursPerDay.value) * timeEntry.dailyRate.value, 2)
             }
         }
         
@@ -136,21 +148,33 @@ class Clockings {
     static public func duration(_ timeInterval: TimeInterval, abbreviated: Bool = false) -> String {
         let formatter = DateComponentsFormatter()
         let hours = timeInterval / 3600.0
+        var allowedUnits: NSCalendar.Unit = []
         
-        if hours < 1 {
-            formatter.allowedUnits = [ .minute ]
-        } else if hours < 24 {
-            formatter.allowedUnits = [ .hour, .minute]
-        } else {
-            formatter.allowedUnits = [ .day, .hour, .minute]
-        }
-        formatter.unitsStyle = (abbreviated ? .abbreviated : .full)
-        formatter.zeroFormattingBehavior = [ .pad ]
-        
-        if let result = formatter.string(from: timeInterval) {
-            return result
-        } else {
+        if timeInterval == 0 {
             return ""
+        } else {
+            
+            if Double(Int(hours)) != Utility.round(hours,2) {
+                allowedUnits = allowedUnits.union([.minute])
+            }
+            
+            if Double(Int(hours/24)) != Utility.round(hours/24, 2) && hours >= 1 {
+                allowedUnits = allowedUnits.union([.hour])
+            }
+            
+            if hours > 24 {
+                allowedUnits = allowedUnits.union([.day])
+            }
+            
+            formatter.allowedUnits = allowedUnits
+            formatter.unitsStyle = (abbreviated ? .abbreviated : .full)
+            formatter.zeroFormattingBehavior = [ .pad ]
+            
+            if let result = formatter.string(from: timeInterval) {
+                return result
+            } else {
+                return ""
+            }
         }
     }
     

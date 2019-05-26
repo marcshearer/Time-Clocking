@@ -23,7 +23,7 @@ class TimeEntry: ClockingViewModel {
         TimeEntry.current.notes.value = self.defaults.string(forKey: "notes") ?? ""
         TimeEntry.current.startTime.value = self.defaults.object(forKey: "startTime") as? Date ?? Date()
         TimeEntry.current.endTime.value = self.defaults.object(forKey: "endTime") as? Date ?? Date()
-        TimeEntry.current.hourlyRate.value = self.defaults.object(forKey: "hourlyRate") as? Double ?? 0.0
+        TimeEntry.current.dailyRate.value = self.defaults.object(forKey: "dailyRate") as? Double ?? 0.0
         TimeEntry.current.timerState.value = self.defaults.string(forKey: "state") ?? TimerState.notStarted.rawValue
     }
 
@@ -35,7 +35,7 @@ class TimeEntry: ClockingViewModel {
         self.defaults.set(TimeEntry.current.notes.value, forKey: "notes")
         self.defaults.set(TimeEntry.current.startTime.value, forKey: "startTime")
         self.defaults.set(TimeEntry.current.endTime.value, forKey: "endTime")
-        self.defaults.set(TimeEntry.current.hourlyRate.value, forKey: "hourlyRate")
+        self.defaults.set(TimeEntry.current.dailyRate.value, forKey: "dailyRate")
         self.defaults.set(TimeEntry.current.timerState.value, forKey: "state")
         
     }

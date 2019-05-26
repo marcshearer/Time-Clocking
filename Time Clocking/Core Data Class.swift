@@ -19,6 +19,7 @@ class CoreData {
     
     // Core data context - set up in initialise
     static var context: NSManagedObjectContext!
+    static var updating = false
     
     class func fetch<MO: NSManagedObject>(from entityName: String, filter: NSPredicate! = nil, filter2: NSPredicate! = nil, limit: Int = 0,
                                           sort: (key: String, direction: SortDirection)...) -> [MO] {
@@ -105,35 +106,57 @@ class CoreData {
     class func update(errorHandler: ((String) -> ())! = nil, updateLogic: () -> ()) -> Bool {
         var ok = true
         
-        if let context = CoreData.context {
+        if CoreData.updating {
+            
+            // Already updating - just execute update logic
             
             updateLogic()
+            ok = true
             
-            context.performAndWait {
-                if context.hasChanges {
-                    do {
-                        try context.save()
-                    } catch {
-                        let nserror = error as NSError
-                        if errorHandler != nil {
-                            errorHandler?(nserror.localizedDescription)
-                        } else {
-                            fatalError("Unresolved error \(nserror.localizedDescription)")
+        } else {
+            
+            CoreData.updating = true
+            
+            if let context = CoreData.context {
+                
+                updateLogic()
+                
+                context.performAndWait {
+                    if context.hasChanges {
+                        do {
+                            try context.save()
+                        } catch {
+                            let nserror = error as NSError
+                            if errorHandler != nil {
+                                errorHandler?(nserror.localizedDescription)
+                            } else {
+                                fatalError("Unresolved error \(nserror.localizedDescription)")
+                            }
+                            ok = false
                         }
-                        ok = false
                     }
                 }
-            }
-        } else {
-            if errorHandler != nil {
-                errorHandler("Invalid context")
             } else {
-                fatalError("Unexpected error (Invalid context)")
+                if errorHandler != nil {
+                    errorHandler("Invalid context")
+                } else {
+                    fatalError("Unexpected error (Invalid context)")
+                }
+                ok = false
             }
-            ok = false
+            
+            CoreData.updating = false
+            
         }
-        
         return ok
+    }
+    
+    class func rollback() {
+        if CoreData.updating {
+            if let context = CoreData.context {
+                context.rollback()
+            }
+        }
     }
     
     class func create<MO: NSManagedObject>(from entityName: String) -> MO {

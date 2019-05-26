@@ -163,8 +163,8 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W4d-Kv-0nT">
-                                <rect key="frame" x="22" y="134" width="121" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Default hourly rate:" id="JfR-Hx-IyQ">
+                                <rect key="frame" x="22" y="134" width="111" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Default daily rate:" id="JfR-Hx-IyQ">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -177,7 +177,6 @@ Gw
                                     <constraint firstAttribute="width" constant="96" id="fQR-vt-BU1"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="LPk-y2-K2e">
-                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="currency" lenient="YES" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" minimumFractionDigits="2" maximumFractionDigits="2" id="E2q-U0-9TP"/>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -223,7 +222,7 @@ Gw
                     <connections>
                         <outlet property="addressTextField" destination="Ekk-cv-cCz" id="PJf-P7-ev3"/>
                         <outlet property="closedButton" destination="myM-HX-pzl" id="VHp-EI-gtN"/>
-                        <outlet property="defaultHourlyRateTextField" destination="GaH-YQ-IXl" id="ljk-NM-sRT"/>
+                        <outlet property="defaultDailyRateTextField" destination="GaH-YQ-IXl" id="ljk-NM-sRT"/>
                         <outlet property="nameTextField" destination="Z2m-b0-kbT" id="Qzk-MO-IC3"/>
                     </connections>
                 </viewController>

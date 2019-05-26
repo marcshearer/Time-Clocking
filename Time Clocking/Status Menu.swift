@@ -19,6 +19,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     private var statusButtonImage: NSImageView!
     private var statusMenu: NSMenu
     private var updateTimer: Timer!
+    private let menuBarColor = NSColor(named: "menuBar\(AppDelegate.isDevelopment ? "Dev" : "")Color")
 
     private var menuItemList: [String: NSMenuItem] = [:]
     private var viewControllerList: [String : NSViewController] = [:]
@@ -43,7 +44,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
             self.statusButtonText = NSTextField(labelWithString: "")
             self.statusButtonText.translatesAutoresizingMaskIntoConstraints = false
             self.statusButtonText.sizeToFit()
-            self.statusButtonText.textColor = NSColor(named: "menuBarTextColor")
+            self.statusButtonText.textColor = self.menuBarColor
             self.statusButtonText.font = NSFont.systemFont(ofSize: 12)
             button.addSubview(self.statusButtonText)
             
@@ -133,7 +134,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     }
     
     internal func menuDidClose(_ menu: NSMenu) {
-        self.statusButtonText.textColor = NSColor(named: "menuBarTextColor")
+        self.statusButtonText.textColor = self.menuBarColor
         self.statusButtonImage.image = getImage()
     }
     
@@ -246,6 +247,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
         
         if alternate {
             imageName += "White"
+        } else if AppDelegate.isDevelopment {
+            imageName += "Blue"
         }
         
         return NSImage(named: NSImage.Name(imageName))!
@@ -264,7 +267,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         var attributes: [NSAttributedString.Key : Any] = [:]
         
         // Set color
-        attributes[NSAttributedString.Key.foregroundColor] = NSColor(named: "menuBarTextColor")!
+        attributes[NSAttributedString.Key.foregroundColor] = self.menuBarColor!
         
         // Set font size if specified
         if let fontSize = fontSize {

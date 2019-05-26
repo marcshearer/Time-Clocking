@@ -11,51 +11,12 @@
 import Cocoa
 import CoreData
 
-enum VarType {
-    case string
-    case date
-    case dateTime
-    case int
-    case double
-    case bool
-    case button
-}
-
-@objc class Layout: NSObject {
-    var key: String
-    var title: String
-    var width: CGFloat
-    var maxWidth: CGFloat
-    var alignment: NSTextAlignment
-    var type: VarType
-    var total: Bool
-    var pad: Bool
-    var dataWidth:CGFloat = 0.0
-    
-    init(key: String, title: String, width: CGFloat, alignment: NSTextAlignment, type: VarType, total: Bool, pad: Bool, maxWidth: CGFloat=0) {
-        self.key = key
-        self.title = title
-        self.width = width
-        self.maxWidth = maxWidth
-        self.alignment = alignment
-        self.type = type
-        self.total = total
-        self.pad = pad
-    }
-}
-
-enum Action {
-    case update
-    case delete
-    case none
-}
-
 @objc public protocol CoreDataTableViewerDelegate : class {
     
     @objc optional func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
     
     @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
-    
+      
     @objc optional func checkEnabled(record: NSManagedObject) -> Bool
     
     @objc optional func buttonPressed(record: NSManagedObject) -> Bool
@@ -70,7 +31,8 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
     
     public var dateFormat = "dd/MM/yyyy"
     public var dateTimeFormat = "dd/MM/yyyy HH:mm:ss.ff"
-    public var doubleFormat = "%.2f"
+    public var intNumberFormatter = NumberFormatter()
+    public var floatNumberFormatter = NumberFormatter()
     
     private let displayTableView: NSTableView
     private var records: [NSManagedObject] = []
@@ -95,7 +57,7 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         // Setup delegates
         self.displayTableView.dataSource = self
         self.displayTableView.delegate = self
-        
+        self.floatNumberFormatter.minimumFractionDigits = 2
     }
     
     public func show(recordType: String, layout: [Layout], sort: [(String, SortDirection)] = [], predicate: [NSPredicate]? = nil) {
@@ -356,8 +318,13 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
                             // Not totalled column
                             textField?.stringValue = ""
                         } else {
-                            let format = (column.type == .int ? "%d" : self.doubleFormat)
-                            textField?.stringValue = String(format: format, self.total[columnNumber]!)
+                            var numberFormatter: NumberFormatter
+                            if column.type == .int {
+                                numberFormatter = self.intNumberFormatter
+                            } else {
+                                numberFormatter = self.floatNumberFormatter
+                            }
+                            textField?.stringValue = numberFormatter.string(from: self.total[columnNumber]! as NSNumber) ?? ""
                             textField?.font = NSFont.boldSystemFont(ofSize: 12)
                         }
                         textField?.alignment = column.alignment
@@ -422,9 +389,9 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
             case .dateTime:
                 return Utility.dateString((object as! Date), format: dateTimeFormat)
             case .int:
-                return "\(object)"
+                return self.intNumberFormatter.string(from: object as! NSNumber) ?? ""
             case .double:
-                return String(format: doubleFormat, object as! Double)
+                return self.floatNumberFormatter.string(from: object as! NSNumber) ?? ""
             case .bool:
                 return (object as! Bool == true ? "X" : "")
             default:

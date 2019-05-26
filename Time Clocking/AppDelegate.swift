@@ -11,7 +11,16 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    
+    static public var isDevelopment:Bool {
+        get {
+            #if DEVELOPMENT
+                return true
+            #else
+                return false
+            #endif
+        }
+    }
+      
     internal func applicationDidFinishLaunching(_ aNotification: Notification) {
 
         // Cache main context for core data
@@ -29,21 +38,44 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Build status menu
         StatusMenu.shared.update()
         
-        /*
+        
         // TODO: Remove    
         // Remove all document history!!
         CoreData.clearTable("Documents")
         CoreData.clearTable("DocumentDetails")
-        let clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        let clockingsArray = CoreData.fetch(from: "Clockings") as! [ClockingMO]
         _ = CoreData.update {
-            for clockingMO in clockings {
-                clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
+            for clockingMO in clockingsArray {
+                if clockingMO.startTime == clockingMO.endTime {
+                    // Sundry line - delete it
+                    CoreData.delete(record: clockingMO)
+                } else {
+                    clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
+                }
             }
         }
         Settings.current.nextInvoiceNo.value = 100001
         Settings.current.nextCreditNo.value = 200001
         Settings.saveDefaults()
-        */
+ 
+        let projects = CoreData.fetch(from: "Projects") as! [ProjectMO]
+        _ = CoreData.update {
+            for projectMO in projects {
+                let customers = Customers.load(specific: projectMO.customerCode, includeClosed: true)
+                projectMO.dailyRate = customers.first!.defaultDailyRate
+            }
+        }
+        
+        let clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        _ = CoreData.update {
+            for clockingMO in clockings {
+                let customers = Customers.load(specific: clockingMO.customerCode, includeClosed: true)
+                let projects = Projects.load(specificCustomer: clockingMO.customerCode, specificProject: clockingMO.projectCode, includeClosed: true)
+                clockingMO.dailyRate = projects.first!.dailyRate
+                clockingMO.hoursPerDay = customers.first!.hoursPerDay
+                clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
+            }
+        }
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {
@@ -153,6 +185,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // If we got here, it is time to quit.
         return .terminateNow
     }
-
 }
 

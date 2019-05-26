@@ -25,7 +25,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @IBOutlet private weak var startTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var endTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var durationTextField: NSTextField!
-    @IBOutlet private weak var hourlyRateTextField: NSTextField!
+    @IBOutlet private weak var dailyRateTextField: NSTextField!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var startButton: NSButton!
     @IBOutlet private weak var stopAndAddButton: NSButton!
@@ -64,7 +64,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
         self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
         self.viewModel.notes.bidirectionalBind(to: self.notesTextField.reactive.editingString)
-        self.viewModel.hourlyRate.bidirectionalBind(to: self.hourlyRateTextField)
+        self.viewModel.dailyRate.bidirectionalBind(to: self.dailyRateTextField)
         self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
         self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
         self.viewModel.durationText.bind(to: self.durationTextField.reactive.editingString)
@@ -75,7 +75,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.customerCodePopupButton.isEnabled = true
         self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
         self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.hourlyRateTextField.reactive.isEnabled)
+        self.viewModel.canEditProjectValues.bind(to: self.dailyRateTextField.reactive.isEnabled)
         self.viewModel.canEditStartTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
         self.viewModel.canEditStartTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
         self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
@@ -238,7 +238,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleFormat = "£ %.2f"
+        self.tableViewer.floatNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     

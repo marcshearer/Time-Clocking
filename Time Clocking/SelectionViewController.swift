@@ -285,7 +285,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         
         let invoiceClockings = self.clockings.filter{!(clockingExcluded[$0.clockingUUID!] ?? false)}
         
-        func clockingIterator(_ action: (NSManagedObject)->()) {
+        func clockingIterator(_ action: (ClockingMO)->()) {
             for clockingMO in invoiceClockings {
                 action(clockingMO)
             }
@@ -325,7 +325,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                 }
             }
             
-            InvoiceViewController.show(relativeTo: self.invoiceButton, customerCode: invoiceClockings[0].customerCode!, documentType: self.documentType, reprintDocumentNumber: reprintDocumentNumber, originalInvoiceNumber: originalInvoiceNumber, defaultDocumentDate: defaultDocumentDate, headerText: headerText, clockingIterator: clockingIterator, completion: invoiceCompletion)
+            InvoiceViewController.show(from: self, customerCode: invoiceClockings[0].customerCode!, documentType: self.documentType, reprintDocumentNumber: reprintDocumentNumber, originalInvoiceNumber: originalInvoiceNumber, defaultDocumentDate: defaultDocumentDate, headerText: headerText, clockingIterator: clockingIterator, completion: invoiceCompletion)
         }
     }
     
@@ -476,7 +476,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleFormat = "£ %.2f"
+        self.tableViewer.floatNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     
@@ -487,7 +487,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
               Layout(key: "=customer",       title: "Customer",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
               Layout(key: "=project",        title: "Project",     width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
               Layout(key: "notes",           title: "Description", width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
-              Layout(key: "startTime",       title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
+              Layout(key: "=invoiceDate",    title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=documentNumber", title: "Last doc",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=amount",         title: "Value",       width: -50,      alignment: .right,  type: .string,      total: true,    pad: false),

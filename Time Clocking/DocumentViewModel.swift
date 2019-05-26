@@ -29,14 +29,14 @@ class DocumentViewModel {
     public var headerText = Observable<String>("")
     public var generated = ObservablePickerDate()
     public var clockingDuration = Observable<String>("")
-    public var clockingValue = ObservableTextFieldFloat<Double>()
-    public var value = ObservableTextFieldFloat<Double>()
+    public var clockingValue = ObservableTextFieldFloat<Double>(2, true)
+    public var value = ObservableTextFieldFloat<Double>(2, true)
     
     // Derived / transient properties
     public var reprintMode = Observable<Bool>(false)
     public var documentSelection = Observable<Int>(DocumentSelection.both.rawValue)
     public var sundryText = Observable<String>("")
-    public var sundryValue = ObservableTextFieldFloat<Double>()
+    public var sundryValue = ObservableTextFieldFloat<Double>(2, true)
     public var documentNumberChange = Observable<Bool>(false)
     public var anyChange = Observable<Bool>(false)
     
