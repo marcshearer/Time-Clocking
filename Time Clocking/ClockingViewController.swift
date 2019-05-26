@@ -238,7 +238,6 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     
@@ -251,7 +250,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
               Layout(key: "notes",           title: "Description", width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
               Layout(key: "startTime",       title: "From",        width: 115, alignment: .center, type: .dateTime, total: false, pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -10, alignment: .left,   type: .string,   total: false, pad: false),
-              Layout(key: "amount",          title: "Value",       width: -50, alignment: .right,  type: .double,   total: true,  pad: false),
+              Layout(key: "amount",          title: "Value",       width: -50, alignment: .right,  type: .currency, total: true,  pad: false),
               Layout(key: "=",               title: "",            width:   0, alignment: .left,   type: .string,   total: false, pad: false)
         ]
     }

@@ -92,14 +92,6 @@ class Clockings {
                 } else {
                     result = Documents.getLastDocumentNumber(clockingUUID: clockingMO.clockingUUID!) ?? ""
                 }
-            case "amount":
-                let amount = clockingMO.amount as NSNumber
-                let formatter = NumberFormatter()
-                formatter.locale = Locale.current
-                formatter.numberStyle = .currency
-                if let formatted = formatter.string(from: amount) {
-                    result = formatted
-                }
             default:
                 break
             }

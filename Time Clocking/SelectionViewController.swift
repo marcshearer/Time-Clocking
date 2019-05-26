@@ -476,7 +476,6 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.doubleNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     
@@ -490,7 +489,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
               Layout(key: "=invoiceDate",    title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=documentNumber", title: "Last doc",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=amount",         title: "Value",       width: -50,      alignment: .right,  type: .string,      total: true,    pad: false),
+              Layout(key: "amount",          title: "Value",       width: -50,      alignment: .right,  type: .currency,    total: true,    pad: false),
               Layout(key: "=",               title: "",            width:   0,      alignment: .left,   type: .string,      total: false,   pad: false)
         ]
         if self.mode == .invoiceCredit {

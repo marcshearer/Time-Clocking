@@ -44,7 +44,7 @@
 		B286988B227DD81400377112 /* Date Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986C227DD81300377112 /* Date Extensions.swift */; };
 		B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
 		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
-		B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Table Viewer.swift */; };
 		B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
 		B2ACC710229819590036C762 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
 		B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
@@ -58,7 +58,7 @@
 		B2ACC719229819590036C762 /* TimeEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC04228428A50040CA46 /* TimeEntry.swift */; };
 		B2ACC71A229819590036C762 /* ProjectFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC1022897FB00040CA46 /* ProjectFilterViewController.swift */; };
 		B2ACC71B229819590036C762 /* Customers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFC227E95B6001CC666 /* Customers.swift */; };
-		B2ACC71C229819590036C762 /* Core Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Viewer.swift */; };
+		B2ACC71C229819590036C762 /* Core Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Table Viewer.swift */; };
 		B2ACC71D229819590036C762 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
 		B2ACC71E229819590036C762 /* ResourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEF1227E5299001CC666 /* ResourceViewModel.swift */; };
 		B2ACC71F229819590036C762 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
@@ -102,8 +102,8 @@
 		B2ACC75122984DBD0036C762 /* Print Document Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC74F22984DBD0036C762 /* Print Document Class.swift */; };
 		B2ACC75322984DCB0036C762 /* Print Document Line Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */; };
 		B2ACC75422984DCB0036C762 /* Print Document Line Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */; };
-		B2ACC75622999ED40036C762 /* Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Viewer.swift */; };
-		B2ACC75722999ED40036C762 /* Data Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Viewer.swift */; };
+		B2ACC75622999ED40036C762 /* Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Table Viewer.swift */; };
+		B2ACC75722999ED40036C762 /* Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75522999ED40036C762 /* Data Table Viewer.swift */; };
 		B2ACC75C2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */; };
 		B2ACC75D2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */; };
 		B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */; };
@@ -192,12 +192,12 @@
 		B286986D227DD81300377112 /* InvoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvoiceViewController.swift; sourceTree = "<group>"; };
 		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B2869870227DD81400377112 /* Core Data Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Viewer.swift"; sourceTree = "<group>"; };
+		B2869870227DD81400377112 /* Core Data Table Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Table Viewer.swift"; sourceTree = "<group>"; };
 		B2ACC74A229819590036C762 /* Time Clocking Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Clocking Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2ACC74B229819590036C762 /* Time Clocking Development-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Time Clocking Development-Info.plist"; path = "/Users/marcshearer/Documents/Xcode projects/Time Clocking/Time Clocking Development-Info.plist"; sourceTree = "<absolute>"; };
 		B2ACC74F22984DBD0036C762 /* Print Document Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Class.swift"; sourceTree = "<group>"; };
 		B2ACC75222984DCB0036C762 /* Print Document Line Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Line Class.swift"; sourceTree = "<group>"; };
-		B2ACC75522999ED40036C762 /* Data Viewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Viewer.swift"; sourceTree = "<group>"; };
+		B2ACC75522999ED40036C762 /* Data Table Viewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Table Viewer.swift"; sourceTree = "<group>"; };
 		B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InvoicePreviewViewController.storyboard; sourceTree = "<group>"; };
 		B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicePreviewViewController.swift; sourceTree = "<group>"; };
 		B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
@@ -378,8 +378,8 @@
 			isa = PBXGroup;
 			children = (
 				B2869850227DD81200377112 /* Core Data Class.swift */,
-				B2869870227DD81400377112 /* Core Data Viewer.swift */,
-				B2ACC75522999ED40036C762 /* Data Viewer.swift */,
+				B2869870227DD81400377112 /* Core Data Table Viewer.swift */,
+				B2ACC75522999ED40036C762 /* Data Table Viewer.swift */,
 				B286986C227DD81300377112 /* Date Extensions.swift */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
 				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
@@ -781,7 +781,7 @@
 				B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
 				B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
-				B286988F227DD81400377112 /* Core Data Viewer.swift in Sources */,
+				B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
 				B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */,
@@ -797,7 +797,7 @@
 				B2C8CC18228D4A420040CA46 /* DocumentViewModel.swift in Sources */,
 				B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */,
 				B2869886227DD81400377112 /* MaintenanceViewController.swift in Sources */,
-				B2ACC75622999ED40036C762 /* Data Viewer.swift in Sources */,
+				B2ACC75622999ED40036C762 /* Data Table Viewer.swift in Sources */,
 				B241BEF4227E52D8001CC666 /* ResourceDetailViewController.swift in Sources */,
 				B2ACC75022984DBD0036C762 /* Print Document Class.swift in Sources */,
 				B2C8CC0D2286CCEB0040CA46 /* Settings.swift in Sources */,
@@ -846,7 +846,7 @@
 				B2ACC7612299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
 				B2ACC71A229819590036C762 /* ProjectFilterViewController.swift in Sources */,
 				B2ACC71B229819590036C762 /* Customers.swift in Sources */,
-				B2ACC71C229819590036C762 /* Core Data Viewer.swift in Sources */,
+				B2ACC71C229819590036C762 /* Core Data Table Viewer.swift in Sources */,
 				B2ACC71D229819590036C762 /* InvoiceViewController.swift in Sources */,
 				B2ACC71E229819590036C762 /* ResourceViewModel.swift in Sources */,
 				B2ACC71F229819590036C762 /* ObservablePickerDate.swift in Sources */,
@@ -862,7 +862,7 @@
 				B2ACC728229819590036C762 /* DocumentViewModel.swift in Sources */,
 				B2ACC729229819590036C762 /* ProjectViewModel.swift in Sources */,
 				B2ACC72A229819590036C762 /* MaintenanceViewController.swift in Sources */,
-				B2ACC75722999ED40036C762 /* Data Viewer.swift in Sources */,
+				B2ACC75722999ED40036C762 /* Data Table Viewer.swift in Sources */,
 				B2ACC72B229819590036C762 /* ResourceDetailViewController.swift in Sources */,
 				B2ACC75122984DBD0036C762 /* Print Document Class.swift in Sources */,
 				B2ACC72C229819590036C762 /* Settings.swift in Sources */,

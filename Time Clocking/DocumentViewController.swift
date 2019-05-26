@@ -170,7 +170,6 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy"
-        self.tableViewer.doubleNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     
@@ -182,7 +181,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
               Layout(key: "documentNumber",        title: "Number",           width:  60,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "documentDate",          title: "Date",             width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "originalInvoiceNumber", title: "Original",         width:  60,      alignment: .left,   type: .string,      total: false,   pad: false),
-              Layout(key: "=value",                title: "Value",            width: 100,      alignment: .right,  type: .double,      total: true,    pad: false)
+              Layout(key: "=value",                title: "Value",            width: 100,      alignment: .right,  type: .currency,    total: true,    pad: false)
         ]
     }
 }
