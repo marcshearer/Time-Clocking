@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PrintDocumentLine: NSObject, DataViewerDataSource {
+class PrintDocumentLine: NSObject, DataTableViewerDataSource {
     
     public var resourceCode: String!
     public var projectCode: String!

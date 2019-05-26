@@ -238,7 +238,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     private func setupTableViewer() {
         self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
         self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.floatNumberFormatter.numberStyle = .currency
+        self.tableViewer.doubleNumberFormatter.numberStyle = .currency
         self.tableViewer.delegate = self
     }
     

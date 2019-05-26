@@ -9,7 +9,7 @@
 import Foundation
 import Cocoa
 
-@objc public protocol DataViewerDataSource {
+@objc public protocol DataTableViewerDataSource {
     func value(forKey: String) -> Any?
 }
 
@@ -57,15 +57,15 @@ enum Action {
 
 @objc public protocol DataTableViewerDelegate : class {
     
-    @objc optional func shouldSelect(record: DataViewerDataSource) -> Bool
+    @objc optional func shouldSelect(record: DataTableViewerDataSource) -> Bool
     
-    @objc optional func derivedKey(key: String, record: DataViewerDataSource) -> String
+    @objc optional func derivedKey(key: String, record: DataTableViewerDataSource) -> String
     
     @objc optional func derivedTotal(key: String) -> String?
 
-    @objc optional func checkEnabled(record: DataViewerDataSource) -> Bool
+    @objc optional func checkEnabled(record: DataTableViewerDataSource) -> Bool
     
-    @objc optional func buttonPressed(record: DataViewerDataSource) -> Bool
+    @objc optional func buttonPressed(record: DataTableViewerDataSource) -> Bool
 }
 
 class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
@@ -77,12 +77,12 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     
     public var dateFormat = "dd/MM/yyyy"
     public var dateTimeFormat = "dd/MM/yyyy HH:mm:ss.ff"
-    public var intNumberFormatter = NumberFormatter()
-    public var doubleNumberFormatter = NumberFormatter()
-    public var currencyNumberFormatter = NumberFormatter()
+    public let intNumberFormatter = NumberFormatter()
+    public let doubleNumberFormatter = NumberFormatter()
+    public let currencyNumberFormatter = NumberFormatter()
     
     private let displayTableView: NSTableView
-    private var records: [DataViewerDataSource] = []
+    private var records: [DataTableViewerDataSource] = []
     private var layout: [Layout]!
     private var total: [Double?]!
     private var totals = false
@@ -90,7 +90,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     private var additional = 0
     private let boxImage = NSImage(named: NSImage.Name("box"))!
     private let boxTickImage = NSImage(named: NSImage.Name("boxtick"))!
-    private var buttonXref: [DataViewerDataSource?] = []
+    private var buttonXref: [DataTableViewerDataSource?] = []
     
     public var delegate: DataTableViewerDelegate?
     
@@ -110,7 +110,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         self.currencyNumberFormatter.numberStyle = .currency
     }
     
-    public func show(layout: [Layout], records: [DataViewerDataSource]) {
+    public func show(layout: [Layout], records: [DataTableViewerDataSource]) {
         
         Utility.mainThread {
             
@@ -139,7 +139,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
-    public func append(record: DataViewerDataSource) {
+    public func append(record: DataTableViewerDataSource) {
         self.displayTableView.beginUpdates()
         self.records.append(record)
         self.displayTableView.insertRows(at: IndexSet(integer: records.count-1), withAnimation: .slideDown)
@@ -147,7 +147,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         self.accumulateTotals()
     }
     
-    public func insert(record: DataViewerDataSource, before: DataViewerDataSource?) {
+    public func insert(record: DataTableViewerDataSource, before: DataTableViewerDataSource?) {
         if let before = before {
             if let index = self.records.firstIndex(where: {$0 === before}) {
                 self.displayTableView.beginUpdates()
@@ -162,7 +162,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
-    public func commit(record: DataViewerDataSource, action: Action) {
+    public func commit(record: DataTableViewerDataSource, action: Action) {
         switch action {
         case .delete:
             // Clear xref entry
@@ -191,7 +191,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         self.accumulateTotals()
     }
     
-    public func forEachRecord(action: (DataViewerDataSource) -> ()) {
+    public func forEachRecord(action: (DataTableViewerDataSource) -> ()) {
         for record in self.records {
             action(record)
         }
@@ -321,7 +321,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                     if row < self.records.count {
                         buttonXref.append(records[row])
                         let image = (value == "" ? self.boxImage : self.boxTickImage)
-                        let action = (enabled ? #selector(CoreDataTableViewer.buttonPressed(_:)) : nil)
+                        let action = (enabled ? #selector(DataTableViewer.buttonPressed(_:)) : nil)
                         let button = NSButton(title: "", image: image, target: self, action: action)
                         button.isBordered = false
                         button.tag = buttonXref.count - 1
@@ -405,7 +405,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         return cell
     }
     
-    private func getValue(record: DataViewerDataSource, column: Layout) -> String {
+    private func getValue(record: DataTableViewerDataSource, column: Layout) -> String {
         if let object = record.value(forKey: column.key) {
             switch column.type {
             case .string:
@@ -458,7 +458,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
-    private func getNumericValue(record: DataViewerDataSource, key: String, type: VarType) -> Double {
+    private func getNumericValue(record: DataTableViewerDataSource, key: String, type: VarType) -> Double {
         if let object = record.value(forKey: key) {
             switch type {
             case .int, .double, .currency:

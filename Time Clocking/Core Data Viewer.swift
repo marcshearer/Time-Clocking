@@ -16,51 +16,43 @@ import CoreData
     @objc optional func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
     
     @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
-      
+    
+    @objc optional func derivedTotal(key: String) -> String?
+    
     @objc optional func checkEnabled(record: NSManagedObject) -> Bool
     
     @objc optional func buttonPressed(record: NSManagedObject) -> Bool
 }
 
-class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
-    
-    private struct PadColumn {
-        let tableColumn: NSTableColumn
-        let column: Layout
-    }
+class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
     
     public var dateFormat = "dd/MM/yyyy"
     public var dateTimeFormat = "dd/MM/yyyy HH:mm:ss.ff"
-    public var intNumberFormatter = NumberFormatter()
-    public var floatNumberFormatter = NumberFormatter()
-    
-    private let displayTableView: NSTableView
-    private var records: [NSManagedObject] = []
-    private var recordType: String!
-    private var layout: [Layout]!
-    private var total: [Double?]!
-    private var totals = false
-    private var padColumns: [PadColumn] = []
-    private var additional = 0
-    private let boxImage = NSImage(named: NSImage.Name("box"))!
-    private let boxTickImage = NSImage(named: NSImage.Name("boxtick"))!
-    private var buttonXref: [NSManagedObject?] = []
+    public let intNumberFormatter: NumberFormatter
+    public let doubleNumberFormatter: NumberFormatter
+    public var currencyNumberFormatter: NumberFormatter
     
     public var delegate: CoreDataTableViewerDelegate?
     
+    private var dataTableViewer: DataTableViewer
+    private var recordType: String!
+    
     init(displayTableView: NSTableView) {
         
-        self.displayTableView = displayTableView
+        self.dataTableViewer = DataTableViewer(displayTableView: displayTableView)
+        self.intNumberFormatter = self.dataTableViewer.intNumberFormatter
+        self.doubleNumberFormatter = self.dataTableViewer.intNumberFormatter
+        self.currencyNumberFormatter = self.dataTableViewer.intNumberFormatter
         
         super.init()
         
-        // Setup delegates
-        self.displayTableView.dataSource = self
-        self.displayTableView.delegate = self
-        self.floatNumberFormatter.minimumFractionDigits = 2
+        self.dataTableViewer.delegate = self
     }
     
     public func show(recordType: String, layout: [Layout], sort: [(String, SortDirection)] = [], predicate: [NSPredicate]? = nil) {
+        
+        // Store record type
+        self.recordType = recordType
         
         // Default sort by first non-derived column
         var sort = sort
@@ -76,351 +68,68 @@ class CoreDataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate
         // Execute query
         let records = CoreData.fetch(from: recordType, filter: predicate, sort: sort)
         
-        self.show(recordType: recordType, layout: layout, records: records)
+        self.dataTableViewer.show(layout: layout, records: records)
         
     }
     
     public func show(recordType: String, layout: [Layout], records: [NSManagedObject]) {
+       
+        // Store record type
+        self.recordType = recordType
         
-        Utility.mainThread {
-            
-            // Store properties
-            self.recordType = recordType
-            self.layout = layout
-            
-            // Remove all rows from grid
-            if self.records.count != 0 {
-                self.displayTableView.beginUpdates()
-                self.displayTableView.removeRows(at: IndexSet(integersIn: 0...self.records.count-1), withAnimation: NSTableView.AnimationOptions.slideUp)
-                self.records = []
-                self.displayTableView.reloadData()
-                self.displayTableView.endUpdates()
-            }
-            self.additional = 0
-            
-            // Set up grid
-            self.setupGrid(displayTableView: self.displayTableView, layout: layout)
-            
-            // Refresh grid
-            self.displayTableView.beginUpdates()
-            self.records = records
-            self.accumulateTotals()
-            self.displayTableView.reloadData()
-            self.displayTableView.endUpdates()
-        }
+        self.dataTableViewer.show(layout: layout, records: records)
+        
     }
     
     public func append(recordType: String, record: NSManagedObject) {
         if self.recordType == recordType {
-            self.displayTableView.beginUpdates()
-            self.records.append(record)
-            self.displayTableView.insertRows(at: IndexSet(integer: records.count-1), withAnimation: .slideDown)
-            self.displayTableView.endUpdates()
-            self.accumulateTotals()
+            self.dataTableViewer.append(record: record)
         }
     }
     
     public func insert(recordType: String, record: NSManagedObject, before: NSManagedObject?) {
         if self.recordType == recordType {
-            if let before = before {
-                if let index = self.records.firstIndex(where: {$0 == before}) {
-                    self.displayTableView.beginUpdates()
-                    self.records.insert(record, at: index)
-                    self.displayTableView.insertRows(at: IndexSet(integer: index), withAnimation: .slideDown)
-                    self.displayTableView.endUpdates()
-                    self.accumulateTotals()
-                }
-            } else {
-                // No before record - append
-                self.append(recordType: recordType, record: record)
-            }
+            self.dataTableViewer.insert(record: record, before: before)
         }
     }
     
     public func commit(recordType: String, record: NSManagedObject, action: Action) {
         if self.recordType == recordType {
-            
-            switch action {
-            case .delete:
-                // Clear xref entry
-                if let xrefIndex = buttonXref.firstIndex(where: {$0 == record}) {
-                    buttonXref[xrefIndex] = nil
-                }
-                // Update array and table view
-                if let index = records.firstIndex(where: {$0 == record}) {
-                    self.displayTableView.beginUpdates()
-                    self.records.remove(at: index)
-                    self.displayTableView.removeRows(at: IndexSet(integer: index), withAnimation: .slideUp)
-                    self.displayTableView.endUpdates()
-                }
-            case .update:
-                // Refresh row
-                if let index = records.firstIndex(where: {$0 == record}) {
-                    self.displayTableView.beginUpdates()
-                    self.displayTableView.reloadData(forRowIndexes: IndexSet(integer: index), columnIndexes: IndexSet(integersIn: 0...self.layout!.count-1))
-                    self.displayTableView.endUpdates()
-                }
-            default:
-                break
-            }
-            
-            // Table view seems to refresh itself so just need to accumulate totals
-            self.accumulateTotals()
+            self.dataTableViewer.commit(record: record, action: action)
         }
     }
     
-    public func forEachRecord(action: (NSManagedObject) -> ()) {
-        for record in self.records {
-            action(record)
-        }
-        self.displayTableView.reloadData()
-    }
-    
-    private func setupGrid(displayTableView: NSTableView, layout: [Layout]) {
-        // Remove any existing columns
-        for tableColumn in displayTableView.tableColumns {
-            displayTableView.removeTableColumn(tableColumn)
-        }
-        // Clear max widths
-        for column in layout {
-            column.dataWidth = abs(column.width)
-        }
-        self.total = []
-        self.totals = false
-        self.padColumns = []
-        var widthUsed:CGFloat = 0.0
+    public func forEachRecord(action: @escaping (NSManagedObject) -> ()) {
         
-        for index in 0..<layout.count {
-            let column = layout[index]
-            let tableColumn = NSTableColumn()
-            tableColumn.width = abs(column.width)
-            let headerCell = NSTableHeaderCell()
-            headerCell.title = column.title
-            headerCell.alignment = column.alignment
-            tableColumn.headerCell = headerCell
-            if column.width < 0 && tableColumn.headerCell.cellSize.width > abs(column.width) {
-                tableColumn.width = tableColumn.headerCell.cellSize.width + 10
-            } else {
-                tableColumn.width = abs(column.width)
-            }
-            widthUsed += tableColumn.width + 4
-            tableColumn.identifier = NSUserInterfaceItemIdentifier("\(index)")
-            self.displayTableView.addTableColumn(tableColumn)
-            self.total.append(column.total ? 0 : nil)
-            self.totals = self.totals || column.total
-            if column.pad {
-                self.padColumns.append(PadColumn(tableColumn: tableColumn, column: column))
-            }
+        func forAction(record: DataTableViewerDataSource) {
+            action(record as! NSManagedObject)
         }
         
-        // Use any spare space in the pad columns
-        if widthUsed < self.displayTableView.frame.width {
-            let padUsed = (self.displayTableView.frame.width - widthUsed)
-            for index in 0...padColumns.count - 1 {
-                padColumns[index].tableColumn.width += (padUsed / CGFloat(self.padColumns.count))
-            }
-        }
-    
-        // Allow for totals
-        if self.totals {
-            additional += 1
-        }
+        self.dataTableViewer.forEachRecord(action: forAction)
     }
     
-    private func accumulateTotals() {
-        var changed = false
-        if self.totals {
-            for (index, column) in self.layout.enumerated() {
-                if column.total {
-                    let currentValue = total[index]
-                    total[index] = 0
-                    for record in self.records {
-                        var value: Double
-                        if column.key.left(1) == "=" {
-                            let stringValue = delegate?.derivedKey?(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: record) ?? "0.0"
-                            value = stringValue.toNumber() ?? 0.0
-                        } else {
-                            value = self.getNumericValue(record: record, key: column.key, type: column.type)
-                        }
-                        total[index]! += value
-                    }
-                    if currentValue != total[index] {
-                        changed = true
-                    }
-                }
-            }
-        }
-        if changed {
-            // Refresh total line in table view
-            self.displayTableView.reloadData(forRowIndexes: IndexSet(integer: self.records.count), columnIndexes: IndexSet(integersIn: 0...self.layout!.count-1))
-        }
+    internal func shouldSelect(record: DataTableViewerDataSource) -> Bool {
+        return self.delegate?.shouldSelect?(recordType: self.recordType, record: record as! NSManagedObject) ?? false
     }
     
-    internal func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.records.count + additional
+    internal func derivedKey(key: String, record: DataTableViewerDataSource) -> String {
+        return self.delegate?.derivedKey?(recordType: self.recordType, key: key, record: record as! NSManagedObject) ?? ""
     }
     
-    internal func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
-        var result: Bool?
-        
-        if row < self.records.count {
-            result = self.delegate?.shouldSelect?(recordType: self.recordType, record: self.records[row]) ?? false
-        }
-        
-        if result != nil {
-            return result!
-        } else {
-            return false
-        }
+    internal func derivedTotal(key: String) -> String? {
+        return self.delegate?.derivedTotal?(key: key)
     }
     
-    internal func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
-        return false
+    internal func checkEnabled(record: DataTableViewerDataSource) -> Bool {
+        return self.delegate?.checkEnabled?(record: record as! NSManagedObject) ?? true
     }
     
-    internal func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        var cell: NSView?
-        if let identifier = tableColumn?.identifier.rawValue {
-            var expand: CGFloat = 0.0
-            if let columnNumber = Int(identifier) {
-                let column = self.layout[columnNumber]
-                var value: String?
-                var enabled = true
-                if row < self.records.count {
-                    if column.key.left(1) == "=" {
-                        value = self.delegate?.derivedKey?(recordType: self.recordType, key: column.key.right(column.key.length - 1), record: self.records[row]) ?? ""
-                    } else {
-                        value = self.getValue(record: self.records[row], key: column.key, type: column.type)
-                    }
-                    enabled = delegate?.checkEnabled?(record: self.records[row]) ?? true
-                }
-                if column.type == .button {
-                    if row < self.records.count {
-                        buttonXref.append(records[row])
-                        let image = (value == "" ? self.boxImage : self.boxTickImage)
-                        let action = (enabled ? #selector(CoreDataTableViewer.buttonPressed(_:)) : nil)
-                        let button = NSButton(title: "", image: image, target: self, action: action)
-                        button.isBordered = false
-                        button.tag = buttonXref.count - 1
-                        button.isEnabled = enabled
-                        cell = button
-                    }
-                } else {
-                    var textField = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(column.key), owner: nil) as? NSTextField
-                    if textField == nil {
-                        textField = NSTextField()
-                        textField?.identifier = NSUserInterfaceItemIdentifier(column.key)
-                        textField?.isBordered = false
-                    }
-                    if row >= self.records.count {
-                        // Total line
-                        if self.records.count == 0 || self.total[columnNumber] == nil {
-                            // Not totalled column
-                            textField?.stringValue = ""
-                        } else {
-                            var numberFormatter: NumberFormatter
-                            if column.type == .int {
-                                numberFormatter = self.intNumberFormatter
-                            } else {
-                                numberFormatter = self.floatNumberFormatter
-                            }
-                            textField?.stringValue = numberFormatter.string(from: self.total[columnNumber]! as NSNumber) ?? ""
-                            textField?.font = NSFont.boldSystemFont(ofSize: 12)
-                        }
-                        textField?.alignment = column.alignment
-                    } else {
-                        // Normal line
-                        textField?.stringValue = value!
-                        textField?.alignment = column.alignment
-                    }
-                    
-                    // Sort out width
-                    column.dataWidth = max(column.dataWidth, textField!.cell!.cellSize.width+2)
-                    if column.maxWidth != 0 {
-                        column.dataWidth = min(column.maxWidth, column.dataWidth)
-                    }
-                    if column.width <= 0 && column.dataWidth > tableColumn!.width {
-                        Utility.mainThread {
-                            
-                            // Stretch column can't contain this value - expand it - trying to recover any padding first
-                            expand = column.dataWidth - tableColumn!.width
-                            // Check how much padding is available
-                            if self.padColumns.count > 0 {
-                                var padAvailable:CGFloat = 0.0
-                                for index in 0...self.padColumns.count - 1 {
-                                    if self.padColumns[index].column.key != column.key {
-                                        padAvailable += max(0, self.padColumns[index].tableColumn.width - self.padColumns[index].column.dataWidth)
-                                    }
-                                }
-                                
-                                // Recover padding
-                                if padAvailable > 0 {
-                                    for index in 0...self.padColumns.count - 1 {
-                                        if self.padColumns[index].column.key != column.key {
-                                            // Don't take it back from yourself
-                                            let padToUse = (max(0, self.padColumns[index].tableColumn.width - self.padColumns[index].column.dataWidth) / padAvailable) * expand
-                                            if padToUse > 0 {
-                                                self.padColumns[index].tableColumn.width -= padToUse
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            // Expand stretch column
-                            tableColumn?.width = column.dataWidth
-                        }
-                    }
-                    
-                    textField?.isEnabled = enabled
-                    cell = textField
-                }
-            }
-        }
-        return cell
+    internal func buttonPressed(record: DataTableViewerDataSource) -> Bool {
+        return self.delegate?.buttonPressed?(record: record as! NSManagedObject) ?? false
     }
+}
+
+extension NSManagedObject : DataTableViewerDataSource {
     
-    private func getValue(record: NSManagedObject, key: String, type: VarType) -> String {
-        if let object = record.value(forKey: key) {
-            switch type {
-            case .string:
-                return object as! String
-            case .date:
-                return Utility.dateString((object as! Date), format: dateFormat)
-            case .dateTime:
-                return Utility.dateString((object as! Date), format: dateTimeFormat)
-            case .int:
-                return self.intNumberFormatter.string(from: object as! NSNumber) ?? ""
-            case .double:
-                return self.floatNumberFormatter.string(from: object as! NSNumber) ?? ""
-            case .bool:
-                return (object as! Bool == true ? "X" : "")
-            default:
-                return ""
-            }
-        } else {
-            return ""
-        }
-    }
-    
-    @objc internal func buttonPressed(_ button: NSButton) {
-        if let record = buttonXref[button.tag] {
-            if let selected = self.delegate?.buttonPressed?(record: record) {
-                button.image = (selected ? self.boxTickImage : self.boxImage)
-            }
-        }
-    }
-    
-    private func getNumericValue(record: NSManagedObject, key: String, type: VarType) -> Double {
-        if let object = record.value(forKey: key) {
-            switch type {
-            case .int, .double:
-                return object as! Double
-            default:
-                return 0
-            }
-        } else {
-            return 0
-        }
-    }
 }
 
