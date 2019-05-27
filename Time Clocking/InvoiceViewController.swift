@@ -154,11 +154,11 @@ class InvoiceViewController : NSViewController {
         self.clockingIterator { (clockingMO) in
             
             if clockingMO.override {
-                hours += Double(clockingMO.overrideMinutes)
+                hours += clockingMO.overrideMinutes
             } else {
                 hours += Clockings.hours(clockingMO)
             }
-            self.viewModel.clockingValue.value += Double(clockingMO.amount)
+            self.viewModel.clockingValue.value += clockingMO.amount
             
         }
         
@@ -182,7 +182,7 @@ class InvoiceViewController : NSViewController {
                 break
             }
             let customerMO = customers.first!
-            let hoursPerDay = Double(customerMO.hoursPerDay)
+            let hoursPerDay = customerMO.hoursPerDay
             
             // Compute due date
             let dueDate = self.dueDate(documentDate: self.viewModel.documentDate.value, termsType: TermsType(rawValue: Int(customerMO.termsType))!, termsValue: Int(customerMO.termsValue))
@@ -217,13 +217,13 @@ class InvoiceViewController : NSViewController {
                 }
                 let projectMO = projects.first!
                 
-                let dailyRate = Double(clockingMO.dailyRate)
+                let dailyRate = clockingMO.dailyRate
                 
                 // Set up overrides
                 var hours: Double
                 var deliveryDate: Date
                 if clockingMO.override {
-                    hours = Double(clockingMO.overrideMinutes)
+                    hours = clockingMO.overrideMinutes
                     deliveryDate = clockingMO.overrideStartTime!
                 } else {
                     hours = Clockings.hours(clockingMO)
@@ -267,12 +267,12 @@ class InvoiceViewController : NSViewController {
                 
                 if clockingMO.startTime == clockingMO.endTime {
                     // Crediting / re-invoicing a sundry
-                    linePrice = Double(clockingMO.amount)
+                    linePrice = clockingMO.amount
                     description = clockingMO.notes!
                 } else {
                     // Normal line
-                    linePrice = Utility.round((hours / Double(clockingMO.hoursPerDay)) * Double(clockingMO.dailyRate), 2)
-                    clockingMO.amount = Float(linePrice)
+                    linePrice = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
+                    clockingMO.amount = linePrice
                     
                     if Int(customerMO.invoiceDetail) != InvoiceDetail.none.rawValue {
                         description = "\(Utility.dateString(deliveryDate)) - "
@@ -372,7 +372,7 @@ class InvoiceViewController : NSViewController {
         clockingMO.endTime = clockingMO.startTime
         clockingMO.notes = self.viewModel.sundryText.value
         clockingMO.invoiceState = self.invoiceState()
-        clockingMO.amount = Float(self.viewModel.sundryValue.value)
+        clockingMO.amount = self.viewModel.sundryValue.value
     }
     
     private func invoiceState() -> String {

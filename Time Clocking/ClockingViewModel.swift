@@ -145,8 +145,8 @@ class ClockingViewModel {
                 let projects = Projects.load(specificCustomer: self.customerCode.value, specificProject: self.projectCode.value, includeClosed: true)
                 let customers = Customers.load(specific: self.customerCode.value, includeClosed: true)
                 if customers.count == 1 && projects.count == 1 {
-                    self.dailyRate.value = Double(projects.first!.dailyRate)
-                    self.hoursPerDay.value = Double(customers.first!.hoursPerDay)
+                    self.dailyRate.value = projects.first!.dailyRate
+                    self.hoursPerDay.value = customers.first!.hoursPerDay
                     self.notes.value = projects[0].lastNotes ?? ""
                 }
             }
@@ -313,12 +313,12 @@ class ClockingViewModel {
         clockingMO.notes = self.notes.value
         clockingMO.startTime = self.startTime.value
         clockingMO.endTime = self.endTime.value
-        clockingMO.dailyRate = Float(self.dailyRate.value)
+        clockingMO.dailyRate = self.dailyRate.value
         clockingMO.invoiceState = self.invoiceState.value
         clockingMO.override = (self.override.value != 0)
-        clockingMO.overrideMinutes = Float(self.overrideMinutes.value)
+        clockingMO.overrideMinutes = self.overrideMinutes.value
         clockingMO.overrideStartTime = self.overrideStartTime.value
-        clockingMO.amount = Float(self.amount.value)
+        clockingMO.amount = self.amount.value
     }
     
     public func copy(from record: NSManagedObject) {
@@ -332,12 +332,12 @@ class ClockingViewModel {
         self.notes.value = clockingMO.notes ?? ""
         self.startTime.value = clockingMO.startTime ?? Date()
         self.endTime.value = clockingMO.endTime ?? Date()
-        self.dailyRate.value = Double(clockingMO.dailyRate)
+        self.dailyRate.value = clockingMO.dailyRate
         self.invoiceState.value = clockingMO.invoiceState ?? InvoiceState.notInvoiced.rawValue
         self.override.value = (clockingMO.override ? 1 : 0)
-        self.overrideMinutes.value = Double(clockingMO.overrideMinutes)
+        self.overrideMinutes.value = clockingMO.overrideMinutes
         self.overrideStartTime.value = clockingMO.overrideStartTime ?? Date()
-        self.amount.value = Double(clockingMO.amount)
+        self.amount.value = clockingMO.amount
         self.timerState.value = TimerState.notStarted.rawValue
     }
     

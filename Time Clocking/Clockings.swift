@@ -74,7 +74,7 @@ class Clockings {
             case "duration", "abbrevDuration":
                 let abbreviated = (key == "abbrevDuration")
                 if clockingMO.override {
-                    result = Clockings.duration(Double(clockingMO.overrideMinutes) * 60.0, abbreviated: abbreviated)
+                    result = Clockings.duration(clockingMO.overrideMinutes * 60.0, abbreviated: abbreviated)
                 } else {
                     result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
                 }
@@ -108,7 +108,7 @@ class Clockings {
         
         for clockingMO in clockings {
             result.hours += Clockings.hours(clockingMO)
-            result.value += Double(clockingMO.amount)
+            result.value += clockingMO.amount
         }
         
         if includeStarted {
@@ -171,19 +171,19 @@ class Clockings {
     }
     
     public static func minutes(_ clockingMO: ClockingMO) -> Double {
-        return Utility.round(Double(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!)) / 60.0 ,2)
+        return Utility.round(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!) / 60.0 ,2)
     }
     
     public static func minutes(_ viewModel: ClockingViewModel) -> Double {
-        return Utility.round(Double(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value)) / 60.0 ,2)
+        return Utility.round(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value) / 60.0 ,2)
     }
     
     public static func hours(_ clockingMO: ClockingMO) -> Double {
-        return Utility.round(Double(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!)) / 3600.0 ,2)
+        return Utility.round(clockingMO.endTime!.timeIntervalSince(clockingMO.startTime!) / 3600.0 ,2)
     }
     
     public static func hours(_ viewModel: ClockingViewModel) -> Double {
-        return Utility.round(Double(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value)) / 3600.0 ,2)
+        return Utility.round(viewModel.endTime.value.timeIntervalSince(viewModel.startTime.value) / 3600.0 ,2)
     }
     
 }
