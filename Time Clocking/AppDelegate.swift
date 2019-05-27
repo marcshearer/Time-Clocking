@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.dailyRate = projects.first!.dailyRate
                 clockingMO.hoursPerDay = customers.first!.hoursPerDay
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
-                let hours = (clockingMO.override ? clockingMO.overrideMinutes * 60.0 : Clockings.hours(clockingMO))
+                let hours = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
                 clockingMO.amount = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
             }
         }
@@ -92,15 +92,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         _ = CoreData.update {
             for clockingMO in clockings {
                 var duration = Clockings.minutes(clockingMO)
-                duration = Double((Int((duration - 0.01) / Double(Settings.current.roundMinutes.value)) + 1)) * Double(Settings.current.roundMinutes.value)
+                duration = Double((Int((duration - 0.5) / Double(Settings.current.roundMinutes.value)) + 1)) * Double(Settings.current.roundMinutes.value)
                 clockingMO.startTime = Date.startOfMinute(from: clockingMO.startTime!)
                 clockingMO.endTime = Date(timeInterval: (duration * 60.0), since: clockingMO.startTime!)
                 clockingMO.override = false
                 clockingMO.overrideStartTime = clockingMO.startTime
                 clockingMO.overrideMinutes = Clockings.minutes(clockingMO)
+                let hours = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
+                clockingMO.amount = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
             }
         }
-        
         // MARK: ========================================================================== -
         */
     }

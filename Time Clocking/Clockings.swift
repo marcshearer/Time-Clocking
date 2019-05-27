@@ -78,12 +78,12 @@ class Clockings {
         }
     }
     
-    static public func startTime(from startTime: Date) -> Date {
+    static public func startTime(from startTime: Date = Date()) -> Date {
         return max(Clockings.lastClockingEndTime, Date.startOfMinute(from: startTime))
     }
     
-    static public func endTime(from endTime: Date, startTime: Date) -> Date {
-            let rounding = Double(Settings.current.roundMinutes.value)
+    static public func endTime(from endTime: Date = Date(), startTime: Date) -> Date {
+            let rounding = 1.0
             let duration = endTime.timeIntervalSince(startTime) / 60.0
             let roundedDuration = Double((Int((duration - 0.01) / rounding) + 1)) * rounding
             return Date.startOfMinute(addMinutes: Int(roundedDuration), from: startTime)
@@ -185,10 +185,6 @@ class Clockings {
             
             if Double(Int(hours/24)) != Utility.round(hours/24, 2) && hours >= 1 {
                 allowedUnits = allowedUnits.union([.hour])
-            }
-            
-            if hours > 24 {
-                allowedUnits = allowedUnits.union([.day])
             }
             
             formatter.allowedUnits = allowedUnits

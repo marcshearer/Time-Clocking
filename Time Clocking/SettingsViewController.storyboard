@@ -142,16 +142,16 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WHA-89-KGv">
-                                <rect key="frame" x="10" y="106" width="130" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Clocking roundings" id="9XE-BY-WgF">
+                                <rect key="frame" x="10" y="106" width="119" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Invoice roundings" id="9XE-BY-WgF">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oB3-E3-M5r">
-                                <rect key="frame" x="22" y="73" width="114" height="17"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Round to minutes:" id="SVn-E8-MrC">
+                                <rect key="frame" x="22" y="73" width="156" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Round lines to (minutes):" id="SVn-E8-MrC">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

@@ -182,7 +182,6 @@ class InvoiceViewController : NSViewController {
                 break
             }
             let customerMO = customers.first!
-            let hoursPerDay = customerMO.hoursPerDay
             
             // Compute due date
             let dueDate = self.dueDate(documentDate: self.viewModel.documentDate.value, termsType: TermsType(rawValue: Int(customerMO.termsType))!, termsValue: Int(customerMO.termsValue))
@@ -218,13 +217,15 @@ class InvoiceViewController : NSViewController {
                 let projectMO = projects.first!
                 
                 let dailyRate = clockingMO.dailyRate
+                let hoursPerDay = clockingMO.hoursPerDay
+
                 
                 // Set up overrides
                 var hours: Double
                 var deliveryDate: Date
                 if clockingMO.override {
-                    hours = clockingMO.overrideMinutes
-                    deliveryDate = clockingMO.overrideStartTime!
+                    hours = clockingMO.overrideMinutes / 60.0
+                    deliveryDate = Date.startOfDay(from: clockingMO.overrideStartTime!)!
                 } else {
                     hours = Clockings.hours(clockingMO)
                     deliveryDate = Date.startOfDay(from: clockingMO.startTime!)!
@@ -268,22 +269,21 @@ class InvoiceViewController : NSViewController {
                 if clockingMO.startTime == clockingMO.endTime {
                     // Crediting / re-invoicing a sundry
                     linePrice = clockingMO.amount
-                    description = clockingMO.notes!
+                    description = clockingMO.notes!.rtrim()
                 } else {
                     // Normal line
                     linePrice = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
-                    clockingMO.amount = linePrice
                     
                     if Int(customerMO.invoiceDetail) != InvoiceDetail.none.rawValue {
                         description = "\(Utility.dateString(deliveryDate)) - "
                     }
                     switch InvoiceDescription(rawValue: Int(customerMO.invoiceDescription))! {
                     case .notes:
-                        description += clockingMO.notes!
+                        description += clockingMO.notes!.rtrim()
                     case .project:
-                        description += projectMO.title!
+                        description += projectMO.title!.rtrim()
                     case .both:
-                        description += "\(projectMO.title!) - \(clockingMO.notes!)"
+                        description += "\(projectMO.title!).rtrim() - \(clockingMO.notes!).rtrim()"
                     }
                 }
                 
@@ -308,7 +308,7 @@ class InvoiceViewController : NSViewController {
                 printDocument.add(resourceCode: resourceCode,
                                   projectCode: projectCode,
                                   deliveryDate: self.viewModel.documentDate.value,
-                                  description: self.viewModel.sundryText.value,
+                                  description: self.viewModel.sundryText.value.rtrim(),
                                   linePrice: self.viewModel.sundryValue.value,
                                   sundryLine: true)
             }

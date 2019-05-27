@@ -126,7 +126,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YLd-gU-QKJ">
-                                        <rect key="frame" x="24" y="271" width="146" height="22"/>
+                                        <rect key="frame" x="24" y="271" width="125" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerMode="range" datePickerStyle="textField" id="7mN-Af-toC">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -134,11 +134,11 @@
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES" second="YES"/>
+                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iyw-Nb-6j5">
-                                        <rect key="frame" x="193" y="271" width="146" height="22"/>
+                                        <rect key="frame" x="172" y="271" width="125" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="textField" id="1nj-Zm-d5f">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -146,7 +146,7 @@
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES" second="YES"/>
+                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rIj-FZ-K93">
@@ -234,7 +234,7 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BMn-lP-CAb">
-                                        <rect key="frame" x="174" y="274" width="15" height="17"/>
+                                        <rect key="frame" x="153" y="274" width="15" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="-" id="tfq-rN-wpa">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

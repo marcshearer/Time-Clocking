@@ -95,7 +95,6 @@ class PrintDocument {
                     
                     if consolidate {
                         previous.quantity += line.quantity
-                        previous.linePrice = Utility.round((previous.quantity / previous.unitsPerPer) * previous.unitPrice, 2)
                         remove.append(index)
                     }
                 }
@@ -105,6 +104,16 @@ class PrintDocument {
         for index in remove.reversed() {
             self.lines.remove(at: index)
         }
+        // Now round total times to setting and re-extend
+        for line in self.lines {
+            let rounding = Double(Settings.current.roundMinutes.value)
+            let minutesPerUnit = (line.unit == .days ? 24.0 * 60.0 : 60.0)
+            let minutes = line.quantity * minutesPerUnit
+            let roundedMinutes = Double((Int((minutes - 0.01) / rounding) + 1)) * rounding
+            line.quantity = Utility.round(roundedMinutes / minutesPerUnit, 4)
+            line.linePrice = Utility.round((line.quantity / line.unitsPerPer) * line.unitPrice, 2)
+        }
+        
     }
     
     public func copyToClipboard() {
@@ -127,7 +136,7 @@ class PrintDocument {
         for (index, line) in self.lines.enumerated() {
             
             var quantity: String
-            if line.unit == .hours && line.quantity != Double(Int(line.quantity)) {
+            if line.unit == .hours {
                 quantity = Clockings.duration(line.quantity * 3600, abbreviated: true)
             } else if line.quantity == 0 {
                 quantity = ""

@@ -195,7 +195,7 @@ class ClockingViewModel {
         // Value component changes
         _ = ReactiveKit.combineLatest(ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable, self.hoursPerDay.observable, self.override, self.overrideStartTime.observable, self.overrideMinutes.observable), self.dailyRate.observable).observeNext { (_) in
             // Recalculate amout
-            let hours = (self.override.value != 0 ? self.overrideMinutes.value * 60.0 : Clockings.hours(self))
+            let hours = (self.override.value != 0 ? self.overrideMinutes.value / 60.0 : Clockings.hours(self))
             self.amount.value = Utility.round((hours / self.hoursPerDay.value) * self.dailyRate.value, 2)
         }
         

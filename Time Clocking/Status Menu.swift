@@ -306,18 +306,16 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func startTimer(_ sender: Any?) {
         Utility.playSound("Morse")
         TimeEntry.current.timerState.value = TimerState.started.rawValue
-        TimeEntry.current.startTime.value = Date()
         StatusMenu.shared.update()
     }
     
     @objc private func stopTimer(_ sender: Any?) {
-        if Clockings.minutes(TimeEntry.current) < 1.0 {
+        if Date().timeIntervalSince(TimeEntry.current.startTime.value) < 60.0 {
             // Don't record clockings of less than 1 minute
             self.resetTimer(sender)
         } else {
             Utility.playSound("Frog")
             TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
-            TimeEntry.current.endTime.value = Date()
             StatusMenu.shared.update()
             _ = Clockings.writeToDatabase(viewModel: TimeEntry.current)
         }
@@ -326,8 +324,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func resetTimer(_ sender: Any?) {
         Utility.playSound("Blow")
         TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
-        TimeEntry.current.startTime.value = Date()
-        TimeEntry.current.endTime.value = Date()
+        TimeEntry.current.startTime.value = Clockings.startTime()
+        TimeEntry.current.endTime.value = TimeEntry.current.startTime.value
         StatusMenu.shared.update()
     }
     

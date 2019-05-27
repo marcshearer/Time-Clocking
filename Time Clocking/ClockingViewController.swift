@@ -180,14 +180,13 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @objc private func timerActivated(_ sender: Any) {
         let state = TimerState(rawValue: TimeEntry.current.timerState.value)
         let now = Date()
-        let rounding = Settings.current.roundMinutes.value
         
         if state == .notStarted {
-            self.viewModel.startTime.value = Date.startOfMinute(rounding: rounding, from: now)
+            self.viewModel.startTime.value = Clockings.startTime(from: now)
         }
         
         if state != .stopped {
-            self.viewModel.endTime.value = Date.startOfMinute(addMinutes: rounding, onlyAddIfRounded: true, rounding: rounding, from: now)
+            self.viewModel.endTime.value = Clockings.endTime(from: now, startTime: self.viewModel.startTime.value)
         }
     }
     

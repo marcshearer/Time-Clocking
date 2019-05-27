@@ -10,11 +10,11 @@
             <objects>
                 <viewController storyboardIdentifier="DocumentViewController" id="JAZ-8u-YcD" userLabel="Document View Controller" customClass="DocumentViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="LYb-KS-FjH">
-                        <rect key="frame" x="0.0" y="0.0" width="900" height="500"/>
+                        <rect key="frame" x="0.0" y="0.0" width="900" height="550"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p9P-ep-2rk" userLabel="Title container">
-                                <rect key="frame" x="0.0" y="476" width="309" height="24"/>
+                                <rect key="frame" x="0.0" y="526" width="309" height="24"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="jfl-Vb-8AR">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -22,7 +22,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pdr-Kn-gkY">
-                                <rect key="frame" x="0.0" y="476" width="309" height="20"/>
+                                <rect key="frame" x="0.0" y="526" width="309" height="20"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Filter Parameters" drawsBackground="YES" id="OGK-Ns-yL7">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -30,10 +30,10 @@
                                 </textFieldCell>
                             </textField>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="eha-ew-hGM" userLabel="Input view">
-                                <rect key="frame" x="0.0" y="0.0" width="309" height="476"/>
+                                <rect key="frame" x="0.0" y="0.0" width="309" height="526"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B6l-aN-so6">
-                                        <rect key="frame" x="10" y="435" width="67" height="17"/>
+                                        <rect key="frame" x="10" y="485" width="67" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Customer:" id="cTK-Sb-EVz">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fDY-3K-cjy">
-                                        <rect key="frame" x="21" y="407" width="279" height="25"/>
+                                        <rect key="frame" x="21" y="457" width="279" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="BMW" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="pWX-VY-bgR" id="UM1-pb-yt0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -55,7 +55,7 @@
                                         </popUpButtonCell>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KaP-S9-5lr">
-                                        <rect key="frame" x="10" y="303" width="139" height="17"/>
+                                        <rect key="frame" x="10" y="353" width="139" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document date range:" id="s70-tU-oSH">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -63,7 +63,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2Jt-As-Qeh">
-                                        <rect key="frame" x="24" y="277" width="81" height="22"/>
+                                        <rect key="frame" x="24" y="327" width="81" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerMode="range" datePickerStyle="textField" id="2Pc-iV-Px8">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -74,7 +74,7 @@
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eDU-KF-uGw">
-                                        <rect key="frame" x="119" y="280" width="11" height="17"/>
+                                        <rect key="frame" x="119" y="330" width="11" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="GzO-33-Gpr">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -82,7 +82,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YT5-0P-08q">
-                                        <rect key="frame" x="144" y="277" width="81" height="22"/>
+                                        <rect key="frame" x="144" y="327" width="81" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="textField" id="n6W-fX-Xe0">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -93,7 +93,7 @@
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4mf-EU-UvN">
-                                        <rect key="frame" x="10" y="236" width="159" height="17"/>
+                                        <rect key="frame" x="10" y="286" width="159" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document number range:" id="WC4-HC-HZP">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -101,7 +101,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="YUt-TX-wl9">
-                                        <rect key="frame" x="24" y="210" width="96" height="22"/>
+                                        <rect key="frame" x="24" y="260" width="96" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="96" id="uOC-tB-9oL"/>
                                         </constraints>
@@ -112,7 +112,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ku-ga-nCN">
-                                        <rect key="frame" x="126" y="213" width="11" height="17"/>
+                                        <rect key="frame" x="126" y="263" width="11" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="3Ob-Ob-Meq">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -120,7 +120,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="lax-lE-ZDL">
-                                        <rect key="frame" x="143" y="210" width="96" height="22"/>
+                                        <rect key="frame" x="143" y="260" width="96" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="96" id="vwc-8Q-RsJ"/>
                                         </constraints>
@@ -141,7 +141,7 @@ Gw
                                         </buttonCell>
                                     </button>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4MV-bH-afx">
-                                        <rect key="frame" x="10" y="369" width="108" height="17"/>
+                                        <rect key="frame" x="10" y="419" width="108" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document types:" id="lkm-av-spG">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -149,7 +149,7 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yqs-W2-z0C">
-                                        <rect key="frame" x="22" y="342" width="277" height="24"/>
+                                        <rect key="frame" x="22" y="392" width="277" height="24"/>
                                         <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="KPd-pT-CS2">
                                             <font key="font" metaFont="system"/>
                                             <segments>
@@ -195,13 +195,13 @@ Gw
                                 </constraints>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDD-XN-ACc" userLabel="Table View">
-                                <rect key="frame" x="309" y="0.0" width="591" height="500"/>
+                                <rect key="frame" x="309" y="0.0" width="591" height="550"/>
                                 <clipView key="contentView" id="caq-RK-QIj">
-                                    <rect key="frame" x="1" y="0.0" width="589" height="499"/>
+                                    <rect key="frame" x="1" y="0.0" width="589" height="549"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" headerView="5ST-dN-ta5" viewBased="YES" id="XtT-Wn-V5a">
-                                            <rect key="frame" x="0.0" y="0.0" width="589" height="474"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="589" height="524"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
