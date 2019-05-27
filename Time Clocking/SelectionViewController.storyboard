@@ -245,7 +245,7 @@ Gw
                                 <rect key="frame" x="309" y="0.0" width="811" height="630"/>
                                 <clipView key="contentView" id="Tze-Oe-R4s">
                                     <rect key="frame" x="1" y="0.0" width="809" height="629"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="lNM-4L-xdG" viewBased="YES" id="BOn-Yc-R9v">
                                             <rect key="frame" x="0.0" y="0.0" width="809" height="604"/>
@@ -330,7 +330,7 @@ Gw
                         <outlet property="customerCodePopupButton" destination="DGl-ZT-xw8" id="VzP-5C-tvC"/>
                         <outlet property="documentNumberLabel" destination="zJE-rv-Idb" id="265-MG-H3x"/>
                         <outlet property="documentNumberLabelIncludeInvoicedButtonTopConstraint" destination="fpa-yL-0TQ" id="Qe6-w4-NFW"/>
-                        <outlet property="documentNumberLabelInvoiceDateDatePickerTopConstraint" destination="qn2-6Q-e0m" id="KVn-PN-cm9"/>
+                        <outlet property="documentNumberLabeloverrideStartTimeDatePickerTopConstraint" destination="qn2-6Q-e0m" id="KVn-PN-cm9"/>
                         <outlet property="documentNumberTextField" destination="wT4-fE-ppe" id="W0n-vM-xVM"/>
                         <outlet property="endTimeDatePicker" destination="DdF-7u-0B1" id="Xgo-ZB-8C1"/>
                         <outlet property="includeInvoicedButton" destination="zq8-0O-nhe" id="M1H-Lo-HQS"/>

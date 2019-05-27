@@ -46,9 +46,9 @@ class ClockingViewModel {
     public var hoursPerDay = ObservableTextFieldFloat<Double>(2)
     public var amount = ObservableTextFieldFloat<Double>(2, true)
     public var invoiceState = Observable<String>("")
-    public var invoiceOverride = Observable<Int>(0)
-    public var invoiceHours = ObservableTextFieldFloat<Double>(2)
-    public var invoiceDate = ObservablePickerDate()
+    public var override = Observable<Int>(0)
+    public var overrideMinutes = ObservableTextFieldFloat<Double>(2)
+    public var overrideStartTime = ObservablePickerDate()
     
     // Derived / transient properties
     public var durationText = Observable<String>("")
@@ -167,11 +167,11 @@ class ClockingViewModel {
             // Any change of strings (contd)
             self.anyChange.value = true
         }
-        _ = ReactiveKit.combineLatest(self.resourceCode.observable, self.startTime.observable, self.endTime.observable, self.lastDocumentDate.observable, self.invoiceDate.observable).observeNext { (_) in
+        _ = ReactiveKit.combineLatest(self.resourceCode.observable, self.startTime.observable, self.endTime.observable, self.lastDocumentDate.observable, self.overrideStartTime.observable).observeNext { (_) in
             // Any change of dates
             self.anyChange.value = true
         }
-        _ = ReactiveKit.combineLatest(self.dailyRate.observable, self.hoursPerDay.observable, self.includeInvoiced, self.invoiceHours.observable, self.invoiceOverride).observeNext { (_) in
+        _ = ReactiveKit.combineLatest(self.dailyRate.observable, self.hoursPerDay.observable, self.includeInvoiced, self.overrideMinutes.observable, self.override).observeNext { (_) in
             // Any change of numerics
             self.anyChange.value = true
         }
@@ -193,9 +193,9 @@ class ClockingViewModel {
         }
         
         // Value component changes
-        _ = ReactiveKit.combineLatest(ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable, self.hoursPerDay.observable, self.invoiceOverride, self.invoiceDate.observable, self.invoiceHours.observable), self.dailyRate.observable).observeNext { (_) in
+        _ = ReactiveKit.combineLatest(ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable, self.hoursPerDay.observable, self.override, self.overrideStartTime.observable, self.overrideMinutes.observable), self.dailyRate.observable).observeNext { (_) in
             // Recalculate amout
-            let hours = (self.invoiceOverride.value != 0 ? self.invoiceHours.value : Clockings.hours(self))
+            let hours = (self.override.value != 0 ? self.overrideMinutes.value * 60.0 : Clockings.hours(self))
             self.amount.value = Utility.round((hours / self.hoursPerDay.value) * self.dailyRate.value, 2)
         }
         
@@ -214,11 +214,11 @@ class ClockingViewModel {
         }
         
         // Invoice override changes
-        _ = ReactiveKit.combineLatest(self.invoiceOverride, self.startTime.observable, self.endTime.observable).observeNext { (_) in
+        _ = ReactiveKit.combineLatest(self.override, self.startTime.observable, self.endTime.observable).observeNext { (_) in
             // Clear date and hours if not set
-            if self.invoiceOverride.value == 0 {
-                self.invoiceHours.value = Clockings.hours(self)
-                self.invoiceDate.value = Date.startOfDay(from: self.startTime.observable.value)!
+            if self.override.value == 0 {
+                self.overrideMinutes.value = Clockings.minutes(self)
+                self.overrideStartTime.value = Date.startOfMinute(from: self.startTime.observable.value)
             }
         }
         
@@ -255,14 +255,14 @@ class ClockingViewModel {
             _ = self.timerState.observeNext { (_) in
                 if self.timerState.value != self.lastTimerState?.rawValue {
                     self.lastTimerState = TimerState(rawValue: self.timerState.value)
-                    switch TimerState(rawValue: self.timerState.value)! {
-                    case .started:
-                        self.startTime.value = Date()
-                        self.endTime.value = self.startTime.value
-                    case .stopped:
-                        self.endTime.value = Date()
-                    default:
-                        break
+                    let now = Date()
+                    let state = TimerState(rawValue: self.timerState.value)
+                    let rounding = Settings.current.roundMinutes.value
+                    if state == .started {
+                        self.startTime.value = Date.startOfMinute(rounding: rounding, from: now)
+                    }
+                    if state != .notStarted {
+                        self.endTime.value = Date.startOfMinute(addMinutes: rounding, onlyAddIfRounded: true, rounding: rounding, from: now)
                     }
                 }
             }
@@ -315,9 +315,9 @@ class ClockingViewModel {
         clockingMO.endTime = self.endTime.value
         clockingMO.dailyRate = Float(self.dailyRate.value)
         clockingMO.invoiceState = self.invoiceState.value
-        clockingMO.invoiceOverride = (self.invoiceOverride.value != 0)
-        clockingMO.invoiceHours = Float(self.invoiceHours.value)
-        clockingMO.invoiceDate = self.invoiceDate.value
+        clockingMO.override = (self.override.value != 0)
+        clockingMO.overrideMinutes = Float(self.overrideMinutes.value)
+        clockingMO.overrideStartTime = self.overrideStartTime.value
         clockingMO.amount = Float(self.amount.value)
     }
     
@@ -334,9 +334,9 @@ class ClockingViewModel {
         self.endTime.value = clockingMO.endTime ?? Date()
         self.dailyRate.value = Double(clockingMO.dailyRate)
         self.invoiceState.value = clockingMO.invoiceState ?? InvoiceState.notInvoiced.rawValue
-        self.invoiceOverride.value = (clockingMO.invoiceOverride ? 1 : 0)
-        self.invoiceHours.value = Double(clockingMO.invoiceHours)
-        self.invoiceDate.value = clockingMO.invoiceDate ?? Date()
+        self.override.value = (clockingMO.override ? 1 : 0)
+        self.overrideMinutes.value = Double(clockingMO.overrideMinutes)
+        self.overrideStartTime.value = clockingMO.overrideStartTime ?? Date()
         self.amount.value = Double(clockingMO.amount)
         self.timerState.value = TimerState.notStarted.rawValue
     }

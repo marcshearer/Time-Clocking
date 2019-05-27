@@ -73,15 +73,15 @@ class Clockings {
                 
             case "duration", "abbrevDuration":
                 let abbreviated = (key == "abbrevDuration")
-                if clockingMO.invoiceOverride {
-                    result = Clockings.duration(Double(clockingMO.invoiceHours) * 3600.0, abbreviated: abbreviated)
+                if clockingMO.override {
+                    result = Clockings.duration(Double(clockingMO.overrideMinutes) * 60.0, abbreviated: abbreviated)
                 } else {
                     result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
                 }
                 
-            case "invoiceDate":
-                if clockingMO.invoiceOverride {
-                    result = Utility.dateString(clockingMO.invoiceDate!)
+            case "startTime":
+                if clockingMO.override {
+                    result = Utility.dateString(clockingMO.overrideStartTime!)
                 } else {
                     result = Utility.dateString(clockingMO.startTime!)
                 }

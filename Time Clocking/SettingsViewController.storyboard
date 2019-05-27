@@ -10,11 +10,11 @@
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" id="MJF-UV-VT2" customClass="SettingsViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="RuK-6O-p37">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="350"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ak9-IQ-BvS">
-                                <rect key="frame" x="22" y="229" width="122" height="17"/>
+                                <rect key="frame" x="22" y="279" width="122" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Time units to show:" id="MjU-4A-Awo">
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -22,7 +22,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="73w-JY-l9g">
-                                <rect key="frame" x="200" y="194" width="96" height="22"/>
+                                <rect key="frame" x="200" y="244" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="4SG-2N-5TY"/>
                                 </constraints>
@@ -36,7 +36,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UdA-3Z-fpo">
-                                <rect key="frame" x="22" y="196" width="157" height="17"/>
+                                <rect key="frame" x="22" y="246" width="157" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Number of units to show:" id="a7U-Tn-lEy">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -44,7 +44,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZM-3T-0fS">
-                                <rect key="frame" x="10" y="263" width="287" height="17"/>
+                                <rect key="frame" x="10" y="313" width="287" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="History of clockings to show in input screen" id="8SM-PI-cKI">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -77,7 +77,7 @@ Gw
                                 </buttonCell>
                             </button>
                             <segmentedControl verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="XGr-sh-E8T">
-                                <rect key="frame" x="198" y="225" width="244" height="24"/>
+                                <rect key="frame" x="198" y="275" width="244" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="Abd-lB-0Mp">
                                     <font key="font" metaFont="system"/>
                                     <segments>
@@ -89,13 +89,14 @@ Gw
                                 </segmentedCell>
                             </segmentedControl>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J0g-bC-tzy">
-                                <rect key="frame" x="200" y="124" width="96" height="22"/>
+                                <rect key="frame" x="200" y="174" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="wuX-Li-qxQ"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="rAf-Kc-ulF">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" lenient="YES" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="mGr-4G-65q">
                                         <real key="minimum" value="1"/>
+                                        <real key="maximum" value="60"/>
                                     </numberFormatter>
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -103,7 +104,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BeJ-0j-JfC">
-                                <rect key="frame" x="200" y="91" width="96" height="22"/>
+                                <rect key="frame" x="200" y="141" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="Dq7-z7-gCj"/>
                                 </constraints>
@@ -117,7 +118,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FeS-sh-Hf7">
-                                <rect key="frame" x="22" y="126" width="133" height="17"/>
+                                <rect key="frame" x="22" y="176" width="133" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Next Invoice number:" id="OYR-Rb-Icm">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -125,7 +126,7 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t0b-NK-sPd">
-                                <rect key="frame" x="22" y="93" width="160" height="17"/>
+                                <rect key="frame" x="22" y="143" width="160" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Next Credit Note number:" id="PDN-fC-Sht">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -133,10 +134,38 @@ Gw
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UQw-Po-2Oy">
-                                <rect key="frame" x="10" y="159" width="144" height="17"/>
+                                <rect key="frame" x="10" y="209" width="144" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Document numbering" id="YfI-HV-a7L">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WHA-89-KGv">
+                                <rect key="frame" x="10" y="106" width="130" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Clocking roundings" id="9XE-BY-WgF">
+                                    <font key="font" metaFont="systemBold"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oB3-E3-M5r">
+                                <rect key="frame" x="22" y="73" width="114" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Round to minutes:" id="SVn-E8-MrC">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zfz-Lo-rk5">
+                                <rect key="frame" x="200" y="71" width="48" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="ohG-3U-N3o"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="ftZ-iA-8nw">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="VlQ-vO-EKI"/>
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -145,21 +174,25 @@ Gw
                             <constraint firstItem="73w-JY-l9g" firstAttribute="centerY" secondItem="UdA-3Z-fpo" secondAttribute="centerY" id="3Dk-gz-LDz"/>
                             <constraint firstItem="FeS-sh-Hf7" firstAttribute="top" secondItem="UQw-Po-2Oy" secondAttribute="bottom" constant="16" id="3fJ-XP-zNx"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="200" id="3ue-pa-IJB"/>
+                            <constraint firstItem="WHA-89-KGv" firstAttribute="top" secondItem="t0b-NK-sPd" secondAttribute="bottom" constant="20" id="7fL-3I-5zB"/>
                             <constraint firstItem="t0b-NK-sPd" firstAttribute="top" secondItem="FeS-sh-Hf7" secondAttribute="bottom" constant="16" id="8bp-Zm-XE4"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="A0W-AX-jyU"/>
                             <constraint firstItem="UQw-Po-2Oy" firstAttribute="top" secondItem="UdA-3Z-fpo" secondAttribute="bottom" constant="20" id="B4M-gG-mj4"/>
                             <constraint firstItem="J0g-bC-tzy" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="EIY-Qc-UQB"/>
+                            <constraint firstItem="oB3-E3-M5r" firstAttribute="top" secondItem="WHA-89-KGv" secondAttribute="bottom" constant="16" id="He9-Qn-dpu"/>
                             <constraint firstItem="dZM-3T-0fS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="Iw8-97-fPc"/>
                             <constraint firstItem="t0b-NK-sPd" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="JoC-qj-X7o"/>
                             <constraint firstItem="ak9-IQ-BvS" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" constant="54" id="JxC-2b-gfu"/>
                             <constraint firstAttribute="trailing" secondItem="14S-p1-gac" secondAttribute="trailing" constant="140" id="O9n-Kz-1mf"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="top" secondItem="ak9-IQ-BvS" secondAttribute="bottom" constant="16" id="Pxy-6g-txv"/>
                             <constraint firstItem="UQw-Po-2Oy" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="QrQ-MD-vBI"/>
+                            <constraint firstItem="Zfz-Lo-rk5" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="TmT-lJ-sHK"/>
                             <constraint firstItem="fUr-uL-Ss2" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="140" id="Un4-Co-1vn"/>
                             <constraint firstItem="XGr-sh-E8T" firstAttribute="centerY" secondItem="ak9-IQ-BvS" secondAttribute="centerY" id="XF6-PL-osq"/>
                             <constraint firstItem="J0g-bC-tzy" firstAttribute="centerY" secondItem="FeS-sh-Hf7" secondAttribute="centerY" id="YVs-06-KWM"/>
                             <constraint firstItem="BeJ-0j-JfC" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="ZyY-PO-IEQ"/>
                             <constraint firstItem="FeS-sh-Hf7" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="ei1-Hu-4GR"/>
+                            <constraint firstItem="oB3-E3-M5r" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="ffM-TU-4oW"/>
                             <constraint firstAttribute="bottom" secondItem="fUr-uL-Ss2" secondAttribute="bottom" constant="10" id="fxW-u6-fgq"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="gfr-VI-HQq"/>
                             <constraint firstAttribute="bottom" secondItem="14S-p1-gac" secondAttribute="bottom" constant="10" id="iBc-PI-4lh"/>
@@ -167,12 +200,15 @@ Gw
                             <constraint firstItem="ak9-IQ-BvS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="nsv-JQ-ZLo"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="qKa-wP-pbl"/>
                             <constraint firstItem="BeJ-0j-JfC" firstAttribute="centerY" secondItem="t0b-NK-sPd" secondAttribute="centerY" id="xD2-2S-DVj"/>
+                            <constraint firstItem="WHA-89-KGv" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="yW2-eg-GWf"/>
+                            <constraint firstItem="Zfz-Lo-rk5" firstAttribute="centerY" secondItem="oB3-E3-M5r" secondAttribute="centerY" id="zyM-n5-aPP"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="14S-p1-gac" id="oVa-8F-9Ox"/>
                         <outlet property="nextCreditNoTextField" destination="BeJ-0j-JfC" id="37x-pE-Wsa"/>
                         <outlet property="nextInvoiceNoTextField" destination="J0g-bC-tzy" id="kYu-nN-tF4"/>
+                        <outlet property="roundMinutesTextField" destination="Zfz-Lo-rk5" id="OfN-Rd-NDR"/>
                         <outlet property="saveButton" destination="fUr-uL-Ss2" id="e3Z-qK-Nkr"/>
                         <outlet property="showQuantityLabel" destination="UdA-3Z-fpo" id="B7a-dO-Bt8"/>
                         <outlet property="showQuantityTextField" destination="73w-JY-l9g" id="Idd-YR-lge"/>

@@ -126,7 +126,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YLd-gU-QKJ">
-                                        <rect key="frame" x="24" y="271" width="125" height="22"/>
+                                        <rect key="frame" x="24" y="271" width="146" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerMode="range" datePickerStyle="textField" id="7mN-Af-toC">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -134,11 +134,11 @@
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
+                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES" second="YES"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iyw-Nb-6j5">
-                                        <rect key="frame" x="172" y="271" width="125" height="22"/>
+                                        <rect key="frame" x="193" y="271" width="146" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="textField" id="1nj-Zm-d5f">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -146,7 +146,7 @@
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
+                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES" second="YES"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rIj-FZ-K93">
@@ -234,7 +234,7 @@ Gw
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BMn-lP-CAb">
-                                        <rect key="frame" x="153" y="274" width="15" height="17"/>
+                                        <rect key="frame" x="174" y="274" width="15" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="-" id="tfq-rN-wpa">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -253,15 +253,15 @@ Gw
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IER-hd-x1x">
-                                        <rect key="frame" x="10" y="187" width="183" height="17"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Override Invoice hours / date:" id="fwh-GC-H2n">
+                                        <rect key="frame" x="10" y="187" width="300" height="17"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Override clocking start time / duration (minutes):" id="fwh-GC-H2n">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OcW-Tq-x5Y">
-                                        <rect key="frame" x="62" y="161" width="96" height="22"/>
+                                        <rect key="frame" x="227" y="161" width="96" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="96" id="ZMZ-Mv-o9i"/>
                                         </constraints>
@@ -271,20 +271,6 @@ Gw
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bkf-jz-0Tj">
-                                        <rect key="frame" x="178" y="161" width="100" height="27"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="97" id="cTB-ok-L0e"/>
-                                        </constraints>
-                                        <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="Exe-os-df3">
-                                            <font key="font" metaFont="system"/>
-                                            <date key="date" timeIntervalSinceReferenceDate="-595929600">
-                                                <!--1982-02-12 16:00:00 +0000-->
-                                            </date>
-                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        </datePickerCell>
-                                    </datePicker>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SKW-ET-4BK">
                                         <rect key="frame" x="22" y="163" width="22" height="18"/>
                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="right" alignment="center" state="on" inset="2" id="rBL-6w-Ox3">
@@ -311,6 +297,21 @@ Gw
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bkf-jz-0Tj">
+                                        <rect key="frame" x="62" y="161" width="148" height="27"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="145" id="KAs-wi-idJ"/>
+                                        </constraints>
+                                        <datePickerCell key="cell" borderStyle="bezel" alignment="left" id="Exe-os-df3">
+                                            <font key="font" metaFont="system"/>
+                                            <date key="date" timeIntervalSinceReferenceDate="-595929600">
+                                                <!--1982-02-12 16:00:00 +0000-->
+                                            </date>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <datePickerElements key="datePickerElements" year="YES" month="YES" day="YES" hour="YES" minute="YES"/>
+                                        </datePickerCell>
+                                    </datePicker>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="gfI-sU-ewu" firstAttribute="top" secondItem="vDH-LZ-nuH" secondAttribute="bottom" constant="12" id="0Fn-B4-KpL"/>
@@ -328,16 +329,15 @@ Gw
                                     <constraint firstItem="IER-hd-x1x" firstAttribute="top" secondItem="w0A-et-q2R" secondAttribute="bottom" constant="12" id="8wq-fe-XCV"/>
                                     <constraint firstItem="vDH-LZ-nuH" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="24" id="9Pd-JL-g8Q"/>
                                     <constraint firstItem="w0A-et-q2R" firstAttribute="width" secondItem="f9H-On-Ytw" secondAttribute="width" id="BeZ-vF-9Yk"/>
-                                    <constraint firstItem="bkf-jz-0Tj" firstAttribute="leading" secondItem="OcW-Tq-x5Y" secondAttribute="trailing" constant="20" id="Ct1-oB-Eda"/>
                                     <constraint firstItem="wzS-nl-JAR" firstAttribute="top" secondItem="FTY-xX-CNl" secondAttribute="bottom" constant="4" id="DOf-vL-VL7"/>
                                     <constraint firstItem="525-ZM-L5t" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="12" id="DW5-2O-dlv"/>
                                     <constraint firstItem="w0A-et-q2R" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="24" id="GVf-BM-DaX"/>
                                     <constraint firstItem="77p-fU-W8b" firstAttribute="centerY" secondItem="vDH-LZ-nuH" secondAttribute="centerY" id="GhN-Wj-h0m"/>
                                     <constraint firstItem="v4e-FZ-A3w" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="12" id="HSX-33-ehW"/>
+                                    <constraint firstItem="OcW-Tq-x5Y" firstAttribute="leading" secondItem="bkf-jz-0Tj" secondAttribute="trailing" constant="20" id="Hyt-df-AQ1"/>
                                     <constraint firstItem="OcW-Tq-x5Y" firstAttribute="centerY" secondItem="SKW-ET-4BK" secondAttribute="centerY" id="IQa-iZ-mqm"/>
                                     <constraint firstItem="BMn-lP-CAb" firstAttribute="leading" secondItem="YLd-gU-QKJ" secondAttribute="trailing" constant="6" id="ImE-9L-fGF"/>
                                     <constraint firstItem="v4e-FZ-A3w" firstAttribute="top" secondItem="f9H-On-Ytw" secondAttribute="bottom" constant="12" id="JDP-q8-cU0"/>
-                                    <constraint firstItem="OcW-Tq-x5Y" firstAttribute="leading" secondItem="SKW-ET-4BK" secondAttribute="trailing" constant="20" id="K6h-Fo-OPC"/>
                                     <constraint firstItem="SKW-ET-4BK" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="24" id="KoE-He-8cG"/>
                                     <constraint firstItem="vGZ-0V-Tif" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="12" id="LO2-ls-NjE"/>
                                     <constraint firstItem="vDH-LZ-nuH" firstAttribute="top" secondItem="24d-Cf-fxI" secondAttribute="bottom" constant="4" id="Nek-XJ-DEb"/>
@@ -354,6 +354,7 @@ Gw
                                     <constraint firstItem="gfI-sU-ewu" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="12" id="c2h-mR-j25"/>
                                     <constraint firstItem="vGZ-0V-Tif" firstAttribute="top" secondItem="pPt-UP-wPB" secondAttribute="bottom" constant="12" id="cPQ-2Z-v0H"/>
                                     <constraint firstItem="374-Le-gnc" firstAttribute="leading" secondItem="gUh-KE-VHu" secondAttribute="leading" constant="60" id="cSU-AY-F0P"/>
+                                    <constraint firstItem="bkf-jz-0Tj" firstAttribute="leading" secondItem="SKW-ET-4BK" secondAttribute="trailing" constant="20" id="daA-IM-1oQ"/>
                                     <constraint firstItem="b6W-GQ-3zo" firstAttribute="centerX" secondItem="gUh-KE-VHu" secondAttribute="centerX" priority="1" id="eZK-nC-nLl"/>
                                     <constraint firstAttribute="bottom" secondItem="ktb-O3-KH2" secondAttribute="bottom" constant="8" id="gUt-qh-fdd"/>
                                     <constraint firstItem="OcW-Tq-x5Y" firstAttribute="top" secondItem="IER-hd-x1x" secondAttribute="bottom" constant="4" id="gqb-Pm-B78"/>
@@ -397,12 +398,12 @@ Gw
                         <outlet property="durationTextField" destination="w0A-et-q2R" id="2PN-R2-Ctu"/>
                         <outlet property="endTimeDatePicker" destination="iyw-Nb-6j5" id="bPM-UT-1NF"/>
                         <outlet property="inovoiceOverrideButton" destination="SKW-ET-4BK" id="umb-Qx-Vzb"/>
-                        <outlet property="invoiceDateDatePicker" destination="bkf-jz-0Tj" id="mQz-uc-c7d"/>
-                        <outlet property="invoiceHoursTextField" destination="OcW-Tq-x5Y" id="yFO-LS-fT1"/>
                         <outlet property="invoiceStateTextField" destination="vDH-LZ-nuH" id="x4D-wG-eVs"/>
                         <outlet property="lastDocumentDateDatePicker" destination="zRH-4l-g9M" id="TQs-MO-wA7"/>
                         <outlet property="lastDocumentNumberTextField" destination="77p-fU-W8b" id="rvX-rs-Z6Y"/>
                         <outlet property="notesTextField" destination="fJo-CG-h0S" id="KDn-y1-PJi"/>
+                        <outlet property="overrideMinutesTextField" destination="OcW-Tq-x5Y" id="yFO-LS-fT1"/>
+                        <outlet property="overrideStartTimeDatePicker" destination="bkf-jz-0Tj" id="mQz-uc-c7d"/>
                         <outlet property="projectCodePopupButton" destination="dGf-Nb-Mpa" id="910-QN-N09"/>
                         <outlet property="resourceCodePopupButton" destination="f9H-On-Ytw" id="MCI-XV-rBn"/>
                         <outlet property="saveButton" destination="374-Le-gnc" id="tzp-C7-eqs"/>

@@ -38,14 +38,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Build status menu
         StatusMenu.shared.update()
         
+        
         /*
         // TODO: Remove ====================== REMOVES ALL INVOICING ======================== -
+        var clockings: [ClockingMO]
         // Remove all document history!!
         CoreData.clearTable("Documents")
         CoreData.clearTable("DocumentDetails")
-        let clockingsArray = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
         _ = CoreData.update {
-            for clockingMO in clockingsArray {
+            for clockingMO in clockings {
                 if clockingMO.startTime == clockingMO.endTime {
                     // Sundry line - delete it
                     CoreData.delete(record: clockingMO)
@@ -54,10 +56,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
             }
         }
+        // Reset document numbers
         Settings.current.nextInvoiceNo.value = 100001
         Settings.current.nextCreditNo.value = 200001
         Settings.saveDefaults()
  
+        // Re-copy project daily rates from customers
         let projects = CoreData.fetch(from: "Projects") as! [ProjectMO]
         _ = CoreData.update {
             for projectMO in projects {
@@ -66,7 +70,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        let clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        // Reset daily rates, hours per day and totals from customers / projects
+        clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
         _ = CoreData.update {
             for clockingMO in clockings {
                 let customers = Customers.load(specific: clockingMO.customerCode, includeClosed: true)
@@ -74,12 +79,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.dailyRate = projects.first!.dailyRate
                 clockingMO.hoursPerDay = customers.first!.hoursPerDay
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
-                let hours = (clockingMO.invoiceOverride ? clockingMO.invoiceHours : Float(Clockings.hours(clockingMO)))
+                let hours = (clockingMO.override ? clockingMO.overrideMinutes * 60.0 : Float(Clockings.hours(clockingMO)))
                 clockingMO.amount = Float(Utility.round(Double((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate), 2))
             }
         }
-        */
+        
+        // Move clocking times to precise minute boundaries, round up to rounded minute time periods and remove overrides
+        clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
+        _ = CoreData.update {
+            for clockingMO in clockings {
+                var duration = Clockings.minutes(clockingMO)
+                duration = Double((Int((duration - 0.01) / Double(Settings.current.roundMinutes.value)) + 1)) * Double(Settings.current.roundMinutes.value)
+                clockingMO.startTime = Date.startOfMinute(from: clockingMO.startTime!)
+                clockingMO.endTime = Date(timeInterval: (duration * 60.0), since: clockingMO.startTime!)
+                clockingMO.override = false
+                clockingMO.overrideStartTime = clockingMO.startTime
+                clockingMO.overrideMinutes = Float(Clockings.minutes(clockingMO))
+            }
+        }
+        
         // MARK: ========================================================================== -
+        */
     }
     
     internal func applicationWillTerminate(_ aNotification: Notification) {
@@ -90,6 +110,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: [
             "showUnit":         TimeUnit.months.rawValue,
             "showQuantity":     2,
+            "nextInvoiceNo":    100001,
+            "nextCreditNo":     200001,
+            "roundMinutes":     5
             ])
     }
 

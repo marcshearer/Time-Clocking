@@ -153,8 +153,8 @@ class InvoiceViewController : NSViewController {
         
         self.clockingIterator { (clockingMO) in
             
-            if clockingMO.invoiceOverride {
-                hours += Double(clockingMO.invoiceHours)
+            if clockingMO.override {
+                hours += Double(clockingMO.overrideMinutes)
             } else {
                 hours += Clockings.hours(clockingMO)
             }
@@ -222,9 +222,9 @@ class InvoiceViewController : NSViewController {
                 // Set up overrides
                 var hours: Double
                 var deliveryDate: Date
-                if clockingMO.invoiceOverride {
-                    hours = Double(clockingMO.invoiceHours)
-                    deliveryDate = clockingMO.invoiceDate!
+                if clockingMO.override {
+                    hours = Double(clockingMO.overrideMinutes)
+                    deliveryDate = clockingMO.overrideStartTime!
                 } else {
                     hours = Clockings.hours(clockingMO)
                     deliveryDate = Date.startOfDay(from: clockingMO.startTime!)!

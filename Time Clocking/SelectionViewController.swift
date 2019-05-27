@@ -37,7 +37,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var closeButtonCenterConstraint: NSLayoutConstraint!
     @IBOutlet private weak var closeButtonTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var documentNumberLabelInvoiceDateDatePickerTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var documentNumberLabeloverrideStartTimeDatePickerTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentNumberLabelIncludeInvoicedButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var tableView: NSTableView!
 
@@ -127,7 +127,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
             if self.mode == .reportClockings {
                 self.documentNumberLabel.isHidden = false
                 self.documentNumberTextField.isHidden = false
-                self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = false
+                self.documentNumberLabeloverrideStartTimeDatePickerTopConstraint.isActive = false
                 self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = true
                 self.invoiceButton.isHidden = true
                 self.closeButtonCenterConstraint.isActive = true
@@ -147,13 +147,13 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                     self.invoiceButton.title = "Invoice"
                     self.documentNumberLabel.isHidden = true
                     self.documentNumberTextField.isHidden = true
-                    self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
+                    self.documentNumberLabeloverrideStartTimeDatePickerTopConstraint.isActive = true
                     self.invoiceInstructions.stringValue = "Select clockings to invoice using the filters and the inclusion check boxes. \n\nNote that you should only select clockings for one customer. \n\nYou cannot mix clockings for more than one customer on an invoice."
                 } else {
                     self.invoiceButton.title = "Credit"
                     self.documentNumberLabel.isHidden = false
                     self.documentNumberTextField.isHidden = false
-                    self.documentNumberLabelInvoiceDateDatePickerTopConstraint.isActive = true
+                    self.documentNumberLabeloverrideStartTimeDatePickerTopConstraint.isActive = true
                     self.documentNumberLabelIncludeInvoicedButtonTopConstraint.isActive = false
                     self.documentNumberLabel.stringValue = "Original invoice number:"
                     self.documentNumberTextField.becomeFirstResponder()
@@ -486,7 +486,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
               Layout(key: "=customer",       title: "Customer",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
               Layout(key: "=project",        title: "Project",     width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
               Layout(key: "notes",           title: "Description", width: -20,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 100),
-              Layout(key: "=invoiceDate",    title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
+              Layout(key: "=startTime",      title: "On",          width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=documentNumber", title: "Last doc",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "amount",          title: "Value",       width: -50,      alignment: .right,  type: .currency,    total: true,    pad: false),

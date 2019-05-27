@@ -18,6 +18,7 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
     @IBOutlet private weak var showQuantityTextField: NSTextField!
     @IBOutlet private weak var nextInvoiceNoTextField: NSTextField!
     @IBOutlet private weak var nextCreditNoTextField: NSTextField!
+    @IBOutlet private weak var roundMinutesTextField: NSTextField!
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     
@@ -39,6 +40,7 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
         self.editSettings.nextInvoiceNo.bidirectionalBind(to: self.nextInvoiceNoTextField)
         self.editSettings.nextCreditNo.bidirectionalBind(to: self.nextCreditNoTextField)
         self.editSettings.showQuantityLabel.bind(to: self.showQuantityLabel.reactive.editingString)
+        self.editSettings.roundMinutes.bidirectionalBind(to: self.roundMinutesTextField)
         
         // Setup enabled bindings
         self.editSettings.canSave.bind(to: self.saveButton.reactive.isEnabled)

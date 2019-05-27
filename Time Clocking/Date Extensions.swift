@@ -10,6 +10,18 @@ import Foundation
 
 extension Date {
     
+    static public func startOfMinute(addMinutes: Int = 0, onlyAddIfRounded: Bool = false, rounding: Int = 1, from date: Date = Date()) -> Date {
+        let calendar = Calendar.current
+        let minute = calendar.component(.minute, from: date)
+        var rounded = Int(minute / rounding) * rounding
+        if minute != rounded || !onlyAddIfRounded {
+            rounded += addMinutes
+        }
+        var components = calendar.dateComponents([.year, .month, .day, .hour], from: date)
+        components.minute = rounded
+        return calendar.date(from: components)!
+    }
+    
     static public func startOfDay(days: Int = 0, from date: Date = Date()) -> Date? {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
