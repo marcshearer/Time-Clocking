@@ -120,8 +120,8 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
         customerMO.customerCode = self.customerCode.value
         customerMO.name = self.name.value
         customerMO.address = self.address.value
-        customerMO.defaultDailyRate = Float(self.defaultDailyRate.value)
-        customerMO.hoursPerDay = Float(self.hoursPerDay.value)
+        customerMO.defaultDailyRate = self.defaultDailyRate.value
+        customerMO.hoursPerDay = self.hoursPerDay.value
         customerMO.invoiceUnit = Int16(self.invoiceUnit.value)
         customerMO.invoicePer = Int16(self.invoicePer.value)
         customerMO.invoiceDescription = Int16(self.invoiceDescription.value)
@@ -138,8 +138,8 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
         self.customerCode.value = customerMO.customerCode ?? ""
         self.name.value = customerMO.name ?? ""
         self.address.value = customerMO.address ?? ""
-        self.defaultDailyRate.value = Double(customerMO.defaultDailyRate)
-        self.hoursPerDay.value = Double(customerMO.hoursPerDay)
+        self.defaultDailyRate.value = customerMO.defaultDailyRate
+        self.hoursPerDay.value = customerMO.hoursPerDay
         self.invoiceUnit.value = Int(customerMO.invoiceUnit)
         self.invoicePer.value = Int(customerMO.invoicePer)
         self.invoiceDescription.value = Int(customerMO.invoiceDescription)

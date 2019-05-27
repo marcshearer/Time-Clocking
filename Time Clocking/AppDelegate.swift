@@ -35,6 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Load latest time entry
         TimeEntry.loadDefaults()
         
+        // Setup last clocking end time - subsequently maintained as database is updated
+        Clockings.updateLastClockingEndTime()
+        
         // Build status menu
         StatusMenu.shared.update()
         

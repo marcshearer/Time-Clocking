@@ -257,12 +257,11 @@ class ClockingViewModel {
                     self.lastTimerState = TimerState(rawValue: self.timerState.value)
                     let now = Date()
                     let state = TimerState(rawValue: self.timerState.value)
-                    let rounding = Settings.current.roundMinutes.value
                     if state == .started {
-                        self.startTime.value = Date.startOfMinute(rounding: rounding, from: now)
+                        self.startTime.value = Clockings.startTime(from: now)
                     }
                     if state != .notStarted {
-                        self.endTime.value = Date.startOfMinute(addMinutes: rounding, onlyAddIfRounded: true, rounding: rounding, from: now)
+                        self.endTime.value = Clockings.endTime(from: now, startTime: self.startTime.value)
                     }
                 }
             }

@@ -119,6 +119,6 @@ class DocumentViewModel {
         documentMO.headerText = self.headerText.value
         documentMO.originalInvoiceNumber = self.originalInvoiceNumber.value
         documentMO.generated = self.generated.value
-        documentMO.value = Float(self.value.value)
+        documentMO.value = self.value.value
     }
 }

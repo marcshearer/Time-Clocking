@@ -54,7 +54,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         _ = self.customer.observable.observeNext { (_) in
             let customers = Customers.load(specific: self.customer.value, includeClosed: true)
             if customers.count == 1 {
-                self.dailyRate.value = Double(customers[0].defaultDailyRate)
+                self.dailyRate.value = customers[0].defaultDailyRate
             }
         }
         
@@ -77,7 +77,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         projectMO.title = self.title.value
         projectMO.statusBarTitle = self.statusBarTitle.value
         projectMO.purchaseOrder = self.purchaseOrder.value
-        projectMO.dailyRate = Float(self.dailyRate.value)
+        projectMO.dailyRate = self.dailyRate.value
         projectMO.closed = (self.closed.value != 0)
     }
     
@@ -90,7 +90,7 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
         self.title.value = projectMO.title ?? ""
         self.statusBarTitle.value = projectMO.statusBarTitle ?? ""
         self.purchaseOrder.value = projectMO.purchaseOrder ?? ""
-        self.dailyRate.value = Double(projectMO.dailyRate)
+        self.dailyRate.value = projectMO.dailyRate
         self.closed.value = (projectMO.closed ? 1 : 0)
         
     }

@@ -95,7 +95,7 @@ class PrintDocument {
                     
                     if consolidate {
                         previous.quantity += line.quantity
-                        previous.linePrice = Utility.round(Double((previous.quantity / previous.unitsPerPer) * previous.unitPrice), 2)
+                        previous.linePrice = Utility.round((previous.quantity / previous.unitsPerPer) * previous.unitPrice, 2)
                         remove.append(index)
                     }
                 }
@@ -180,7 +180,7 @@ class PrintDocument {
             documentMO.originalInvoiceNumber = self.originalInvoiceNumber
             documentMO.headerText = self.headerText
             documentMO.generated = generated
-            documentMO.value = Float(self.totalValue)
+            documentMO.value = self.totalValue
             
         }) {
             ok = true

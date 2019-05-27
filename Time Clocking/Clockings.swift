@@ -11,6 +11,8 @@ import CoreData
 
 class Clockings {
     
+    static public var lastClockingEndTime: Date!
+    
     static public  func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, fromTime: Date? = nil, toTime: Date? = nil) -> [ClockingMO] {
         
         var predicate: [NSPredicate] = []
@@ -40,20 +42,51 @@ class Clockings {
             clockingMO = CoreData.create(from: "Clockings") as ClockingMO
             viewModel.copy(to: clockingMO)
         }
+        Clockings.lastClockingEndTime = max(Clockings.lastClockingEndTime, clockingMO.endTime!)
         
         return clockingMO
     }
     
     static public func updateDatabase(from viewModel: ClockingViewModel, clockingMO: ClockingMO) {
+        let updateRequired = (clockingMO.endTime! >= Clockings.lastClockingEndTime && viewModel.endTime.value < Clockings.lastClockingEndTime)
         _ = CoreData.update {
             viewModel.copy(to: clockingMO)
+        }
+        if updateRequired {
+            self.updateLastClockingEndTime()
+        } else {
+            Clockings.lastClockingEndTime = max(Clockings.lastClockingEndTime, clockingMO.endTime!)
         }
     }
     
     static public func removeFromDatabase(_ clockingMO: ClockingMO) {
+        let updateRequired = (clockingMO.endTime! >= Clockings.lastClockingEndTime)
         _ = CoreData.update {
             CoreData.delete(record: clockingMO)
         }
+        if updateRequired {
+            self.updateLastClockingEndTime()
+        }
+    }
+    
+    static public func updateLastClockingEndTime() {
+        let clockings = CoreData.fetch(from: "Clockings", limit: 1, sort: [("endTime", .descending)]) as! [ClockingMO]
+        if clockings.count == 0 {
+            Clockings.lastClockingEndTime = Date(timeIntervalSince1970: 0)
+        } else {
+            Clockings.lastClockingEndTime = clockings.first!.endTime!
+        }
+    }
+    
+    static public func startTime(from startTime: Date) -> Date {
+        return max(Clockings.lastClockingEndTime, Date.startOfMinute(from: startTime))
+    }
+    
+    static public func endTime(from endTime: Date, startTime: Date) -> Date {
+            let rounding = Double(Settings.current.roundMinutes.value)
+            let duration = endTime.timeIntervalSince(startTime) / 60.0
+            let roundedDuration = Double((Int((duration - 0.01) / rounding) + 1)) * rounding
+            return Date.startOfMinute(addMinutes: Int(roundedDuration), from: startTime)
     }
     
     static public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
