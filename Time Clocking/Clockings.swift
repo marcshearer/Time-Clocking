@@ -107,7 +107,7 @@ class Clockings {
             case "duration", "abbrevDuration":
                 let abbreviated = (key == "abbrevDuration")
                 if clockingMO.override {
-                    result = Clockings.duration(clockingMO.overrideMinutes * 60.0, abbreviated: abbreviated)
+                    result = Clockings.duration(Double(clockingMO.overrideMinutes) * 60.0, abbreviated: abbreviated)
                 } else {
                     result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
                 }

@@ -47,7 +47,7 @@ class ClockingViewModel {
     public var amount = ObservableTextFieldFloat<Double>(2, true)
     public var invoiceState = Observable<String>("")
     public var override = Observable<Int>(0)
-    public var overrideMinutes = ObservableTextFieldFloat<Double>(2)
+    public var overrideMinutes = ObservableTextFieldInt<Int64>()
     public var overrideStartTime = ObservablePickerDate()
     
     // Derived / transient properties
@@ -195,7 +195,7 @@ class ClockingViewModel {
         // Value component changes
         _ = ReactiveKit.combineLatest(ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable, self.hoursPerDay.observable, self.override, self.overrideStartTime.observable, self.overrideMinutes.observable), self.dailyRate.observable).observeNext { (_) in
             // Recalculate amout
-            let hours = (self.override.value != 0 ? self.overrideMinutes.value / 60.0 : Clockings.hours(self))
+            let hours = (self.override.value != 0 ? Double(self.overrideMinutes.value) / 60.0 : Clockings.hours(self))
             self.amount.value = Utility.round((hours / self.hoursPerDay.value) * self.dailyRate.value, 2)
         }
         
@@ -217,7 +217,7 @@ class ClockingViewModel {
         _ = ReactiveKit.combineLatest(self.override, self.startTime.observable, self.endTime.observable).observeNext { (_) in
             // Clear date and hours if not set
             if self.override.value == 0 {
-                self.overrideMinutes.value = Clockings.minutes(self)
+                self.overrideMinutes.value = Int64(Utility.round(Clockings.minutes(self),0))
                 self.overrideStartTime.value = Date.startOfMinute(from: self.startTime.observable.value)
             }
         }
