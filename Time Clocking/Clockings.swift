@@ -79,7 +79,7 @@ class Clockings {
     }
     
     static public func startTime(from startTime: Date = Date()) -> Date {
-        return max(Clockings.lastClockingEndTime, Date.startOfMinute(from: startTime))
+        return max(Clockings.lastClockingEndTime ?? Date(timeIntervalSince1970: 0), Date.startOfMinute(from: startTime))
     }
     
     static public func endTime(from endTime: Date = Date(), startTime: Date) -> Date {
@@ -107,16 +107,16 @@ class Clockings {
             case "duration", "abbrevDuration":
                 let abbreviated = (key == "abbrevDuration")
                 if clockingMO.override {
-                    result = Clockings.duration(Double(clockingMO.overrideMinutes) * 60.0, abbreviated: abbreviated)
+                    result = Clockings.duration(minutes: Double(clockingMO.overrideMinutes), abbreviated: abbreviated)
                 } else {
                     result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
                 }
                 
             case "startTime":
                 if clockingMO.override {
-                    result = Utility.dateString(clockingMO.overrideStartTime!)
+                    result = clockingMO.overrideStartTime!.toString()
                 } else {
-                    result = Utility.dateString(clockingMO.startTime!)
+                    result = clockingMO.startTime!.toString()
                 }
                 
             case "documentNumber":
@@ -134,29 +134,41 @@ class Clockings {
         return result
     }
     
-    public static func todaysClockings(includeStarted: Bool = true) -> (hours: Double, value: Double){
-        var result: (hours: Double, value: Double) = (hours: 0.0, value: 0.0)
+    static public func todaysClockingsText() -> String? {
+        let todaysClockings = Clockings.todaysClockings()
+        var today: String?
+        if todaysClockings.minutes != 0.0 {
+            today = "\(Clockings.duration(minutes: todaysClockings.minutes))"
+            if todaysClockings.value != 0 {
+                today = today! + " - \(todaysClockings.value.toCurrencyString())"
+            }
+        }
+        return today
+    }
+    
+    static public func todaysClockings(includeStarted: Bool = true) -> (minutes: Double, value: Double){
+        var result: (minutes: Double, value: Double) = (minutes: 0.0, value: 0.0)
         
         let clockings = Clockings.load(fromTime: Date.startOfDay(), toTime: Date.endOfDay())
         
         for clockingMO in clockings {
-            result.hours += Clockings.hours(clockingMO)
+            result.minutes += Clockings.minutes(clockingMO)
             result.value += clockingMO.amount
         }
         
         if includeStarted {
             let timeEntry = TimeEntry.current
             if timeEntry.timerState.value != TimerState.notStarted.rawValue {
-                let hours = Clockings.hours(timeEntry)
-                result.hours += hours
-                result.value += Utility.round((hours / timeEntry.hoursPerDay.value) * timeEntry.dailyRate.value, 2)
+                let minutes = Clockings.minutes(timeEntry)
+                result.minutes += minutes
+                result.value += Utility.round(((minutes / 60.0) / timeEntry.hoursPerDay.value) * timeEntry.dailyRate.value, 2)
             }
         }
         
         return result
     }
     
-    static public func duration(start: Date, end: Date, suffix: String = "", short: String = "", abbreviated: Bool = false) -> String {
+    static public func duration(start: Date, end: Date, suffix: String = "", short: String = "", abbreviated: Bool = true) -> String {
         if start > end {
             return ""
         } else {
@@ -165,25 +177,25 @@ class Clockings {
             if timeInterval < 60 {
                 return short
             } else {
-                return Clockings.duration(timeInterval, abbreviated: true)
+                return Clockings.duration(minutes: timeInterval / 60.0, abbreviated: abbreviated)
             }
         }
     }
     
-    static public func duration(_ timeInterval: TimeInterval, abbreviated: Bool = false) -> String {
+    static public func duration(minutes: Double, abbreviated: Bool = false) -> String {
         let formatter = DateComponentsFormatter()
-        let hours = timeInterval / 3600.0
+        let hours = Utility.round(minutes / 60.0, 2)
         var allowedUnits: NSCalendar.Unit = []
         
-        if timeInterval == 0 {
+        if minutes == 0 {
             return ""
         } else {
             
-            if Double(Int(hours)) != Utility.round(hours,2) {
+            if Double(Int(hours)) != hours {
                 allowedUnits = allowedUnits.union([.minute])
             }
             
-            if Double(Int(hours/24)) != Utility.round(hours/24, 2) && hours >= 1 {
+            if hours >= 1 {
                 allowedUnits = allowedUnits.union([.hour])
             }
             
@@ -191,7 +203,7 @@ class Clockings {
             formatter.unitsStyle = (abbreviated ? .abbreviated : .full)
             formatter.zeroFormattingBehavior = [ .pad ]
             
-            if let result = formatter.string(from: timeInterval) {
+            if let result = formatter.string(from: minutes * 60) {
                 return result
             } else {
                 return ""

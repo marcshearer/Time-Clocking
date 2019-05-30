@@ -10,6 +10,22 @@ import Foundation
 
 extension Date {
     
+    init(from dateString: String, format: String = "dd/MM/yyyy") {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        self = formatter.date(from: dateString) ?? Date(timeIntervalSince1970: 0)
+    }
+    
+    func toString(format: String = "dd/MM/yyyy", localized: Bool = true) -> String {
+        let formatter = DateFormatter()
+        if localized {
+            formatter.setLocalizedDateFormatFromTemplate(format)
+        } else {
+            formatter.dateFormat = format
+        }
+        return formatter.string(from: self)
+    }
+    
     static public func startOfMinute(addMinutes: Int = 0, onlyAddIfRounded: Bool = false, rounding: Int = 1, from date: Date = Date()) -> Date {
         let calendar = Calendar.current
         let minute = calendar.component(.minute, from: date)

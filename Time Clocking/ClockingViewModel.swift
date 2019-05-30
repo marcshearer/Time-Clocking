@@ -52,6 +52,7 @@ class ClockingViewModel {
     
     // Derived / transient properties
     public var durationText = Observable<String>("")
+    public var todaysActivity = Observable<String>("")
     public var timerState = Observable<String>(TimerState.notStarted.rawValue)
     public var timerStateDescription = Observable<String>("")
     public var includeInvoiced = Observable<Int>(0)
@@ -82,6 +83,7 @@ class ClockingViewModel {
     // Private state
     private let mode: ClockingMode
     private var lastTimerState: TimerState!
+    private var lastProjectCode: String!
     private var initialising = true
     private let notClosedPredicate = [NSPredicate(format: "closed = false")]
     private var reloading = false
@@ -138,17 +140,27 @@ class ClockingViewModel {
         // Project changes
         _ = self.projectCode.observable.observeNext { (_) in
             // Editable for project values - requires project code to be non-blank
-            self.canEditProjectValues.value = (self.projectCode.value != "")
             
-            // Load rate from customer / project
-            if !self.reloading {
-                let projects = Projects.load(specificCustomer: self.customerCode.value, specificProject: self.projectCode.value, includeClosed: true)
-                let customers = Customers.load(specific: self.customerCode.value, includeClosed: true)
-                if customers.count == 1 && projects.count == 1 {
-                    self.dailyRate.value = projects.first!.dailyRate
-                    self.hoursPerDay.value = customers.first!.hoursPerDay
-                    self.notes.value = projects[0].lastNotes ?? ""
+            if self.projectCode.value != self.lastProjectCode {
+                self.canEditProjectValues.value = (self.projectCode.value != "")
+                
+                // Load rate from customer / project
+                if !self.reloading {
+                    let projects = Projects.load(specificCustomer: self.customerCode.value, specificProject: self.projectCode.value, includeClosed: true)
+                    let customers = Customers.load(specific: self.customerCode.value, includeClosed: true)
+                    if customers.count == 1 && projects.count == 1 {
+                        self.dailyRate.value = projects.first!.dailyRate
+                        self.hoursPerDay.value = customers.first!.hoursPerDay
+                        self.notes.value = projects[0].lastNotes ?? ""
+                    }
                 }
+                
+                // Update status menu
+                if !self.initialising {
+                    StatusMenu.shared.update()
+                }
+
+                self.lastProjectCode = self.projectCode.value
             }
         }
 
@@ -195,18 +207,10 @@ class ClockingViewModel {
         // Value component changes
         _ = ReactiveKit.combineLatest(ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable, self.hoursPerDay.observable, self.override, self.overrideStartTime.observable, self.overrideMinutes.observable), self.dailyRate.observable).observeNext { (_) in
             // Recalculate amout
-            let hours = (self.override.value != 0 ? Double(self.overrideMinutes.value) / 60.0 : Clockings.hours(self))
-            self.amount.value = Utility.round((hours / self.hoursPerDay.value) * self.dailyRate.value, 2)
+            let minutes = (self.override.value != 0 ? Double(self.overrideMinutes.value) : Clockings.minutes(self))
+            self.amount.value = Utility.round(((minutes / 60.0) / self.hoursPerDay.value) * self.dailyRate.value, 2)
         }
         
-        // Timer state changes
-        _ = self.anyChange.observeNext { (_) in
-            // Update toolbar
-            if !self.initialising {
-                StatusMenu.shared.update()
-            }
-        }
-
         // Document number changes
         _ = self.documentNumber.observeNext { (_) in
             // Change of document number
@@ -234,10 +238,26 @@ class ClockingViewModel {
                     self.resourceCode.value != "" && self.projectCode.value != "")
             }
             
-            // Start or end time changes
-            _ = ReactiveKit.combineLatest(self.startTime.observable, self.endTime.observable).observeNext { (_) in
+            // Timer state, start or end time changes
+            _ = ReactiveKit.combineLatest(self.timerState, self.startTime.observable, self.endTime.observable).observeNext { (_) in
                 // Update duration text
-                self.durationText.value = Clockings.duration(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute")
+                if self.mode != .clockingEntry || self.timerState.value != TimerState.notStarted.rawValue {
+                    self.durationText.value = Clockings.duration(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute", abbreviated: false)
+                } else {
+                    self.durationText.value = "Not started"
+                }
+                if self.mode == .clockingEntry {
+                    if self.timerState.value != TimerState.notStarted.rawValue {
+                        let minutes = Clockings.minutes(self)
+                        let value = Utility.round(((minutes / 60.0) / self.hoursPerDay.value) * self.dailyRate.value, 2)
+                        if value > 0 {
+                            self.durationText.value += " - \(value.toCurrencyString())"
+                        }
+                    }
+                }
+                if !self.initialising {
+                    self.todaysActivity.value = Clockings.todaysClockingsText() ?? "None"
+                }
             }
             
             // State or resource code or project code changes
@@ -262,6 +282,10 @@ class ClockingViewModel {
                     }
                     if state != .notStarted {
                         self.endTime.value = Clockings.endTime(from: now, startTime: self.startTime.value)
+                    }
+                    
+                    if !self.initialising {
+                        StatusMenu.shared.update()
                     }
                 }
             }
@@ -313,6 +337,7 @@ class ClockingViewModel {
         clockingMO.startTime = self.startTime.value
         clockingMO.endTime = self.endTime.value
         clockingMO.dailyRate = self.dailyRate.value
+        clockingMO.hoursPerDay = self.hoursPerDay.value
         clockingMO.invoiceState = self.invoiceState.value
         clockingMO.override = (self.override.value != 0)
         clockingMO.overrideMinutes = self.overrideMinutes.value
@@ -332,6 +357,7 @@ class ClockingViewModel {
         self.startTime.value = clockingMO.startTime ?? Date()
         self.endTime.value = clockingMO.endTime ?? Date()
         self.dailyRate.value = clockingMO.dailyRate
+        self.hoursPerDay.value = clockingMO.hoursPerDay
         self.invoiceState.value = clockingMO.invoiceState ?? InvoiceState.notInvoiced.rawValue
         self.override.value = (clockingMO.override ? 1 : 0)
         self.overrideMinutes.value = clockingMO.overrideMinutes

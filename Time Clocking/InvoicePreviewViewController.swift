@@ -36,7 +36,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
             if line.quantity == 0 {
                 result = ""
             } else if line.unit == .hours {
-                result = Clockings.duration(line.quantity * 3600, abbreviated: true)
+                result = Clockings.duration(minutes: line.quantity * 60.0, abbreviated: true)
             } else {
                 result = self.numberFormatter.string(from: line.quantity! as NSNumber) ?? ""
             }
@@ -55,7 +55,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
             case "quantity":
                 let total = self.printLines.reduce(0, {$0 + $1.quantity})
                 if line.unit == .hours && total != Double(Int(total)) {
-                    result = Clockings.duration(total * 3600, abbreviated: true)
+                    result = Clockings.duration(minutes: total * 60.0, abbreviated: true)
                 } else {
                     result = self.numberFormatter.string(from: total as NSNumber) ?? ""
                 }

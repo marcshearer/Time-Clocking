@@ -51,24 +51,6 @@ class Utility {
         }
     }
     
-    // MARK: - String manipulation ============================================================================ -
-    
-    class func dateString(_ date: Date, format: String = "dd/MM/yyyy", localized: Bool = true) -> String {
-        let formatter = DateFormatter()
-        if localized {
-            formatter.setLocalizedDateFormatFromTemplate(format)
-        } else {
-            formatter.dateFormat = format
-        }
-        return formatter.string(from: date)
-    }
-    
-    class func dateFromString(_ dateString: String, format: String = "dd/MM/yyyy") -> Date? {
-        let formatter = DateFormatter()
-        formatter.dateFormat = format
-        return formatter.date(from: dateString)
-    }
-    
     // MARK: - Percentages and quotients (with rounding to integer and protection from divide by zero) =============== -
     
     class func percent(_ numerator: CGFloat, _ denominator: CGFloat) -> CGFloat {
@@ -321,7 +303,7 @@ class Utility {
         
         func closure() {
             var outputMessage: String
-            let timestamp = Utility.dateString(Date(), format: "HH:mm:ss.SS", localized: false)
+            let timestamp = Date().toString(format: "HH:mm:ss.SS", localized: false)
             outputMessage = "DEBUG(\(from)): \(timestamp)"
             outputMessage = outputMessage + " - \(message)"
             print(outputMessage)

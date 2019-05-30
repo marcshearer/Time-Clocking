@@ -411,9 +411,9 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             case .string:
                 return object as! String
             case .date:
-                return Utility.dateString((object as! Date), format: dateFormat)
+                return (object as! Date).toString(format: dateFormat)
             case .dateTime:
-                return Utility.dateString((object as! Date), format: dateTimeFormat)
+                return (object as! Date).toString(format: dateTimeFormat)
             case .int, .double, .currency:
                 let numberFormatter = self.getNumberFormatter(column.type)
                 return self.getValue(number: object as? NSNumber, numberFormatter: numberFormatter, zeroBlank: column.zeroBlank)

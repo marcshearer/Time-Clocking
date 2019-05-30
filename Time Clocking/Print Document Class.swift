@@ -127,7 +127,7 @@ class PrintDocument {
         invoiceData = addClipboard(existing: invoiceData, add: ["HTITLE", "Account Number", "Name", "Address 1", "Address 2", "Address 3" ,"Address 4" ,"Address 5" ,"Address 6" ,"Document Type", "Document Number", "Document Date", "Due Date", "Original Invoice", "Header text 1", "Header text 2", "Header text 3", "Header text 4", "Header text 5"])
         
         // Output header data
-        invoiceData = addClipboard(existing: invoiceData, add: ["HDATA", self.customerCode, self.customerName] + customerAddress + [self.documentType.rawValue, self.documentNumber, Utility.dateString(self.documentDate), Utility.dateString(self.dueDate), self.originalInvoiceNumber] + headerText)
+        invoiceData = addClipboard(existing: invoiceData, add: ["HDATA", self.customerCode, self.customerName] + customerAddress + [self.documentType.rawValue, self.documentNumber, self.documentDate.toString(), self.dueDate.toString(), self.originalInvoiceNumber] + headerText)
         
         // Output lines title
         invoiceData = addClipboard(existing: invoiceData, add: ["LTITLE", "Line No", "Quantity", "Unit", "Description", "Price", "Per", "Line Price", "P/O Number"])
@@ -137,7 +137,7 @@ class PrintDocument {
             
             var quantity: String
             if line.unit == .hours {
-                quantity = Clockings.duration(line.quantity * 3600, abbreviated: true)
+                quantity = Clockings.duration(minutes: line.quantity * 60.0, abbreviated: true)
             } else if line.quantity == 0 {
                 quantity = ""
             } else {

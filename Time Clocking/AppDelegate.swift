@@ -82,8 +82,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.dailyRate = projects.first!.dailyRate
                 clockingMO.hoursPerDay = customers.first!.hoursPerDay
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
-                let hours = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
-                clockingMO.amount = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
+                let minutes = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
+                clockingMO.amount = Utility.round(((minutes / 60.0) / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
             }
         }
         
@@ -98,8 +98,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.override = false
                 clockingMO.overrideStartTime = clockingMO.startTime
                 clockingMO.overrideMinutes = Clockings.minutes(clockingMO)
-                let hours = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
-                clockingMO.amount = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
+                let minutes = (clockingMO.override ? clockingMO.overrideMinutes : Clockings.minutes(clockingMO))
+                clockingMO.amount = Utility.round(((minutes / 60.0) / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
             }
         }
         // MARK: ========================================================================== -

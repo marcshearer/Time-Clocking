@@ -18,7 +18,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
     private var statusButtonTextWidthConstraint: NSLayoutConstraint!
     private var statusButtonImage: NSImageView!
     private var statusMenu: NSMenu
-    private var updateTimer: Timer!
     private let menuBarColor = NSColor(named: "menuBar\(AppDelegate.isDevelopment ? "Dev" : "")Color")
 
     private var menuItemList: [String: NSMenuItem] = [:]
@@ -112,7 +111,11 @@ class StatusMenu: NSObject, NSMenuDelegate {
     
     internal func menuWillOpen(_ menu: NSMenu) {
         let event = NSApp.currentEvent!
-        if event.type != NSEvent.EventType.rightMouseDown && StatusMenu.popover.count == 0 && TimerState(rawValue: TimeEntry.current.timerState.value) != .stopped {
+        let leftClick = (event.type != NSEvent.EventType.rightMouseDown)
+        let timerNotStopped = (TimerState(rawValue: TimeEntry.current.timerState.value) != .stopped)
+        let viewOpen = (StatusMenu.popover.count != 0)
+        
+        if leftClick && !viewOpen && timerNotStopped {
             // Left-click while no windows displayed and timer is not stopped - start / stop timer and avoid menu popping up
             switch TimerState(rawValue: TimeEntry.current.timerState.value)! {
             case .notStarted:
@@ -124,21 +127,29 @@ class StatusMenu: NSObject, NSMenuDelegate {
             }
             menu.cancelTracking()
             self.update()
-        } else {
+        } else if viewOpen {
+            // View being displayed - close it and show dropdown menu if right-clicked
             self.hidePopover(menu)
             self.update()
+            self.statusButtonText.textColor = (!leftClick ? NSColor.white : self.menuBarColor)
+            self.setImage(alternate: !leftClick, close: !leftClick)
+            if leftClick {
+                // If left click should just close
+                menu.cancelTracking()
+            }
+        } else {
+            // Just show dropdown menu
             self.statusButtonText.textColor = NSColor.white
-            self.statusButtonImage.image = getImage(alternate: true)
+            self.setImage(alternate: true, close: true)
         }
     }
     
     internal func menuDidClose(_ menu: NSMenu) {
         self.statusButtonText.textColor = self.menuBarColor
-        self.statusButtonImage.image = getImage()
+        self.setImage()
     }
     
     public func update() {
-
         let timeEntry = TimeEntry.current
         
         // Set up project and state
@@ -180,19 +191,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.menuItemList["State"]?.attributedTitle = self.attributedString(state)
         toolTip += "\n\(state)"
         
-        let todaysClockings = Clockings.todaysClockings()
-        if todaysClockings.hours != 0 {
+        if let today = Clockings.todaysClockingsText() {
             self.menuItemList["Today"]?.isHidden = false
-            var today = "Today: \(Clockings.duration(todaysClockings.hours * 3600))"
-            if todaysClockings.value != 0 {
-                let amount = todaysClockings.value as NSNumber
-                let formatter = NumberFormatter()
-                formatter.locale = Locale.current
-                formatter.numberStyle = .currency
-                if let formatted = formatter.string(from: amount) {
-                     today += " - \(formatted)"
-                }
-            }
             self.menuItemList["Today"]?.attributedTitle = self.attributedString(today)
             toolTip += "\n\(today)"
         } else {
@@ -209,7 +209,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         if let button = self.statusItem.button {
             
             button.toolTip = toolTip
-            self.statusButtonImage.image = getImage()
+            self.setImage()
             
             if timeEntry.projectCode.value == "" {
                 self.setTitle("")
@@ -228,10 +228,13 @@ class StatusMenu: NSObject, NSMenuDelegate {
         }
     }
     
-    private func getImage(alternate: Bool = false) -> NSImage {
+    private func setImage(alternate: Bool = false, close: Bool = false) {
         var imageName: String
         
-        if TimeEntry.current.projectCode.value == "" {
+        if close || StatusMenu.popover.count != 0 {
+            imageName = "close"
+        }
+        else if TimeEntry.current.projectCode.value == "" {
             imageName = "clockings"
         } else {
             switch TimerState(rawValue: TimeEntry.current.timerState.value)! {
@@ -249,8 +252,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         } else if AppDelegate.isDevelopment {
             imageName += "Blue"
         }
-        
-        return NSImage(named: NSImage.Name(imageName))!
+        self.statusButtonImage.image = NSImage(named: NSImage.Name(imageName))!
     }
     
     private func setTitle(_ title: String) {
@@ -306,7 +308,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
     @objc private func startTimer(_ sender: Any?) {
         Utility.playSound("Morse")
         TimeEntry.current.timerState.value = TimerState.started.rawValue
-        StatusMenu.shared.update()
+        self.update()
     }
     
     @objc private func stopTimer(_ sender: Any?) {
@@ -316,7 +318,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         } else {
             Utility.playSound("Frog")
             TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
-            StatusMenu.shared.update()
+            self.update()
             _ = Clockings.writeToDatabase(viewModel: TimeEntry.current)
         }
     }
@@ -326,7 +328,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
         TimeEntry.current.startTime.value = Clockings.startTime()
         TimeEntry.current.endTime.value = TimeEntry.current.startTime.value
-        StatusMenu.shared.update()
+        self.update()
     }
     
     @objc private func showEntries(_ sender: Any?) {
@@ -414,6 +416,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
                 popover.contentViewController = viewController
                 popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
+                self.setImage(close: true)
                 StatusMenu.addPopover(popover)
             }
         }

@@ -22,10 +22,11 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var notesTextField: NSTextField!
+    @IBOutlet private weak var dailyRateTextField: NSTextField!
     @IBOutlet private weak var startTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var endTimeDatePicker: NSDatePicker!
     @IBOutlet private weak var durationTextField: NSTextField!
-    @IBOutlet private weak var dailyRateTextField: NSTextField!
+    @IBOutlet private weak var todaysActivityTextField: NSTextField!
     @IBOutlet private weak var titleLabel: NSTextField!
     @IBOutlet private weak var startButton: NSButton!
     @IBOutlet private weak var stopAndAddButton: NSButton!
@@ -51,7 +52,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     override func viewDidDisappear() {
         self.stopUpdateTimer()
-    }
+        }
     
     // MARK: - Setup bindings to view model ====================================================================== 
 
@@ -68,6 +69,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
         self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
         self.viewModel.durationText.bind(to: self.durationTextField.reactive.editingString)
+        self.viewModel.todaysActivity.bind(to: self.todaysActivityTextField.reactive.editingString)
         self.viewModel.timerStateDescription.bind(to: self.titleLabel.reactive.editingString)
         
         // Bind enablers
@@ -174,6 +176,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     }
     
     private func stopUpdateTimer() {
+        self.updateTimer?.invalidate()
         self.updateTimer = nil
     }
     

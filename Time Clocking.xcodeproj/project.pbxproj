@@ -19,6 +19,8 @@
 		B241BF032280650B001CC666 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BF022280650B001CC666 /* ProjectViewModel.swift */; };
 		B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B241BF0622814520001CC666 /* Time Clocking.xcdatamodeld */; };
 		B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
+		B261F53C229E467000AEAFE9 /* Double Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B261F539229E442400AEAFE9 /* Double Extensions.swift */; };
+		B261F53D229E467000AEAFE9 /* Double Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B261F539229E442400AEAFE9 /* Double Extensions.swift */; };
 		B2869871227DD81400377112 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
 		B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
 		B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
@@ -165,6 +167,7 @@
 		B241BF022280650B001CC666 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
 		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
 		B24F5BDA228306FA005600F4 /* Clockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clockings.swift; sourceTree = "<group>"; };
+		B261F539229E442400AEAFE9 /* Double Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extensions.swift"; sourceTree = "<group>"; };
 		B2869850227DD81200377112 /* Core Data Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Class.swift"; sourceTree = "<group>"; };
 		B2869851227DD81200377112 /* ClockingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingDetailViewController.swift; sourceTree = "<group>"; };
 		B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingDetailViewController.storyboard; sourceTree = "<group>"; };
@@ -273,7 +276,6 @@
 			isa = PBXGroup;
 			children = (
 				B2035A42227DD2AF00BE3863 /* Time Clocking */,
-				B2035A55227DD2B000BE3863 /* Time ClockingTests */,
 				B2035A60227DD2B000BE3863 /* Time ClockingUITests */,
 				B2035A41227DD2AF00BE3863 /* Products */,
 				5F838D927D286D884F681037 /* Pods */,
@@ -380,8 +382,10 @@
 				B2869850227DD81200377112 /* Core Data Class.swift */,
 				B2869870227DD81400377112 /* Core Data Table Viewer.swift */,
 				B2ACC75522999ED40036C762 /* Data Table Viewer.swift */,
-				B286986C227DD81300377112 /* Date Extensions.swift */,
+				B2035A55227DD2B000BE3863 /* Time ClockingTests */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
+				B261F539229E442400AEAFE9 /* Double Extensions.swift */,
+				B286986C227DD81300377112 /* Date Extensions.swift */,
 				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
 				B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */,
 				B2C8CC0822848C070040CA46 /* ObservableTextField.swift */,
@@ -792,6 +796,7 @@
 				B2869871227DD81400377112 /* Core Data Class.swift in Sources */,
 				B2869889227DD81400377112 /* String Extensions.swift in Sources */,
 				B286988B227DD81400377112 /* Date Extensions.swift in Sources */,
+				B261F53D229E467000AEAFE9 /* Double Extensions.swift in Sources */,
 				B241BF0122805EA1001CC666 /* CustomerViewModel.swift in Sources */,
 				B2C8CC0922848C070040CA46 /* ObservableTextField.swift in Sources */,
 				B2C8CC18228D4A420040CA46 /* DocumentViewModel.swift in Sources */,
@@ -857,6 +862,7 @@
 				B2ACC723229819590036C762 /* Core Data Class.swift in Sources */,
 				B2ACC724229819590036C762 /* String Extensions.swift in Sources */,
 				B2ACC725229819590036C762 /* Date Extensions.swift in Sources */,
+				B261F53C229E467000AEAFE9 /* Double Extensions.swift in Sources */,
 				B2ACC726229819590036C762 /* CustomerViewModel.swift in Sources */,
 				B2ACC727229819590036C762 /* ObservableTextField.swift in Sources */,
 				B2ACC728229819590036C762 /* DocumentViewModel.swift in Sources */,
