@@ -39,6 +39,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private weak var closeButtonTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentNumberLabeloverrideStartTimeDatePickerTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var documentNumberLabelIncludeInvoicedButtonTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var tableViewTitleTextField: NSTextField!
     @IBOutlet private weak var tableView: NSTableView!
 
     override internal func viewDidLoad() {
@@ -149,6 +150,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                     self.documentNumberTextField.isHidden = true
                     self.documentNumberLabeloverrideStartTimeDatePickerTopConstraint.isActive = true
                     self.invoiceInstructions.stringValue = "Select clockings to invoice using the filters and the inclusion check boxes. \n\nNote that you should only select clockings for one customer. \n\nYou cannot mix clockings for more than one customer on an invoice."
+                    self.tableViewTitleTextField.stringValue = "Clockings Matching Criteria Available to Invoice"
                 } else {
                     self.invoiceButton.title = "Credit"
                     self.documentNumberLabel.isHidden = false
@@ -158,8 +160,10 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                     self.documentNumberLabel.stringValue = "Original invoice number:"
                     self.documentNumberTextField.becomeFirstResponder()
                     self.invoiceInstructions.stringValue = "Select the invoice to credit using the filters (especially the original invoice number) and then select the clockings you wish to credit using the inclusion check boxes. \n\nYou can only credit the clockings from one invoice at a time."
-
+                    self.tableViewTitleTextField.stringValue = "Clockings Matching Criteria Available to Credit"
                 }
+            } else {
+                self.tableViewTitleTextField.stringValue = "Clockings Matching Criteria"
             }
         }
     }

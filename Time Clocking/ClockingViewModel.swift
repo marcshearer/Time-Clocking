@@ -367,17 +367,17 @@ class ClockingViewModel {
     }
     
     public func getStateDescription() -> String {
-        var description = ""
+        var description = "Clocking -"
         
         switch TimerState(rawValue: self.timerState.value)! {
         case .notStarted:
-            description = "Not started"
+            description += " Not started"
             
         case .started:
-            description = "Started \(Clockings.duration(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now"))"
+            description += " Started \(Clockings.duration(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now", abbreviated: false))"
             
         case .stopped:
-            description = "Stopped after \(Clockings.duration(start: self.startTime.value, end: self.endTime.value, suffix: "", short: "less than 1 minute"))"
+            description += " Stopped after \(Clockings.duration(start: self.startTime.value, end: self.endTime.value, suffix: "", short: "less than 1 minute", abbreviated: false))"
             
         }
         

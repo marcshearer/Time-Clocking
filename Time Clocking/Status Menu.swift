@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusMenu: NSObject, NSMenuDelegate {
+class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     public static let shared = StatusMenu()
     
@@ -25,6 +25,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
     private var popoverList: [String : NSPopover] = [:]
     private static var popover: [NSPopover] = []
     
+    // MARK: - Constructor - instantiate the status bar menu =========================================================== -
+    
     override init() {
         
         self.statusMenu = NSMenu()
@@ -34,7 +36,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         if let button = self.statusItem.button {
             // Re-purpose the status button since standard view didn't give the right vertical alignment
 
-            StatusMenu.anchor(view: button.superview!, control: button, attributes: .top, .bottom)
+            Constraint.anchor(view: button.superview!, control: button, attributes: .top, .bottom)
             
             self.statusButtonImage = NSImageView(image: NSImage(named: NSImage.Name("clockings"))!)
             self.statusButtonImage.translatesAutoresizingMaskIntoConstraints = false
@@ -47,14 +49,14 @@ class StatusMenu: NSObject, NSMenuDelegate {
             self.statusButtonText.font = NSFont.systemFont(ofSize: 12)
             button.addSubview(self.statusButtonText)
             
-            _ = StatusMenu.setHeight(control: button, height: NSApp.mainMenu!.menuBarHeight)
+            _ = Constraint.setHeight(control: button, height: NSApp.mainMenu!.menuBarHeight)
             
-            StatusMenu.anchor(view: button, control: self.statusButtonImage, attributes: .leading, .top, .bottom)
-            _ = StatusMenu.setWidth(control: self.statusButtonImage, width: 30)
+            Constraint.anchor(view: button, control: self.statusButtonImage, attributes: .leading, .top, .bottom)
+            _ = Constraint.setWidth(control: self.statusButtonImage, width: 30)
             
-            StatusMenu.anchor(view: button, control: self.statusButtonText, attributes: .centerY)
-            StatusMenu.anchor(view: button, control: self.statusButtonText, to: self.statusButtonImage, toAttribute: .trailing, attributes: .leading)
-            StatusMenu.anchor(view: button, control: self.statusButtonText, attributes: .trailing)
+            Constraint.anchor(view: button, control: self.statusButtonText, attributes: .centerY)
+            Constraint.anchor(view: button, control: self.statusButtonText, to: self.statusButtonImage, toAttribute: .trailing, attributes: .leading)
+            Constraint.anchor(view: button, control: self.statusButtonText, attributes: .trailing)
          }
         
         // Construct skeleton
@@ -88,26 +90,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.statusItem.menu = self.statusMenu
     }
     
-    public static func setWidth(control: NSView, width: CGFloat) -> NSLayoutConstraint {
-        let constraint = NSLayoutConstraint(item: control, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .width, multiplier: 1.0, constant: width)
-        control.addConstraint(constraint)
-        return constraint
-    }
-    
-    public static func setHeight(control: NSView, height: CGFloat) -> NSLayoutConstraint {
-        let constraint = NSLayoutConstraint(item: control, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: height)
-        control.addConstraint(constraint)
-        return constraint
-    }
-    
-    public static func anchor(view: NSView, control: NSView, to: NSView? = nil, toAttribute: NSLayoutConstraint.Attribute? = nil, attributes: NSLayoutConstraint.Attribute...) {
-        let to = to ?? view
-        for attribute in attributes {
-            let toAttribute = toAttribute ?? attribute
-            let constraint = NSLayoutConstraint(item: control, attribute: attribute, relatedBy: .equal, toItem: to, attribute: toAttribute, multiplier: 1.0, constant: 0.0)
-            view.addConstraint(constraint)
-        }
-    }
+    // MARK: - Menu delegate handlers =========================================================== -
     
     internal func menuWillOpen(_ menu: NSMenu) {
         let event = NSApp.currentEvent!
@@ -148,6 +131,14 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.statusButtonText.textColor = self.menuBarColor
         self.setImage()
     }
+    
+    // MARK: - Popover delegate hanlders =========================================================== -
+    
+    internal func popoverDidClose(_ notification: Notification) {
+        self.update()
+    }
+    
+    // MARK: - Main routines to handle the status elements of the menu =========================================================== -
     
     public func update() {
         let timeEntry = TimeEntry.current
@@ -261,7 +252,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
         }
         self.statusButtonText.stringValue = title
         self.statusButtonText.sizeToFit()
-        self.statusButtonTextWidthConstraint = StatusMenu.setWidth(control: self.statusButtonText, width: self.statusButtonText.frame.size.width)
+        self.statusButtonTextWidthConstraint = Constraint.setWidth(control: self.statusButtonText, width: self.statusButtonText.frame.size.width)
     }
     
     private func attributedString(_ string: String, fontSize: CGFloat? = nil) -> NSAttributedString {
@@ -278,6 +269,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
         return NSAttributedString(string: string, attributes: attributes)
     }
     
+    // MARK: - Helper routines for the popup menu =========================================================== -
+
     private func addItem(id: String? = nil, _ text: String = "", action: Selector? = nil, keyEquivalent: String = "", to menu: NSMenu? = nil) {
         var menu = menu
         if menu == nil {
@@ -305,6 +298,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.statusMenu.addItem(NSMenuItem.separator())
     }
     
+    // MARK: - Timer handlers =========================================================== -
+    
     @objc private func startTimer(_ sender: Any?) {
         Utility.playSound("Morse")
         TimeEntry.current.timerState.value = TimerState.started.rawValue
@@ -330,6 +325,8 @@ class StatusMenu: NSObject, NSMenuDelegate {
         TimeEntry.current.endTime.value = TimeEntry.current.startTime.value
         self.update()
     }
+    
+    // MARK: - Action routines from popup menu options =========================================================== -
     
     @objc private func showEntries(_ sender: Any?) {
         
@@ -402,6 +399,12 @@ class StatusMenu: NSObject, NSMenuDelegate {
         self.showPopover("Projects", viewController!)
     }
     
+    @objc private func quit(_ sender: Any?) {
+        NSApp.terminate(sender)
+    }
+    
+    // MARK: - Routines to show a popover =========================================================== -
+    
     private func showPopover(_ identifier: String, _ viewController: NSViewController) {
         
         if let button = self.statusItem.button {
@@ -410,6 +413,7 @@ class StatusMenu: NSObject, NSMenuDelegate {
             var popover = self.popoverList[identifier]
             if popover == nil {
                 popover = NSPopover()
+                popover?.delegate = self
                 self.popoverList[identifier] = popover
             }
             if let popover = popover {
@@ -433,10 +437,6 @@ class StatusMenu: NSObject, NSMenuDelegate {
             StatusMenu.popover[index].close()
             StatusMenu.popover.remove(at: index)
         }
-    }
-    
-    @objc private func quit(_ sender: Any?) {
-        NSApp.terminate(sender)
     }
 
     private func createController(_ identifier: String, _ storyboardName: String, viewIdentifier: String? = nil) -> NSViewController? {

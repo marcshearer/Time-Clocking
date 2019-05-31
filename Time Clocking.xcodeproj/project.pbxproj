@@ -47,6 +47,9 @@
 		B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B286986D227DD81300377112 /* InvoiceViewController.swift */; };
 		B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B286986E227DD81300377112 /* ClockingViewController.storyboard */; };
 		B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Table Viewer.swift */; };
+		B2901D9222A0F2FB0039B93E /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901D9122A0F2FA0039B93E /* Constraint.swift */; };
+		B2901D9C22A0F6000039B93E /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901D9B22A0F6000039B93E /* Constraint.swift */; };
+		B2901D9D22A0F6000039B93E /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901D9B22A0F6000039B93E /* Constraint.swift */; };
 		B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
 		B2ACC710229819590036C762 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
 		B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
@@ -196,6 +199,8 @@
 		B286986E227DD81300377112 /* ClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingViewController.storyboard; sourceTree = "<group>"; };
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2869870227DD81400377112 /* Core Data Table Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Table Viewer.swift"; sourceTree = "<group>"; };
+		B2901D9122A0F2FA0039B93E /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
+		B2901D9B22A0F6000039B93E /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
 		B2ACC74A229819590036C762 /* Time Clocking Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Clocking Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2ACC74B229819590036C762 /* Time Clocking Development-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Time Clocking Development-Info.plist"; path = "/Users/marcshearer/Documents/Xcode projects/Time Clocking/Time Clocking Development-Info.plist"; sourceTree = "<absolute>"; };
 		B2ACC74F22984DBD0036C762 /* Print Document Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Class.swift"; sourceTree = "<group>"; };
@@ -276,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				B2035A42227DD2AF00BE3863 /* Time Clocking */,
+				B2035A55227DD2B000BE3863 /* Time ClockingTests */,
 				B2035A60227DD2B000BE3863 /* Time ClockingUITests */,
 				B2035A41227DD2AF00BE3863 /* Products */,
 				5F838D927D286D884F681037 /* Pods */,
@@ -319,6 +325,7 @@
 			children = (
 				B2035A56227DD2B000BE3863 /* Time_ClockingTests.swift */,
 				B2035A58227DD2B000BE3863 /* Info.plist */,
+				B2901D9122A0F2FA0039B93E /* Constraint.swift */,
 			);
 			path = "Time ClockingTests";
 			sourceTree = "<group>";
@@ -382,7 +389,6 @@
 				B2869850227DD81200377112 /* Core Data Class.swift */,
 				B2869870227DD81400377112 /* Core Data Table Viewer.swift */,
 				B2ACC75522999ED40036C762 /* Data Table Viewer.swift */,
-				B2035A55227DD2B000BE3863 /* Time ClockingTests */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
 				B261F539229E442400AEAFE9 /* Double Extensions.swift */,
 				B286986C227DD81300377112 /* Date Extensions.swift */,
@@ -390,6 +396,7 @@
 				B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */,
 				B2C8CC0822848C070040CA46 /* ObservableTextField.swift */,
 				B2869860227DD81300377112 /* Utility.swift */,
+				B2901D9B22A0F6000039B93E /* Constraint.swift */,
 			);
 			name = "Utility & Data Classes";
 			sourceTree = "<group>";
@@ -775,6 +782,7 @@
 				B241BEFB227E945B001CC666 /* Resources.swift in Sources */,
 				B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */,
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
+				B2901D9222A0F2FB0039B93E /* Constraint.swift in Sources */,
 				B2869885227DD81400377112 /* SettingsViewModel.swift in Sources */,
 				B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */,
 				B286987C227DD81400377112 /* SelectionViewController.swift in Sources */,
@@ -788,6 +796,7 @@
 				B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
+				B2901D9C22A0F6000039B93E /* Constraint.swift in Sources */,
 				B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */,
 				B2869880227DD81400377112 /* Utility.swift in Sources */,
 				B2C8CC1A22912AF90040CA46 /* CustomerDetailMainViewController.swift in Sources */,
@@ -877,6 +886,7 @@
 				B2ACC72F229819590036C762 /* ClockingDetailViewController.swift in Sources */,
 				B2ACC730229819590036C762 /* Maintenance.swift in Sources */,
 				B2ACC731229819590036C762 /* Projects.swift in Sources */,
+				B2901D9D22A0F6000039B93E /* Constraint.swift in Sources */,
 				B2ACC732229819590036C762 /* CustomerDetailInvoiceViewController.swift in Sources */,
 				B2ACC733229819590036C762 /* Documents.swift in Sources */,
 				B2ACC734229819590036C762 /* SettingsViewController.swift in Sources */,

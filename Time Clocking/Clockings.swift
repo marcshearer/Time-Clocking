@@ -177,7 +177,7 @@ class Clockings {
             if timeInterval < 60 {
                 return short
             } else {
-                return Clockings.duration(minutes: timeInterval / 60.0, abbreviated: abbreviated)
+                return Clockings.duration(minutes: timeInterval / 60.0, abbreviated: abbreviated) + " " + suffix
             }
         }
     }

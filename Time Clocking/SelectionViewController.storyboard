@@ -29,6 +29,36 @@
                                     <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yVs-h4-SxS" userLabel="Separator">
+                                <rect key="frame" x="307" y="606" width="5" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="AvX-LP-la9"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="OUk-Wx-sLv">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsi-wV-jwP" userLabel="Recent Clockings Container">
+                                <rect key="frame" x="310" y="606" width="810" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="cwc-IW-gac"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="Rjb-gF-3bE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ctf-5V-fDV">
+                                <rect key="frame" x="310" y="606" width="810" height="20"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Clockings Available to Invoice / Credit" drawsBackground="YES" id="uLe-pf-rYG">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="TN0-Kj-LU5" userLabel="Input view">
                                 <rect key="frame" x="0.0" y="0.0" width="309" height="606"/>
                                 <subviews>
@@ -193,7 +223,7 @@ Gw
                                         <textFieldCell key="cell" selectable="YES" borderStyle="bezel" alignment="left" drawsBackground="YES" id="JHq-ay-0iC">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                 </subviews>
@@ -242,13 +272,13 @@ Gw
                                 </constraints>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1O-0m-Kk0" userLabel="Table View">
-                                <rect key="frame" x="309" y="0.0" width="811" height="630"/>
+                                <rect key="frame" x="309" y="0.0" width="811" height="606"/>
                                 <clipView key="contentView" id="Tze-Oe-R4s">
-                                    <rect key="frame" x="1" y="0.0" width="809" height="629"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                    <rect key="frame" x="1" y="0.0" width="809" height="605"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="lNM-4L-xdG" viewBased="YES" id="BOn-Yc-R9v">
-                                            <rect key="frame" x="0.0" y="0.0" width="809" height="604"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="809" height="580"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -306,21 +336,32 @@ Gw
                             </scrollView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="j1O-0m-Kk0" firstAttribute="top" secondItem="yVs-h4-SxS" secondAttribute="bottom" id="152-Py-RGl"/>
+                            <constraint firstItem="Ctf-5V-fDV" firstAttribute="trailing" secondItem="lsi-wV-jwP" secondAttribute="trailing" id="2qe-Va-SvI"/>
+                            <constraint firstItem="Ctf-5V-fDV" firstAttribute="leading" secondItem="lsi-wV-jwP" secondAttribute="leading" id="5Xn-GB-hVp"/>
                             <constraint firstItem="TN0-Kj-LU5" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" constant="24" id="5kw-Rf-r9Z"/>
                             <constraint firstItem="j1O-0m-Kk0" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="trailing" id="6qc-Wp-TRi"/>
+                            <constraint firstItem="yVs-h4-SxS" firstAttribute="leading" secondItem="PUW-lV-XY4" secondAttribute="trailing" id="9x0-dU-zv8"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="trailing" secondItem="PUW-lV-XY4" secondAttribute="trailing" id="EIb-tp-BbL"/>
-                            <constraint firstItem="j1O-0m-Kk0" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="FXY-7x-kRJ"/>
+                            <constraint firstItem="j1O-0m-Kk0" firstAttribute="top" secondItem="lsi-wV-jwP" secondAttribute="bottom" id="OBP-Pe-oFe"/>
+                            <constraint firstItem="Ctf-5V-fDV" firstAttribute="top" secondItem="lsi-wV-jwP" secondAttribute="top" constant="4" id="R8Q-gD-6Sr"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="top" secondItem="PUW-lV-XY4" secondAttribute="top" constant="4" id="RAG-ph-vjF"/>
+                            <constraint firstItem="Ctf-5V-fDV" firstAttribute="bottom" secondItem="lsi-wV-jwP" secondAttribute="bottom" id="Syz-Wy-OOI"/>
+                            <constraint firstItem="lsi-wV-jwP" firstAttribute="leading" secondItem="yVs-h4-SxS" secondAttribute="trailing" id="Y4w-iT-K7U"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="bottom" secondItem="PUW-lV-XY4" secondAttribute="bottom" id="aNF-4M-CGY"/>
+                            <constraint firstAttribute="trailing" secondItem="lsi-wV-jwP" secondAttribute="trailing" id="cDs-2y-Ckr"/>
                             <constraint firstAttribute="bottom" secondItem="TN0-Kj-LU5" secondAttribute="bottom" id="hdO-Ya-PXM"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="leading" secondItem="PUW-lV-XY4" secondAttribute="leading" id="ho1-rg-I8e"/>
                             <constraint firstAttribute="bottom" secondItem="j1O-0m-Kk0" secondAttribute="bottom" id="lhB-bh-e3m"/>
                             <constraint firstItem="TN0-Kj-LU5" firstAttribute="top" secondItem="PUW-lV-XY4" secondAttribute="bottom" id="lx0-c3-0Id"/>
                             <constraint firstAttribute="trailing" secondItem="j1O-0m-Kk0" secondAttribute="trailing" id="nBx-LN-RyJ"/>
                             <constraint firstItem="j1O-0m-Kk0" firstAttribute="leading" secondItem="fxD-hs-YdV" secondAttribute="trailing" id="ox7-PJ-ziC"/>
+                            <constraint firstItem="yVs-h4-SxS" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="qHY-vW-xN2"/>
+                            <constraint firstItem="Ctf-5V-fDV" firstAttribute="leading" secondItem="yVs-h4-SxS" secondAttribute="trailing" id="rSE-jL-NJR"/>
                             <constraint firstItem="TN0-Kj-LU5" firstAttribute="leading" secondItem="6dz-WO-g9f" secondAttribute="leading" id="sS6-Hh-6Os"/>
                             <constraint firstItem="PUW-lV-XY4" firstAttribute="leading" secondItem="6dz-WO-g9f" secondAttribute="leading" id="sVh-gT-fW2"/>
                             <constraint firstItem="PUW-lV-XY4" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="vA7-Iq-ACT"/>
+                            <constraint firstItem="lsi-wV-jwP" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="z3s-hw-LSJ"/>
                         </constraints>
                     </view>
                     <connections>
@@ -341,6 +382,7 @@ Gw
                         <outlet property="resourceCodePopupButton" destination="WOO-Bk-W8O" id="BEz-EU-3iB"/>
                         <outlet property="startTimeDatePicker" destination="CoX-fg-VZS" id="0bl-dr-hPZ"/>
                         <outlet property="tableView" destination="BOn-Yc-R9v" id="d39-xo-uY5"/>
+                        <outlet property="tableViewTitleTextField" destination="Ctf-5V-fDV" id="7Om-by-VKN"/>
                     </connections>
                 </viewController>
                 <customObject id="tdT-6O-qec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

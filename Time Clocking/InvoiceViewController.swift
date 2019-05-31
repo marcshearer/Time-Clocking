@@ -275,7 +275,7 @@ class InvoiceViewController : NSViewController {
                     linePrice = Utility.round(((minutes / 60.0) / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
                     
                     if Int(customerMO.invoiceDetail) != InvoiceDetail.none.rawValue {
-                        description = "\(deliveryDate.toString())) - "
+                        description = "\(deliveryDate.toString()) - "
                     }
                     switch InvoiceDescription(rawValue: Int(customerMO.invoiceDescription))! {
                     case .notes:
