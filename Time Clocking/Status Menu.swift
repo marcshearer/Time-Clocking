@@ -135,7 +135,10 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     // MARK: - Popover delegate hanlders =========================================================== -
     
     internal func popoverDidClose(_ notification: Notification) {
-        self.update()
+        // Shouldn't happen if hidePopover is called properly from child views
+        if StatusMenu.popover.count != 0 {
+            self.hidePopover(self)
+        }
     }
     
     // MARK: - Main routines to handle the status elements of the menu =========================================================== -
@@ -298,7 +301,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         self.statusMenu.addItem(NSMenuItem.separator())
     }
     
-    // MARK: - Timer handlers =========================================================== -
+    // MARK: - Timer menu option handlers =========================================================== -
     
     @objc private func startTimer(_ sender: Any?) {
         Utility.playSound("Morse")
@@ -326,7 +329,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         self.update()
     }
     
-    // MARK: - Action routines from popup menu options =========================================================== -
+    // MARK: - Other action routines from popup menu options =========================================================== -
     
     @objc private func showEntries(_ sender: Any?) {
         
@@ -437,6 +440,8 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             StatusMenu.popover[index].close()
             StatusMenu.popover.remove(at: index)
         }
+        self.update()
+        
     }
 
     private func createController(_ identifier: String, _ storyboardName: String, viewIdentifier: String? = nil) -> NSViewController? {
