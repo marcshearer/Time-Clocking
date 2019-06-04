@@ -139,6 +139,18 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
+    public func scrollToTop() {
+        Utility.mainThread {
+            self.displayTableView.scrollRowToVisible(0)
+        }
+    }
+    
+    public func scrollToBottom() {
+        Utility.mainThread {
+            self.displayTableView.scrollToEndOfDocument(self)
+        }
+    }
+    
     public func append(record: DataTableViewerDataSource) {
         self.displayTableView.beginUpdates()
         self.records.append(record)
@@ -236,8 +248,8 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
         
         // Use any spare space in the pad columns
-        if widthUsed < self.displayTableView.frame.width {
-            let padUsed = (self.displayTableView.frame.width - widthUsed)
+        if widthUsed < self.displayTableView.frame.width - 8.0 {
+            let padUsed = (self.displayTableView.frame.width - widthUsed - 8.0)
             for index in 0...padColumns.count - 1 {
                 padColumns[index].tableColumn.width += (padUsed / CGFloat(self.padColumns.count))
             }
@@ -398,6 +410,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                     }
                     
                     textField?.isEnabled = enabled
+                    textField?.backgroundColor = NSColor.clear
                     cell = textField
                 }
             }

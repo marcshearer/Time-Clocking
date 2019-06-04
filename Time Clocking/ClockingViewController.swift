@@ -10,7 +10,10 @@ import Cocoa
 import Bond
 import ReactiveKit
 
-class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, ClockingDetailDelegate {
+class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, ClockingDetailDelegate, StatusMenuPopoverDelegate {
+    
+    public var popover: NSPopover?
+    private var popoverBehavior: NSPopover.Behavior!
     
     private var updateTimer: Timer!
     
@@ -21,6 +24,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @IBOutlet private weak var resourceCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodePopupButton: NSPopUpButton!
+    @IBOutlet private weak var projectCodeTextField: NSTextField!
     @IBOutlet private weak var notesTextField: NSTextField!
     @IBOutlet private weak var dailyRateTextField: NSTextField!
     @IBOutlet private weak var startTimeDatePicker: NSDatePicker!
@@ -28,12 +32,19 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @IBOutlet private weak var durationTextField: NSTextField!
     @IBOutlet private weak var todaysActivityTextField: NSTextField!
     @IBOutlet private weak var titleLabel: NSTextField!
+    @IBOutlet private weak var startButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stopButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var pauseButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var resumeButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var resetButtonLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var startButton: NSButton!
-    @IBOutlet private weak var stopAndAddButton: NSButton!
     @IBOutlet private weak var stopButton: NSButton!
-    @IBOutlet private weak var addButton: NSButton!
+    @IBOutlet private weak var pauseButton: NSButton!
+    @IBOutlet private weak var resumeButton: NSButton!
     @IBOutlet private weak var resetButton: NSButton!
     @IBOutlet private weak var closeButton: NSButton!
+    @IBOutlet private weak var clockView: AnalogueClockView!
+    @IBOutlet private weak var resizeButton: NSButton!
     @IBOutlet private weak var tableView: NSTableView!
 
     override func viewDidLoad() {
@@ -48,6 +59,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.reload()
         self.loadClockings()
         self.startUpdateTimer()
+        self.tableViewer?.scrollToBottom()
     }
     
     override func viewDidDisappear() {
@@ -64,31 +76,42 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         self.viewModel.resourceCode.bidirectionalBind(to: resourceCodePopupButton)
         self.viewModel.customerCode.bidirectionalBind(to: customerCodePopupButton)
         self.viewModel.projectCode.bidirectionalBind(to: projectCodePopupButton)
-        self.viewModel.notes.bidirectionalBind(to: self.notesTextField.reactive.editingString)
+        self.viewModel.projectCode.observable.bind(to: projectCodeTextField?.reactive.editingString ?? NSTextField().reactive.editingString)
+        self.viewModel.notes.bidirectionalBind(to: self.notesTextField?.reactive.editingString ?? NSTextField().reactive.editingString)
         self.viewModel.dailyRate.bidirectionalBind(to: self.dailyRateTextField)
         self.viewModel.startTime.bidirectionalBind(to: self.startTimeDatePicker)
         self.viewModel.endTime.bidirectionalBind(to: self.endTimeDatePicker)
-        self.viewModel.durationText.bind(to: self.durationTextField.reactive.editingString)
-        self.viewModel.todaysActivity.bind(to: self.todaysActivityTextField.reactive.editingString)
-        self.viewModel.timerStateDescription.bind(to: self.titleLabel.reactive.editingString)
+        self.viewModel.durationText.bind (to: self.durationTextField?.reactive.editingString ?? NSTextField().reactive.editingString)
+        self.viewModel.todaysActivity.bind(to: self.todaysActivityTextField?.reactive.editingString ?? NSTextField().reactive.editingString)
+        self.viewModel.timerStateDescription.bind(to: self.titleLabel?.reactive.editingString ?? NSTextField().reactive.editingString)
         
         // Bind enablers
-        self.resourceCodePopupButton.isEnabled = true
-        self.customerCodePopupButton.isEnabled = true
-        self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.notesTextField.reactive.isEnabled)
-        self.viewModel.canEditProjectValues.bind(to: self.dailyRateTextField.reactive.isEnabled)
-        self.viewModel.canEditStartTime.bind(to: self.startTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditStartTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker.reactive.alphaValue)
-        self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker.reactive.isEnabled)
-        self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker.reactive.alphaValue)
-        self.viewModel.canStart.bind(to: self.startButton.reactive.isEnabled)
-        self.viewModel.canStop.bind(to: self.stopButton.reactive.isEnabled)
-        self.viewModel.canStop.bind(to: self.stopAndAddButton.reactive.isEnabled)
-        self.viewModel.canAdd.bind(to: self.addButton.reactive.isEnabled)
-        self.viewModel.canReset.bind(to: self.resetButton.reactive.isEnabled)
-        self.durationTextField.isEnabled = false
-        self.closeButton.isEnabled = true
+        let nullHidden = NSTextField().reactive.isHidden
+        let nullEnabled = NSTextField().reactive.isEnabled
+        let nullAlphaValue = NSTextField().reactive.alphaValue
+        self.viewModel.canEditProjectCode.bind(to: self.projectCodePopupButton?.reactive.isEnabled ?? nullEnabled)
+        self.viewModel.canEditProjectValues.bind(to: self.notesTextField?.reactive.isEnabled ?? nullEnabled)
+        self.viewModel.canEditProjectValues.bind(to: self.dailyRateTextField?.reactive.isEnabled ?? nullEnabled)
+        self.viewModel.canEditStartTime.bind(to: self.startTimeDatePicker?.reactive.isEnabled ?? nullEnabled)
+        self.viewModel.canEditStartTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.startTimeDatePicker?.reactive.alphaValue ?? nullAlphaValue)
+        self.viewModel.canEditEndTime.bind(to: self.endTimeDatePicker?.reactive.isEnabled ?? nullEnabled)
+        self.viewModel.canEditEndTime.map{ $0 ? CGFloat(1.0) : CGFloat(0.4) }.bind(to: self.endTimeDatePicker?.reactive.alphaValue ?? nullAlphaValue)
+        self.viewModel.startSequence.map{$0 == 0}.bind(to: self.startButton?.reactive.isHidden ?? nullHidden)
+        self.viewModel.pauseSequence.map{$0 == 0}.bind(to: self.pauseButton?.reactive.isHidden ?? nullHidden)
+        self.viewModel.stopSequence.map{$0 == 0}.bind(to: self.stopButton?.reactive.isHidden ?? nullHidden)
+        self.viewModel.resumeSequence.map{$0 == 0}.bind(to: self.resumeButton?.reactive.isHidden ?? nullHidden)
+        self.viewModel.resetSequence.map{$0 == 0}.bind(to: self.resetButton?.reactive.isHidden ?? nullHidden)
+        
+        // Button positions - couldn't bind these
+        _ = self.viewModel.timerState.observeNext { (_) in
+            let spacing:CGFloat = (self.viewModel.compact.value ? 50 : 90.0)
+            self.startButtonLeadingConstraint.constant = (self.viewModel.startSequence.value - 1) * spacing
+            self.pauseButtonLeadingConstraint.constant = (self.viewModel.pauseSequence.value - 1) * spacing
+            self.stopButtonLeadingConstraint.constant = (self.viewModel.stopSequence.value - 1) * spacing
+            self.resumeButtonLeadingConstraint.constant = (self.viewModel.resumeSequence.value - 1) * spacing
+            self.resetButtonLeadingConstraint.constant = (self.viewModel.resetSequence.value - 1) * spacing
+        }
+        
         
         // Bind button actions
         _ = self.startButton.reactive.controlEvent.observeNext { (_) in
@@ -96,22 +119,23 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             self.viewModel.timerState.value = TimerState.started.rawValue
         }
         
-        _ = self.stopButton.reactive.controlEvent.observeNext { (_) in
+        _ = self.pauseButton.reactive.controlEvent.observeNext { (_) in
             // Stop button
             self.viewModel.timerState.value = TimerState.stopped.rawValue
         }
         
-        _ = self.stopAndAddButton.reactive.controlEvent.observeNext { (_) in
-            // Stop and add button
+        _ = self.stopButton.reactive.controlEvent.observeNext { (_) in
+            // Stop (and add) button
             self.viewModel.timerState.value = TimerState.stopped.rawValue
             self.addClocking()
             self.viewModel.timerState.value = TimerState.notStarted.rawValue
         }
         
-        _ = self.addButton.reactive.controlEvent.observeNext { (_) in
-            // Add button
-            self.addClocking()
-            self.viewModel.timerState.value = TimerState.notStarted.rawValue
+        _ = self.resumeButton.reactive.controlEvent.observeNext { (_) in
+            // Resume button
+            let startTime = self.viewModel.startTime.value
+            self.viewModel.timerState.value = TimerState.started.rawValue
+            self.viewModel.startTime.value = startTime
         }
         
         _ = self.resetButton.reactive.controlEvent.observeNext { (_) in
@@ -119,7 +143,15 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             self.viewModel.timerState.value = TimerState.notStarted.rawValue
         }
         
-        _ = self.closeButton.reactive.controlEvent.observeNext { (_) in
+        _ = self.resizeButton?.reactive.controlEvent.observeNext { (_) in
+            // Resize button - switch between compact and expanded
+            self.stopUpdateTimer()
+            self.viewModel.compact.value = !self.viewModel.compact.value
+            StatusMenu.shared.hidePopover(self.resizeButton)
+            StatusMenu.shared.showEntries(self.resizeButton)
+        }
+
+        _ = self.closeButton?.reactive.controlEvent.observeNext { (_) in
             // Close button
             self.stopUpdateTimer()
             TimeEntry.saveDefaults()
@@ -135,6 +167,41 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         _ = self.viewModel.notes.observeNext { (_) in
             self.saveLastNotes()
         }
+        
+        // Observe timer state changes
+        _ = self.viewModel.timerState.observeNext { (_) in
+            switch TimerState(rawValue: self.viewModel.timerState.value)! {
+            case .notStarted:
+                self.clockView?.hideTimerHands()
+            case .started:
+                self.clockView?.startTimer(startTime: self.viewModel.startTime.value)
+            case .stopped:
+                self.clockView?.showTimer(from: self.viewModel.startTime.value, to: self.viewModel.endTime.value)
+            }
+        }
+        
+        // Observe start time changes
+        _ = self.viewModel.startTime.observable.observeNext { (_) in
+            switch TimerState(rawValue: self.viewModel.timerState.value)! {
+            case .started:
+                self.clockView?.startTimer(startTime: self.viewModel.startTime.value)
+            case .stopped:
+                self.clockView?.showTimer(from: self.viewModel.startTime.value, to: self.viewModel.endTime.value)
+            default:
+                break
+            }
+        }
+        
+        // Observe end time changes
+        _ = self.viewModel.endTime.observable.observeNext { (_) in
+            switch TimerState(rawValue: self.viewModel.timerState.value)! {
+            case .stopped:
+                self.clockView?.showTimer(from: self.viewModel.startTime.value, to: self.viewModel.endTime.value)
+            default:
+                break
+            }
+        }
+        
     }
 
     // MARK: - Core Data Viewer Delegate Handlers ======================================================================
@@ -145,6 +212,8 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         switch recordType {
         case "Clockings":
             // Call the generic clocking detail routine
+            self.popoverBehavior = self.popover?.behavior
+            popover?.behavior = .applicationDefined
             ClockingDetailViewController.show(record as! ClockingMO, delegate: self, from: self)
         default:
             break
@@ -162,13 +231,14 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         if action != .none {
             self.tableViewer.commit(recordType: "Clockings", record: clockingMO, action: action)
         }
+        self.popover?.behavior = self.popoverBehavior
     }
     
     // MARK: - Timer methods ==========================================================================================
     
     private func startUpdateTimer() {
         self.updateTimer = Timer.scheduledTimer(
-            timeInterval: TimeInterval(5),
+            timeInterval: TimeInterval(1),
             target: self,
             selector: #selector(ClockingViewController.timerActivated(_:)),
             userInfo: nil,
@@ -196,20 +266,24 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     // MARK: - Clocking management methods ======================================================================
     
     private func loadClockings() {
-        var predicate: [NSPredicate]? = [NSPredicate(format: "invoiceState <> 'Invoiced'")]
-        if let startDate = self.startDate() {
-            predicate?.append(NSPredicate(format: "startTime > %@", startDate as NSDate))
+        if self.tableViewer != nil {
+            var predicate: [NSPredicate]? = [NSPredicate(format: "invoiceState <> 'Invoiced'")]
+            if let startDate = self.startDate() {
+                predicate?.append(NSPredicate(format: "startTime > %@", startDate as NSDate))
+            }
+            self.tableViewer.show(recordType: "Clockings", layout: clockingsLayout, sort: [("startTime", .ascending)], predicate: predicate)
         }
-        self.tableViewer.show(recordType: "Clockings", layout: clockingsLayout, sort: [("startTime", .ascending)], predicate: predicate)
     }
+        
     
     private func addClocking() {
         let clockingMO = Clockings.writeToDatabase(viewModel: self.viewModel)
-        self.tableViewer.append(recordType: "Clockings", record: clockingMO)
+        self.tableViewer?.append(recordType: "Clockings", record: clockingMO)
+        self.tableViewer?.scrollToBottom()
     }
     
     private func startDate() -> Date? {
-        switch TimeUnit(rawValue: Settings.current.showUnit.value)! {
+        switch PeriodUnit(rawValue: Settings.current.showUnit.value)! {
         case .weeks:
             return Date.startOfWeek(weeks: -Settings.current.showQuantity.value + 1)
             
@@ -235,21 +309,29 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             }
         }
     }
+    
+    private func nullString() -> DynamicSubject<String> {
+        return NSTextField().reactive.editingString
+    }
 
     // MARK: - Core Data table viewer setup methods ======================================================================
     
     private func setupTableViewer() {
-        self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
-        self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
-        self.tableViewer.delegate = self
+        if self.tableView != nil {
+            self.tableView.backgroundColor = NSColor.clear
+            self.tableView.enclosingScrollView?.drawsBackground = false
+            self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
+            self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
+            self.tableViewer.delegate = self
+        }
     }
     
     private func setupLayouts() {
         
         clockingsLayout =
-            [ Layout(key: "=resource",       title: "Resource",    width: -20, alignment: .left,   type: .string,   total: false, pad: false, maxWidth: 100),
-              Layout(key: "=customer",       title: "Customer",    width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
-              Layout(key: "=project",        title: "Project",     width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
+            [ Layout(key: "=resource",       title: "Resource",    width: -20, alignment: .left,   type: .string,   total: false, pad: false, maxWidth: 90),
+              Layout(key: "=customer",       title: "Customer",    width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 90),
+              Layout(key: "=project",        title: "Project",     width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 90),
               Layout(key: "notes",           title: "Description", width: -20, alignment: .left,   type: .string,   total: false, pad: true,  maxWidth: 100),
               Layout(key: "startTime",       title: "From",        width: 115, alignment: .center, type: .dateTime, total: false, pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -10, alignment: .left,   type: .string,   total: false, pad: false),
@@ -258,4 +340,18 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         ]
     }
     
+}
+
+class ColoredView: NSView {
+    @IBInspectable var backgroundColor: NSColor
+    
+    required init?(coder: NSCoder) {
+        self.backgroundColor = NSColor.lightGray
+        super.init(coder: coder)
+    }
+    
+    override func draw(_ dirtyRect: NSRect) {
+        self.backgroundColor.set()
+        self.bounds.fill()
+    }
 }

@@ -21,6 +21,8 @@
 		B24F5BDB228306FA005600F4 /* Clockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B24F5BDA228306FA005600F4 /* Clockings.swift */; };
 		B261F53C229E467000AEAFE9 /* Double Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B261F539229E442400AEAFE9 /* Double Extensions.swift */; };
 		B261F53D229E467000AEAFE9 /* Double Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B261F539229E442400AEAFE9 /* Double Extensions.swift */; };
+		B26349C422A3BF7800E6B644 /* CompactClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B26349C322A3BF7800E6B644 /* CompactClockingViewController.storyboard */; };
+		B26349C522A3BF7800E6B644 /* CompactClockingViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B26349C322A3BF7800E6B644 /* CompactClockingViewController.storyboard */; };
 		B2869871227DD81400377112 /* Core Data Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869850227DD81200377112 /* Core Data Class.swift */; };
 		B2869872227DD81400377112 /* ClockingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869851227DD81200377112 /* ClockingDetailViewController.swift */; };
 		B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */; };
@@ -49,6 +51,10 @@
 		B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869870227DD81400377112 /* Core Data Table Viewer.swift */; };
 		B2901D9C22A0F6000039B93E /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901D9B22A0F6000039B93E /* Constraint.swift */; };
 		B2901D9D22A0F6000039B93E /* Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901D9B22A0F6000039B93E /* Constraint.swift */; };
+		B2901DA022A122650039B93E /* AnalogueClockViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2901D9F22A122650039B93E /* AnalogueClockViewController.storyboard */; };
+		B2901DA122A122650039B93E /* AnalogueClockViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2901D9F22A122650039B93E /* AnalogueClockViewController.storyboard */; };
+		B2901DA322A1246E0039B93E /* AnalogueClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901DA222A1246E0039B93E /* AnalogueClockViewController.swift */; };
+		B2901DA422A1246E0039B93E /* AnalogueClockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2901DA222A1246E0039B93E /* AnalogueClockViewController.swift */; };
 		B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2869865227DD81300377112 /* ProjectDetailViewController.swift */; };
 		B2ACC710229819590036C762 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = B241BEFA227E945B001CC666 /* Resources.swift */; };
 		B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
@@ -112,6 +118,8 @@
 		B2ACC75D2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */; };
 		B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */; };
 		B2ACC7612299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */; };
+		B2C84E0122A38FE5005252D9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C84E0022A38FE5005252D9 /* Button.swift */; };
+		B2C84E0222A38FE5005252D9 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C84E0022A38FE5005252D9 /* Button.swift */; };
 		B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */; };
 		B2C8CC012283DD0C0040CA46 /* ObservablePopupString.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */; };
 		B2C8CC03228410B90040CA46 /* ObservablePickerDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */; };
@@ -170,6 +178,7 @@
 		B241BF0722814520001CC666 /* Time Clock.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Time Clock.xcdatamodel"; sourceTree = "<group>"; };
 		B24F5BDA228306FA005600F4 /* Clockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clockings.swift; sourceTree = "<group>"; };
 		B261F539229E442400AEAFE9 /* Double Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double Extensions.swift"; sourceTree = "<group>"; };
+		B26349C322A3BF7800E6B644 /* CompactClockingViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CompactClockingViewController.storyboard; sourceTree = "<group>"; };
 		B2869850227DD81200377112 /* Core Data Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Class.swift"; sourceTree = "<group>"; };
 		B2869851227DD81200377112 /* ClockingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClockingDetailViewController.swift; sourceTree = "<group>"; };
 		B2869852227DD81200377112 /* ClockingDetailViewController.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ClockingDetailViewController.storyboard; sourceTree = "<group>"; };
@@ -199,6 +208,8 @@
 		B286986F227DD81300377112 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B2869870227DD81400377112 /* Core Data Table Viewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Core Data Table Viewer.swift"; sourceTree = "<group>"; };
 		B2901D9B22A0F6000039B93E /* Constraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraint.swift; sourceTree = "<group>"; };
+		B2901D9F22A122650039B93E /* AnalogueClockViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AnalogueClockViewController.storyboard; sourceTree = "<group>"; };
+		B2901DA222A1246E0039B93E /* AnalogueClockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalogueClockViewController.swift; sourceTree = "<group>"; };
 		B2ACC74A229819590036C762 /* Time Clocking Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Time Clocking Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2ACC74B229819590036C762 /* Time Clocking Development-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Time Clocking Development-Info.plist"; path = "/Users/marcshearer/Documents/Xcode projects/Time Clocking/Time Clocking Development-Info.plist"; sourceTree = "<absolute>"; };
 		B2ACC74F22984DBD0036C762 /* Print Document Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Print Document Class.swift"; sourceTree = "<group>"; };
@@ -206,6 +217,7 @@
 		B2ACC75522999ED40036C762 /* Data Table Viewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data Table Viewer.swift"; sourceTree = "<group>"; };
 		B2ACC75B2299ACC70036C762 /* InvoicePreviewViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = InvoicePreviewViewController.storyboard; sourceTree = "<group>"; };
 		B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvoicePreviewViewController.swift; sourceTree = "<group>"; };
+		B2C84E0022A38FE5005252D9 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockingViewController.swift; sourceTree = "<group>"; };
 		B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePopupString.swift; sourceTree = "<group>"; };
 		B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePickerDate.swift; sourceTree = "<group>"; };
@@ -314,6 +326,7 @@
 				B2869896227DD8B300377112 /* Projects */,
 				B2869897227DD8BA00377112 /* Settings */,
 				B2869893227DD87700377112 /* Utility & Data Classes */,
+				B2901D9E22A1223A0039B93E /* Analogue Clock */,
 			);
 			path = "Time Clocking";
 			sourceTree = "<group>";
@@ -388,6 +401,7 @@
 				B2ACC75522999ED40036C762 /* Data Table Viewer.swift */,
 				B286986A227DD81300377112 /* String Extensions.swift */,
 				B261F539229E442400AEAFE9 /* Double Extensions.swift */,
+				B2C84E0022A38FE5005252D9 /* Button.swift */,
 				B286986C227DD81300377112 /* Date Extensions.swift */,
 				B2C8CC002283DD0C0040CA46 /* ObservablePopupString.swift */,
 				B2C8CC02228410B90040CA46 /* ObservablePickerDate.swift */,
@@ -468,6 +482,7 @@
 			isa = PBXGroup;
 			children = (
 				B286986E227DD81300377112 /* ClockingViewController.storyboard */,
+				B26349C322A3BF7800E6B644 /* CompactClockingViewController.storyboard */,
 				B2C8CBFE2283470F0040CA46 /* ClockingViewController.swift */,
 			);
 			name = "Clockings Entry";
@@ -491,6 +506,15 @@
 				B2ACC75E2299AD2A0036C762 /* InvoicePreviewViewController.swift */,
 			);
 			name = "Invoices and Credits";
+			sourceTree = "<group>";
+		};
+		B2901D9E22A1223A0039B93E /* Analogue Clock */ = {
+			isa = PBXGroup;
+			children = (
+				B2901D9F22A122650039B93E /* AnalogueClockViewController.storyboard */,
+				B2901DA222A1246E0039B93E /* AnalogueClockViewController.swift */,
+			);
+			name = "Analogue Clock";
 			sourceTree = "<group>";
 		};
 		B2ACC74C22984D3A0036C762 /* Print Abstractions */ = {
@@ -646,6 +670,7 @@
 				B2ACC75C2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */,
 				B2869881227DD81400377112 /* SettingsViewController.storyboard in Resources */,
 				B2869876227DD81400377112 /* Main.storyboard in Resources */,
+				B2901DA022A122650039B93E /* AnalogueClockViewController.storyboard in Resources */,
 				B2869873227DD81400377112 /* ClockingDetailViewController.storyboard in Resources */,
 				B241BEF8227E5349001CC666 /* ResourceDetailViewController.storyboard in Resources */,
 				B2869874227DD81400377112 /* MaintenanceViewController.storyboard in Resources */,
@@ -654,6 +679,7 @@
 				B2C8CC202292EC590040CA46 /* DocumentViewController.storyboard in Resources */,
 				B286987D227DD81400377112 /* SelectionViewController.storyboard in Resources */,
 				B286987B227DD81400377112 /* Assets.xcassets in Resources */,
+				B26349C422A3BF7800E6B644 /* CompactClockingViewController.storyboard in Resources */,
 				B286987F227DD81400377112 /* InvoiceViewController.storyboard in Resources */,
 				B286988D227DD81400377112 /* ClockingViewController.storyboard in Resources */,
 			);
@@ -682,6 +708,7 @@
 				B2ACC75D2299ACC70036C762 /* InvoicePreviewViewController.storyboard in Resources */,
 				B2ACC73A229819590036C762 /* SettingsViewController.storyboard in Resources */,
 				B2ACC73B229819590036C762 /* Main.storyboard in Resources */,
+				B2901DA122A122650039B93E /* AnalogueClockViewController.storyboard in Resources */,
 				B2ACC73C229819590036C762 /* ClockingDetailViewController.storyboard in Resources */,
 				B2ACC73D229819590036C762 /* ResourceDetailViewController.storyboard in Resources */,
 				B2ACC73E229819590036C762 /* MaintenanceViewController.storyboard in Resources */,
@@ -690,6 +717,7 @@
 				B2ACC741229819590036C762 /* DocumentViewController.storyboard in Resources */,
 				B2ACC742229819590036C762 /* SelectionViewController.storyboard in Resources */,
 				B2ACC743229819590036C762 /* Assets.xcassets in Resources */,
+				B26349C522A3BF7800E6B644 /* CompactClockingViewController.storyboard in Resources */,
 				B2ACC744229819590036C762 /* InvoiceViewController.storyboard in Resources */,
 				B2ACC745229819590036C762 /* ClockingViewController.storyboard in Resources */,
 			);
@@ -776,6 +804,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2869884227DD81400377112 /* ProjectDetailViewController.swift in Sources */,
+				B2C84E0122A38FE5005252D9 /* Button.swift in Sources */,
 				B241BEFB227E945B001CC666 /* Resources.swift in Sources */,
 				B2C8CBFF2283470F0040CA46 /* ClockingViewController.swift in Sources */,
 				B241BF0822814520001CC666 /* Time Clocking.xcdatamodeld in Sources */,
@@ -789,6 +818,7 @@
 				B2ACC7602299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
 				B2C8CC1222897FB00040CA46 /* ProjectFilterViewController.swift in Sources */,
 				B241BEFD227E95B6001CC666 /* Customers.swift in Sources */,
+				B2901DA322A1246E0039B93E /* AnalogueClockViewController.swift in Sources */,
 				B286988F227DD81400377112 /* Core Data Table Viewer.swift in Sources */,
 				B286988C227DD81400377112 /* InvoiceViewController.swift in Sources */,
 				B241BEF2227E5299001CC666 /* ResourceViewModel.swift in Sources */,
@@ -843,6 +873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2ACC70F229819590036C762 /* ProjectDetailViewController.swift in Sources */,
+				B2C84E0222A38FE5005252D9 /* Button.swift in Sources */,
 				B2ACC710229819590036C762 /* Resources.swift in Sources */,
 				B2ACC711229819590036C762 /* ClockingViewController.swift in Sources */,
 				B2ACC712229819590036C762 /* Time Clocking.xcdatamodeld in Sources */,
@@ -856,6 +887,7 @@
 				B2ACC7612299AD2A0036C762 /* InvoicePreviewViewController.swift in Sources */,
 				B2ACC71A229819590036C762 /* ProjectFilterViewController.swift in Sources */,
 				B2ACC71B229819590036C762 /* Customers.swift in Sources */,
+				B2901DA422A1246E0039B93E /* AnalogueClockViewController.swift in Sources */,
 				B2ACC71C229819590036C762 /* Core Data Table Viewer.swift in Sources */,
 				B2ACC71D229819590036C762 /* InvoiceViewController.swift in Sources */,
 				B2ACC71E229819590036C762 /* ResourceViewModel.swift in Sources */,

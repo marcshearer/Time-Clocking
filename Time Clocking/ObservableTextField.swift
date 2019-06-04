@@ -54,42 +54,44 @@ class ObservableTextFieldFloat<T: BinaryFloatingPoint> {
         self.numberFormatter.maximumFractionDigits = decimalPlaces
     }
     
-    public func bidirectionalBind(to textField: NSTextField) {
-        _ = self.observable.observeNext { (value) in
-            textField.stringValue = value
-        }
-        _ = textField.reactive.editingString.observeNext { (value) in
-            var number: NSNumber?
-            var string: String?
-            var ok = false
-            
-            let strippedValue = value.replacingOccurrences(of: ",", with: "")
-            
-            number = self.numberFormatter.number(from: strippedValue)
-            if number == nil && self.currency {
-                // Try currency formatter
-                number = self.currencyFormatter.number(from: strippedValue)
+    public func bidirectionalBind(to textField: NSTextField?) {
+        if let textField = textField {
+            _ = self.observable.observeNext { (value) in
+                textField.stringValue = value
             }
-            
-            if number != nil {
-                if number as! Double >= 0.0 || self.negative {
-                    string = self.currencyFormatter.string(from: number!)
-                    if let string = string {
-                        if let newNumber = self.currencyFormatter.number(from: string) {
-                            if number == newNumber {
-                                // Ended up back where we thought
-                                ok = true
+            _ = textField.reactive.editingString.observeNext { (value) in
+                var number: NSNumber?
+                var string: String?
+                var ok = false
+                
+                let strippedValue = value.replacingOccurrences(of: ",", with: "")
+                
+                number = self.numberFormatter.number(from: strippedValue)
+                if number == nil && self.currency {
+                    // Try currency formatter
+                    number = self.currencyFormatter.number(from: strippedValue)
+                }
+                
+                if number != nil {
+                    if number as! Double >= 0.0 || self.negative {
+                        string = self.currencyFormatter.string(from: number!)
+                        if let string = string {
+                            if let newNumber = self.currencyFormatter.number(from: string) {
+                                if number == newNumber {
+                                    // Ended up back where we thought
+                                    ok = true
+                                }
                             }
                         }
                     }
                 }
-            }
-            
-            if ok || value == "" || (value == "-" && self.negative) || (value == self.currencySymbol && self.currency) {
-                self.observable.value = value
-            } else {
-                // Illegal - reset it
-                textField.stringValue = self.observable.value
+                
+                if ok || value == "" || (value == "-" && self.negative) || (value == self.currencySymbol && self.currency) {
+                    self.observable.value = value
+                } else {
+                    // Illegal - reset it
+                    textField.stringValue = self.observable.value
+                }
             }
         }
     }
@@ -104,7 +106,9 @@ class ObservableTextFieldInt<T: BinaryInteger> {
         set(newValue) { self.observable.value = "\(newValue)" }
     }
     
-    public func bidirectionalBind(to textField: NSTextField) {
-        self.observable.bidirectionalBind(to: textField.reactive.editingString)
+    public func bidirectionalBind(to textField: NSTextField?) {
+        if let textField = textField {
+            self.observable.bidirectionalBind(to: textField.reactive.editingString)
+        }
     }
 }

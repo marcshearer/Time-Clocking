@@ -96,6 +96,14 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
         self.dataTableViewer.show(layout: layout, records: records)
         
     }
+        
+    public func scrollToTop() {
+        self.dataTableViewer.scrollToTop()
+    }
+    
+    public func scrollToBottom() {
+        self.dataTableViewer.scrollToBottom()
+    }
     
     public func append(recordType: String, record: NSManagedObject) {
         if self.recordType == recordType {

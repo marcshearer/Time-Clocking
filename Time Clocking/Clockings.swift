@@ -11,7 +11,7 @@ import CoreData
 
 class Clockings {
     
-    static public var lastClockingEndTime: Date!
+    static public var lastClocking: ClockingMO!
     
     static public  func load(specificResource: String? = nil, specificCustomer: String? = nil, specificProject: String? = nil, fromTime: Date? = nil, toTime: Date? = nil) -> [ClockingMO] {
         
@@ -42,44 +42,44 @@ class Clockings {
             clockingMO = CoreData.create(from: "Clockings") as ClockingMO
             viewModel.copy(to: clockingMO)
         }
-        Clockings.lastClockingEndTime = max(Clockings.lastClockingEndTime, clockingMO.endTime!)
+        Clockings.lastClocking = clockingMO
         
         return clockingMO
     }
     
     static public func updateDatabase(from viewModel: ClockingViewModel, clockingMO: ClockingMO) {
-        let updateRequired = (clockingMO.endTime! >= Clockings.lastClockingEndTime && viewModel.endTime.value < Clockings.lastClockingEndTime)
+        let updateRequired = (Clockings.lastClocking != nil && clockingMO.endTime! >= Clockings.lastClocking!.endTime! && viewModel.endTime.value < Clockings.lastClocking!.endTime!)
         _ = CoreData.update {
             viewModel.copy(to: clockingMO)
         }
         if updateRequired {
-            self.updateLastClockingEndTime()
+            self.updateLastClocking()
         } else {
-            Clockings.lastClockingEndTime = max(Clockings.lastClockingEndTime, clockingMO.endTime!)
+            Clockings.lastClocking = clockingMO
         }
     }
     
     static public func removeFromDatabase(_ clockingMO: ClockingMO) {
-        let updateRequired = (clockingMO.endTime! >= Clockings.lastClockingEndTime)
+        let updateRequired = (clockingMO.clockingUUID ==  Clockings.lastClocking.clockingUUID)
         _ = CoreData.update {
             CoreData.delete(record: clockingMO)
         }
         if updateRequired {
-            self.updateLastClockingEndTime()
+            self.updateLastClocking()
         }
     }
     
-    static public func updateLastClockingEndTime() {
+    static public func updateLastClocking() {
         let clockings = CoreData.fetch(from: "Clockings", limit: 1, sort: [("endTime", .descending)]) as! [ClockingMO]
         if clockings.count == 0 {
-            Clockings.lastClockingEndTime = Date(timeIntervalSince1970: 0)
+            Clockings.lastClocking = nil
         } else {
-            Clockings.lastClockingEndTime = clockings.first!.endTime!
+            Clockings.lastClocking = clockings.first!
         }
     }
     
     static public func startTime(from startTime: Date = Date()) -> Date {
-        return max(Clockings.lastClockingEndTime ?? Date(timeIntervalSince1970: 0), Date.startOfMinute(from: startTime))
+        return max(Clockings.lastClocking?.endTime ?? Date(timeIntervalSince1970: 0), Date.startOfMinute(from: startTime))
     }
     
     static public func endTime(from endTime: Date = Date(), startTime: Date) -> Date {
@@ -134,11 +134,11 @@ class Clockings {
         return result
     }
     
-    static public func todaysClockingsText() -> String? {
+    static public func todaysClockingsText(abbreviated: Bool = false) -> String? {
         let todaysClockings = Clockings.todaysClockings()
         var today: String?
         if todaysClockings.minutes != 0.0 {
-            today = "\(Clockings.duration(minutes: todaysClockings.minutes))"
+            today = "\(Clockings.duration(minutes: todaysClockings.minutes, abbreviated: abbreviated))"
             if todaysClockings.value != 0 {
                 today = today! + " - \(todaysClockings.value.toCurrencyString())"
             }

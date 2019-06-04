@@ -10,9 +10,17 @@ import Cocoa
 import Bond
 import ReactiveKit
 
+public enum PeriodUnit: Int {
+    case days = 0
+    case weeks = 1
+    case months = 2
+    case years = 3
+    
+}
+
 class SettingsViewModel: NSObject, NSCopying {
     
-    var showUnit = Observable<Int>(TimeUnit.months.rawValue)
+    var showUnit = Observable<Int>(PeriodUnit.months.rawValue)
     var showQuantity = ObservableTextFieldInt<Int>()
     var showQuantityLabel = Observable<String>("")
     var nextInvoiceNo = ObservableTextFieldInt<Int>()
@@ -25,7 +33,7 @@ class SettingsViewModel: NSObject, NSCopying {
         self.setupMapping()
     }
     
-    convenience init(showUnit: TimeUnit, showQuantity: Int, nextInvoiceNo: Int, nextCreditNo: Int, roundMinutes: Int) {
+    convenience init(showUnit: PeriodUnit, showQuantity: Int, nextInvoiceNo: Int, nextCreditNo: Int, roundMinutes: Int) {
         self.init()
         self.showUnit.value = showUnit.rawValue
         self.showQuantity.value = showQuantity
@@ -38,7 +46,7 @@ class SettingsViewModel: NSObject, NSCopying {
 
     private func setupMapping() {
         _ = self.showUnit.observeNext { (_) in
-            self.showQuantityLabel.value = "Number of \(TimeUnit(rawValue: self.showUnit.value) ?? .days) to show:"
+            self.showQuantityLabel.value = "Number of \(PeriodUnit(rawValue: self.showUnit.value) ?? .days) to show:"
         }
         _ = self.showQuantity.observable.observeNext { (_) in
             self.canSave.value = (self.showQuantity.value > 0)
@@ -48,7 +56,7 @@ class SettingsViewModel: NSObject, NSCopying {
     // MARK: - Method to copy view model ================================================================= -
     
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copy = SettingsViewModel(showUnit: TimeUnit(rawValue: self.showUnit.value)!, showQuantity: self.showQuantity.value, nextInvoiceNo: self.nextInvoiceNo.value, nextCreditNo: self.nextCreditNo.value, roundMinutes: self.roundMinutes.value)
+        let copy = SettingsViewModel(showUnit: PeriodUnit(rawValue: self.showUnit.value)!, showQuantity: self.showQuantity.value, nextInvoiceNo: self.nextInvoiceNo.value, nextCreditNo: self.nextCreditNo.value, roundMinutes: self.roundMinutes.value)
         return copy
     }
     

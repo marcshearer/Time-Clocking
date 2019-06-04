@@ -8,6 +8,10 @@
 
 import Cocoa
 
+protocol StatusMenuPopoverDelegate {
+    var popover: NSPopover? {get set}
+}
+
 class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     public static let shared = StatusMenu()
@@ -205,18 +209,21 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             button.toolTip = toolTip
             self.setImage()
             
-            if timeEntry.projectCode.value == "" {
-                self.setTitle("")
-            } else {
-                let projects = Projects.load(specificCustomer: timeEntry.customerCode.value, specificProject: timeEntry.projectCode.value, includeClosed: true)
-                if projects.count == 1 && (projects.first?.statusBarTitle ?? "") != "" {
-                    projectTitle = projects.first!.statusBarTitle!
-                }
+            if StatusMenu.popover.count == 0 {
                 
-                if TimerState(rawValue: timeEntry.timerState.value) == .stopped {
-                    self.setTitle("Stopped")
+                if timeEntry.projectCode.value == "" {
+                    self.setTitle("")
                 } else {
-                    self.setTitle(projectTitle)
+                    let projects = Projects.load(specificCustomer: timeEntry.customerCode.value, specificProject: timeEntry.projectCode.value, includeClosed: true)
+                    if projects.count == 1 && (projects.first?.statusBarTitle ?? "") != "" {
+                        projectTitle = projects.first!.statusBarTitle!
+                    }
+                    
+                    if TimerState(rawValue: timeEntry.timerState.value) == .stopped {
+                        self.setTitle("Paused")
+                    } else {
+                        self.setTitle(projectTitle)
+                    }
                 }
             }
         }
@@ -226,16 +233,16 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         var imageName: String
         
         if close || StatusMenu.popover.count != 0 {
-            imageName = "close"
+            imageName = "ringClose"
         }
         else if TimeEntry.current.projectCode.value == "" {
             imageName = "clockings"
         } else {
             switch TimerState(rawValue: TimeEntry.current.timerState.value)! {
             case .notStarted:
-                imageName = "start"
+                imageName = "ringStart"
             case .started:
-                imageName = "stop"
+                imageName = "ringStop"
             default:
                 imageName = "clockings"
             }
@@ -245,6 +252,8 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             imageName += "White"
         } else if AppDelegate.isDevelopment {
             imageName += "Blue"
+        } else {
+            imageName += "Green"
         }
         self.statusButtonImage.image = NSImage(named: NSImage.Name(imageName))!
     }
@@ -331,17 +340,30 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     // MARK: - Other action routines from popup menu options =========================================================== -
     
-    @objc private func showEntries(_ sender: Any?) {
+    @objc public func showEntries(_ sender: Any?) {
+        
+        var viewControllerName: String
+        var identifier: String
+        
+        if TimeEntry.current.compact.value {
+            viewControllerName = "CompactClockingViewController"
+            identifier = "Compact"
+        } else {
+            viewControllerName = "ClockingViewController"
+            identifier = "Clockings"
+        }
         
         // Retrieve or create the view controller
-        let viewController = self.createController("Clockings", "ClockingViewController") as? ClockingViewController
-        self.showPopover("Clockings", viewController!)
+        let viewController = self.createController(identifier, viewControllerName) as? ClockingViewController
+        self.setTitle("")
+        self.showPopover(identifier, viewController!, transient: true)
     }
     
     @objc private func showSettings(_ sender: Any?) {
         
         // Retrieve or create the view controller
         let viewController = self.createController("Settings", "SettingsViewController") as? SettingsViewController
+        self.setTitle("Settings")
         self.showPopover("Settings", viewController!)
     }
     
@@ -350,24 +372,27 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         // Retrieve or create the view controller
         let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
         viewController?.mode = .reportClockings
+        self.setTitle("Clockings")
         self.showPopover("Reporting", viewController!)
     }
     
     @objc private func showInvoiceSelection(_ sender: Any?) {
         
         // Retrieve or create the view controller
-        let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        let viewController = self.createController("Invoices", "SelectionViewController") as? SelectionViewController
         viewController?.mode = .invoiceCredit
         viewController?.documentType = .invoice
+        self.setTitle("Invoices")
         self.showPopover("Reporting", viewController!)
     }
     
     @objc private func showCreditSelection(_ sender: Any?) {
         
         // Retrieve or create the view controller
-        let viewController = self.createController("Reporting", "SelectionViewController") as? SelectionViewController
+        let viewController = self.createController("Credits", "SelectionViewController") as? SelectionViewController
         viewController?.mode = .invoiceCredit
         viewController?.documentType = .credit
+        self.setTitle("Credits")
         self.showPopover("Reporting", viewController!)
     }
     
@@ -375,6 +400,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         
         // Retrieve or create the view controller
         let viewController = self.createController("Documents", "DocumentViewController") as? DocumentViewController
+        self.setTitle("Documents")
         self.showPopover("Documents", viewController!)
     }
     
@@ -382,6 +408,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         // Retrieve or create the view controller
         let viewController = self.createController("Resources", "MaintenanceViewController") as? MaintenanceViewController
         viewController?.delegate = Resources()
+        self.setTitle("Resources")
         self.showPopover("Resources", viewController!)
     }
     
@@ -389,6 +416,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         // Retrieve or create the view controller
         let viewController = self.createController("Customers", "MaintenanceViewController") as? MaintenanceViewController
         viewController?.delegate = Customers()
+        self.setTitle("Customers")
         self.showPopover("Customers", viewController!)
     }
     
@@ -399,6 +427,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         viewController?.delegate = Projects()
         let size = viewController!.view.frame.size
         viewController?.view.setFrameSize(NSSize(width: size.width, height: size.height + growHeight))
+        self.setTitle("Projects")
         self.showPopover("Projects", viewController!)
     }
     
@@ -408,7 +437,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     // MARK: - Routines to show a popover =========================================================== -
     
-    private func showPopover(_ identifier: String, _ viewController: NSViewController) {
+    public func showPopover(_ identifier: String, _ viewController: NSViewController, transient: Bool = false) {
         
         if let button = self.statusItem.button {
             
@@ -416,10 +445,16 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             var popover = self.popoverList[identifier]
             if popover == nil {
                 popover = NSPopover()
+                if transient {
+                    popover?.behavior = .transient
+                }
                 popover?.delegate = self
                 self.popoverList[identifier] = popover
             }
             if let popover = popover {
+                if var popoverDelegate = viewController as? StatusMenuPopoverDelegate {
+                    popoverDelegate.popover = popover
+                }
                 popover.contentViewController = viewController
                 popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)

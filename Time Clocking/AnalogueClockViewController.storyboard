@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Analogue Clock View Controller-->
+        <scene sceneID="gKO-tO-axT">
+            <objects>
+                <viewController storyboardIdentifier="AnalogueClockViewController" id="oZq-iA-mIj" customClass="AnalogueClockViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="jlX-VF-jla" customClass="AnalogueClockView" customModule="Time_Clocking" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="Jiz-MC-Wdn" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="158" y="213.5"/>
+        </scene>
+    </scenes>
+</document>

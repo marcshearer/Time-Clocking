@@ -18,12 +18,14 @@ class ObservablePickerDate {
         set(newValue) {self.observable.value = newValue }
     }
     
-    func bidirectionalBind(to datePicker: NSDatePicker) {
-        _ = observable.observeNext { (_) in
-            datePicker.dateValue = self.observable.value
-        }
-        _ = datePicker.reactive.objectValue.observeNext { (_) in
-            self.observable.value = datePicker.dateValue
+    func bidirectionalBind(to datePicker: NSDatePicker?) {
+        if let datePicker = datePicker {
+            _ = observable.observeNext { (_) in
+                datePicker.dateValue = self.observable.value
+            }
+            _ = datePicker.reactive.objectValue.observeNext { (_) in
+                self.observable.value = datePicker.dateValue
+            }
         }
     }
     

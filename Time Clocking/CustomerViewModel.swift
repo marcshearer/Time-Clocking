@@ -1,5 +1,5 @@
 //
-//  CustommerViewModel.swift
+//  CustomerViewModel.swift
 //  Time Clocking
 //
 //  Created by Marc Shearer on 06/05/2019.
@@ -20,9 +20,6 @@ public enum TimeUnit: Int {
     case none = -1
     case hours = 0
     case days = 1
-    case weeks = 2
-    case months = 3
-    case years = 4
     
     public var description: String {
         get {
@@ -33,16 +30,9 @@ public enum TimeUnit: Int {
                 return "Hours"
             case .days:
                 return "Days"
-            case .weeks:
-                return "Weeks"
-            case .months:
-                return "Months"
-            case .years:
-                return "Years"
             }
         }
     }
-    
 }
 
 public enum InvoiceDetail: Int {

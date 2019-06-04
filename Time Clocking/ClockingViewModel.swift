@@ -60,6 +60,7 @@ class ClockingViewModel {
     public var lastDocumentDate = ObservablePickerDate()
     public var documentNumber = Observable<String>("")
     public var clockingsInvoiceable = Observable<Bool>(false)
+    public var compact = Observable<Bool>(false)
  
     // Enabled properties
     public var canEditProjectCode = Observable<Bool>(true)
@@ -69,10 +70,11 @@ class ClockingViewModel {
     public var canEditDocumentNumber = Observable<Bool>(true)
     public var canEditDocumentDate = Observable<Bool>(true)
     public var canEditOther = Observable<Bool>(true)
-    public var canStart = Observable<Bool>(true)
-    public var canStop = Observable<Bool>(true)
-    public var canAdd = Observable<Bool>(true)
-    public var canReset = Observable<Bool>(true)
+    public var startSequence = Observable<CGFloat>(0)
+    public var pauseSequence = Observable<CGFloat>(0)
+    public var stopSequence = Observable<CGFloat>(0)
+    public var resumeSequence = Observable<CGFloat>(0)
+    public var resetSequence = Observable<CGFloat>(0)
     public var canSave = Observable<Bool>(true)
     public var canInvoice = Observable<Bool>(true)
 
@@ -244,29 +246,50 @@ class ClockingViewModel {
                 if self.mode != .clockingEntry || self.timerState.value != TimerState.notStarted.rawValue {
                     self.durationText.value = Clockings.duration(start: self.startTime.value, end: self.endTime.value, short: "Less than 1 minute", abbreviated: false)
                 } else {
-                    self.durationText.value = "Not started"
-                }
-                if self.mode == .clockingEntry {
-                    if self.timerState.value != TimerState.notStarted.rawValue {
-                        let minutes = Clockings.minutes(self)
-                        let value = Utility.round(((minutes / 60.0) / self.hoursPerDay.value) * self.dailyRate.value, 2)
-                        if value > 0 {
-                            self.durationText.value += " - \(value.toCurrencyString())"
-                        }
+                    if self.compact.value && Clockings.lastClocking != nil {
+                        self.durationText.value = "Last: \(Clockings.duration(start: Clockings.lastClocking!.startTime!, end: Clockings.lastClocking!.endTime!, short: "Less than 1 minute", abbreviated: true))"
+                    } else {
+                        self.durationText.value = "Not started"
                     }
                 }
+                if self.mode == .clockingEntry {
+                    self.durationText.value += self.getClockingValue()
+                }
                 if !self.initialising {
-                    self.todaysActivity.value = Clockings.todaysClockingsText() ?? "None"
+                    self.todaysActivity.value = (self.compact.value ? "Today: " : "") + (Clockings.todaysClockingsText(abbreviated: self.compact.value) ?? "None")
                 }
             }
             
             // State or resource code or project code changes
             _ = ReactiveKit.combineLatest(self.timerState, self.resourceCode.observable, self.projectCode.observable).observeNext { (_) in
-                // Update which buttons can be enabled
-                self.canStart.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.timerState.value == TimerState.notStarted.rawValue)
-                self.canStop.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.timerState.value == TimerState.started.rawValue)
-                self.canAdd.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.timerState.value == TimerState.stopped.rawValue)
-                self.canReset.value = (self.resourceCode.value != "" && self.projectCode.value != "" && self.timerState.value != TimerState.notStarted.rawValue)
+                // Update position (and visibility) of buttons
+                var sequence: CGFloat = 1.0
+                self.startSequence.value = 0
+                self.pauseSequence.value = 0
+                self.stopSequence.value = 0
+                self.resumeSequence.value = 0
+                self.resetSequence.value = 0
+                
+                if self.resourceCode.value != "" && self.projectCode.value != "" {
+                    if self.timerState.value == TimerState.notStarted.rawValue {
+                        self.startSequence.value = sequence
+                        sequence += 1
+                    }
+                    if self.timerState.value == TimerState.started.rawValue {
+                        self.pauseSequence.value = sequence
+                        sequence += 1
+                    }
+                    if self.timerState.value == TimerState.stopped.rawValue {
+                        self.resumeSequence.value = sequence
+                        sequence += 1
+                    }
+                    if self.timerState.value != TimerState.notStarted.rawValue {
+                        self.stopSequence.value = sequence
+                        sequence += 1
+                        self.resetSequence.value = sequence
+                        sequence += 1
+                    }
+                }
             }
         }
         
@@ -367,20 +390,48 @@ class ClockingViewModel {
     }
     
     public func getStateDescription() -> String {
-        var description = "Clocking -"
+        var description = ""
         
         switch TimerState(rawValue: self.timerState.value)! {
         case .notStarted:
-            description += " Not started"
+            if self.compact.value && Clockings.lastClocking != nil {
+                description += "Last: \(Clockings.duration(start: Clockings.lastClocking!.startTime!, end: Clockings.lastClocking!.endTime!, short: "Less than 1 minute", abbreviated: true))"
+            } else {
+                description += "Not started"
+            }
+
             
         case .started:
-            description += " Started \(Clockings.duration(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now", abbreviated: false))"
+            description += " Started \(Clockings.duration(start: self.startTime.value, end: Date(), suffix: "ago", short: "just now", abbreviated: self.compact.value))"
             
         case .stopped:
-            description += " Stopped after \(Clockings.duration(start: self.startTime.value, end: self.endTime.value, suffix: "", short: "less than 1 minute", abbreviated: false))"
-            
+            description += " Paused after \(Clockings.duration(start: self.startTime.value, end: self.endTime.value, suffix: "", short: (self.compact.value ? "< 1 min" : "less than 1 minute"), abbreviated: self.compact.value))"
+        }
+        
+        if self.compact.value {
+            description += self.getClockingValue()
         }
         
         return description
+    }
+    
+    public func getClockingValue() -> String {
+        var result = ""
+        var minutes = 0.0
+        
+        if self.timerState.value != TimerState.notStarted.rawValue {
+            minutes = Clockings.minutes(self)
+        } else if Clockings.lastClocking != nil {
+            minutes = Clockings.minutes(Clockings.lastClocking)
+        }
+        
+        if minutes != 0 {
+            let value = Utility.round(((minutes / 60.0) / self.hoursPerDay.value) * self.dailyRate.value, 2)
+            if value > 0 {
+                result = " - \(value.toCurrencyString())"
+            }
+        }
+        
+        return result
     }
 }

@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         TimeEntry.loadDefaults()
         
         // Setup last clocking end time - subsequently maintained as database is updated
-        Clockings.updateLastClockingEndTime()
+        Clockings.updateLastClocking()
         
         // Build status menu
         StatusMenu.shared.update()
@@ -112,7 +112,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func registerDefaults() {
         UserDefaults.standard.register(defaults: [
-            "showUnit":         TimeUnit.months.rawValue,
+            "showUnit":         PeriodUnit.months.rawValue,
             "showQuantity":     2,
             "nextInvoiceNo":    100001,
             "nextCreditNo":     200001,

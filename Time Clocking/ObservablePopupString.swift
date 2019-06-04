@@ -86,11 +86,13 @@ class ObservablePopupString {
         self.observable.value = value
     }
     
-    public func bidirectionalBind(to popUpButton: NSPopUpButton) {
-        self.popUpButton = popUpButton
-        self.fillPopup()
-        self.popupIndex.bidirectionalBind(to: popUpButton.reactive.indexOfSelectedItem)
-        self.title.bind(to: popUpButton.reactive.title)
+    public func bidirectionalBind(to popUpButton: NSPopUpButton?) {
+        if let popUpButton = popUpButton {
+            self.popUpButton = popUpButton
+            self.fillPopup()
+            self.popupIndex.bidirectionalBind(to: popUpButton.reactive.indexOfSelectedItem)
+            self.title.bind(to: popUpButton.reactive.title)
+        }
     }
     
     private func fillPopup() {
