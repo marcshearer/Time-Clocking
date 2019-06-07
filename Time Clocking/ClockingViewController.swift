@@ -32,11 +32,11 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     @IBOutlet private weak var durationTextField: NSTextField!
     @IBOutlet private weak var todaysActivityTextField: NSTextField!
     @IBOutlet private weak var titleLabel: NSTextField!
-    @IBOutlet private weak var startButtonLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var stopButtonLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var pauseButtonLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var resumeButtonLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var resetButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var startButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var stopButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var pauseButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var resumeButtonLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private var resetButtonLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var startButton: NSButton!
     @IBOutlet private weak var stopButton: NSButton!
     @IBOutlet private weak var pauseButton: NSButton!
@@ -56,8 +56,13 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        self.viewModel.reload()
-        self.loadClockings()
+        if let coloredView = self.view as? ColoredView {
+            coloredView.backgroundColor = StatusMenu.compactWindowColor!
+        }
+        if self.tableViewer != nil {
+            self.viewModel.reload()
+            self.loadClockings()
+        }
         self.startUpdateTimer()
         self.tableViewer?.scrollToBottom()
     }
@@ -104,7 +109,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         
         // Button positions - couldn't bind these
         _ = self.viewModel.timerState.observeNext { (_) in
-            let spacing:CGFloat = (self.viewModel.compact.value ? 50 : 90.0)
+            let spacing:CGFloat = (self.viewModel.compact.value ? 50 : 60.0)
             self.startButtonLeadingConstraint.constant = (self.viewModel.startSequence.value - 1) * spacing
             self.pauseButtonLeadingConstraint.constant = (self.viewModel.pauseSequence.value - 1) * spacing
             self.stopButtonLeadingConstraint.constant = (self.viewModel.stopSequence.value - 1) * spacing
@@ -146,8 +151,8 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         _ = self.resizeButton?.reactive.controlEvent.observeNext { (_) in
             // Resize button - switch between compact and expanded
             self.stopUpdateTimer()
+            StatusMenu.shared.hideWindows(self)
             self.viewModel.compact.value = !self.viewModel.compact.value
-            StatusMenu.shared.hidePopover(self.resizeButton)
             StatusMenu.shared.showEntries(self.resizeButton)
         }
 
@@ -155,7 +160,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             // Close button
             self.stopUpdateTimer()
             TimeEntry.saveDefaults()
-            StatusMenu.shared.hidePopover(self.closeButton)
+            StatusMenu.shared.hideWindows(self)
         }
         
         // Observe data changes
@@ -252,13 +257,15 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     @objc private func timerActivated(_ sender: Any) {
         let state = TimerState(rawValue: TimeEntry.current.timerState.value)
-        let now = Date()
-        
-        if state == .notStarted {
-            self.viewModel.startTime.value = Clockings.startTime(from: now)
-        }
         
         if state != .stopped {
+
+            let now = Date()
+        
+            if state == .notStarted {
+                self.viewModel.startTime.value = Clockings.startTime(from: now)
+            }
+            
             self.viewModel.endTime.value = Clockings.endTime(from: now, startTime: self.viewModel.startTime.value)
         }
     }
@@ -318,7 +325,6 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     private func setupTableViewer() {
         if self.tableView != nil {
-            self.tableView.backgroundColor = NSColor.clear
             self.tableView.enclosingScrollView?.drawsBackground = false
             self.tableViewer = CoreDataTableViewer(displayTableView: self.tableView)
             self.tableViewer.dateTimeFormat = "dd/MM/yyyy HH:mm"
@@ -343,7 +349,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
 }
 
 class ColoredView: NSView {
-    @IBInspectable var backgroundColor: NSColor
+    @IBInspectable public var backgroundColor: NSColor
     
     required init?(coder: NSCoder) {
         self.backgroundColor = NSColor.lightGray

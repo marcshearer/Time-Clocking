@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,26 +18,26 @@
                                 <rect key="frame" x="0.0" y="526" width="309" height="24"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="jfl-Vb-8AR">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pdr-Kn-gkY">
                                 <rect key="frame" x="0.0" y="526" width="309" height="20"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Filter Parameters" drawsBackground="YES" id="OGK-Ns-yL7">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
                                 </textFieldCell>
                             </textField>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="eha-ew-hGM" userLabel="Input view">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="eha-ew-hGM" userLabel="Input view" customClass="ColoredView" customModule="Time_Clocking" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="309" height="526"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="B6l-aN-so6">
                                         <rect key="frame" x="10" y="485" width="67" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Customer:" id="cTK-Sb-EVz">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -53,12 +54,13 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
+                                        <color key="contentTintColor" name="panelTextColor"/>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KaP-S9-5lr">
                                         <rect key="frame" x="10" y="353" width="139" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document date range:" id="s70-tU-oSH">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -70,7 +72,7 @@
                                                 <!--1982-02-12 16:00:00 +0000-->
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eDU-KF-uGw">
@@ -89,14 +91,14 @@
                                                 <!--1982-02-12 16:00:00 +0000-->
                                             </date>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4mf-EU-UvN">
                                         <rect key="frame" x="10" y="286" width="159" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document number range:" id="WC4-HC-HZP">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -107,7 +109,7 @@
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="dOL-YV-DyF">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -126,7 +128,7 @@
                                         </constraints>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="tc7-FV-36S">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -144,7 +146,7 @@ Gw
                                         <rect key="frame" x="10" y="419" width="108" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Document types:" id="lkm-av-spG">
                                             <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="textColor" name="panelTextColor"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
@@ -193,15 +195,20 @@ Gw
                                     <constraint firstAttribute="trailing" secondItem="yqs-W2-z0C" secondAttribute="trailing" constant="12" id="sXh-AT-DYq"/>
                                     <constraint firstItem="eDU-KF-uGw" firstAttribute="leading" secondItem="2Jt-As-Qeh" secondAttribute="trailing" constant="16" id="tbG-kY-CbB"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                        <color key="value" name="panelBackgroundColor"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDD-XN-ACc" userLabel="Table View">
-                                <rect key="frame" x="309" y="0.0" width="591" height="550"/>
+                                <rect key="frame" x="309" y="0.0" width="591" height="526"/>
                                 <clipView key="contentView" id="caq-RK-QIj">
-                                    <rect key="frame" x="1" y="0.0" width="589" height="549"/>
+                                    <rect key="frame" x="1" y="0.0" width="589" height="525"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" headerView="5ST-dN-ta5" viewBased="YES" id="XtT-Wn-V5a">
-                                            <rect key="frame" x="0.0" y="0.0" width="589" height="524"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="589" height="500"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -225,7 +232,7 @@ Gw
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tkl-Fi-f0h">
-                                                                    <rect key="frame" x="0.0" y="25" width="64" height="17"/>
+                                                                    <rect key="frame" x="1" y="22" width="64" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" id="KDc-ug-cgR">
                                                                         <font key="font" metaFont="system"/>
@@ -257,18 +264,57 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cXc-4T-Sgn" userLabel="Separator">
+                                <rect key="frame" x="307" y="533" width="5" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="1" id="7W7-ei-c7G"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="RFl-Zc-uc2">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w96-Xy-TUQ" userLabel="Title container">
+                                <rect key="frame" x="310" y="526" width="590" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="HVa-8j-1bP"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="mQF-gD-UWB">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I59-pw-3OU">
+                                <rect key="frame" x="310" y="526" width="590" height="20"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Documents Matching Criteria" drawsBackground="YES" id="kfJ-73-eBm">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="MDD-XN-ACc" secondAttribute="trailing" id="0kf-BR-JQY"/>
                             <constraint firstItem="pdr-Kn-gkY" firstAttribute="top" secondItem="p9P-ep-2rk" secondAttribute="top" constant="4" id="4Yq-M0-kjM"/>
+                            <constraint firstItem="MDD-XN-ACc" firstAttribute="top" secondItem="w96-Xy-TUQ" secondAttribute="bottom" id="APG-tg-FoO"/>
+                            <constraint firstItem="cXc-4T-Sgn" firstAttribute="leading" secondItem="p9P-ep-2rk" secondAttribute="trailing" id="Bzi-Rg-tZ5"/>
                             <constraint firstItem="eha-ew-hGM" firstAttribute="top" secondItem="p9P-ep-2rk" secondAttribute="bottom" id="CDX-O6-FCt"/>
                             <constraint firstItem="pdr-Kn-gkY" firstAttribute="trailing" secondItem="p9P-ep-2rk" secondAttribute="trailing" id="Fky-47-ckr"/>
                             <constraint firstItem="MDD-XN-ACc" firstAttribute="leading" secondItem="eha-ew-hGM" secondAttribute="trailing" id="JCY-ft-ruF"/>
+                            <constraint firstItem="I59-pw-3OU" firstAttribute="trailing" secondItem="w96-Xy-TUQ" secondAttribute="trailing" id="OrT-5g-Mya"/>
                             <constraint firstItem="eha-ew-hGM" firstAttribute="top" secondItem="LYb-KS-FjH" secondAttribute="top" constant="24" id="PcF-IG-GbF"/>
+                            <constraint firstItem="I59-pw-3OU" firstAttribute="top" secondItem="w96-Xy-TUQ" secondAttribute="top" constant="4" id="Pf9-7A-2so"/>
+                            <constraint firstItem="I59-pw-3OU" firstAttribute="bottom" secondItem="w96-Xy-TUQ" secondAttribute="bottom" id="WOI-qk-JPf"/>
+                            <constraint firstAttribute="trailing" secondItem="w96-Xy-TUQ" secondAttribute="trailing" id="WRZ-ep-6Ab"/>
                             <constraint firstItem="pdr-Kn-gkY" firstAttribute="bottom" secondItem="p9P-ep-2rk" secondAttribute="bottom" id="Zo1-5H-Cjk"/>
+                            <constraint firstItem="I59-pw-3OU" firstAttribute="leading" secondItem="w96-Xy-TUQ" secondAttribute="leading" id="bUT-eQ-KeC"/>
                             <constraint firstItem="eha-ew-hGM" firstAttribute="leading" secondItem="LYb-KS-FjH" secondAttribute="leading" id="cLi-qG-UB9"/>
+                            <constraint firstItem="I59-pw-3OU" firstAttribute="leading" secondItem="cXc-4T-Sgn" secondAttribute="trailing" id="dKn-oR-yol"/>
+                            <constraint firstItem="w96-Xy-TUQ" firstAttribute="top" secondItem="LYb-KS-FjH" secondAttribute="top" id="dgi-lg-aLi"/>
+                            <constraint firstItem="cXc-4T-Sgn" firstAttribute="top" secondItem="w96-Xy-TUQ" secondAttribute="top" id="fHv-30-vBS"/>
                             <constraint firstItem="p9P-ep-2rk" firstAttribute="top" secondItem="LYb-KS-FjH" secondAttribute="top" id="gh6-En-hi9"/>
-                            <constraint firstItem="MDD-XN-ACc" firstAttribute="top" secondItem="LYb-KS-FjH" secondAttribute="top" id="iEC-U3-0D4"/>
                             <constraint firstItem="p9P-ep-2rk" firstAttribute="leading" secondItem="LYb-KS-FjH" secondAttribute="leading" id="mD7-wW-NcD"/>
                             <constraint firstAttribute="bottom" secondItem="eha-ew-hGM" secondAttribute="bottom" id="nF3-9K-eYh"/>
                             <constraint firstItem="pdr-Kn-gkY" firstAttribute="leading" secondItem="p9P-ep-2rk" secondAttribute="leading" id="oTs-tz-OCs"/>
@@ -292,4 +338,18 @@ Gw
             <point key="canvasLocation" x="143" y="105"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="panelBackgroundColor">
+            <color red="0.70196078431372544" green="0.84313725490196079" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="panelTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleBackgroundColor">
+            <color red="0.0" green="0.0" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleTextColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

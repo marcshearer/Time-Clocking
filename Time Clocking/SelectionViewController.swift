@@ -22,7 +22,8 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     private var clockingExcluded: [String:Bool] = [:]
     public var popover: NSPopover!
     public var specificDocumentNumber: String!
-    
+    private var count = 0
+
     @IBOutlet private weak var resourceCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var customerCodePopupButton: NSPopUpButton!
     @IBOutlet private weak var projectCodePopupButton: NSPopUpButton!
@@ -35,10 +36,10 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private weak var invoiceInstructions: NSTextField!
     @IBOutlet private weak var invoiceButton: NSButton!
     @IBOutlet private weak var closeButton: NSButton!
-    @IBOutlet private weak var closeButtonCenterConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var closeButtonTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var documentNumberLabeloverrideStartTimeDatePickerTopConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var documentNumberLabelIncludeInvoicedButtonTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var closeButtonCenterConstraint: NSLayoutConstraint!
+    @IBOutlet private var closeButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private var documentNumberLabeloverrideStartTimeDatePickerTopConstraint: NSLayoutConstraint!
+    @IBOutlet private var documentNumberLabelIncludeInvoicedButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var tableViewTitleTextField: NSTextField!
     @IBOutlet private weak var tableView: NSTableView!
 
@@ -107,7 +108,9 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         
         // Setup invoice action button
         _ = self.invoiceButton.reactive.controlEvent.observeNext { (_) in
-            self.invoiceAction()
+            if NSApp.currentEvent?.type == NSEvent.EventType.leftMouseUp {
+                self.invoiceAction()
+            }
         }
         
         // Setup close button
@@ -337,7 +340,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         if self.mode == .documentDetail {
             self.dismiss(self.closeButton)
         } else {
-            StatusMenu.shared.hidePopover(self.closeButton)
+            StatusMenu.shared.hideWindows(self.closeButton)
         }
     }
     

@@ -211,6 +211,11 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     }
     
     private func setupGrid(displayTableView: NSTableView, layout: [Layout]) {
+        // Set background if specified
+        if let backgroundColor = NSColor(named: "tableBackgroundColor") {
+            self.displayTableView.backgroundColor = backgroundColor
+        }
+        
         // Remove any existing columns
         for tableColumn in displayTableView.tableColumns {
             displayTableView.removeTableColumn(tableColumn)
@@ -231,6 +236,12 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             let headerCell = NSTableHeaderCell()
             headerCell.title = column.title
             headerCell.alignment = column.alignment
+            
+            // Set colors if specified
+            if let textColor = NSColor(named: "tableHeaderTextColor") {
+                headerCell.textColor = textColor
+            }
+            
             tableColumn.headerCell = headerCell
             if column.width < 0 && tableColumn.headerCell.cellSize.width > abs(column.width) {
                 tableColumn.width = tableColumn.headerCell.cellSize.width + 10
@@ -485,3 +496,16 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     }
 }
 
+extension NSTableHeaderCell {
+    
+    override open func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
+        super.draw(withFrame: cellFrame, in: controlView)
+        if let backgroundColor = NSColor(named: "tableHeaderBackgroundColor") {
+            backgroundColor.setFill()
+            NSBezierPath.fill(cellFrame)
+            
+            let interiorFrame = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y + 6.0, width: cellFrame.size.width, height: 14.0)
+            drawInterior(withFrame: interiorFrame, in: controlView)
+        }
+    }
+}

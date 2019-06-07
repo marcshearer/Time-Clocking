@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -10,7 +11,7 @@
             <objects>
                 <customObject id="RGQ-cG-AWy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="ProjectDetailViewController" id="97T-ho-5rV" customClass="ProjectDetailViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="VUz-Qe-1iz">
+                    <view key="view" id="VUz-Qe-1iz" customClass="ColoredView" customModule="Time_Clocking" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="500" height="340"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -18,7 +19,7 @@
                                 <rect key="frame" x="22" y="299" width="101" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Customer code:" id="YBR-q7-DGd">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -29,12 +30,13 @@
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="G1t-OQ-ORG"/>
                                 </popUpButtonCell>
+                                <color key="contentTintColor" name="detailTextColor"/>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aPh-23-rlV">
                                 <rect key="frame" x="22" y="258" width="85" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Project code:" id="Pn0-aV-llh">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -45,7 +47,7 @@
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="efm-Qr-xDQ">
                                     <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -53,7 +55,7 @@
                                 <rect key="frame" x="22" y="217" width="35" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Title:" id="gwB-CQ-Pbh">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -61,7 +63,7 @@
                                 <rect key="frame" x="177" y="215" width="311" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="THO-Ij-vVV">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -69,7 +71,7 @@
                                 <rect key="frame" x="22" y="135" width="151" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Purchase order number:" id="X8h-v5-dWN">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -77,7 +79,7 @@
                                 <rect key="frame" x="177" y="133" width="311" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="vKV-TH-tv4">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -85,7 +87,7 @@
                                 <rect key="frame" x="22" y="53" width="50" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Closed:" id="IcS-uL-yFd">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -125,7 +127,7 @@ Gw
                                 <rect key="frame" x="22" y="94" width="75" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Hourly rate:" id="U1e-Pd-XV6">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -136,7 +138,7 @@ Gw
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="82k-UD-szE">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -144,7 +146,7 @@ Gw
                                 <rect key="frame" x="22" y="176" width="97" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Status bar title:" id="o7x-SM-NIJ">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -155,7 +157,7 @@ Gw
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="OHQ-r7-rIT">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -197,6 +199,11 @@ Gw
                             <constraint firstItem="Xng-Zc-PCb" firstAttribute="leading" secondItem="VUz-Qe-1iz" secondAttribute="leading" constant="24" id="ypg-oS-J0z"/>
                             <constraint firstItem="oZk-QH-tBU" firstAttribute="centerY" secondItem="B7o-7U-7U7" secondAttribute="centerY" id="zYA-iI-hhd"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" name="detailBackgroundColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="jfe-67-Mqf" id="sCn-qO-pSD"/>
@@ -219,4 +226,12 @@ Gw
             <point key="canvasLocation" x="79" y="489"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="detailBackgroundColor">
+            <color red="0.94117647058823528" green="0.94117647058823528" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="detailTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

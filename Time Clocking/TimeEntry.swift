@@ -25,6 +25,7 @@ class TimeEntry: ClockingViewModel {
         TimeEntry.current.endTime.value = self.defaults.object(forKey: "endTime") as? Date ?? Date()
         TimeEntry.current.dailyRate.value = self.defaults.object(forKey: "dailyRate") as? Double ?? 0.0
         TimeEntry.current.timerState.value = self.defaults.string(forKey: "state") ?? TimerState.notStarted.rawValue
+        TimeEntry.current.compact.value = self.defaults.bool(forKey: "compact")
     }
 
     static public func saveDefaults() {
@@ -37,6 +38,6 @@ class TimeEntry: ClockingViewModel {
         self.defaults.set(TimeEntry.current.endTime.value, forKey: "endTime")
         self.defaults.set(TimeEntry.current.dailyRate.value, forKey: "dailyRate")
         self.defaults.set(TimeEntry.current.timerState.value, forKey: "state")
-        
+        self.defaults.set(TimeEntry.current.compact.value, forKey: "compact")
     }
 }

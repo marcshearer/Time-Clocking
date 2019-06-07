@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -9,20 +10,20 @@
         <scene sceneID="fkI-V4-eh2">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" id="MJF-UV-VT2" customClass="SettingsViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="RuK-6O-p37">
+                    <view key="view" id="RuK-6O-p37" customClass="ColoredView" customModule="Time_Clocking" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="350"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ak9-IQ-BvS">
-                                <rect key="frame" x="22" y="279" width="122" height="17"/>
+                                <rect key="frame" x="22" y="260" width="122" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Time units to show:" id="MjU-4A-Awo">
                                     <font key="font" usesAppearanceFont="YES"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="73w-JY-l9g">
-                                <rect key="frame" x="200" y="244" width="96" height="22"/>
+                                <rect key="frame" x="200" y="225" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="4SG-2N-5TY"/>
                                 </constraints>
@@ -31,23 +32,23 @@
                                         <real key="minimum" value="1"/>
                                     </numberFormatter>
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UdA-3Z-fpo">
-                                <rect key="frame" x="22" y="246" width="157" height="17"/>
+                                <rect key="frame" x="22" y="227" width="157" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Number of units to show:" id="a7U-Tn-lEy">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dZM-3T-0fS">
-                                <rect key="frame" x="10" y="313" width="287" height="17"/>
+                                <rect key="frame" x="10" y="293" width="287" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="History of clockings to show in input screen" id="8SM-PI-cKI">
                                     <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -77,7 +78,7 @@ Gw
                                 </buttonCell>
                             </button>
                             <segmentedControl verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="XGr-sh-E8T">
-                                <rect key="frame" x="198" y="275" width="244" height="24"/>
+                                <rect key="frame" x="198" y="256" width="244" height="24"/>
                                 <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="Abd-lB-0Mp">
                                     <font key="font" metaFont="system"/>
                                     <segments>
@@ -89,7 +90,7 @@ Gw
                                 </segmentedCell>
                             </segmentedControl>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J0g-bC-tzy">
-                                <rect key="frame" x="200" y="174" width="96" height="22"/>
+                                <rect key="frame" x="200" y="155" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="wuX-Li-qxQ"/>
                                 </constraints>
@@ -99,12 +100,12 @@ Gw
                                         <real key="maximum" value="60"/>
                                     </numberFormatter>
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BeJ-0j-JfC">
-                                <rect key="frame" x="200" y="141" width="96" height="22"/>
+                                <rect key="frame" x="200" y="122" width="96" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="96" id="Dq7-z7-gCj"/>
                                 </constraints>
@@ -113,79 +114,103 @@ Gw
                                         <real key="minimum" value="1"/>
                                     </numberFormatter>
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FeS-sh-Hf7">
-                                <rect key="frame" x="22" y="176" width="133" height="17"/>
+                                <rect key="frame" x="22" y="157" width="133" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Next Invoice number:" id="OYR-Rb-Icm">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="t0b-NK-sPd">
-                                <rect key="frame" x="22" y="143" width="160" height="17"/>
+                                <rect key="frame" x="22" y="124" width="160" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Next Credit Note number:" id="PDN-fC-Sht">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UQw-Po-2Oy">
-                                <rect key="frame" x="10" y="209" width="144" height="17"/>
+                                <rect key="frame" x="10" y="190" width="144" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Document numbering" id="YfI-HV-a7L">
                                     <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WHA-89-KGv">
-                                <rect key="frame" x="10" y="106" width="119" height="17"/>
+                                <rect key="frame" x="10" y="87" width="119" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Invoice roundings" id="9XE-BY-WgF">
                                     <font key="font" metaFont="systemBold"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oB3-E3-M5r">
-                                <rect key="frame" x="22" y="73" width="156" height="17"/>
+                                <rect key="frame" x="22" y="54" width="156" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Round lines to (minutes):" id="SVn-E8-MrC">
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Zfz-Lo-rk5">
-                                <rect key="frame" x="200" y="71" width="48" height="22"/>
+                                <rect key="frame" x="200" y="52" width="48" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="48" id="ohG-3U-N3o"/>
                                 </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="right" drawsBackground="YES" id="ftZ-iA-8nw">
                                     <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="VlQ-vO-EKI"/>
                                     <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="detailTextColor"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qU4-h5-FIR" userLabel="Title container">
+                                <rect key="frame" x="0.0" y="326" width="450" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="RZf-pS-OIf"/>
+                                    <constraint firstAttribute="height" constant="24" id="oIS-be-3EW"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="Lyv-IH-Iju">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sfk-76-vN4">
+                                <rect key="frame" x="0.0" y="326" width="450" height="20"/>
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Settings" drawsBackground="YES" id="9FX-Xn-zbH">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="titleTextColor"/>
+                                    <color key="backgroundColor" name="titleBackgroundColor"/>
                                 </textFieldCell>
                             </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="centerY" secondItem="UdA-3Z-fpo" secondAttribute="centerY" id="3Dk-gz-LDz"/>
                             <constraint firstItem="FeS-sh-Hf7" firstAttribute="top" secondItem="UQw-Po-2Oy" secondAttribute="bottom" constant="16" id="3fJ-XP-zNx"/>
+                            <constraint firstItem="qU4-h5-FIR" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" id="3qt-M0-gct"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="200" id="3ue-pa-IJB"/>
                             <constraint firstItem="WHA-89-KGv" firstAttribute="top" secondItem="t0b-NK-sPd" secondAttribute="bottom" constant="20" id="7fL-3I-5zB"/>
                             <constraint firstItem="t0b-NK-sPd" firstAttribute="top" secondItem="FeS-sh-Hf7" secondAttribute="bottom" constant="16" id="8bp-Zm-XE4"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="A0W-AX-jyU"/>
                             <constraint firstItem="UQw-Po-2Oy" firstAttribute="top" secondItem="UdA-3Z-fpo" secondAttribute="bottom" constant="20" id="B4M-gG-mj4"/>
                             <constraint firstItem="J0g-bC-tzy" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="EIY-Qc-UQB"/>
+                            <constraint firstItem="ak9-IQ-BvS" firstAttribute="top" secondItem="dZM-3T-0fS" secondAttribute="bottom" constant="16" id="Eyy-Rl-vCc"/>
                             <constraint firstItem="oB3-E3-M5r" firstAttribute="top" secondItem="WHA-89-KGv" secondAttribute="bottom" constant="16" id="He9-Qn-dpu"/>
                             <constraint firstItem="dZM-3T-0fS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="Iw8-97-fPc"/>
                             <constraint firstItem="t0b-NK-sPd" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="JoC-qj-X7o"/>
-                            <constraint firstItem="ak9-IQ-BvS" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" constant="54" id="JxC-2b-gfu"/>
+                            <constraint firstItem="Sfk-76-vN4" firstAttribute="top" secondItem="qU4-h5-FIR" secondAttribute="top" constant="4" id="K51-1e-Brx"/>
                             <constraint firstAttribute="trailing" secondItem="14S-p1-gac" secondAttribute="trailing" constant="140" id="O9n-Kz-1mf"/>
+                            <constraint firstAttribute="trailing" secondItem="qU4-h5-FIR" secondAttribute="trailing" id="Pxg-0l-LB7"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="top" secondItem="ak9-IQ-BvS" secondAttribute="bottom" constant="16" id="Pxy-6g-txv"/>
                             <constraint firstItem="UQw-Po-2Oy" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="QrQ-MD-vBI"/>
+                            <constraint firstItem="Sfk-76-vN4" firstAttribute="trailing" secondItem="qU4-h5-FIR" secondAttribute="trailing" id="SZf-lY-uk5"/>
                             <constraint firstItem="Zfz-Lo-rk5" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="TmT-lJ-sHK"/>
                             <constraint firstItem="fUr-uL-Ss2" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="140" id="Un4-Co-1vn"/>
                             <constraint firstItem="XGr-sh-E8T" firstAttribute="centerY" secondItem="ak9-IQ-BvS" secondAttribute="centerY" id="XF6-PL-osq"/>
@@ -195,14 +220,22 @@ Gw
                             <constraint firstItem="oB3-E3-M5r" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="ffM-TU-4oW"/>
                             <constraint firstAttribute="bottom" secondItem="fUr-uL-Ss2" secondAttribute="bottom" constant="10" id="fxW-u6-fgq"/>
                             <constraint firstItem="73w-JY-l9g" firstAttribute="leading" secondItem="XGr-sh-E8T" secondAttribute="leading" id="gfr-VI-HQq"/>
+                            <constraint firstItem="dZM-3T-0fS" firstAttribute="top" secondItem="qU4-h5-FIR" secondAttribute="bottom" constant="16" id="hCV-o7-Q4a"/>
                             <constraint firstAttribute="bottom" secondItem="14S-p1-gac" secondAttribute="bottom" constant="10" id="iBc-PI-4lh"/>
-                            <constraint firstItem="dZM-3T-0fS" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" constant="20" id="lzV-3G-mco"/>
                             <constraint firstItem="ak9-IQ-BvS" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="nsv-JQ-ZLo"/>
+                            <constraint firstItem="qU4-h5-FIR" firstAttribute="top" secondItem="RuK-6O-p37" secondAttribute="top" id="pPb-JP-mXx"/>
                             <constraint firstItem="UdA-3Z-fpo" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="24" id="qKa-wP-pbl"/>
+                            <constraint firstItem="Sfk-76-vN4" firstAttribute="bottom" secondItem="qU4-h5-FIR" secondAttribute="bottom" id="ub4-sz-QNk"/>
                             <constraint firstItem="BeJ-0j-JfC" firstAttribute="centerY" secondItem="t0b-NK-sPd" secondAttribute="centerY" id="xD2-2S-DVj"/>
+                            <constraint firstItem="Sfk-76-vN4" firstAttribute="leading" secondItem="qU4-h5-FIR" secondAttribute="leading" id="xM4-zE-QIp"/>
                             <constraint firstItem="WHA-89-KGv" firstAttribute="leading" secondItem="RuK-6O-p37" secondAttribute="leading" constant="12" id="yW2-eg-GWf"/>
                             <constraint firstItem="Zfz-Lo-rk5" firstAttribute="centerY" secondItem="oB3-E3-M5r" secondAttribute="centerY" id="zyM-n5-aPP"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
+                                <color key="value" name="detailBackgroundColor"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
                         <outlet property="cancelButton" destination="14S-p1-gac" id="oVa-8F-9Ox"/>
@@ -220,4 +253,18 @@ Gw
             <point key="canvasLocation" x="98" y="-29"/>
         </scene>
     </scenes>
+    <resources>
+        <namedColor name="detailBackgroundColor">
+            <color red="0.78431372549019607" green="0.92156862745098034" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="detailTextColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleBackgroundColor">
+            <color red="0.0" green="0.0" blue="0.58823529411764708" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="titleTextColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
 </document>

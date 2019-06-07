@@ -49,11 +49,11 @@ class SettingsViewController: NSViewController, NSControlTextEditingDelegate {
         _ = self.saveButton.reactive.controlEvent.observeNext { (_) in
             Settings.current = self.editSettings.copy() as! SettingsViewModel
             Settings.saveDefaults()
-            StatusMenu.shared.hidePopover(self.saveButton)
+            StatusMenu.shared.hideWindows(self.saveButton)
         }
         
         _ = self.cancelButton.reactive.controlEvent.observeNext { (_) in
-            StatusMenu.shared.hidePopover(self.cancelButton)
+            StatusMenu.shared.hideWindows(self.cancelButton)
         }
     }
 }

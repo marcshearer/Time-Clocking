@@ -20,13 +20,17 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     private var statusButtonText: NSTextField!
     private var statusButtonTextWidthConstraint: NSLayoutConstraint!
-    private var statusButtonImage: NSImageView!
+    private var statusButtonImage = NSImageView()
     private var statusMenu: NSMenu
-    private let menuBarColor = NSColor(named: "menuBar\(AppDelegate.isDevelopment ? "Dev" : "")Color")
+    private static let menuBarColor = NSColor(named: "menuBar\(AppDelegate.isDevelopment ? "Dev" : "")Color")
+    public static let compactWindowColor = NSColor(named: "compact\(AppDelegate.isDevelopment ? "Dev" : "")Color")
 
     private var menuItemList: [String: NSMenuItem] = [:]
     private var viewControllerList: [String : NSViewController] = [:]
+    private var windowControllerList: [String : NSWindowController] = [:]
+    private var windowList: [String : NSWindow] = [:]
     private var popoverList: [String : NSPopover] = [:]
+    private static var window: [NSWindow] = []
     private static var popover: [NSPopover] = []
     
     // MARK: - Constructor - instantiate the status bar menu =========================================================== -
@@ -42,14 +46,15 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
 
             Constraint.anchor(view: button.superview!, control: button, attributes: .top, .bottom)
             
-            self.statusButtonImage = NSImageView(image: NSImage(named: NSImage.Name("clockings"))!)
+            
+            self.setImage()
             self.statusButtonImage.translatesAutoresizingMaskIntoConstraints = false
             button.addSubview(self.statusButtonImage)
 
             self.statusButtonText = NSTextField(labelWithString: "")
             self.statusButtonText.translatesAutoresizingMaskIntoConstraints = false
             self.statusButtonText.sizeToFit()
-            self.statusButtonText.textColor = self.menuBarColor
+            self.statusButtonText.textColor = StatusMenu.menuBarColor
             self.statusButtonText.font = NSFont.systemFont(ofSize: 12)
             button.addSubview(self.statusButtonText)
             
@@ -100,7 +105,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         let event = NSApp.currentEvent!
         let leftClick = (event.type != NSEvent.EventType.rightMouseDown)
         let timerNotStopped = (TimerState(rawValue: TimeEntry.current.timerState.value) != .stopped)
-        let viewOpen = (StatusMenu.popover.count != 0)
+        let viewOpen = (StatusMenu.popover.count != 0 || StatusMenu.window.count != 0)
         
         if leftClick && !viewOpen && timerNotStopped {
             // Left-click while no windows displayed and timer is not stopped - start / stop timer and avoid menu popping up
@@ -116,9 +121,9 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             self.update()
         } else if viewOpen {
             // View being displayed - close it and show dropdown menu if right-clicked
-            self.hidePopover(menu)
+            self.hideWindows(menu)
             self.update()
-            self.statusButtonText.textColor = (!leftClick ? NSColor.white : self.menuBarColor)
+            self.statusButtonText.textColor = (!leftClick ? NSColor.white : StatusMenu.menuBarColor)
             self.setImage(alternate: !leftClick, close: !leftClick)
             if leftClick {
                 // If left click should just close
@@ -132,16 +137,16 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     }
     
     internal func menuDidClose(_ menu: NSMenu) {
-        self.statusButtonText.textColor = self.menuBarColor
+        self.statusButtonText.textColor = StatusMenu.menuBarColor
         self.setImage()
     }
     
     // MARK: - Popover delegate hanlders =========================================================== -
-    
+
     internal func popoverDidClose(_ notification: Notification) {
         // Shouldn't happen if hidePopover is called properly from child views
         if StatusMenu.popover.count != 0 {
-            self.hidePopover(self)
+            self.hideWindows(self)
         }
     }
     
@@ -209,7 +214,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             button.toolTip = toolTip
             self.setImage()
             
-            if StatusMenu.popover.count == 0 {
+            if StatusMenu.popover.count == 0 && StatusMenu.window.count == 0 {
                 
                 if timeEntry.projectCode.value == "" {
                     self.setTitle("")
@@ -232,7 +237,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     private func setImage(alternate: Bool = false, close: Bool = false) {
         var imageName: String
         
-        if close || StatusMenu.popover.count != 0 {
+        if close || StatusMenu.popover.count != 0 || StatusMenu.window.count != 0 {
             imageName = "ringClose"
         }
         else if TimeEntry.current.projectCode.value == "" {
@@ -251,9 +256,9 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         if alternate {
             imageName += "White"
         } else if AppDelegate.isDevelopment {
-            imageName += "Blue"
-        } else {
             imageName += "Green"
+        } else {
+            imageName += "Blue"
         }
         self.statusButtonImage.image = NSImage(named: NSImage.Name(imageName))!
     }
@@ -271,7 +276,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         var attributes: [NSAttributedString.Key : Any] = [:]
         
         // Set color
-        attributes[NSAttributedString.Key.foregroundColor] = self.menuBarColor!
+        attributes[NSAttributedString.Key.foregroundColor] = StatusMenu.menuBarColor!
         
         // Set font size if specified
         if let fontSize = fontSize {
@@ -342,21 +347,17 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
     
     @objc public func showEntries(_ sender: Any?) {
         
-        var viewControllerName: String
-        var identifier: String
-        
         if TimeEntry.current.compact.value {
-            viewControllerName = "CompactClockingViewController"
-            identifier = "Compact"
+            if let viewController = self.createController("Compact", "CompactClockingViewController") as? ClockingViewController {
+                self.setTitle("")
+                self.showWindow("Compact", viewController: viewController)
+            }
         } else {
-            viewControllerName = "ClockingViewController"
-            identifier = "Clockings"
+            // Retrieve or create the view controller
+            let viewController = self.createController("Clockings", "ClockingViewController") as? ClockingViewController
+            self.setTitle("")
+            self.showPopover("Clockings", viewController!, transient: !TimeEntry.current.compact.value)
         }
-        
-        // Retrieve or create the view controller
-        let viewController = self.createController(identifier, viewControllerName) as? ClockingViewController
-        self.setTitle("")
-        self.showPopover(identifier, viewController!, transient: true)
     }
     
     @objc private func showSettings(_ sender: Any?) {
@@ -435,9 +436,32 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         NSApp.terminate(sender)
     }
     
+    // MARK: - Routines to show a window ============================================================================== -
+    
+    private func showWindow(_ identifier: String, viewController: NSViewController) {
+        var windowController = self.windowControllerList["Compact"]
+        var window = self.windowList["Compact"]
+        if windowController == nil || window == nil {
+            window = NSWindow()
+            windowController = NSWindowController(window: window)
+            window?.contentViewController = viewController
+            window?.styleMask = .borderless
+            window?.isMovableByWindowBackground = true
+            window?.level = NSWindow.Level.statusBar
+            if let buttonWindow = self.statusItem.button?.window {
+                window?.setFrameOrigin(NSPoint(x: buttonWindow.frame.maxX - self.statusButtonImage.frame.width + 4.0, y: buttonWindow.frame.minY - window!.frame.height))
+            }
+            self.windowControllerList["Compact"] = windowController
+            self.windowList["Compact"] = window
+        }
+        windowController!.showWindow(self)
+        self.setImage(close: true)
+        StatusMenu.window.append(window!)
+    }
+    
     // MARK: - Routines to show a popover =========================================================== -
     
-    public func showPopover(_ identifier: String, _ viewController: NSViewController, transient: Bool = false) {
+    private func showPopover(_ identifier: String, _ viewController: NSViewController, transient: Bool = false) {
         
         if let button = self.statusItem.button {
             
@@ -459,22 +483,26 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
                 popover.appearance = NSAppearance(named: NSAppearance.Name.aqua)
                 popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
                 self.setImage(close: true)
-                StatusMenu.addPopover(popover)
+                StatusMenu.popover.append(popover)
             }
         }
     }
     
-    public static func addPopover(_ popover: NSPopover) {
-        StatusMenu.popover.append(popover)
-    }
+    // MARK: - Routines to create view controllers and hide windows======================================================================== -
     
-    @objc public func hidePopover(_ sender: Any?) {
+    @objc public func hideWindows(_ sender: Any?) {
         
         // Close the popovers in the stack
         for index in (0..<StatusMenu.popover.count).reversed() {
             StatusMenu.popover[index].close()
             StatusMenu.popover.remove(at: index)
         }
+        // Close the windows in the stack
+        for index in (0..<StatusMenu.window.count).reversed() {
+            StatusMenu.window[index].close()
+            StatusMenu.window.remove(at: index)
+        }
+
         self.update()
         
     }
@@ -486,6 +514,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             let storyboard = NSStoryboard(name: NSStoryboard.Name(storyboardName), bundle: nil)
             let sceneIdentifier = NSStoryboard.SceneIdentifier(stringLiteral: viewIdentifier ?? storyboardName)
             viewController = storyboard.instantiateController(withIdentifier: sceneIdentifier) as? NSViewController
+            self.viewControllerList[identifier] = viewController
         }
         
         return viewController

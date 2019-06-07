@@ -47,7 +47,7 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     @IBOutlet private weak var closeButton: NSButton!
     @IBOutlet private weak var tableView: NSTableView!
     @IBOutlet private weak var filterView: NSView!
-    @IBOutlet private weak var filterViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var filterViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var titleLabel: NSTextField!
     
     override internal func viewDidLoad() {
@@ -140,7 +140,7 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
         }
         
         _ = closeButton.reactive.controlEvent.observeNext { (_) in
-            StatusMenu.shared.hidePopover(self.closeButton)
+            StatusMenu.shared.hideWindows(self.closeButton)
         }
     }
     

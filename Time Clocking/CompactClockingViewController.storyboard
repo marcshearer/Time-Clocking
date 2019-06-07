@@ -58,9 +58,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="3DW-0X-x6t"/>
                                                     <constraint firstAttribute="width" secondItem="Cao-AL-YtK" secondAttribute="height" multiplier="1:1" id="sUZ-d4-IdN"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="square" title="Start" bezelStyle="shadowlessSquare" image="startWhite" imagePosition="above" alignment="center" imageScaling="proportionallyDown" sound="Morse" inset="2" id="1CB-Ct-GaX">
+                                                <buttonCell key="cell" type="square" title="Start" bezelStyle="shadowlessSquare" image="startWhite" imagePosition="above" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" sound="Morse" inset="2" id="1CB-Ct-GaX">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="9"/>
+                                                    <font key="font" metaFont="miniSystem"/>
                                                     <string key="keyEquivalent">s</string>
                                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>
@@ -72,9 +72,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="IBa-zg-qol"/>
                                                     <constraint firstAttribute="width" secondItem="6T2-pa-kgA" secondAttribute="height" multiplier="1:1" id="sup-Ef-z5g"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="square" title="Pause" bezelStyle="shadowlessSquare" image="pauseWhite" imagePosition="above" alignment="center" imageScaling="proportionallyDown" sound="Pop" inset="2" id="8DK-Kw-SmN">
+                                                <buttonCell key="cell" type="square" title="Pause" bezelStyle="shadowlessSquare" image="pauseWhite" imagePosition="above" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" sound="Pop" inset="2" id="8DK-Kw-SmN">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="9"/>
+                                                    <font key="font" metaFont="miniSystem"/>
                                                     <string key="keyEquivalent">s</string>
                                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>
@@ -86,9 +86,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="JEZ-0C-xbG"/>
                                                     <constraint firstAttribute="width" secondItem="xUX-KT-XaA" secondAttribute="height" multiplier="1:1" id="tDR-nz-NGR"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="square" title="Resume" bezelStyle="shadowlessSquare" image="resumeWhite" imagePosition="above" alignment="center" imageScaling="proportionallyDown" sound="Morse" inset="2" id="kbI-mp-gS0">
+                                                <buttonCell key="cell" type="square" title="Resume" bezelStyle="shadowlessSquare" image="resumeWhite" imagePosition="above" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" sound="Morse" inset="2" id="kbI-mp-gS0">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="9"/>
+                                                    <font key="font" metaFont="miniSystem"/>
                                                 </buttonCell>
                                                 <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </button>
@@ -98,9 +98,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="G0y-hS-OqB"/>
                                                     <constraint firstAttribute="width" secondItem="c2F-iI-gBI" secondAttribute="height" multiplier="1:1" id="myF-hD-XKK"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="square" title="Stop" bezelStyle="shadowlessSquare" image="stopWhite" imagePosition="above" alignment="center" imageScaling="proportionallyDown" sound="Frog" inset="2" id="kEw-PL-pD0">
+                                                <buttonCell key="cell" type="square" title="Stop" bezelStyle="shadowlessSquare" image="stopWhite" imagePosition="above" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" sound="Frog" inset="2" id="kEw-PL-pD0">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="9"/>
+                                                    <font key="font" metaFont="miniSystem"/>
                                                     <string key="keyEquivalent">x</string>
                                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>
@@ -112,9 +112,9 @@
                                                     <constraint firstAttribute="width" constant="40" id="g11-rc-1sR"/>
                                                     <constraint firstAttribute="width" secondItem="n24-dO-iBG" secondAttribute="height" multiplier="1:1" id="hfR-P1-gaV"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="square" title="Reset" bezelStyle="shadowlessSquare" image="resetWhite" imagePosition="above" alignment="center" imageScaling="proportionallyDown" sound="Blow" inset="2" id="v0X-Xf-Eai">
+                                                <buttonCell key="cell" type="square" title="Reset" bezelStyle="shadowlessSquare" image="resetWhite" imagePosition="above" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyDown" sound="Blow" inset="2" id="v0X-Xf-Eai">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                    <font key="font" metaFont="system" size="9"/>
+                                                    <font key="font" metaFont="miniSystem"/>
                                                     <string key="keyEquivalent">r</string>
                                                     <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                                                 </buttonCell>

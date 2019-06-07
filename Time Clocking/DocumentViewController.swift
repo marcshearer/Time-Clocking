@@ -162,7 +162,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
     // MARK: - Utility functions ============================================================================== -
     
     private func closePopover() {
-        StatusMenu.shared.hidePopover(self.closeButton)
+        StatusMenu.shared.hideWindows(self.closeButton)
     }
     
     // MARK: - Core Data table viewer setup methods ======================================================================

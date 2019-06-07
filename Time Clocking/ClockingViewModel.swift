@@ -185,7 +185,7 @@ class ClockingViewModel {
             // Any change of dates
             self.anyChange.value = true
         }
-        _ = ReactiveKit.combineLatest(self.dailyRate.observable, self.hoursPerDay.observable, self.includeInvoiced, self.overrideMinutes.observable, self.override).observeNext { (_) in
+        _ = ReactiveKit.combineLatest(self.dailyRate.observable, self.hoursPerDay.observable, self.includeInvoiced, self.overrideMinutes.observable, self.override, self.compact).observeNext { (_) in
             // Any change of numerics
             self.anyChange.value = true
         }
@@ -252,7 +252,7 @@ class ClockingViewModel {
                         self.durationText.value = "Not started"
                     }
                 }
-                if self.mode == .clockingEntry {
+                if self.mode == .clockingEntry && self.compact.value {
                     self.durationText.value += self.getClockingValue()
                 }
                 if !self.initialising {
@@ -425,7 +425,7 @@ class ClockingViewModel {
             minutes = Clockings.minutes(Clockings.lastClocking)
         }
         
-        if minutes != 0 {
+        if minutes != 0.0 {
             let value = Utility.round(((minutes / 60.0) / self.hoursPerDay.value) * self.dailyRate.value, 2)
             if value > 0 {
                 result = " - \(value.toCurrencyString())"

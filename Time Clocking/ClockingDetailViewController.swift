@@ -38,8 +38,8 @@ class ClockingDetailViewController: NSViewController {
     @IBOutlet private weak var saveButton: NSButton!
     @IBOutlet private weak var cancelButton: NSButton!
     @IBOutlet private weak var deleteButton: NSButton!
-    @IBOutlet private weak var cancelButtonTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var cancelButtonCenterConstraint: NSLayoutConstraint!
+    @IBOutlet private var cancelButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private var cancelButtonCenterConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()

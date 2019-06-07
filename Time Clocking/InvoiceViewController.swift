@@ -412,7 +412,7 @@ class InvoiceViewController : NSViewController {
     // MARK: - Method to show this view =================================================================== -
     
     static public func show(from parentViewController: NSViewController, customerCode: String, documentType: DocumentType, reprintDocumentNumber: String? = nil, originalInvoiceNumber: String? = nil, defaultDocumentDate: Date, headerText: String? = nil, clockingIterator: @escaping ((ClockingMO)->())->(), completion: ((Bool)->())? = nil) {
-        
+        print("here")
         // Create the view controller
         let storyboard = NSStoryboard(name: NSStoryboard.Name("InvoiceViewController"), bundle: nil)
         let viewController = storyboard.instantiateController(withIdentifier: "InvoiceViewController") as! InvoiceViewController
