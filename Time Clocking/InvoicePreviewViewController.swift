@@ -27,7 +27,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
         self.numberFormatter.maximumSignificantDigits = 4
     }
     
-    internal func derivedKey(key: String, record: DataTableViewerDataSource) -> String {
+    internal func derivedKey(key: String, record: DataTableViewerDataSource, sortValue: Bool) -> String {
         let line = record as! PrintDocumentLine
         var result = ""
         

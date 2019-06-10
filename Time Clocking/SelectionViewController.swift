@@ -42,6 +42,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
     @IBOutlet private var documentNumberLabelIncludeInvoicedButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var tableViewTitleTextField: NSTextField!
     @IBOutlet private weak var tableView: NSTableView!
+    @IBOutlet private weak var watermarkImageView: NSImageView!
 
     override internal func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +141,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
             }
             
             if self.mode == .invoiceCredit {
+                self.watermarkImageView.isHidden = false
                 self.includeInvoicedLabel.isHidden = true
                 self.includeInvoicedButton.isHidden = true
                 self.invoiceButton.isHidden = false
@@ -167,6 +169,7 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
                 }
             } else {
                 self.tableViewTitleTextField.stringValue = "Clockings Matching Criteria"
+                self.watermarkImageView.isHidden = true
             }
         }
     }
@@ -184,14 +187,14 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
         return false
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String {
         var result = ""
         
         if key == "selected" {
             let clockingMO = record as! ClockingMO
             result = ((self.clockingExcluded[clockingMO.clockingUUID!] ?? false) ? "" : "X")
         } else {
-            result = Clockings.derivedKey(recordType: recordType, key: key, record: record)
+            result = Clockings.derivedKey(recordType: recordType, key: key, record: record, sortValue: sortValue)
         }
         
         return result
@@ -233,6 +236,14 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
        self.checkClockingsInvoiceable()
         
         return included
+    }
+    
+    internal func buttonState(record: NSManagedObject) -> Bool {
+        
+        // Get current value
+        let clockingMO = record as! ClockingMO
+        let excluded =  (clockingExcluded[clockingMO.clockingUUID!] ?? false)
+        return !excluded
     }
     
     // MARK: - Clocking Detail Delegate Handlers ======================================================================
@@ -497,7 +508,6 @@ class SelectionViewController: NSViewController, CoreDataTableViewerDelegate, Cl
               Layout(key: "=abbrevDuration", title: "For",         width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=documentNumber", title: "Last doc",    width: -20,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "amount",          title: "Value",       width: -50,      alignment: .right,  type: .currency,    total: true,    pad: false),
-              Layout(key: "=",               title: "",            width:   0,      alignment: .left,   type: .string,      total: false,   pad: false)
         ]
         if self.mode == .invoiceCredit {
             self.clockingsLayout.insert(

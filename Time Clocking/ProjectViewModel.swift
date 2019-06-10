@@ -25,14 +25,14 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     public var canClose = Observable<Bool>(false)
     public var canEditCustomer = Observable<Bool>(false)
 
-    init(blankTitle: String = "") {
+    init(createMode: Bool = true, blankTitle: String? = nil) {
         super.init()
         
-        self.setupMappings(createMode: false, blankTitle: blankTitle)
+        self.setupMappings(createMode: createMode, blankTitle: blankTitle)
     }
     
-    convenience init(from projectMO: ProjectMO?, blankTitle: String = "") {
-        self.init(blankTitle: blankTitle)
+    convenience init(from projectMO: ProjectMO?, blankTitle: String? = nil) {
+        self.init(createMode: (projectMO == nil), blankTitle: blankTitle)
         
         if let projectMO = projectMO {
             self.copy(from: projectMO)
@@ -41,13 +41,13 @@ class ProjectViewModel: NSObject, MaintenanceViewModelDelegate {
     
     // MARK: - Setup view model mappings
 
-    private func setupMappings(createMode: Bool, blankTitle: String = "") {
+    private func setupMappings(createMode: Bool, blankTitle: String? = nil) {
         
         self.customer = ObservablePopupString(recordType: "Customers", codeKey: "customerCode", titleKey: "name", blankTitle: blankTitle)
         
-        // Only allow save if project code and title complete
-        _ = combineLatest(self.projectCode, self.title).observeNext { (_) in
-            self.canSave.value = (self.projectCode.value != "" && self.title.value != "")
+        // Only allow save if customer code, project code and title complete
+        _ = combineLatest(self.customer.observable, self.projectCode, self.title).observeNext { (_) in
+            self.canSave.value = (self.customer.observable.value != "" && self.projectCode.value != "" && self.title.value != "")
         }
         
         // Default the hourly rate from the customer default

@@ -11,11 +11,11 @@
             <objects>
                 <viewController storyboardIdentifier="SelectionViewController" id="17r-Bf-WdO" userLabel="Reporting View Controller" customClass="SelectionViewController" customModule="Time_Clocking" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="6dz-WO-g9f">
-                        <rect key="frame" x="0.0" y="0.0" width="1038" height="615"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1038" height="620"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PUW-lV-XY4" userLabel="Title container">
-                                <rect key="frame" x="0.0" y="591" width="259" height="24"/>
+                                <rect key="frame" x="0.0" y="596" width="259" height="24"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="K1A-pI-LFe">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="titleTextColor"/>
@@ -23,7 +23,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fxD-hs-YdV">
-                                <rect key="frame" x="0.0" y="591" width="259" height="20"/>
+                                <rect key="frame" x="0.0" y="596" width="259" height="20"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Filter Parameters" drawsBackground="YES" id="HGJ-zd-kMg">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="titleTextColor"/>
@@ -31,7 +31,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yVs-h4-SxS" userLabel="Separator">
-                                <rect key="frame" x="257" y="591" width="5" height="24"/>
+                                <rect key="frame" x="257" y="596" width="5" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="1" id="AvX-LP-la9"/>
                                 </constraints>
@@ -42,7 +42,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lsi-wV-jwP" userLabel="Recent Clockings Container">
-                                <rect key="frame" x="260" y="591" width="778" height="24"/>
+                                <rect key="frame" x="260" y="596" width="778" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="cwc-IW-gac"/>
                                 </constraints>
@@ -53,7 +53,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ctf-5V-fDV">
-                                <rect key="frame" x="260" y="591" width="778" height="20"/>
+                                <rect key="frame" x="260" y="596" width="778" height="20"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" alignment="center" title="Clockings Available to Invoice / Credit" drawsBackground="YES" id="uLe-pf-rYG">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="titleTextColor"/>
@@ -61,10 +61,10 @@
                                 </textFieldCell>
                             </textField>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="TN0-Kj-LU5" userLabel="Input view" customClass="ColoredView" customModule="Time_Clocking" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="259" height="591"/>
+                                <rect key="frame" x="0.0" y="0.0" width="259" height="596"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EO6-5s-Rme">
-                                        <rect key="frame" x="10" y="570" width="65" height="17"/>
+                                        <rect key="frame" x="10" y="575" width="65" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Resource:" id="Rqm-Fn-mz1">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -72,7 +72,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WOO-Bk-W8O">
-                                        <rect key="frame" x="21" y="542" width="229" height="25"/>
+                                        <rect key="frame" x="21" y="547" width="229" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="Marc Shearer" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="H3x-qG-xrA" id="MFb-c8-xgc">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -87,7 +87,7 @@
                                         <color key="contentTintColor" name="panelTextColor"/>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="X7Z-1x-oof">
-                                        <rect key="frame" x="10" y="516" width="67" height="17"/>
+                                        <rect key="frame" x="10" y="521" width="67" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Customer:" id="XOe-qz-5lP">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -95,7 +95,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DGl-ZT-xw8">
-                                        <rect key="frame" x="21" y="488" width="229" height="25"/>
+                                        <rect key="frame" x="21" y="493" width="229" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="BMW" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="sIB-Y9-qp2" id="FXB-Rk-gRB">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -110,7 +110,7 @@
                                         <color key="contentTintColor" name="panelTextColor"/>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Q9C-w9-OUl">
-                                        <rect key="frame" x="10" y="462" width="51" height="17"/>
+                                        <rect key="frame" x="10" y="467" width="51" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Project:" id="4k8-Bh-fbu">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -118,7 +118,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g8r-Qv-iwq">
-                                        <rect key="frame" x="21" y="434" width="229" height="25"/>
+                                        <rect key="frame" x="21" y="439" width="229" height="25"/>
                                         <popUpButtonCell key="cell" type="push" title="BMW Active Service Customers" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" pullsDown="YES" selectedItem="hGk-Ff-rvA" id="aWY-RV-qmF">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
@@ -133,7 +133,7 @@
                                         <color key="contentTintColor" name="panelTextColor"/>
                                     </popUpButton>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bOu-uc-Fik">
-                                        <rect key="frame" x="10" y="408" width="169" height="17"/>
+                                        <rect key="frame" x="10" y="413" width="169" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Include clockings from / to:" id="kJL-Al-cEf">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -141,7 +141,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CoX-fg-VZS">
-                                        <rect key="frame" x="24" y="382" width="81" height="22"/>
+                                        <rect key="frame" x="24" y="387" width="81" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerMode="range" datePickerStyle="textField" id="eMd-7k-iJI">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -152,7 +152,7 @@
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ioh-ea-XfF">
-                                        <rect key="frame" x="115" y="385" width="11" height="17"/>
+                                        <rect key="frame" x="115" y="390" width="11" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="-" id="lx6-x4-zmg">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -160,7 +160,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <datePicker verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DdF-7u-0B1">
-                                        <rect key="frame" x="136" y="382" width="81" height="22"/>
+                                        <rect key="frame" x="136" y="387" width="81" height="22"/>
                                         <datePickerCell key="cell" borderStyle="bezel" alignment="left" datePickerStyle="textField" id="ygK-EM-Vfe">
                                             <font key="font" metaFont="system"/>
                                             <date key="date" timeIntervalSinceReferenceDate="-595929600">
@@ -171,7 +171,7 @@
                                         </datePickerCell>
                                     </datePicker>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PT6-ET-OvY">
-                                        <rect key="frame" x="10" y="353" width="120" height="17"/>
+                                        <rect key="frame" x="10" y="358" width="120" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Invoiced clockings:" id="5CG-CN-Rqr">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -179,7 +179,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zq8-0O-nhe">
-                                        <rect key="frame" x="22" y="333" width="130" height="18"/>
+                                        <rect key="frame" x="22" y="338" width="130" height="18"/>
                                         <buttonCell key="cell" type="check" title="Included in report" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="j74-7B-d6K">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -187,7 +187,7 @@
                                         <color key="contentTintColor" name="panelTextColor"/>
                                     </button>
                                     <textField verticalHuggingPriority="750" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="wT4-fE-ppe">
-                                        <rect key="frame" x="24" y="280" width="96" height="22"/>
+                                        <rect key="frame" x="24" y="285" width="96" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="96" id="WjW-hC-qN7"/>
                                         </constraints>
@@ -198,7 +198,7 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zJE-rv-Idb">
-                                        <rect key="frame" x="10" y="306" width="101" height="17"/>
+                                        <rect key="frame" x="10" y="311" width="101" height="17"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Invoice number:" id="Ir8-Jj-ScN">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="panelTextColor"/>
@@ -287,13 +287,13 @@ Gw
                                 </userDefinedRuntimeAttributes>
                             </customView>
                             <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1O-0m-Kk0" userLabel="Table View">
-                                <rect key="frame" x="259" y="0.0" width="779" height="591"/>
+                                <rect key="frame" x="259" y="0.0" width="779" height="596"/>
                                 <clipView key="contentView" id="Tze-Oe-R4s">
-                                    <rect key="frame" x="1" y="0.0" width="777" height="590"/>
+                                    <rect key="frame" x="1" y="0.0" width="777" height="595"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="lNM-4L-xdG" viewBased="YES" id="BOn-Yc-R9v">
-                                            <rect key="frame" x="0.0" y="0.0" width="777" height="565"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowSizeStyle="automatic" headerView="lNM-4L-xdG" viewBased="YES" id="BOn-Yc-R9v">
+                                            <rect key="frame" x="0.0" y="0.0" width="777" height="570"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -331,6 +331,9 @@ Gw
                                                             </connections>
                                                         </tableCellView>
                                                     </prototypeCellViews>
+                                                    <connections>
+                                                        <binding destination="17r-Bf-WdO" name="value" keyPath="self" id="FgE-aD-GkM"/>
+                                                    </connections>
                                                 </tableColumn>
                                             </tableColumns>
                                         </tableView>
@@ -349,6 +352,15 @@ Gw
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableHeaderView>
                             </scrollView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CSR-Fr-2lF">
+                                <rect key="frame" x="283" y="24" width="731" height="548"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dollarWatermark" id="W0j-w7-0xY"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="alphaValue">
+                                        <real key="value" value="0.5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
                         </subviews>
                         <constraints>
                             <constraint firstItem="j1O-0m-Kk0" firstAttribute="top" secondItem="yVs-h4-SxS" secondAttribute="bottom" id="152-Py-RGl"/>
@@ -363,19 +375,23 @@ Gw
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="top" secondItem="PUW-lV-XY4" secondAttribute="top" constant="4" id="RAG-ph-vjF"/>
                             <constraint firstItem="Ctf-5V-fDV" firstAttribute="bottom" secondItem="lsi-wV-jwP" secondAttribute="bottom" id="Syz-Wy-OOI"/>
                             <constraint firstItem="lsi-wV-jwP" firstAttribute="leading" secondItem="yVs-h4-SxS" secondAttribute="trailing" id="Y4w-iT-K7U"/>
+                            <constraint firstItem="CSR-Fr-2lF" firstAttribute="leading" secondItem="TN0-Kj-LU5" secondAttribute="trailing" constant="24" id="YvK-sc-3qR"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="bottom" secondItem="PUW-lV-XY4" secondAttribute="bottom" id="aNF-4M-CGY"/>
                             <constraint firstAttribute="trailing" secondItem="lsi-wV-jwP" secondAttribute="trailing" id="cDs-2y-Ckr"/>
                             <constraint firstAttribute="bottom" secondItem="TN0-Kj-LU5" secondAttribute="bottom" id="hdO-Ya-PXM"/>
                             <constraint firstItem="fxD-hs-YdV" firstAttribute="leading" secondItem="PUW-lV-XY4" secondAttribute="leading" id="ho1-rg-I8e"/>
+                            <constraint firstItem="CSR-Fr-2lF" firstAttribute="top" secondItem="lsi-wV-jwP" secondAttribute="bottom" constant="24" id="jhy-bO-6h7"/>
                             <constraint firstAttribute="bottom" secondItem="j1O-0m-Kk0" secondAttribute="bottom" id="lhB-bh-e3m"/>
                             <constraint firstItem="TN0-Kj-LU5" firstAttribute="top" secondItem="PUW-lV-XY4" secondAttribute="bottom" id="lx0-c3-0Id"/>
                             <constraint firstAttribute="trailing" secondItem="j1O-0m-Kk0" secondAttribute="trailing" id="nBx-LN-RyJ"/>
                             <constraint firstItem="j1O-0m-Kk0" firstAttribute="leading" secondItem="fxD-hs-YdV" secondAttribute="trailing" id="ox7-PJ-ziC"/>
+                            <constraint firstAttribute="trailing" secondItem="CSR-Fr-2lF" secondAttribute="trailing" constant="24" id="pUu-GK-pwT"/>
                             <constraint firstItem="yVs-h4-SxS" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="qHY-vW-xN2"/>
                             <constraint firstItem="Ctf-5V-fDV" firstAttribute="leading" secondItem="yVs-h4-SxS" secondAttribute="trailing" id="rSE-jL-NJR"/>
                             <constraint firstItem="TN0-Kj-LU5" firstAttribute="leading" secondItem="6dz-WO-g9f" secondAttribute="leading" id="sS6-Hh-6Os"/>
                             <constraint firstItem="PUW-lV-XY4" firstAttribute="leading" secondItem="6dz-WO-g9f" secondAttribute="leading" id="sVh-gT-fW2"/>
                             <constraint firstItem="PUW-lV-XY4" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="vA7-Iq-ACT"/>
+                            <constraint firstAttribute="bottom" secondItem="CSR-Fr-2lF" secondAttribute="bottom" constant="24" id="wz3-Jq-Csi"/>
                             <constraint firstItem="lsi-wV-jwP" firstAttribute="top" secondItem="6dz-WO-g9f" secondAttribute="top" id="z3s-hw-LSJ"/>
                         </constraints>
                     </view>
@@ -398,6 +414,7 @@ Gw
                         <outlet property="startTimeDatePicker" destination="CoX-fg-VZS" id="0bl-dr-hPZ"/>
                         <outlet property="tableView" destination="BOn-Yc-R9v" id="d39-xo-uY5"/>
                         <outlet property="tableViewTitleTextField" destination="Ctf-5V-fDV" id="7Om-by-VKN"/>
+                        <outlet property="watermarkImageView" destination="CSR-Fr-2lF" id="IUZ-og-SNn"/>
                     </connections>
                 </viewController>
                 <customObject id="tdT-6O-qec" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -406,6 +423,7 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="dollarWatermark" width="500" height="500"/>
         <namedColor name="panelBackgroundColor">
             <color red="0.78431372549019607" green="0.92156862745098034" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

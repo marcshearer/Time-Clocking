@@ -89,7 +89,7 @@ class Clockings {
             return Date.startOfMinute(addMinutes: Int(roundedDuration), from: startTime)
     }
     
-    static public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    static public func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool = false) -> String {
         var result = ""
         switch recordType {
         case "Clockings":
@@ -105,13 +105,24 @@ class Clockings {
                 result = Resources.getName(resourceCode: clockingMO.resourceCode!)
                 
             case "duration", "abbrevDuration":
-                let abbreviated = (key == "abbrevDuration")
-                if clockingMO.override {
-                    result = Clockings.duration(minutes: Double(clockingMO.overrideMinutes), abbreviated: abbreviated)
+                if sortValue {
+                    var minutes: Double
+                    if clockingMO.override {
+                        minutes = Double(clockingMO.overrideMinutes)
+                    } else {
+                        minutes = Clockings.minutes(clockingMO)
+                    }
+                    let minuteString = String(format: "%.4f", minutes)
+                    result = String(repeating: " ", count: 15 - minuteString.count) + minuteString
                 } else {
-                    result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
+                    let abbreviated = (key == "abbrevDuration")
+                    if clockingMO.override {
+                        result = Clockings.duration(minutes: Double(clockingMO.overrideMinutes), abbreviated: abbreviated)
+                    } else {
+                        result = Clockings.duration(start: clockingMO.startTime!, end: clockingMO.endTime!, abbreviated: abbreviated)
+                    }
                 }
-                
+                    
             case "startTime":
                 if clockingMO.override {
                     result = clockingMO.overrideStartTime!.toString()

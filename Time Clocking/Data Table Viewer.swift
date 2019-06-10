@@ -24,6 +24,11 @@ enum VarType {
     case button
 }
 
+struct SortElement {
+    var key: String
+    var record: DataTableViewerDataSource
+}
+
 @objc class Layout: NSObject {
     public var key: String
     public var title: String
@@ -34,7 +39,7 @@ enum VarType {
     public var zeroBlank: Bool
     public var total: Bool
     public var pad: Bool
-    public var dataWidth:CGFloat = 0.0 // TODO - Should be fileprivate
+    public var dataWidth: CGFloat = 0.0 // TODO - Should be fileprivate
     
     init(key: String, title: String, width: CGFloat, alignment: NSTextAlignment, type: VarType, total: Bool, pad: Bool, maxWidth: CGFloat=0, zeroBlank: Bool = false) {
         self.key = key
@@ -59,13 +64,15 @@ enum Action {
     
     @objc optional func shouldSelect(record: DataTableViewerDataSource) -> Bool
     
-    @objc optional func derivedKey(key: String, record: DataTableViewerDataSource) -> String
+    @objc optional func derivedKey(key: String, record: DataTableViewerDataSource, sortValue: Bool) -> String
     
     @objc optional func derivedTotal(key: String) -> String?
 
     @objc optional func checkEnabled(record: DataTableViewerDataSource) -> Bool
     
     @objc optional func buttonPressed(record: DataTableViewerDataSource) -> Bool
+    
+    @objc optional func buttonState(record: DataTableViewerDataSource) -> Bool
 }
 
 class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
@@ -83,6 +90,9 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     
     private let displayTableView: NSTableView
     private var records: [DataTableViewerDataSource] = []
+    private var sortElements: [SortElement]!
+    private var lastSortColumn: Layout!
+    private var lastSortDirection: SortDirection!
     private var layout: [Layout]!
     private var total: [Double?]!
     private var totals = false
@@ -91,8 +101,12 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     private let boxImage = NSImage(named: NSImage.Name("box"))!
     private let boxTickImage = NSImage(named: NSImage.Name("boxtick"))!
     private var buttonXref: [DataTableViewerDataSource?] = []
+    private var buttons: [NSButton?] = []
+    private var popUpMenu: NSMenu!
     
     public var delegate: DataTableViewerDelegate?
+    
+    // MARK: - Constructor ============================================================================== -
     
     init(displayTableView: NSTableView) {
         
@@ -110,7 +124,9 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         self.currencyNumberFormatter.numberStyle = .currency
     }
     
-    public func show(layout: [Layout], records: [DataTableViewerDataSource]) {
+    // MARK: - Display table view ============================================================================== -
+    
+    public func show(layout: [Layout], records: [DataTableViewerDataSource], sortKey: String? = nil) {
         
         Utility.mainThread {
             
@@ -133,11 +149,16 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             // Refresh grid
             self.displayTableView.beginUpdates()
             self.records = records
+            let sortColumn = self.getSortColumn(key: sortKey)
+            self.sortRecords(by: sortColumn)
+            
             self.accumulateTotals()
             self.displayTableView.reloadData()
             self.displayTableView.endUpdates()
         }
     }
+    
+    // MARK: - Actions on table view ============================================================================== -
     
     public func scrollToTop() {
         Utility.mainThread {
@@ -151,27 +172,18 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
-    public func append(record: DataTableViewerDataSource) {
+    public func insert(record: DataTableViewerDataSource) {
+        let recordKey = self.getValue(record: record, column: lastSortColumn, sortValue: true)
         self.displayTableView.beginUpdates()
         self.records.append(record)
-        self.displayTableView.insertRows(at: IndexSet(integer: records.count-1), withAnimation: .slideDown)
+        var index = self.sortElements.firstIndex(where: {$0.key > recordKey})
+        if index == nil {
+            index = self.sortElements.count
+        }
+        self.sortElements.insert(self.newSortElement(record: record, column: self.lastSortColumn), at: index!)
+        self.displayTableView.insertRows(at: IndexSet(integer: index!), withAnimation: .slideDown)
         self.displayTableView.endUpdates()
         self.accumulateTotals()
-    }
-    
-    public func insert(record: DataTableViewerDataSource, before: DataTableViewerDataSource?) {
-        if let before = before {
-            if let index = self.records.firstIndex(where: {$0 === before}) {
-                self.displayTableView.beginUpdates()
-                self.records.insert(record, at: index)
-                self.displayTableView.insertRows(at: IndexSet(integer: index), withAnimation: .slideDown)
-                self.displayTableView.endUpdates()
-                self.accumulateTotals()
-            }
-        } else {
-            // No before record - append
-            self.append(record: record)
-        }
     }
     
     public func commit(record: DataTableViewerDataSource, action: Action) {
@@ -180,21 +192,25 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             // Clear xref entry
             if let xrefIndex = buttonXref.firstIndex(where: {$0 === record}) {
                 buttonXref[xrefIndex] = nil
+                buttons[xrefIndex] = nil
             }
             // Update array and table view
-            if let index = records.firstIndex(where: {$0 === record}) {
-                self.displayTableView.beginUpdates()
-                self.records.remove(at: index)
+            self.displayTableView.beginUpdates()
+            if let index = self.sortElements.firstIndex(where: {$0.record === record}) {
+                self.sortElements.remove(at: index)
                 self.displayTableView.removeRows(at: IndexSet(integer: index), withAnimation: .slideUp)
-                self.displayTableView.endUpdates()
             }
+            if let index = records.firstIndex(where: {$0 === record}) {
+                self.records.remove(at: index)
+            }
+            self.displayTableView.endUpdates()
         case .update:
             // Refresh row
-            if let index = records.firstIndex(where: {$0 === record}) {
-                self.displayTableView.beginUpdates()
+            self.displayTableView.beginUpdates()
+            if let index = self.sortElements.firstIndex(where: {$0.record === record}) {
                 self.displayTableView.reloadData(forRowIndexes: IndexSet(integer: index), columnIndexes: IndexSet(integersIn: 0...self.layout!.count-1))
-                self.displayTableView.endUpdates()
             }
+            self.displayTableView.endUpdates()
         default:
             break
         }
@@ -209,6 +225,8 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
         self.displayTableView.reloadData()
     }
+    
+    // MARK: - Setup the table view columns ============================================================================== -
     
     private func setupGrid(displayTableView: NSTableView, layout: [Layout]) {
         // Set background if specified
@@ -233,10 +251,11 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             let column = layout[index]
             let tableColumn = NSTableColumn()
             tableColumn.width = abs(column.width)
-            let headerCell = NSTableHeaderCell()
-            headerCell.title = column.title
+            let headerCell = TableHeaderCell(textCell: column.title)
+//            headerCell.title = column.title
+//            headerCell.attributedStringValue = NSAttributedString(string: column.title, attributes: [NSAttributedString.Key.font: NSFont.boldSystemFont(ofSize: 12)])
             headerCell.alignment = column.alignment
-            
+
             // Set colors if specified
             if let textColor = NSColor(named: "tableHeaderTextColor") {
                 headerCell.textColor = textColor
@@ -272,6 +291,8 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
+    // MARK: - Accumulate totals ============================================================================== -
+    
     private func accumulateTotals() {
         var changed = false
         if self.totals {
@@ -282,7 +303,7 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                     for record in self.records {
                         var value: Double
                         if column.key.left(1) == "=" {
-                            let stringValue = delegate?.derivedKey?(key: column.key.right(column.key.length - 1), record: record) ?? "0.0"
+                            let stringValue = delegate?.derivedKey?(key: column.key.right(column.key.length - 1), record: record, sortValue: false) ?? "0.0"
                             value = stringValue.toNumber() ?? 0.0
                         } else {
                             value = self.getNumericValue(record: record, key: column.key, type: column.type)
@@ -301,6 +322,8 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
+    // MARK: - TableView Delegate handlers ===================================================================== -
+    
     internal func numberOfRows(in tableView: NSTableView) -> Int {
         return self.records.count + additional
     }
@@ -308,8 +331,8 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
     internal func tableView(_ tableView: NSTableView, shouldSelectRow row: Int) -> Bool {
         var result: Bool?
         
-        if row < self.records.count {
-            result = self.delegate?.shouldSelect?(record: self.records[row]) ?? false
+        if row < self.sortElements.count {
+            result = self.delegate?.shouldSelect?(record: self.sortElements[row].record) ?? false
         }
         
         if result != nil {
@@ -317,6 +340,20 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         } else {
             return false
         }
+    }
+    
+    internal func tableView(_ tableView: NSTableView, shouldSelect tableColumn: NSTableColumn?) -> Bool {
+        if let identifier = tableColumn?.identifier.rawValue {
+            if let columnNumber = Int(identifier) {
+                let column = self.layout[columnNumber]
+                if column.type == .button {
+                    self.selectAllPopupMenu()
+                } else {
+                    self.sort(by: column)
+                }
+            }
+        }
+        return false
     }
     
     internal func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
@@ -331,58 +368,67 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                 let column = self.layout[columnNumber]
                 var value: String?
                 var enabled = true
-                let derived = (column.key.left(1) == "=")
-                if row < self.records.count {
-                    if derived {
-                        value = self.delegate?.derivedKey?(key: column.key.right(column.key.length - 1), record: self.records[row]) ?? ""
-                    } else {
-                        value = self.getValue(record: self.records[row], column: column)
-                    }
-                    enabled = delegate?.checkEnabled?(record: self.records[row]) ?? true
-                }
-                if column.type == .button {
-                    if row < self.records.count {
-                        buttonXref.append(records[row])
-                        let image = (value == "" ? self.boxImage : self.boxTickImage)
-                        let action = (enabled ? #selector(DataTableViewer.buttonPressed(_:)) : nil)
-                        let button = NSButton(title: "", image: image, target: self, action: action)
-                        button.isBordered = false
-                        button.tag = buttonXref.count - 1
-                        button.isEnabled = enabled
-                        cell = button
-                    }
-                } else {
-                    var textField = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(column.key), owner: nil) as? NSTextField
+                var textField: NSTextField?
+                
+                if column.type != .button {
+                    // Create a text field unless this is a buton
+                    textField = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(column.key), owner: nil) as? NSTextField
                     if textField == nil {
                         textField = NSTextField()
                         textField?.identifier = NSUserInterfaceItemIdentifier(column.key)
                         textField?.isBordered = false
+                        textField?.backgroundColor = NSColor.clear
                     }
-                    if row >= self.records.count {
-                        // Total line
-                        if self.records.count == 0 || self.total[columnNumber] == nil {
-                            // Not totalled column
-                            textField?.stringValue = ""
-                        } else {
-                            var derivedValue: String?
-                            if derived {
-                                derivedValue = self.delegate?.derivedTotal?(key: column.key.right(column.key.length - 1))
-                            }
-                            if let stringValue = derivedValue {
-                                textField?.stringValue = stringValue
-                            } else {
-                                let numberFormatter = getNumberFormatter(column.type)
-                                textField?.stringValue = numberFormatter.string(from: self.total[columnNumber]! as NSNumber) ?? ""
-                            }
-                            textField?.font = NSFont.boldSystemFont(ofSize: 12)
-                        }
-                        textField?.alignment = column.alignment
+                }
+                
+                if row < self.records.count {
+                    let record = self.sortElements[row].record
+                    value = self.getValue(record: record, column: column)
+                    enabled = delegate?.checkEnabled?(record: record) ?? true
+                
+                    if column.type == .button {
+                        let image = (value == "" ? self.boxImage : self.boxTickImage)
+                        let action = (enabled ? #selector(DataTableViewer.buttonPressed(_:)) : nil)
+                        let button = NSButton(title: "", image: image, target: self, action: action)
+                        self.buttonXref.append(record)
+                        button.tag = buttonXref.count - 1
+                        button.isBordered = false
+                        button.isEnabled = enabled
+                        self.buttons.append(button)
+                        cell = button
                     } else {
                         // Normal line
                         textField?.stringValue = value!
                         textField?.alignment = column.alignment
+                        textField?.font = NSFont.systemFont(ofSize: 12)
+                        textField?.isEnabled = enabled
+                        cell = textField
                     }
                     
+                } else {
+                    // Total line
+                    if self.records.count == 0 || self.total[columnNumber] == nil {
+                        // Not totalled column
+                        textField?.stringValue = ""
+                    } else {
+                        var derivedValue: String?
+                        let derived = (column.key.left(1) == "=")
+                        if derived {
+                            derivedValue = self.delegate?.derivedTotal?(key: column.key.right(column.key.length - 1))
+                        }
+                        if let stringValue = derivedValue {
+                            textField?.stringValue = stringValue
+                        } else {
+                            let numberFormatter = getNumberFormatter(column.type)
+                            textField?.stringValue = numberFormatter.string(from: self.total[columnNumber]! as NSNumber) ?? ""
+                        }
+                        textField?.font = NSFont.boldSystemFont(ofSize: 12)
+                    }
+                    textField?.alignment = column.alignment
+                    cell = textField
+                }
+                
+                if column.type != .button {
                     // Sort out width
                     column.dataWidth = max(column.dataWidth, textField!.cell!.cellSize.width+2)
                     if column.maxWidth != 0 {
@@ -419,35 +465,44 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                             tableColumn?.width = column.dataWidth
                         }
                     }
-                    
-                    textField?.isEnabled = enabled
-                    textField?.backgroundColor = NSColor.clear
-                    cell = textField
                 }
             }
         }
         return cell
     }
     
-    private func getValue(record: DataTableViewerDataSource, column: Layout) -> String {
-        if let object = record.value(forKey: column.key) {
-            switch column.type {
-            case .string:
-                return object as! String
-            case .date:
-                return (object as! Date).toString(format: dateFormat)
-            case .dateTime:
-                return (object as! Date).toString(format: dateTimeFormat)
-            case .int, .double, .currency:
-                let numberFormatter = self.getNumberFormatter(column.type)
-                return self.getValue(number: object as? NSNumber, numberFormatter: numberFormatter, zeroBlank: column.zeroBlank)
-            case .bool:
-                return (object as! Bool == true ? "X" : "")
-            default:
+    // MARK: - Utility routines to get values ===================================================== -
+
+    
+    private func getValue(record: DataTableViewerDataSource, column: Layout, sortValue: Bool = false) -> String {
+        let derived = (column.key.left(1) == "=")
+        if derived {
+            return self.delegate?.derivedKey?(key: column.key.right(column.key.length - 1), record: record, sortValue: sortValue) ?? ""
+        } else {
+            if let object = record.value(forKey: column.key) {
+                switch column.type {
+                case .string:
+                    return object as! String
+                case .date:
+                    return (object as! Date).toString(format: dateFormat)
+                case .dateTime:
+                    return (object as! Date).toString(format: dateTimeFormat)
+                case .int, .double, .currency:
+                    if sortValue {
+                        let valueString = String(format: "%.4f", (object as! Double) + 1e14)
+                        return String(repeating: " ", count: 20 - valueString.count) + valueString
+                    } else {
+                        let numberFormatter = self.getNumberFormatter(column.type)
+                        return self.getValue(number: object as? NSNumber, numberFormatter: numberFormatter, zeroBlank: column.zeroBlank)
+                    }
+                case .bool:
+                    return (object as! Bool == true ? "X" : "")
+                default:
+                    return ""
+                }
+            } else {
                 return ""
             }
-        } else {
-            return ""
         }
     }
     
@@ -474,14 +529,6 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
         }
     }
     
-    @objc internal func buttonPressed(_ button: NSButton) {
-        if let record = buttonXref[button.tag] {
-            if let selected = self.delegate?.buttonPressed?(record: record) {
-                button.image = (selected ? self.boxTickImage : self.boxImage)
-            }
-        }
-    }
-    
     private func getNumericValue(record: DataTableViewerDataSource, key: String, type: VarType) -> Double {
         if let object = record.value(forKey: key) {
             switch type {
@@ -494,18 +541,146 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             return 0
         }
     }
+    
+    // MARK: - Manage check box button column ===================================================================== -
+    
+    @objc internal func buttonPressed(_ button: NSButton) {
+        if let record = buttonXref[button.tag] {
+            if let selected = self.delegate?.buttonPressed?(record: record) {
+                button.image = (selected ? self.boxTickImage : self.boxImage)
+            }
+        }
+    }
+    
+    private func selectAllPopupMenu() {
+        if self.popUpMenu == nil {
+            if self.records.count > 0 && self.delegate?.buttonState?(record: self.records.first!) != nil {
+                self.popUpMenu = NSMenu()
+                self.popUpMenu.autoenablesItems = false
+                let selectAll = NSMenuItem(title: "Select all", action: #selector(DataTableViewer.selectAll(_:)), keyEquivalent: "")
+                selectAll.isEnabled = true
+                selectAll.target = self
+                self.popUpMenu.addItem(selectAll)
+                let deselectAll = NSMenuItem(title: "De-select all", action: #selector(DataTableViewer.deselectAll(_:)), keyEquivalent: "")
+                deselectAll.isEnabled = true
+                deselectAll.target = self
+                self.popUpMenu.addItem(deselectAll)
+            }
+        }
+        self.popUpMenu?.popUp(positioning: self.popUpMenu.item(at: 0), at: NSEvent.mouseLocation, in: nil)
+    }
+    
+    @objc internal func selectAll(_ sender: Any) {
+        self.toggleAll(to: true)
+    }
+
+    @objc internal func deselectAll(_ sender: Any) {
+        self.toggleAll(to: false)
+    }
+    
+    private func toggleAll(to required: Bool) {
+        for record in self.records {
+            if let alreadySelected = self.delegate?.buttonState?(record: record) {
+                if alreadySelected != required {
+                    if let selected = self.delegate?.buttonPressed?(record: record) {
+                        if selected == required {
+                            if let index = self.buttonXref.firstIndex(where: {$0 === record}) {
+                                if let button = buttons[index] {
+                                    button.image = (selected ? self.boxTickImage : self.boxImage)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Table sort routines ===================================================================== -
+
+    private func sortRecords(by column: Layout) {
+        
+        if self.lastSortColumn != nil && self.lastSortColumn.key == column.key {
+            self.lastSortDirection = (self.lastSortDirection == .ascending ? .descending : .ascending)
+        } else {
+            self.lastSortDirection = .ascending
+            self.lastSortColumn = column
+        }
+
+        // Build sort descriptors
+        self.sortElements = []
+        for record in self.records {
+            self.sortElements.append(self.newSortElement(record: record, column: column))
+        }
+        if self.lastSortDirection == .ascending {
+            self.sortElements.sort(by: { $1.key > $0.key })
+        } else {
+            self.sortElements.sort(by: { $1.key < $0.key })
+        }
+    }
+    
+    private func sort(by column: Layout) {
+        self.sortRecords(by: column)
+        self.displayTableView.beginUpdates()
+        self.displayTableView.reloadData()
+        self.displayTableView.endUpdates()
+    }
+    
+    private func newSortElement(record: DataTableViewerDataSource, column: Layout?) -> SortElement {
+        var key = ""
+        if let column = column {
+            key = self.getValue(record: record, column: column, sortValue: true)
+        }
+        return SortElement(key: key, record: record)
+    }
+    
+    private func getSortColumn(key: String?) -> Layout {
+        var sort: Layout?
+        if let key = key {
+            if let index = self.layout.firstIndex(where: {$0.key == key}) {
+                sort = self.layout[index]
+            }
+        }
+        if sort == nil {
+            for column in self.layout {
+                if column.type != .button {
+                    sort = column
+                    break
+                }
+            }
+        }
+        return sort!
+    }
+    
 }
 
-extension NSTableHeaderCell {
+final class TableHeaderCell : NSTableHeaderCell {
     
-    override open func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
-        super.draw(withFrame: cellFrame, in: controlView)
+    override init(textCell: String) {
+        super.init(textCell: textCell)
+        self.font = NSFont.boldSystemFont(ofSize: 12)
+        self.backgroundColor = NSColor.white
+    }
+    
+    required init(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
         if let backgroundColor = NSColor(named: "tableHeaderBackgroundColor") {
             backgroundColor.setFill()
             NSBezierPath.fill(cellFrame)
             
-            let interiorFrame = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y + 6.0, width: cellFrame.size.width, height: 14.0)
-            drawInterior(withFrame: interiorFrame, in: controlView)
+            let leftEdge = NSRect(x: cellFrame.maxX, y: cellFrame.minY, width: 1, height: cellFrame.height)
+            NSColor.lightGray.setFill()
+            NSBezierPath.fill(leftEdge)
+            
         }
+        self.drawInterior(withFrame: cellFrame, in: controlView)
+    }
+    
+    override func drawInterior(withFrame cellFrame: NSRect, in controlView: NSView) {
+        let interiorFrame = CGRect(x: cellFrame.origin.x + 4.0, y: cellFrame.origin.y + 6.0, width: cellFrame.size.width - 8.0, height: 14.0)
+        self.attributedStringValue.draw(in: interiorFrame)
     }
 }

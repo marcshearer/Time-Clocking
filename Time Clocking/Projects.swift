@@ -28,7 +28,7 @@ class Projects: NSObject, MaintenanceViewControllerDelegate {
           Layout(key: "closed",         title: "Closed",        width:   60, alignment: .center, type: .bool,   total: false,   pad: false)
         ]
     
-    public func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    public func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String {
         var result = ""
         let projectMO = record as! ProjectMO
         

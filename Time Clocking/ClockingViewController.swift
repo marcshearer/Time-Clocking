@@ -226,8 +226,8 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         return false
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        return Clockings.derivedKey(recordType: recordType, key: key, record: record)
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String {
+        return Clockings.derivedKey(recordType: recordType, key: key, record: record, sortValue: sortValue)
     }
 
     // MARK: - Clocking Detail Delegate Handlers ======================================================================
@@ -285,7 +285,7 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
     
     private func addClocking() {
         let clockingMO = Clockings.writeToDatabase(viewModel: self.viewModel)
-        self.tableViewer?.append(recordType: "Clockings", record: clockingMO)
+        self.tableViewer?.insert(recordType: "Clockings", record: clockingMO)
         self.tableViewer?.scrollToBottom()
     }
     
@@ -342,7 +342,6 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
               Layout(key: "startTime",       title: "From",        width: 115, alignment: .center, type: .dateTime, total: false, pad: false),
               Layout(key: "=abbrevDuration", title: "For",         width: -10, alignment: .left,   type: .string,   total: false, pad: false),
               Layout(key: "amount",          title: "Value",       width: -50, alignment: .right,  type: .currency, total: true,  pad: false),
-              Layout(key: "=",               title: "",            width:   0, alignment: .left,   type: .string,   total: false, pad: false)
         ]
     }
     

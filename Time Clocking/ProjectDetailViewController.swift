@@ -42,7 +42,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         
         // Setup view model
         self.projectViewModel = ProjectViewModel(from: self.projectMO)
-        self.setupBingings(createMode: projectMO == nil)
+        self.setupBindings(createMode: projectMO == nil)
     }
     
     override internal func viewDidAppear() {
@@ -54,7 +54,7 @@ class ProjectDetailViewController: NSViewController, MaintenanceDetailViewContro
         }
     }
     
-    private func setupBingings(createMode: Bool) {
+    private func setupBindings(createMode: Bool) {
         
         // Set up field bindings
         self.projectViewModel.customer.bidirectionalBind(to: self.customerCodePopupButton)

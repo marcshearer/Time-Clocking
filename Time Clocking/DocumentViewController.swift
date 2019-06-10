@@ -90,7 +90,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
         return false
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String {
         var result = ""
         
         let documentMO = record as! DocumentMO
@@ -103,11 +103,16 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
             if documentMO.documentType == DocumentType.credit.rawValue {
                 value *= -1
             }
-            let formatter = NumberFormatter()
-            formatter.locale = Locale.current
-            formatter.numberStyle = .currency
-            if let formatted = formatter.string(from: value as NSNumber) {
-                result = formatted
+            if sortValue {
+                let valueString = String(format: "%.4f", value + 1e14)
+                result = String(repeating: " ", count: 20 - valueString.count) + valueString
+            } else {
+                let formatter = NumberFormatter()
+                formatter.locale = Locale.current
+                formatter.numberStyle = .currency
+                if let formatted = formatter.string(from: value as NSNumber) {
+                    result = formatted
+                }
             }
         default:
             break

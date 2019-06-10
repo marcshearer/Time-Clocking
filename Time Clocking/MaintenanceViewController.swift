@@ -20,7 +20,7 @@ import Cocoa
     @objc optional var filterStoryboardName: String {get}
     @objc optional var filterViewControllerName: String {get}
     
-    @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
+    @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String
     
 }
 
@@ -92,8 +92,8 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
         return false
     }
     
-    internal func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String {
-        return self.delegate?.derivedKey?(recordType: recordType, key: key, record: record) ?? ""
+    internal func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String {
+        return self.delegate?.derivedKey?(recordType: recordType, key: key, record: record, sortValue: sortValue) ?? ""
     }
     
     private func editRecord(_ record: NSManagedObject? = nil, completion: ((NSManagedObject, Bool)->())? = nil) {
@@ -125,7 +125,7 @@ class MaintenanceViewController: NSViewController, CoreDataTableViewerDelegate {
     // MARK: - Completion handlers for edit record================================================================ 
     
     private func addCompletion(_ record: NSManagedObject, deleted: Bool) {
-        tableViewer.append(recordType: self.delegate.recordType, record: record)
+        tableViewer.insert(recordType: self.delegate.recordType, record: record)
     }
     
     private func editCompletion(_ record: NSManagedObject, deleted: Bool) {

@@ -17,13 +17,15 @@ import CoreData
     
     @objc optional func shouldSelect(recordType: String, record: NSManagedObject) -> Bool
     
-    @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject) -> String
+    @objc optional func derivedKey(recordType: String, key: String, record: NSManagedObject, sortValue: Bool) -> String
     
     @objc optional func derivedTotal(key: String) -> String?
     
     @objc optional func checkEnabled(record: NSManagedObject) -> Bool
     
     @objc optional func buttonPressed(record: NSManagedObject) -> Bool
+    
+    @objc optional func buttonState(record: NSManagedObject) -> Bool
 }
 
 class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
@@ -105,15 +107,9 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
         self.dataTableViewer.scrollToBottom()
     }
     
-    public func append(recordType: String, record: NSManagedObject) {
+    public func insert(recordType: String, record: NSManagedObject) {
         if self.recordType == recordType {
-            self.dataTableViewer.append(record: record)
-        }
-    }
-    
-    public func insert(recordType: String, record: NSManagedObject, before: NSManagedObject?) {
-        if self.recordType == recordType {
-            self.dataTableViewer.insert(record: record, before: before)
+            self.dataTableViewer.insert(record: record)
         }
     }
     
@@ -136,8 +132,8 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
         return self.delegate?.shouldSelect?(recordType: self.recordType, record: record as! NSManagedObject) ?? false
     }
     
-    internal func derivedKey(key: String, record: DataTableViewerDataSource) -> String {
-        return self.delegate?.derivedKey?(recordType: self.recordType, key: key, record: record as! NSManagedObject) ?? ""
+    internal func derivedKey(key: String, record: DataTableViewerDataSource, sortValue: Bool) -> String {
+        return self.delegate?.derivedKey?(recordType: self.recordType, key: key, record: record as! NSManagedObject, sortValue: sortValue) ?? ""
     }
     
     internal func derivedTotal(key: String) -> String? {
@@ -150,6 +146,10 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
     
     internal func buttonPressed(record: DataTableViewerDataSource) -> Bool {
         return self.delegate?.buttonPressed?(record: record as! NSManagedObject) ?? false
+    }
+    
+    internal func buttonState(record: DataTableViewerDataSource) -> Bool {
+        return self.delegate?.buttonState?(record: record as! NSManagedObject) ?? false
     }
 }
 
