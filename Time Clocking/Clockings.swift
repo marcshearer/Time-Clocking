@@ -124,11 +124,19 @@ class Clockings {
                 }
                     
             case "startTime":
+                var dateValue: Date
                 if clockingMO.override {
-                    result = clockingMO.overrideStartTime!.toString()
+                    dateValue = clockingMO.overrideStartTime!
                 } else {
-                    result = clockingMO.startTime!.toString()
+                    dateValue = clockingMO.startTime!
                 }
+                if sortValue {
+                    let valueString = "\(Int(dateValue.timeIntervalSinceReferenceDate))"
+                    result = String(repeating: " ", count: 20 - valueString.count) + valueString
+                } else {
+                    result = dateValue.toString()
+                }
+                
                 
             case "documentNumber":
                 if clockingMO.invoiceState == InvoiceState.notInvoiced.rawValue || clockingMO.invoiceState == "" {

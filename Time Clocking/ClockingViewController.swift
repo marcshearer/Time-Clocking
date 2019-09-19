@@ -125,12 +125,17 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
         }
         
         _ = self.pauseButton.reactive.controlEvent.observeNext { (_) in
-            // Stop button
+            // Stop button - update clock and change state
+            self.viewModel.endTime.value = Clockings.endTime(startTime: self.viewModel.startTime.value)
             self.viewModel.timerState.value = TimerState.stopped.rawValue
         }
         
         _ = self.stopButton.reactive.controlEvent.observeNext { (_) in
             // Stop (and add) button
+            if self.viewModel.timerState.value != TimerState.stopped.rawValue {
+                // Update clock
+                self.viewModel.endTime.value = Clockings.endTime(startTime: self.viewModel.startTime.value)
+            }
             self.viewModel.timerState.value = TimerState.stopped.rawValue
             self.addClocking()
             self.viewModel.timerState.value = TimerState.notStarted.rawValue
@@ -281,7 +286,6 @@ class ClockingViewController: NSViewController, CoreDataTableViewerDelegate, Clo
             self.tableViewer.show(recordType: "Clockings", layout: clockingsLayout, sort: [("startTime", .ascending)], predicate: predicate)
         }
     }
-        
     
     private func addClocking() {
         let clockingMO = Clockings.writeToDatabase(viewModel: self.viewModel)

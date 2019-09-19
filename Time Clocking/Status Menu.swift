@@ -329,6 +329,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
             self.resetTimer(sender)
         } else {
             Utility.playSound("Frog")
+            TimeEntry.current.endTime.value = Clockings.endTime(startTime: TimeEntry.current.startTime.value)
             TimeEntry.current.timerState.value = TimerState.notStarted.rawValue
             self.update()
             _ = Clockings.writeToDatabase(viewModel: TimeEntry.current)

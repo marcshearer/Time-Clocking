@@ -370,4 +370,13 @@ class Utility {
         NSSound(named: named)?.play()
     }
     
+    // MARK: - Clipboard handling ====================================================================== -
+    
+    static public func copyToClipboard(_ data: String) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        pasteboard.setString(data, forType: .string)
+    }
+    
+    
 }

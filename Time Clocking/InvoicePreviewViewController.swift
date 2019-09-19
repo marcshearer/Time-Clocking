@@ -10,7 +10,8 @@ import Cocoa
 
 class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
 
-    public var printLines: [PrintDocumentLine]!
+    private var printLines: [PrintDocumentLine]!
+    private var printData: String?
     
     private var tableViewer: DataTableViewer!
     private var layout: [Layout]!
@@ -18,6 +19,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
     
     @IBOutlet private weak var tableView: NSTableView!
     @IBOutlet private weak var closeButton: NSButton!
+    @IBOutlet private weak var copyButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,7 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
         self.setupBindings()
         self.showTableViewer()
         self.numberFormatter.maximumSignificantDigits = 4
+        self.copyButton.isEnabled = (self.printData != nil)
     }
     
     internal func derivedKey(key: String, record: DataTableViewerDataSource, sortValue: Bool) -> String {
@@ -73,17 +76,23 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
             self.dismiss(self.closeButton)
         }
         
+        _ = self.copyButton.reactive.controlEvent.observeNext { (_) in
+            Utility.copyToClipboard(self.printData!)
+            Utility.alertMessage("A copy of the document details have been inserted into the paste buffer", title: "Note")
+        }
+        
     }
     
     private func showTableViewer() {
         self.tableViewer = DataTableViewer(displayTableView: self.tableView)
         self.tableViewer.delegate = self
-        self.tableViewer.show(layout: self.layout, records: printLines)
+        self.tableViewer.show(layout: self.layout, records: printLines, sortKey: "deliveryDate")
     }
     
     private func setupLayout() {
         self.layout =
-            [ Layout(key: "=quantity",       title: "Quantity",    width:  -50,      alignment: .right,  type: .double,      total: true,    pad: false, zeroBlank: true),
+            [ Layout(key: "deliveryDate",    title: "Started",     width:  0,        alignment: .center, type: .date,        total: false,   pad: false),
+              Layout(key: "=quantity",       title: "Quantity",    width:  -50,      alignment: .right,  type: .double,      total: true,    pad: false, zeroBlank: true),
               Layout(key: "unit",            title: "Unit",        width:  -50,      alignment: .center, type: .string,      total: false,   pad: false),
               Layout(key: "desc",            title: "Description", width: -120,      alignment: .left,   type: .string,      total: false,   pad: true,  maxWidth: 230),
               Layout(key: "unitPrice",       title: "Unit price",  width:  -50,      alignment: .right,  type: .currency,    total: false,   pad: false, zeroBlank: true),
@@ -104,12 +113,13 @@ class InvoicePreviewViewController: NSViewController, DataTableViewerDelegate {
  
     // MARK: - Method to show this view =================================================================== -
     
-    static public func show(from parentViewController: NSViewController, printLines: [PrintDocumentLine]) {
+    static public func show(from parentViewController: NSViewController, printLines: [PrintDocumentLine], printData: String? = nil) {
         
         // Create the view controller
         let storyboard = NSStoryboard(name: NSStoryboard.Name("InvoicePreviewViewController"), bundle: nil)
         let viewController = storyboard.instantiateController(withIdentifier: "InvoicePreviewViewController") as! InvoicePreviewViewController
         viewController.printLines = printLines
+        viewController.printData = printData
         parentViewController.presentAsSheet(viewController)
     }
 }

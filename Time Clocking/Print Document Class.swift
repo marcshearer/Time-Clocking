@@ -116,7 +116,7 @@ class PrintDocument {
         
     }
     
-    public func copyToClipboard() {
+    public func createInvoiceData(overrideTitle: String? = nil) -> String {
         var invoiceData = ""
         
         // Get address and header text as arrays
@@ -124,10 +124,19 @@ class PrintDocument {
         let customerAddress: [String] = Utility.stringToArray(self.customerAddress, lines: 6)
         
         // Output header title
-        invoiceData = addClipboard(existing: invoiceData, add: ["HTITLE", "Account Number", "Name", "Address 1", "Address 2", "Address 3" ,"Address 4" ,"Address 5" ,"Address 6" ,"Document Type", "Document Number", "Document Date", "Due Date", "Original Invoice", "Header text 1", "Header text 2", "Header text 3", "Header text 4", "Header text 5"])
+        var documentType: String
+        var documentNumber: String
+        if overrideTitle != nil {
+            documentType = overrideTitle!
+            documentNumber = " "
+        } else {
+            documentType = self.documentType.rawValue
+            documentNumber = self.documentNumber
+        }
+        invoiceData = addClipboard(existing: invoiceData, add: ["HTITLE", "Account Number", "Address 1", "Address 2", "Address 3" ,"Address 4" ,"Address 5" ,"Address 6" ,"Document Type", "Document Number", "Document Date", "Due Date", "Original Invoice", "Header text 1", "Header text 2", "Header text 3", "Header text 4", "Header text 5"])
         
         // Output header data
-        invoiceData = addClipboard(existing: invoiceData, add: ["HDATA", self.customerCode, self.customerName] + customerAddress + [self.documentType.rawValue, self.documentNumber, self.documentDate.toString(), self.dueDate.toString(), self.originalInvoiceNumber] + headerText)
+        invoiceData = addClipboard(existing: invoiceData, add: ["HDATA", self.customerCode] + customerAddress + [documentType, documentNumber, self.documentDate.toString(), self.dueDate.toString(), self.originalInvoiceNumber] + headerText)
         
         // Output lines title
         invoiceData = addClipboard(existing: invoiceData, add: ["LTITLE", "Line No", "Quantity", "Unit", "Description", "Price", "Per", "Line Price", "P/O Number"])
@@ -147,13 +156,9 @@ class PrintDocument {
             // Add line to invoice
             invoiceData = addClipboard(existing: invoiceData, add: ["LDATA\(index + 1)", "\(index + 1)", quantity, line.unit.description, line.desc, String(format: "%.2f", line.unitPrice), line.per, String(format: "%.2f", line.linePrice), line.purchaseOrder])
         }
-        
-        let pasteboard = NSPasteboard.general
-        pasteboard.clearContents()
-        pasteboard.setString(invoiceData, forType: .string)
-        
+        return invoiceData
     }
-    
+        
     public func writeToDatabase(documentMO: inout DocumentMO, documentDetailMO: inout [DocumentDetailMO], clockingIterator: ((ClockingMO)->())->(), sundryClockingUUID: String?) -> Bool {
         var ok = false
         
@@ -189,7 +194,7 @@ class PrintDocument {
             documentMO.originalInvoiceNumber = self.originalInvoiceNumber
             documentMO.headerText = self.headerText
             documentMO.generated = generated
-            documentMO.value = self.totalValue
+            documentMO.value = self.lines.reduce(0) {$0 + $1.linePrice}
             
         }) {
             ok = true
@@ -199,7 +204,8 @@ class PrintDocument {
     }
     
     public func preview(from parentViewController: NSViewController) {
-        InvoicePreviewViewController.show(from: parentViewController, printLines: self.lines)
+        let printData = self.createInvoiceData(overrideTitle: "PREVIEW")
+        InvoicePreviewViewController.show(from: parentViewController, printLines: self.lines, printData: printData)
     }
     
     private func addClipboard(existing: String, add: [String]) -> String {

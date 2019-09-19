@@ -13,7 +13,6 @@ class InvoiceViewController : NSViewController {
     private var clockingIterator: (((ClockingMO)->())->())!
     private var completion: ((Bool)->())!
     private let viewModel = DocumentViewModel()
-    private var printDocument: PrintDocument!
     
     @IBOutlet private weak var documentNumberLabel: NSTextField!
     @IBOutlet private weak var documentNumberTextField: NSTextField!
@@ -87,12 +86,12 @@ class InvoiceViewController : NSViewController {
             if event.type != NSEvent.EventType.leftMouseDown {
                 var (printDocument, ok, errorMessage) = self.createPrintDocument()
                 if ok {
-                    self.printDocument = printDocument
-                    printDocument.copyToClipboard()
+                    let invoiceData = printDocument.createInvoiceData()
+                    Utility.copyToClipboard(invoiceData)
                     if self.viewModel.reprintMode.value {
                         // Reprinting - no action required
                     } else {
-                        ok = self.updateDocument()
+                        ok = self.updateDocument(printDocument: printDocument)
                         errorMessage = "Error updating database"
                     }
                     if ok {
@@ -321,7 +320,7 @@ class InvoiceViewController : NSViewController {
         
     }
     
-    public func updateDocument() -> Bool {
+    public func updateDocument(printDocument: PrintDocument) -> Bool {
         var ok = false
         var documentMO = DocumentMO()
         var documentDetailMO: [DocumentDetailMO] = []
@@ -334,18 +333,18 @@ class InvoiceViewController : NSViewController {
                 
                 sundryClockingUUID = UUID().uuidString
                 
-                self.printDocument.iterateLines(sundryOnly: true, action:{ (printLine) in
+                printDocument.iterateLines(sundryOnly: true, action:{ (printLine) in
                     self.addSundryLine(printLine, clockingUUID: sundryClockingUUID!)
                 })
             }
             
-            // Set existing lines to invoiced / credited
+            // Set existing lines to invoiced / credited and recalculate total
             self.clockingIterator { (clockingMO) in
                 clockingMO.invoiceState = invoiceState()
             }
             
             // Create document header / detail records
-            if !self.printDocument.writeToDatabase(documentMO: &documentMO, documentDetailMO: &documentDetailMO, clockingIterator: self.clockingIterator, sundryClockingUUID: sundryClockingUUID) {
+            if !printDocument.writeToDatabase(documentMO: &documentMO, documentDetailMO: &documentDetailMO, clockingIterator: self.clockingIterator, sundryClockingUUID: sundryClockingUUID) {
                 CoreData.rollback()
             }
             

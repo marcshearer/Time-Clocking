@@ -42,8 +42,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         StatusMenu.shared.update()
         
         
-        /*
+        
         // TODO: Remove ====================== REMOVES ALL INVOICING ======================== -
+        
+        /*
         var clockings: [ClockingMO]
         // Remove all document history!!
         CoreData.clearTable("Documents")
@@ -82,11 +84,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 clockingMO.dailyRate = projects.first!.dailyRate
                 clockingMO.hoursPerDay = customers.first!.hoursPerDay
                 clockingMO.invoiceState = InvoiceState.notInvoiced.rawValue
-                let minutes = (clockingMO.override ? clockingMO.overrideMinutes / 60.0 : Clockings.hours(clockingMO))
-                clockingMO.amount = Utility.round(((minutes / 60.0) / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
+                let hours = (clockingMO.override ? Double(clockingMO.overrideMinutes) / 60.0 : Clockings.hours(clockingMO))
+                clockingMO.amount = Utility.round((hours / clockingMO.hoursPerDay) * clockingMO.dailyRate, 2)
             }
         }
+        */
         
+        /*
         // Move clocking times to precise minute boundaries, round up to rounded minute time periods and remove overrides
         clockings = CoreData.fetch(from: "Clockings") as! [ClockingMO]
         _ = CoreData.update {

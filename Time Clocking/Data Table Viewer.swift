@@ -252,8 +252,6 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
             let tableColumn = NSTableColumn()
             tableColumn.width = abs(column.width)
             let headerCell = TableHeaderCell(textCell: column.title)
-//            headerCell.title = column.title
-//            headerCell.attributedStringValue = NSAttributedString(string: column.title, attributes: [NSAttributedString.Key.font: NSFont.boldSystemFont(ofSize: 12)])
             headerCell.alignment = column.alignment
 
             // Set colors if specified
@@ -484,9 +482,19 @@ class DataTableViewer : NSObject, NSTableViewDataSource, NSTableViewDelegate {
                 case .string:
                     return object as! String
                 case .date:
-                    return (object as! Date).toString(format: dateFormat)
+                    if sortValue {
+                        let valueString = "\(Int((object as! Date).timeIntervalSinceReferenceDate))"
+                        return String(repeating: " ", count: 20 - valueString.count) + valueString
+                    } else {
+                        return (object as! Date).toString(format: dateFormat)
+                    }
                 case .dateTime:
-                    return (object as! Date).toString(format: dateTimeFormat)
+                    if sortValue {
+                        let valueString = "\(Int((object as! Date).timeIntervalSinceReferenceDate))"
+                        return String(repeating: " ", count: 20 - valueString.count) + valueString
+                    } else {
+                        return (object as! Date).toString(format: dateTimeFormat)
+                    }
                 case .int, .double, .currency:
                     if sortValue {
                         let valueString = String(format: "%.4f", (object as! Double) + 1e14)

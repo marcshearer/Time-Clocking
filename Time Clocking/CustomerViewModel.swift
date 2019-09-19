@@ -133,6 +133,7 @@ class CustomerViewModel: NSObject, MaintenanceViewModelDelegate {
         self.invoiceUnit.value = Int(customerMO.invoiceUnit)
         self.invoicePer.value = Int(customerMO.invoicePer)
         self.invoiceDescription.value = Int(customerMO.invoiceDescription)
+        self.invoiceDetail.value = Int(customerMO.invoiceDetail)
         self.invoiceTermsType.value = Int(customerMO.termsType)
         self.invoiceTermsValue.value = Int(customerMO.termsValue)
         self.closed.value = (customerMO.closed ? 1 : 0)

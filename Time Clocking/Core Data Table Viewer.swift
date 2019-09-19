@@ -67,7 +67,7 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
         self.dataTableViewer.delegate = self
     }
     
-    public func show(recordType: String, layout: [Layout], sort: [(String, SortDirection)] = [], predicate: [NSPredicate]? = nil) {
+    public func show(recordType: String, layout: [Layout], sort: [(key: String, direction: SortDirection)] = [], predicate: [NSPredicate]? = nil) {
         
         // Store record type
         self.recordType = recordType
@@ -86,16 +86,16 @@ class CoreDataTableViewer : NSObject, DataTableViewerDelegate {
         // Execute query
         let records = CoreData.fetch(from: recordType, filter: predicate, sort: sort)
         
-        self.dataTableViewer.show(layout: layout, records: records)
+        self.dataTableViewer.show(layout: layout, records: records, sortKey: sort[0].key)
         
     }
     
-    public func show(recordType: String, layout: [Layout], records: [NSManagedObject]) {
+    public func show(recordType: String, layout: [Layout], records: [NSManagedObject], sortKey: String? = nil) {
        
         // Store record type
         self.recordType = recordType
         
-        self.dataTableViewer.show(layout: layout, records: records)
+        self.dataTableViewer.show(layout: layout, records: records, sortKey: sortKey)
         
     }
         

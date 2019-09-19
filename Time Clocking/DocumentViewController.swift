@@ -161,7 +161,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
     }
     
     private func showDocuments() {
-        self.tableViewer.show(recordType: "Documents", layout: documentLayout, records: documents)
+        self.tableViewer.show(recordType: "Documents", layout: documentLayout, records: documents, sortKey: "generated")
     }
     
     // MARK: - Utility functions ============================================================================== -
@@ -185,6 +185,7 @@ class DocumentViewController: NSViewController, CoreDataTableViewerDelegate {
               Layout(key: "documentType",          title: "Type",             width:  80,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "documentNumber",        title: "Number",           width:  60,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "documentDate",          title: "Date",             width:  80,      alignment: .center, type: .date,        total: false,   pad: false),
+              Layout(key: "generated",             title: "Generated",        width:  80,      alignment: .center, type: .dateTime,        total: false,   pad: false),
               Layout(key: "originalInvoiceNumber", title: "Original",         width:  60,      alignment: .left,   type: .string,      total: false,   pad: false),
               Layout(key: "=value",                title: "Value",            width: 100,      alignment: .right,  type: .currency,    total: true,    pad: false)
         ]

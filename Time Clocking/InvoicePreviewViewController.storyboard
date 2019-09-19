@@ -77,7 +77,7 @@
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Nz1-Z5-vJf">
-                                <rect key="frame" x="270" y="3" width="81" height="32"/>
+                                <rect key="frame" x="209" y="3" width="81" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="69" id="46l-Fu-NgX"/>
                                 </constraints>
@@ -89,10 +89,22 @@ Gw
 </string>
                                 </buttonCell>
                             </button>
+                            <button toolTip="Copy details to clipboard" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i90-6D-SY2">
+                                <rect key="frame" x="318" y="3" width="152" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="140" id="Gw2-sq-cQX"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Copy to clipboard" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lro-JM-M9w">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Nz1-Z5-vJf" firstAttribute="leading" secondItem="LBF-0k-RL4" secondAttribute="leading" constant="215" id="3N6-cC-EDd"/>
                             <constraint firstItem="eNK-ts-QdZ" firstAttribute="leading" secondItem="LBF-0k-RL4" secondAttribute="leading" id="DLq-cT-J34"/>
-                            <constraint firstItem="Nz1-Z5-vJf" firstAttribute="centerX" secondItem="LBF-0k-RL4" secondAttribute="centerX" id="XU9-mW-3QC"/>
+                            <constraint firstAttribute="bottom" secondItem="i90-6D-SY2" secondAttribute="bottom" constant="10" id="DpR-DQ-MvQ"/>
+                            <constraint firstItem="i90-6D-SY2" firstAttribute="leading" secondItem="Nz1-Z5-vJf" secondAttribute="trailing" constant="40" id="GFJ-Om-KAg"/>
                             <constraint firstAttribute="bottom" secondItem="Nz1-Z5-vJf" secondAttribute="bottom" constant="10" id="aWq-R4-U7y"/>
                             <constraint firstAttribute="bottom" secondItem="eNK-ts-QdZ" secondAttribute="bottom" constant="40" id="kaF-lC-Do6"/>
                             <constraint firstItem="eNK-ts-QdZ" firstAttribute="top" secondItem="LBF-0k-RL4" secondAttribute="top" id="p91-pC-Wn7"/>
@@ -101,6 +113,7 @@ Gw
                     </view>
                     <connections>
                         <outlet property="closeButton" destination="Nz1-Z5-vJf" id="Scr-BK-B7A"/>
+                        <outlet property="copyButton" destination="i90-6D-SY2" id="Vjp-og-xOz"/>
                         <outlet property="tableView" destination="wkq-Yc-UOw" id="oWo-qU-lVn"/>
                     </connections>
                 </viewController>
