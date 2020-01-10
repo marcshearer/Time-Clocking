@@ -286,17 +286,19 @@ class InvoiceViewController : NSViewController {
                     }
                 }
                 
-                printDocument.add(resourceCode: clockingMO.resourceCode!,
-                                  projectCode: clockingMO.projectCode!,
-                                  deliveryDate: deliveryDate,
-                                  quantity: quantity,
-                                  unit: unit,
-                                  description: description,
-                                  unitPrice: unitPrice,
-                                  per: per,
-                                  unitsPerPer: unitsPerPer,
-                                  linePrice: linePrice,
-                                  purchaseOrder: projectMO.purchaseOrder!)
+                if quantity != 0.0 {
+                    printDocument.add(resourceCode: clockingMO.resourceCode!,
+                                      projectCode: clockingMO.projectCode!,
+                                      deliveryDate: deliveryDate,
+                                      quantity: quantity,
+                                      unit: unit,
+                                      description: description,
+                                      unitPrice: unitPrice,
+                                      per: per,
+                                      unitsPerPer: unitsPerPer,
+                                      linePrice: linePrice,
+                                      purchaseOrder: projectMO.purchaseOrder!)
+                }
             }
             
             // Now consolidate as required

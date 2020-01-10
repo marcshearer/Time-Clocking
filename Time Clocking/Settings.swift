@@ -25,6 +25,7 @@ class Settings {
         UserDefaults.standard.set(self.current.showUnit.value, forKey: "showUnit")
         UserDefaults.standard.set(self.current.showQuantity.value, forKey: "showQuantity")
         UserDefaults.standard.set(self.current.nextInvoiceNo.value, forKey: "nextInvoiceNo")
+        UserDefaults.standard.set(self.current.nextCreditNo.value, forKey: "nextCreditNo")
         UserDefaults.standard.set(self.current.roundMinutes.value, forKey: "roundMinutes")
     }
 }
