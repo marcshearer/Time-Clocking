@@ -141,7 +141,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         self.setImage()
     }
     
-    // MARK: - Popover delegate hanlders =========================================================== -
+    // MARK: - Popover delegate handlers =========================================================== -
 
     internal func popoverDidClose(_ notification: Notification) {
         // Shouldn't happen if hidePopover is called properly from child views
@@ -178,25 +178,25 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
                 notes = notesArray[0]
             }
         }
-        self.menuItemList["Project"]?.attributedTitle = self.attributedString(projectTitle)
+        self.menuItemList["Project"]?.title = projectTitle
         toolTip = projectTitle
         if notes == "" {
             self.menuItemList["Notes"]?.isHidden = true
         } else {
             
             self.menuItemList["Notes"]?.isHidden = false
-            self.menuItemList["Notes"]?.attributedTitle = self.attributedString("          (\(notes))")
+            self.menuItemList["Notes"]?.title = "          (\(notes))"
             toolTip += "\n          \((notes))"
         }
 
         
         let state = timeEntry.getStateDescription()
-        self.menuItemList["State"]?.attributedTitle = self.attributedString(state)
+        self.menuItemList["State"]?.title = state
         toolTip += "\n\(state)"
         
         if let today = Clockings.todaysClockingsText() {
             self.menuItemList["Today"]?.isHidden = false
-            self.menuItemList["Today"]?.attributedTitle = self.attributedString(today)
+            self.menuItemList["Today"]?.title = today
             toolTip += "\n\(today)"
         } else {
             self.menuItemList["Today"]?.isHidden = true
@@ -258,7 +258,7 @@ class StatusMenu: NSObject, NSMenuDelegate, NSPopoverDelegate {
         } else if AppDelegate.isDevelopment {
             imageName += "Green"
         } else {
-            imageName += "Blue"
+            imageName += "White"
         }
         self.statusButtonImage.image = NSImage(named: NSImage.Name(imageName))!
     }
